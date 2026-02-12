@@ -254,7 +254,7 @@ export default function MarriageVisaPage() {
             </h1>
 
             {/* Progress bar */}
-            <div className="mt-8 print:hidden">
+            <div className="mt-6 print:hidden">
               <div className={`flex items-center justify-between ${classes.progress} font-semibold text-slate-700`}>
                 <div>
                   Progress: {done} of {totalWithForms} items

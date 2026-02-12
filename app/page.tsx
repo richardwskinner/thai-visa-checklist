@@ -17,7 +17,7 @@ export default function HomePage() {
         {/* Hero */}
         <div className="pt-10 pb-8 text-center">
           <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight text-slate-900">
-            Thai Visa Checklists
+            Thai Visa Checklist
           </h1>
           <p className="mt-3 text-lg text-slate-600">
             Get organized for your visa application with comprehensive checklists

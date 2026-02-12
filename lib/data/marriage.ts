@@ -43,7 +43,6 @@ export const marriageChecklist: VisaChecklist = {
       items: [
         { text: "Your spouse in person", required: true },
         { text: "Copy of spouse's National ID", required: true },
-        { text: "Copy of spouse's passport (if available)", required: false },
         { text: "Copy of spouse's Blue Book (Tabian Baan)", required: true },
         {
           text: "Thai Marriage Certificate Kor Ror 3 (original + copy)",
@@ -54,7 +53,7 @@ export const marriageChecklist: VisaChecklist = {
           required: true,
         },
         {
-          text: "Family photos (inside home + outside with house number)",
+          text: "4 Family photos (2 inside home + 2 outside home with number visable)",
           required: true,
         },
         { text: "Hand-drawn map (major roads nearby)", required: true },
@@ -78,11 +77,11 @@ export const marriageChecklist: VisaChecklist = {
           required: true,
         },
         {
-          text: "Bank statement up to 6 months (issued within 7 days)",
+          text: "Bank statement up to 6 months (issued within 7 days of appointment)",
           required: true,
         },
         {
-          text: "Bank letter confirming your bank account",
+          text: "Official bank letter confirming account holder details",
           required: true,
         },
         {

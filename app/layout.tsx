@@ -14,11 +14,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Thai Visa Checklist Helper — Free Document Checklists for Thailand Visas",
-    template: "%s | Thai Visa Checklist Helper",
+    default: "Thai Visa Checklist — Free Document Checklists for Thailand Visas",
+    template: "%s | Thai Visa Checklist",
   },
   description:
-    "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, business visa and more. Never miss a document again.",
+    "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, business visa and more. Never miss a document again, and hopfully no second trips to immigration.",
 };
 
 export default function RootLayout({
