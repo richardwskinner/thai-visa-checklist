@@ -7,13 +7,45 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, FileDown, Printer } from "lucide-react";
+import { ArrowLeft, Printer } from "lucide-react";
 import { marriageChecklist } from "@/lib/data/marriage";
 import type { ChecklistItem } from "@/lib/data/marriage";
 
 /* ── Storage keys ── */
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:checked:v1";
 const STORAGE_KEY_FONTSIZE = "thai-visa-checklist:fontsize:v1";
+
+/* ── Application form links (compact pills) ── */
+const APPLICATION_FORMS = [
+  {
+    code: "TM.7",
+    url: "https://www.immigration.go.th/wp-content/uploads/2022/10/4.%E0%B8%84%E0%B8%B3%E0%B8%82%E0%B8%AD%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%8D%E0%B8%B2%E0%B8%95%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B9%83%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%AD%E0%B8%B2%E0%B8%93%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%A7%E0%B8%95%E0%B9%88%E0%B8%AD%E0%B9%84%E0%B8%9B-%E0%B8%95%E0%B8%A1.7.pdf",
+  },
+  { code: "STM.2", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-2-FORM-2025.pdf" },
+  { code: "STM.9", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-9-FORM-2025.pdf" },
+  { code: "STM.10", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-10-FORM-2025.pdf" },
+  { code: "STM.11", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-11-FORM-2025.pdf" },
+] as const;
+
+function FormChips() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {APPLICATION_FORMS.map((f) => (
+        <a
+          key={f.code}
+          href={f.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {f.code}
+          <span className="text-slate-400">↗</span>
+        </a>
+      ))}
+    </div>
+  );
+}
 
 /* ── Font size config ── */
 const fontSizeClasses = {
@@ -41,7 +73,7 @@ const fontSizeClasses = {
     label: "text-base",
     progress: "text-lg",
   },
-};
+} as const;
 
 type FontSize = keyof typeof fontSizeClasses;
 
@@ -62,43 +94,33 @@ function Section({
   const classes = fontSizeClasses[fontSize];
 
   return (
-    <div className="mt-10 print:mt-4">
+    <div className="mt-6 print:mt-3">
       <div className={`${classes.sectionTitle} font-extrabold text-slate-900`}>{title}</div>
-      <div className="mt-3 h-[3px] w-full rounded-full bg-blue-700 print:mt-1" />
+      <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700 print:mt-1" />
 
-      <div className="mt-5 grid gap-4 print:mt-2 print:gap-2">
+      <div className="mt-3 grid gap-2 print:mt-1 print:gap-1">
         {items.map((item, idx) => {
           const key = `${title}:${idx}`;
           return (
-            <label
-              key={key}
-              className="flex items-start gap-4 print:gap-2 cursor-pointer"
-            >
-              <div className="pt-1">
-                <Checkbox
-                  checked={!!checked[key]}
-                  onCheckedChange={() => onToggle(key)}
-                  className="h-6 w-6 rounded-md print:h-4 print:w-4"
-                />
-              </div>
-              <div className={`${classes.itemText} text-slate-900`}>
-                <div className="leading-snug">
-                  {item.text}
-                  {item.noteLink && item.noteUrl && (
-                    <a
-                      href={item.noteUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ml-2 text-blue-700 underline underline-offset-2 print:hidden"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {item.noteLink}
-                    </a>
-                  )}
-                </div>
-                <div className={`mt-1 ${classes.label} text-slate-500`}>
-                  {item.required ? "Required" : "Optional"}
-                </div>
+            <label key={key} className="flex cursor-pointer items-center gap-3 print:gap-2">
+              <Checkbox
+                checked={!!checked[key]}
+                onCheckedChange={() => onToggle(key)}
+                className="h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+              />
+              <div className={`${classes.itemText} text-slate-900 leading-snug`}>
+                {item.text}
+                {item.noteLink && item.noteUrl && (
+                  <a
+                    href={item.noteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-2 text-blue-700 underline underline-offset-2 print:hidden"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {item.noteLink}
+                  </a>
+                )}
               </div>
             </label>
           );
@@ -116,7 +138,7 @@ export default function MarriageVisaPage() {
 
   const classes = fontSizeClasses[fontSize];
 
-  // Load saved progress and font size on mount
+  // Load saved progress + font size
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY_CHECKED);
@@ -135,7 +157,7 @@ export default function MarriageVisaPage() {
     setLoaded(true);
   }, []);
 
-  // Save progress when checked changes (skip initial empty state)
+  // Save progress
   useEffect(() => {
     if (!loaded) return;
     try {
@@ -155,27 +177,25 @@ export default function MarriageVisaPage() {
     }
   }, [fontSize, loaded]);
 
-  // Toggle a single checkbox
   const handleToggle = (key: string) => {
     setChecked((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  // Reset with confirmation
   const handleReset = () => {
     if (window.confirm("Reset all checkboxes? This cannot be undone.")) {
       setChecked({});
     }
   };
 
-  // Progress calculation
-  const total = useMemo(() => {
-    let count = 0;
-    marriageChecklist.sections.forEach((s) => (count += s.items.length));
-    return count;
-  }, []);
+  // Total checklist items (data) + 1 extra for forms checkbox
+  const total = useMemo(
+    () => marriageChecklist.sections.reduce((sum, s) => sum + s.items.length, 0),
+    []
+  );
+  const totalWithForms = total + 1;
 
   const done = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
-  const pct = total ? Math.round((done / total) * 100) : 0;
+  const pct = totalWithForms ? Math.round((done / totalWithForms) * 100) : 0;
 
   return (
     <div className="min-h-screen bg-[#eef3fb]">
@@ -188,16 +208,16 @@ export default function MarriageVisaPage() {
             </Link>
           </Button>
 
-          <div className="flex flex-wrap gap-3 items-center">
+          <div className="flex flex-wrap items-center gap-3">
             {/* Font Size Selector */}
-            <div className="flex items-center gap-2 rounded-2xl bg-white px-4 py-2 shadow-sm border border-slate-200">
+            <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm">
               <span className="text-sm font-medium text-slate-700">Text Size:</span>
               <div className="flex gap-1">
                 {(["small", "medium", "large"] as const).map((size) => (
                   <button
                     key={size}
                     onClick={() => setFontSize(size)}
-                    className={`px-3 py-1 rounded-lg text-sm font-medium transition capitalize ${
+                    className={`rounded-lg px-3 py-1 text-sm font-medium transition capitalize ${
                       fontSize === size
                         ? "bg-indigo-600 text-white"
                         : "bg-slate-100 text-slate-700 hover:bg-slate-200"
@@ -218,12 +238,6 @@ export default function MarriageVisaPage() {
             </Button>
 
             <Button
-              onClick={() => alert("PDF export coming soon!")}
-              className="h-12 rounded-2xl bg-red-600 px-5 text-base hover:bg-red-700"
-            >
-              <FileDown className="mr-2 h-5 w-5" /> PDF
-            </Button>
-            <Button
               onClick={() => window.print()}
               className="h-12 rounded-2xl bg-blue-600 px-5 text-base hover:bg-blue-700"
             >
@@ -235,30 +249,47 @@ export default function MarriageVisaPage() {
         {/* Content */}
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
           <CardContent className="p-10 print:p-6">
-            <h1 className={`${classes.title} font-extrabold tracking-tight text-slate-900`}>
+            <h1 className={`${classes.title} text-center font-extrabold tracking-tight text-slate-900`}>
               {marriageChecklist.title}
             </h1>
-            <p className={`mt-3 ${classes.subtitle} text-slate-600`}>
-              {marriageChecklist.subtitle}
-            </p>
-            <p className={`mt-1 ${classes.label} text-slate-400`}>
-              Last updated: {marriageChecklist.lastUpdated}
-            </p>
-            <p className={`mt-2 ${classes.progress} text-slate-500`}>Document Checklist</p>
 
             {/* Progress bar */}
-            <div className="mt-10 print:hidden">
-              <div
-                className={`flex items-center justify-between ${classes.progress} font-semibold text-slate-700`}
-              >
+            <div className="mt-8 print:hidden">
+              <div className={`flex items-center justify-between ${classes.progress} font-semibold text-slate-700`}>
                 <div>
-                  Progress: {done} of {total} items
+                  Progress: {done} of {totalWithForms} items
                 </div>
                 <div>{pct}%</div>
               </div>
-              <div className="mt-3">
-                <Progress value={pct} className="h-3" />
+              <div className="mt-2">
+                <Progress value={pct} className="h-3 [&>div]:bg-green-500" />
               </div>
+            </div>
+
+            {/* Application forms (UNDER progress bar) */}
+            <div className="mt-8 print:hidden">
+              <div className={`${fontSizeClasses[fontSize].sectionTitle} font-extrabold text-slate-900`}>
+                Application forms
+              </div>
+              <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700" />
+
+              <label className="mt-4 flex cursor-pointer items-start gap-3">
+                <Checkbox
+                  checked={!!checked["__forms__"]}
+                  onCheckedChange={() => handleToggle("__forms__")}
+                  className="mt-1 h-5 w-5 rounded-md data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                />
+
+                <div className="flex-1">
+                  <div className={`${classes.itemText} text-slate-900 leading-snug`}>
+                    Download and complete the required application forms:
+                  </div>
+
+                  <div className="mt-3">
+                    <FormChips />
+                  </div>
+                </div>
+              </label>
             </div>
 
             {/* Sections */}
@@ -274,11 +305,9 @@ export default function MarriageVisaPage() {
             ))}
 
             {/* Tips */}
-            <div className="mt-12 rounded-lg bg-amber-50 border-l-4 border-amber-500 p-6 print:mt-6 print:p-4">
-              <div className={`${classes.itemText} font-bold text-amber-900`}>
-                Important Notes:
-              </div>
-              <ul className={`mt-3 list-disc pl-6 ${classes.label} text-amber-900 space-y-2`}>
+            <div className="mt-8 rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5 print:mt-4 print:p-4">
+              <div className={`${classes.itemText} font-bold text-amber-900`}>Extra Tips:</div>
+              <ul className={`mt-2 list-disc space-y-1 pl-6 ${classes.label} text-amber-900`}>
                 {marriageChecklist.tips.map((tip) => (
                   <li key={tip}>{tip}</li>
                 ))}
@@ -287,9 +316,8 @@ export default function MarriageVisaPage() {
           </CardContent>
         </Card>
 
-        <div className="py-10 text-xs text-slate-500">
+        <div className="py-8 text-xs text-slate-500">
           <Separator className="mb-4" />
-          Reminder: exact document requirements can vary by immigration office.
         </div>
       </div>
 

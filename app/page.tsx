@@ -2,6 +2,13 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { VISAS } from "@/lib/data/visas";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Thai Visa Checklist Helper — Free Document Checklists for Thailand Visas",
+  description:
+    "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, business visa and more. Never miss a document again.",
+};
 
 export default function HomePage() {
   return (
@@ -10,7 +17,7 @@ export default function HomePage() {
         {/* Hero */}
         <div className="pt-10 pb-8 text-center">
           <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight text-slate-900">
-            Thai Visa Checklist Helper
+            Thai Visa Checklists
           </h1>
           <p className="mt-3 text-lg text-slate-600">
             Get organized for your visa application with comprehensive checklists
@@ -25,12 +32,12 @@ export default function HomePage() {
               </h2>
             </div>
 
-            <div className="mt-7 grid gap-5">
+            <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
               {VISAS.map((v) =>
                 v.disabled ? (
                   <div
                     key={v.slug}
-                    className={`group relative w-full rounded-2xl ${v.bg} px-7 py-7 text-left text-white shadow-md opacity-90`}
+                    className={`group relative w-full rounded-2xl ${v.bg} px-7 py-7 text-left text-white shadow-md opacity-90 transition hover:-translate-y-1 hover:shadow-lg`}
                   >
                     <span className="absolute right-4 top-4 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold">
                       Coming soon
@@ -47,7 +54,7 @@ export default function HomePage() {
                   <Link
                     key={v.slug}
                     href={v.href}
-                    className={`group relative w-full rounded-2xl ${v.bg} px-7 py-7 text-left text-white shadow-md transition hover:shadow-lg hover:-translate-y-[1px]`}
+                    className={`group relative w-full rounded-2xl ${v.bg} px-7 py-7 text-left text-white shadow-md transition hover:shadow-lg hover:-translate-y-2`}
                   >
                     <div className="text-3xl font-extrabold tracking-tight">
                       <span className="mr-3">{v.emoji}</span>
@@ -59,6 +66,19 @@ export default function HomePage() {
                   </Link>
                 )
               )}
+
+              <Link
+                href="/tdac"
+                className="group relative w-full rounded-2xl bg-sky-600 px-7 py-7 text-left text-white shadow-md transition hover:shadow-lg hover:-translate-y-2"
+              >
+                <div className="text-3xl font-extrabold tracking-tight">
+                  <span className="mr-3">✈️</span>
+                  TDAC
+                </div>
+                <div className="mt-2 text-lg font-semibold text-white/85">
+                  Thailand Digital Arrival Card
+                </div>
+              </Link>
             </div>
 
             <div className="mt-7 text-center text-sm text-slate-500">
