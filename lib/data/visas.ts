@@ -13,7 +13,7 @@ export const VISAS: VisaInfo[] = [
     slug: "marriage",
     emoji: "💑",
     title: "Marriage Visa",
-    subtitle: 'Non-Immigrant Type "O" (Marriage to a Thai National)',
+    subtitle: 'Non-Immigrant Type "O" (Extension of Stay Based on Marriage to a Thai National)',
     bg: "bg-pink-600",
     href: "/visa/marriage",
   },
