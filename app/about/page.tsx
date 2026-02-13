@@ -49,7 +49,7 @@ export default function AboutPage() {
           <p className="mt-6 text-slate-700 leading-relaxed">
             Thai Visa Checklist started one morning while standing in the immigration
             office, holding a numbered ticket and wondering whether one missing
-            photocopy was about to ruin our day.
+            photocopy was about to ruin my day.
           </p>
 
           <p className="mt-4 text-slate-700 leading-relaxed">

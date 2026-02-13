@@ -85,7 +85,13 @@ export default function HomePage() {
               Requirements can vary by immigration office - always confirm locally.
             </div>
 
-            <div className="mt-5 text-center">
+            <div className="mt-5 flex items-center justify-center gap-6">
+              <Link
+                href="/guides"
+                className="text-sm font-medium text-slate-600 underline underline-offset-4 hover:text-slate-900"
+              >
+                Guides
+              </Link>
               <Link
                 href="/about"
                 className="text-sm font-medium text-slate-600 underline underline-offset-4 hover:text-slate-900"
