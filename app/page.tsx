@@ -14,6 +14,19 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#eef3fb]">
       <div className="mx-auto w-full max-w-5xl px-5">
+
+{/* Top Navigation */}
+<div className="pt-6">
+  <div className="flex items-center justify-end">
+    <Link
+      href="/about"
+      className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 hover:text-slate-900"
+    >
+      About
+    </Link>
+  </div>
+</div>
+
         {/* Hero */}
         <div className="pt-10 pb-8 text-center">
           <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight text-slate-900">
@@ -86,7 +99,6 @@ export default function HomePage() {
             </div>
           </CardContent>
         </Card>
-
         <div className="py-10 text-xs text-slate-500">
           <Separator className="mb-4" />
           Note: Requirements can vary by immigration office. Always confirm locally.
