@@ -53,7 +53,7 @@ export const marriageChecklist: VisaChecklist = {
           required: true,
         },
         {
-          text: "4 Family photos (2 inside home + 2 outside home with number visable)",
+          text: "4 Family photos (2 inside home + 2 outside home)",
           required: true,
         },
         { text: "Hand-drawn map (major roads nearby)", required: true },
@@ -61,7 +61,7 @@ export const marriageChecklist: VisaChecklist = {
         { text: "Children's birth certificate (if applicable)", required: false },
         { text: "Spouse name change document (if applicable)", required: false },
         {
-          text: "Letter from your spouse confirming marriage",
+          text: "Signed letter from spouse confirming ongoing marriage",
           required: true,
         },
       ],
@@ -77,11 +77,11 @@ export const marriageChecklist: VisaChecklist = {
           required: true,
         },
         {
-          text: "Bank statement up to 6 months (issued within 7 days of appointment)",
+          text: "Bank statement covering last 6 months (issued within 7 days of appointment)",
           required: true,
         },
         {
-          text: "Official bank letter confirming account holder details",
+          text: "Official bank letter confirming account holder details (Same day recommended)",
           required: true,
         },
         {
