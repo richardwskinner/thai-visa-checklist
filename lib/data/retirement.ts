@@ -22,7 +22,7 @@ export interface VisaChecklist {
 export const retirementChecklist: VisaChecklist = {
   id: "retirement-extension",
   title: 'Non-Immigrant "O" (Retirement Visa)',
-  subtitle: "Annual extension of stay based on retirement",
+  subtitle: "Annual extension of stay based for retirement purposes",
   lastUpdated: "13 Feb 2026",
   sections: [
     {
@@ -83,8 +83,7 @@ export const retirementChecklist: VisaChecklist = {
   tips: [
     "Apply 30–45 days before your current extension expires — don't wait until the last day",
     "Prepare 2 copies of all documents and sign the bottom of every corner",
-    "Bank funds must come from an international transfer — domestic transfers may not be accepted",
-    "After renewal, your balance cannot drop below 400,000 THB for the next 3 months",
+    "If using the 800,000 THB deposit method, the funds must remain for 3 months after approval (then never drop below 400,000 THB)",
     "Health insurance is mandatory for O-A visa holders but not required for Non-O retirement extensions",
     "Some offices may also ask for a personal information form / CV",
   ],

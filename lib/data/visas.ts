@@ -21,7 +21,7 @@ export const VISAS: VisaInfo[] = [
     slug: "retirement",
     emoji: "🏖️",
     title: "Retirement Visa",
-    subtitle: 'Non-Immigrant Type "O-A" 50+ (Extension)',
+    subtitle: 'Non-Immigrant Type "O" 50+ (Extension)',
     bg: "bg-blue-600",
     href: "/visa/retirement",
   },
