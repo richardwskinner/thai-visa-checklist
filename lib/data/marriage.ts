@@ -19,20 +19,20 @@ export interface VisaChecklist {
 }
 
 export const marriageChecklist: VisaChecklist = {
-  title: 'Non-Immigrant Type "O" (Marriage Visa)',
-  subtitle: "For foreigners married to Thai nationals",
+  title: 'Non-Immigrant Type "O" (Marriage)',
+  subtitle: "Annual extention of stay based on Marriage to Thai National",
   lastUpdated: "11 Feb 2026",
 
   sections: [
     {
       title: "Personal Documents",
       items: [
-        { text: "Passport (Original)", required: true },
-        { text: "1x Passport Photo (4x6 cm)", required: true },
+        { text: "Passport (Must be valid for at least 18 months)", required: true },
+        { text: "1x Passport Photo taken within 6 months(4x6 cm)", required: true },
         { text: "TM.30 Receipt", required: true },
         { text: "90 Day Report Receipt", required: false },
         {
-          text: "Copy of Passport Photo Page, Visa & Entry Stamp",
+          text: "Passport Photocopies: Photo Page, Previous Visa Stamp & Latest Entry Stamp",
           required: true,
         },
       ],
@@ -100,7 +100,7 @@ export const marriageChecklist: VisaChecklist = {
 
   tips: [
     "Download TM.7 and STM forms and prepare in advance",
-    "Prepare two copies of your documents (not always required, but recommended).",
-    "Sign the bottom of all copies.",
+    "Prepare two copies of your documents (not always required, but recommended)",
+    "Sign the bottom corner of every copy",
   ],
 };

@@ -24,7 +24,6 @@ export const VISAS: VisaInfo[] = [
     subtitle: 'Non-Immigrant Type "O-A" 50+ (Extension)',
     bg: "bg-blue-600",
     href: "/visa/retirement",
-    disabled: true,
   },
   {
     slug: "business",

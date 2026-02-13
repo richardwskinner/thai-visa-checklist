@@ -8,11 +8,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Printer } from "lucide-react";
-import { marriageChecklist } from "@/lib/data/marriage";
-import type { ChecklistItem } from "@/lib/data/marriage";
+import { retirementChecklist } from "@/lib/data/retirement";
+import type { ChecklistItem } from "@/lib/data/retirement";
 
 /* ── Storage keys ── */
-const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:checked:v1";
+const STORAGE_KEY_CHECKED = "thai-visa-checklist:retirement:checked:v1";
 const STORAGE_KEY_FONTSIZE = "thai-visa-checklist:fontsize:v1";
 
 /* ── Application form links (compact pills) ── */
@@ -21,10 +21,6 @@ const APPLICATION_FORMS = [
     code: "TM.7",
     url: "https://www.immigration.go.th/wp-content/uploads/2022/10/4.%E0%B8%84%E0%B8%B3%E0%B8%82%E0%B8%AD%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%8D%E0%B8%B2%E0%B8%95%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B9%83%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%AD%E0%B8%B2%E0%B8%93%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%A7%E0%B8%95%E0%B9%88%E0%B8%AD%E0%B9%84%E0%B8%9B-%E0%B8%95%E0%B8%A1.7.pdf",
   },
-  { code: "STM.2", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-2-FORM-2025.pdf" },
-  { code: "STM.9", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-9-FORM-2025.pdf" },
-  { code: "STM.10", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-10-FORM-2025.pdf" },
-  { code: "STM.11", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-11-FORM-2025.pdf" },
 ] as const;
 
 function FormChips() {
@@ -110,7 +106,9 @@ function Section({
                 className="h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
               />
               <div className={`${classes.itemText} text-slate-900 leading-snug`}>
-                {item.text}
+                {item.text.split("\n").map((line, i) => (
+  <span key={i} className="block">{line}</span>
+))}
                 {item.noteLink && item.noteUrl && (
                   <a
                     href={item.noteUrl}
@@ -132,7 +130,7 @@ function Section({
 }
 
 /* ── Main page ── */
-export default function MarriageVisaPage() {
+export default function RetirementVisaPage() {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [fontSize, setFontSize] = useState<FontSize>("small");
   const [loaded, setLoaded] = useState(false);
@@ -190,7 +188,7 @@ export default function MarriageVisaPage() {
 
   // Total checklist items (data) + 1 extra for forms checkbox
   const total = useMemo(
-    () => marriageChecklist.sections.reduce((sum, s) => sum + s.items.length, 0),
+    () => retirementChecklist.sections.reduce((sum, s) => sum + s.items.length, 0),
     []
   );
   const totalWithForms = total + 1;
@@ -251,11 +249,11 @@ export default function MarriageVisaPage() {
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm print:mt-0 print:rounded-none print:shadow-none">
           <CardContent className="p-10 print:p-6 print:pb-0">
             <h1 className={`${classes.title} text-center font-extrabold tracking-tight text-slate-900`}>
-              {marriageChecklist.title}
+              {retirementChecklist.title}
             </h1>
             <p className={`mt-2 ${classes.subtitle} text-center text-slate-600`}>
-                          {marriageChecklist.subtitle}
-                        </p>
+              {retirementChecklist.subtitle}
+            </p>
 
             {/* Progress bar (screen only) */}
             <div className="mt-8 print:hidden">
@@ -270,10 +268,10 @@ export default function MarriageVisaPage() {
               </div>
             </div>
 
-            {/* Application forms (screen: under progress bar / print: still included) */}
+            {/* Application forms */}
             <div className="mt-8 print:mt-6">
               <div className={`${fontSizeClasses[fontSize].sectionTitle} font-extrabold text-slate-900`}>
-                Application forms
+                Application Forms
               </div>
               <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700 print:mt-1" />
 
@@ -286,7 +284,7 @@ export default function MarriageVisaPage() {
 
                 <div className="flex-1">
                   <div className={`${classes.itemText} text-slate-900 leading-snug`}>
-                    Download and complete the required application forms:
+                    Download and complete the required application form:
                   </div>
 
                   <div className="mt-3 print:mt-2">
@@ -297,7 +295,7 @@ export default function MarriageVisaPage() {
             </div>
 
             {/* Sections */}
-            {marriageChecklist.sections.map((section) => (
+            {retirementChecklist.sections.map((section) => (
               <Section
                 key={section.title}
                 title={section.title}
@@ -312,13 +310,12 @@ export default function MarriageVisaPage() {
             <div className="mt-8 rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5 print:mt-4 print:p-4">
               <div className={`${classes.itemText} font-bold text-amber-900`}>Extra Tips:</div>
               <ul className={`mt-2 list-disc space-y-1 pl-6 ${classes.label} text-amber-900`}>
-                {marriageChecklist.tips.map((tip) => (
+                {retirementChecklist.tips.map((tip) => (
                   <li key={tip}>{tip}</li>
                 ))}
               </ul>
             </div>
 
-            {/* This separator/footer is what often causes the “blank second page” — hide on print */}
             <div className="mt-8 print:hidden">
               <Separator />
             </div>
@@ -338,7 +335,6 @@ export default function MarriageVisaPage() {
             -webkit-print-color-adjust: exact;
           }
 
-          /* Defensive: remove shadows/extra rendering that can push content to page 2 */
           * { box-shadow: none !important; }
         }
       `}</style>

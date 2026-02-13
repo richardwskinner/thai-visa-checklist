@@ -20,7 +20,7 @@ export default function HomePage() {
           </h1>
 
           <p className="mt-4 text-lg text-slate-600">
-            Get organized for your visa application with comprehensive checklists
+            100% Free checklists for Thai visa applications
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-7 text-center text-sm text-slate-500">
-              Free to use • Requirements can vary by immigration office — always confirm locally.
+              Requirements can vary by immigration office - always confirm locally.
             </div>
 
             <div className="mt-5 text-center">
