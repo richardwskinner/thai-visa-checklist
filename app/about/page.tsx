@@ -56,7 +56,7 @@ export default function AboutPage() {
             After going through the process many times and always forgetting something, I created my
             own checklist. Although much of the information is available online,
             it’s scattered, inconsistent, and often outdated. I wanted one clear
-            document where everything I needed was centralised — something I
+            document where everything I needed was centralised. Something I
             could print, and tick off as I prepared. So this site was created to solve one simple problem:
           </p>
 
