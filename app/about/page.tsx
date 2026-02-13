@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About",
@@ -30,23 +31,33 @@ export default function AboutPage() {
 
         {/* Content card */}
         <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
-          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 text-center">
             About Thai Visa Checklist
           </h1>
 
+          <div className="mt-6 flex justify-center">
+  <Image
+    src="/images/immigration-cartoon.png"
+    alt="Cartoon of someone at Thai immigration with too many documents"
+    width={500}
+    height={500}
+    className="rounded-2xl shadow-md"
+    priority
+  />
+</div>
+
           <p className="mt-6 text-slate-700 leading-relaxed">
-            Thai Visa Checklist started one day while standing in an immigration
+            Thai Visa Checklist started one day while standing in the immigration
             office, holding a numbered ticket and wondering whether one missing
-            photocopy was about to ruin the morning.
+            photocopy was about to ruin our morning.
           </p>
 
           <p className="mt-4 text-slate-700 leading-relaxed">
-            After going through the process many times personally, I created my
+            After going through the process many times and always forgetting something, I created my
             own checklist. Although much of the information is available online,
             it’s scattered, inconsistent, and often outdated. I wanted one clear
             document where everything I needed was centralised — something I
-            could print, tick off as I prepared, and use for one final check
-            before my appointment. So this site was created to solve one simple problem:
+            could print, and tick off as I prepared. So this site was created to solve one simple problem:
           </p>
 
           <p className="mt-3 text-xl font-extrabold text-slate-900">
@@ -74,14 +85,14 @@ export default function AboutPage() {
   </p>
 
   <p className="mt-3 text-slate-800 leading-relaxed">
-    Immigration requirements can change, may vary by office, and individual
-    circumstances differ. Always confirm requirements directly with your
+    Immigration requirements can change, vary by office, and individual
+    circumstances. Always confirm requirements directly with your
     local immigration office before submitting an application.
   </p>
 </div>
 
           <p className="mt-6 text-slate-700 leading-relaxed">
-            If you’d prefer a professional to handle the process, we can connect you with a trusted visa agent.{" "}
+            If you’d prefer to have a professional to handle the process - {" "}
             <a
               href="/contact"
               className="font-semibold text-blue-700 underline underline-offset-2 hover:text-blue-900"

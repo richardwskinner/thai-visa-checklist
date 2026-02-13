@@ -36,11 +36,12 @@ function FormChips() {
           href={f.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100
+                     print:bg-white print:text-slate-900 print:border-slate-300"
           onClick={(e) => e.stopPropagation()}
         >
           {f.code}
-          <span className="text-slate-400">↗</span>
+          <span className="text-slate-400 print:hidden">↗</span>
         </a>
       ))}
     </div>
@@ -198,8 +199,8 @@ export default function MarriageVisaPage() {
   const pct = totalWithForms ? Math.round((done / totalWithForms) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-[#eef3fb]">
-      <div className="mx-auto w-full max-w-5xl px-5">
+    <div className="min-h-screen bg-[#eef3fb] print:min-h-0 print:bg-white">
+      <div className="mx-auto w-full max-w-5xl px-5 print:px-0">
         {/* Top actions */}
         <div className="flex flex-col gap-3 pt-8 print:hidden sm:flex-row sm:items-center sm:justify-between">
           <Button asChild className="h-12 justify-start rounded-2xl bg-slate-600 px-5 text-base hover:bg-slate-700">
@@ -247,14 +248,14 @@ export default function MarriageVisaPage() {
         </div>
 
         {/* Content */}
-        <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
-          <CardContent className="p-10 print:p-6">
+        <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm print:mt-0 print:rounded-none print:shadow-none">
+          <CardContent className="p-10 print:p-6 print:pb-0">
             <h1 className={`${classes.title} text-center font-extrabold tracking-tight text-slate-900`}>
               {marriageChecklist.title}
             </h1>
 
-            {/* Progress bar */}
-            <div className="mt-6 print:hidden">
+            {/* Progress bar (screen only) */}
+            <div className="mt-8 print:hidden">
               <div className={`flex items-center justify-between ${classes.progress} font-semibold text-slate-700`}>
                 <div>
                   Progress: {done} of {totalWithForms} items
@@ -266,18 +267,18 @@ export default function MarriageVisaPage() {
               </div>
             </div>
 
-            {/* Application forms (UNDER progress bar) */}
-            <div className="mt-8 print:hidden">
+            {/* Application forms (screen: under progress bar / print: still included) */}
+            <div className="mt-8 print:mt-6">
               <div className={`${fontSizeClasses[fontSize].sectionTitle} font-extrabold text-slate-900`}>
                 Application forms
               </div>
-              <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700" />
+              <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700 print:mt-1" />
 
-              <label className="mt-4 flex cursor-pointer items-start gap-3">
+              <label className="mt-4 flex cursor-pointer items-start gap-3 print:gap-2">
                 <Checkbox
                   checked={!!checked["__forms__"]}
                   onCheckedChange={() => handleToggle("__forms__")}
-                  className="mt-1 h-5 w-5 rounded-md data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                  className="mt-1 h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
                 />
 
                 <div className="flex-1">
@@ -285,7 +286,7 @@ export default function MarriageVisaPage() {
                     Download and complete the required application forms:
                   </div>
 
-                  <div className="mt-3">
+                  <div className="mt-3 print:mt-2">
                     <FormChips />
                   </div>
                 </div>
@@ -313,22 +314,29 @@ export default function MarriageVisaPage() {
                 ))}
               </ul>
             </div>
+
+            {/* This separator/footer is what often causes the “blank second page” — hide on print */}
+            <div className="mt-8 print:hidden">
+              <Separator />
+            </div>
           </CardContent>
         </Card>
-
-        <div className="py-8 text-xs text-slate-500">
-          <Separator className="mb-4" />
-        </div>
       </div>
 
       {/* Print styles */}
       <style>{`
         @media print {
           @page { margin: 0.5in; }
+
+          html, body { height: auto !important; }
           body {
+            margin: 0 !important;
             print-color-adjust: exact;
             -webkit-print-color-adjust: exact;
           }
+
+          /* Defensive: remove shadows/extra rendering that can push content to page 2 */
+          * { box-shadow: none !important; }
         }
       `}</style>
     </div>
