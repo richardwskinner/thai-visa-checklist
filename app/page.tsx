@@ -82,23 +82,36 @@ export default function HomePage() {
             </div>
 
             <div className="mt-7 text-center text-sm text-slate-500">
-              Requirements can vary by immigration office - always confirm locally.
+              Requirements can vary by immigration office — always confirm locally.
             </div>
 
-            <div className="mt-5 flex items-center justify-center gap-6">
-              <Link
-                href="/guides"
-                className="text-sm font-medium text-slate-600 underline underline-offset-4 hover:text-slate-900"
-              >
-                Guides
-              </Link>
-              <Link
-                href="/about"
-                className="text-sm font-medium text-slate-600 underline underline-offset-4 hover:text-slate-900"
-              >
-                About
-              </Link>
-            </div>
+            {/* Navigation Links */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm font-medium">
+  <Link
+    href="/guides"
+    className="text-slate-600 underline underline-offset-4 hover:text-slate-900"
+  >
+    Guides
+  </Link>
+
+  <span className="text-slate-300">•</span>
+
+  <Link
+    href="/about"
+    className="text-slate-600 underline underline-offset-4 hover:text-slate-900"
+  >
+    About
+  </Link>
+
+  <span className="text-slate-300">•</span>
+
+  <Link
+    href="/get-in-touch"
+    className="text-violet-600 underline underline-offset-4 hover:text-violet-800"
+  >
+    Get in Touch
+  </Link>
+</div>
           </CardContent>
         </Card>
       </div>
