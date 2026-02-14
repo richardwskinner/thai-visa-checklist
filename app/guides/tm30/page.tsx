@@ -36,7 +36,9 @@ export default function TM30Page() {
 
             <div className="mt-6 rounded-2xl bg-teal-50 border border-teal-200 p-6">
               <p className="text-lg font-semibold text-teal-900">
-                The TM.30 is a notification that tells Thai Immigration where a foreigner is staying. It is your landlord&apos;s responsibility to file it - but if they don&apos;t, you are the one who will face problems at immigration.
+                The TM.30 is a notification that tells Thai Immigration where a foreigner is staying.
+                It is your landlord&apos;s responsibility to file it - but if they don&apos;t, you are
+                the one who will face problems at immigration.
               </p>
             </div>
 
@@ -44,27 +46,50 @@ export default function TM30Page() {
               <div>
                 <h2 className="text-xl font-extrabold text-slate-900">What is TM.30</h2>
                 <p className="mt-2 text-slate-700">
-                  TM.30 stands for &quot;Notification from House-Master, Owner or the Possessor of the Residence where Alien has Stayed.&quot; Under the Immigration Act of 1979, any property owner, landlord, or hotel hosting a foreigner must notify immigration of that foreigner&apos;s stay within 24 hours of arrival. It is not a visa and does not affect how long you can stay. It simply tells the government where you live.
-                </p>
-                <p className="mt-2 text-slate-700">
+                  TM.30 stands for &quot;Notification from House-Master, Owner or the Possessor of the
+                  Residence where Alien has Stayed.&quot; Under the Immigration Act of 1979, any
+                  property owner, landlord, or hotel hosting a foreigner must notify immigration of that
+                  foreigner&apos;s stay within 24 hours of arrival. It is not a visa and does not affect
+                  how long you can stay. It simply tells the government where you live.
                 </p>
               </div>
 
+              {/* ✅ Bullet version */}
               <div>
                 <h2 className="text-xl font-extrabold text-slate-900">Who is responsible</h2>
-                <p className="mt-2 text-slate-700">
-                  Legally, the property owner or landlord is responsible for filing the TM.30 - not the foreigner. In practice, hotels and serviced apartments do this automatically. For private rentals, condos, and houses, you may need to remind your landlord or help them file it. Some landlords will sign an authorization letter allowing the foreigner or an agent to file on their behalf.
-                </p>
-                <p className="mt-2 text-slate-700">
-                </p>
+
+                <ul className="mt-4 space-y-3">
+                  <li className="flex items-start gap-3 text-slate-700">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
+                    <span>Legally, the landlord or property owner must file the TM.30.</span>
+                  </li>
+
+                  <li className="flex items-start gap-3 text-slate-700">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
+                    <span>Hotels and serviced apartments file this automatically.</span>
+                  </li>
+
+                  <li className="flex items-start gap-3 text-slate-700">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
+                    <span>For private rentals, you may need to remind your landlord or assist them.</span>
+                  </li>
+
+                  <li className="flex items-start gap-3 text-slate-700">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
+                    <span>
+                      Some landlords sign an authorisation letter allowing the foreigner or an agent to
+                      file on their behalf.
+                    </span>
+                  </li>
+                </ul>
               </div>
 
               <div>
                 <h2 className="text-xl font-extrabold text-slate-900">When must it be filed</h2>
                 <div className="mt-3 grid gap-2">
                   {[
-                    "When a foreigner first moves into a property — within 24 hours",
-                    "When a foreigner returns to Thailand from abroad — within 24 hours",
+                    "When a foreigner first moves into a property - within 24 hours",
+                    "When a foreigner returns to Thailand from abroad - within 24 hours",
                     "When a foreigner moves to a new address",
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-3 text-slate-700">
@@ -74,7 +99,8 @@ export default function TM30Page() {
                   ))}
                 </div>
                 <p className="mt-3 text-slate-700">
-                  Even if you return to the same address after travelling abroad, a new TM.30 may be required depending on your local immigration office.
+                  Even if you return to the same address after travelling abroad, a new TM.30 may be
+                  required depending on your local immigration office.
                 </p>
               </div>
 
@@ -101,7 +127,8 @@ export default function TM30Page() {
                   <div className="rounded-2xl border border-slate-200 p-5">
                     <h3 className="font-bold text-slate-900">Online</h3>
                     <p className="mt-1 text-slate-700">
-                      The landlord can register on the official TM.30 website and file notifications digitally. This is the fastest method and provides a downloadable receipt.
+                      The landlord can register on the official TM.30 website and file notifications
+                      digitally. This is the fastest method and provides a downloadable receipt.
                     </p>
                     <a
                       href="https://tm30.immigration.go.th"
@@ -116,41 +143,90 @@ export default function TM30Page() {
                   <div className="rounded-2xl border border-slate-200 p-5">
                     <h3 className="font-bold text-slate-900">In person</h3>
                     <p className="mt-1 text-slate-700">
-                      The landlord (or authorized person) visits the local immigration office with the documents. After filing, they receive a stamped receipt - the &quot;Receipt of Notification&quot; - which the foreigner should keep.
+                      The landlord (or authorized person) visits the local immigration office with the
+                      documents. After filing, they receive a stamped receipt - the &quot;Receipt of
+                      Notification&quot; - which the foreigner should keep.
                     </p>
                   </div>
 
                   <div className="rounded-2xl border border-slate-200 p-5">
                     <h3 className="font-bold text-slate-900">Via the Section 38 app</h3>
                     <p className="mt-1 text-slate-700">
-                      Thai Immigration has a mobile application that landlords can use to submit TM.30 notifications and download receipts digitally.
+                      Thai Immigration has a mobile application that landlords can use to submit TM.30
+                      notifications and download receipts digitally.
                     </p>
                   </div>
                 </div>
               </div>
 
+              {/* ✅ Bullet version */}
               <div>
                 <h2 className="text-xl font-extrabold text-slate-900">Why it matters to you</h2>
-                <p className="mt-2 text-slate-700">
-                  Even though the landlord is responsible for filing, the TM.30 receipt is required when you visit immigration for visa extensions, 90-day reporting, or re-entry permits. Without it, your application may be delayed or rejected. Some hospitals also ask for it when processing insurance claims.
-                </p>
+
+                <ul className="mt-4 space-y-3">
+                  <li className="flex items-start gap-3 text-slate-700">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
+                    <span>The TM.30 receipt is required for visa extensions.</span>
+                  </li>
+
+                  <li className="flex items-start gap-3 text-slate-700">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
+                    <span>It is often required for 90-day reporting and re-entry permits.</span>
+                  </li>
+
+                  <li className="flex items-start gap-3 text-slate-700">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
+                    <span>Without it, your immigration application may be delayed or rejected.</span>
+                  </li>
+
+                  <li className="flex items-start gap-3 text-slate-700">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
+                    <span>Some hospitals request it when processing insurance claims.</span>
+                  </li>
+                </ul>
               </div>
 
+              {/* ✅ Bullet version */}
               <div>
                 <h2 className="text-xl font-extrabold text-slate-900">What happens if it is not filed</h2>
-                <p className="mt-2 text-slate-700">
-                  Landlords who fail to file face a fine of up to 10,000 THB for the first offence. For foreigners, not having a TM.30 receipt can cause problems when trying to extend your visa, do 90-day reporting, or access other government services. Enforcement varies by immigration office - some are strict, others are more relaxed.
-                </p>
+
+                <ul className="mt-4 space-y-3">
+                  <li className="flex items-start gap-3 text-slate-700">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
+                    <span>Landlords may face fines of up to 10,000 THB for the first offence.</span>
+                  </li>
+
+                  <li className="flex items-start gap-3 text-slate-700">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
+                    <span>Foreigners may face problems extending visas or completing 90-day reporting.</span>
+                  </li>
+
+                  <li className="flex items-start gap-3 text-slate-700">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
+                    <span>Enforcement varies by immigration office.</span>
+                  </li>
+                </ul>
               </div>
             </div>
 
             <div className="mt-10 rounded-lg bg-amber-50 border-l-4 border-amber-500 p-5">
               <div className="font-bold text-amber-900">Good to know</div>
               <div className="mt-2 text-sm text-amber-900 space-y-1">
-                <p>TM.30 records where you live, while 90-day reporting confirms you are still at that address.</p>
-                <p>Hotels and serviced apartments file TM.30 automatically - you don't need to do anything.</p>
-                <p>Keep a copy of your Receipt of Notification safe - you will need it at immigration.</p>
-                <p>If you lose your receipt, you may need a police report before immigration will issue a replacement.</p>
+                <p>
+                  TM.30 records where you live, while 90-day reporting confirms you are still at that
+                  address.
+                </p>
+                <p>
+                  Hotels and serviced apartments file TM.30 automatically - you don&apos;t need to do
+                  anything.
+                </p>
+                <p>
+                  Keep a copy of your Receipt of Notification safe - you will need it at immigration.
+                </p>
+                <p>
+                  If you lose your receipt, you may need a police report before immigration will issue a
+                  replacement.
+                </p>
               </div>
             </div>
           </CardContent>
@@ -158,7 +234,8 @@ export default function TM30Page() {
 
         <div className="py-8 text-xs text-slate-500">
           <Separator className="mb-4" />
-          Information based on official Thai Immigration Bureau guidelines. Always check with your local immigration office for the latest requirements.
+          Information based on official Thai Immigration Bureau guidelines. Always check with your local
+          immigration office for the latest requirements.
         </div>
       </div>
     </div>
