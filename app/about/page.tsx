@@ -90,17 +90,6 @@ export default function AboutPage() {
     local immigration office before submitting an application.
   </p>
 </div>
-
-          <p className="mt-6 text-slate-700 leading-relaxed">
-            If you’d prefer to have a professional to handle the process - {" "}
-            <a
-              href="/contact"
-              className="font-semibold text-blue-700 underline underline-offset-2 hover:text-blue-900"
-            >
-              Get in touch here.
-            </a>
-          </p>
-
           <p className="mt-10 text-sm text-slate-500">
             Until then — bring extra copies.
           </p>
