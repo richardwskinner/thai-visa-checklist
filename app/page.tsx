@@ -107,7 +107,7 @@ export default function HomePage() {
 
   <Link
     href="/get-in-touch"
-    className="text-violet-600 underline underline-offset-4 hover:text-violet-800"
+    className="text-slate-600 underline underline-offset-4 hover:text-slate-900"
   >
     Get in Touch
   </Link>

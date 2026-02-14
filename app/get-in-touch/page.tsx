@@ -35,7 +35,7 @@ export default function ContactPage() {
             Get in Touch
           </h1>
           <p className="mt-2 text-sm text-slate-600">
-            Have an idea or need help? I’d love to hear from you.
+            Have an idea or need help? we’d love to hear from you.
           </p>
         </div>
 
