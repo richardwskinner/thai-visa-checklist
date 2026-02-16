@@ -26,40 +26,45 @@ export const metadata: Metadata = {
 function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur">
-      <div className="mx-auto w-full max-w-5xl px-5">
-        {/* 3-col grid keeps title truly centered while nav sits right */}
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center py-2">
-          <div />
+      <div className="mx-auto w-full max-w-5xl px-4 sm:px-5">
+        <div className="py-3 sm:py-2">
+          {/* Mobile: stacked | Desktop: 3-col */}
+          <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-0">
+            {/* Left spacer (desktop only) */}
+            <div className="hidden sm:block" />
 
-          <Link href="/" className="text-center">
-            <div className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-              Thai Visa Checklist
-            </div>
-            <div className="mt-1 text-sm font-medium text-slate-500">
-              Free checklists for Thai visa applications
-            </div>
-          </Link>
+            {/* Title */}
+            <Link href="/" className="text-center">
+              <div className="text-2xl font-black tracking-tight text-slate-900 sm:text-4xl">
+                Thai Visa Checklist
+              </div>
+              <div className="mt-1 text-sm font-medium text-slate-500">
+                Free checklists for Thai visa applications
+              </div>
+            </Link>
 
-          <nav className="flex items-center justify-end gap-3 sm:gap-6">
-            <Link
-              href="/guides"
-              className="text-sm font-semibold text-slate-600 hover:text-slate-900"
-            >
-              Guides
-            </Link>
-            <Link
-              href="/about"
-              className="text-sm font-semibold text-slate-600 hover:text-slate-900"
-            >
-              About
-            </Link>
-            <Link
-              href="/contact"
-              className="text-sm font-semibold text-slate-600 hover:text-slate-900"
-            >
-              Contact
-            </Link>
-          </nav>
+            {/* Nav (centered on mobile, right on desktop) */}
+            <nav className="flex items-center justify-center gap-4 sm:justify-end sm:gap-6">
+              <Link
+                href="/guides"
+                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+              >
+                Guides
+              </Link>
+              <Link
+                href="/about"
+                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+              >
+                About
+              </Link>
+              <Link
+                href="/contact"
+                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+              >
+                Contact
+              </Link>
+            </nav>
+          </div>
         </div>
       </div>
     </header>

@@ -325,19 +325,21 @@ export default function RetirementVisaPage() {
 
       {/* Print styles */}
       <style>{`
-        @media print {
-          @page { margin: 0.5in; }
+  @media print {
+    @page { margin: 0.5in; }
 
-          html, body { height: auto !important; }
-          body {
-            margin: 0 !important;
-            print-color-adjust: exact;
-            -webkit-print-color-adjust: exact;
-          }
+    html, body { height: auto !important; }
+    body {
+      margin: 0 !important;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
 
-          * { box-shadow: none !important; }
-        }
-      `}</style>
+    * { box-shadow: none !important; }
+
+    header { display: none !important; }
+  }
+`}</style>
     </div>
   );
 }
