@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, ExternalLink, CalendarClock } from "lucide-react";
 import type { Metadata } from "next";
+import NinetyDayCalculator from "./NinetyDayCalculator";
 
 export const metadata: Metadata = {
   title: "90-Day Reporting in Thailand — What It Is and How to Do It",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     "Everything you need to know about 90-day reporting in Thailand. Who needs to report, when to do it, how to report online, by mail, or in person, and what happens if you miss it.",
 };
 
-export default function NinetyDayReportingPage() {
+export default function NinetyDayReportingpage() {
   return (
     <div className="min-h-screen bg-[#eef3fb]">
       <div className="mx-auto w-full max-w-5xl px-5">
@@ -53,6 +54,7 @@ export default function NinetyDayReportingPage() {
                 <p className="mt-2 text-slate-700">
                   You can report from 15 days before your due date up to 7 days after it. This gives you a roughly 3-week window. Your due date is exactly 90 days from your latest entry into Thailand or from your last report - whichever is more recent. If you leave Thailand and return, the 90-day count resets from your new entry date.
                 </p>
+                <NinetyDayCalculator />
               </div>
 
               <div>
