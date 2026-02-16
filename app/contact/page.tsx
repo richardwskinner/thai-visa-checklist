@@ -31,28 +31,13 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-[#eef3fb]">
 
-      {/* Top Header Bar */}
-      <div className="mx-auto max-w-6xl px-6 pt-8 flex items-center justify-between text-slate-600">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-sm font-medium hover:text-slate-900"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to home
-        </Link>
-
-        <div className="text-sm font-semibold text-slate-900">
-          Thai Visa Checklist
-        </div>
-      </div>
-
       {/* Center Content */}
       <div className="flex justify-center px-6 py-12">
         <div className="w-full max-w-lg">
 
           <div className="text-center mb-10">
             <h1 className="text-4xl font-extrabold text-slate-900">
-              Get in Touch
+              Contact
             </h1>
             <p className="mt-3 text-slate-600">
               Have an idea or need help? We’d love to hear from you.

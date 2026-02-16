@@ -60,20 +60,18 @@ export default function ReEntryPermitPage() {
               <div>
                 <h2 className="text-xl font-extrabold text-slate-900">Two types</h2>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-slate-200 p-5">
+                  <div className="rounded-2xl border border-orange-200 bg-orange-50/30 p-5">
                     <h3 className="font-bold text-slate-900">Single re-entry</h3>
                     <p className="mt-1 text-slate-700">One trip out and back. Valid until your visa expires.</p>
                     <p className="mt-2 text-2xl font-extrabold text-slate-900">1,000 THB</p>
                   </div>
-                  <div className="rounded-2xl border border-slate-200 p-5">
+                  <div className="rounded-2xl border border-orange-200 bg-orange-50/30 p-5">
                     <h3 className="font-bold text-slate-900">Multiple re-entry</h3>
                     <p className="mt-1 text-slate-700">Unlimited trips out and back. Valid until your visa expires.</p>
                     <p className="mt-2 text-2xl font-extrabold text-slate-900">3,800 THB</p>
                   </div>
                 </div>
-                <p className="mt-3 text-sm text-slate-500">
-                  If you plan to leave Thailand more than 3 times during your visa period, the multiple re-entry permit is better value.
-                </p>
+                
               </div>
 
               <div>

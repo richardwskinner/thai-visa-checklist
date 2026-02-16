@@ -12,23 +12,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#eef3fb]">
       <div className="mx-auto w-full max-w-4xl px-5 py-10">
-        {/* Top nav */}
-        <div className="mb-8 flex items-center justify-between">
-          <Link
-            href="/"
-            className="text-sm font-medium text-slate-600 hover:text-slate-900"
-          >
-            ← Back to home
-          </Link>
-
-          <Link
-            href="/"
-            className="text-sm font-semibold text-slate-900 hover:underline underline-offset-4"
-          >
-            Thai Visa Checklist
-          </Link>
-        </div>
-
+       
         {/* Content card */}
         <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 text-center">
@@ -48,16 +32,15 @@ export default function AboutPage() {
 
           <p className="mt-6 text-slate-700 leading-relaxed">
             Thai Visa Checklist started one morning while standing in the immigration
-            office, holding a numbered ticket and wondering whether one missing
+            office, holding a numbered ticket and wondering whether a missing
             photocopy was about to ruin my day.
           </p>
 
           <p className="mt-4 text-slate-700 leading-relaxed">
-            After going through the process many times and always forgetting something, I created my
-            own checklist. Although much of the information is available online,
-            it’s scattered, inconsistent, and often outdated. I wanted one clear
-            document where everything I needed was centralised. Something I
-            could print, and tick off as I prepared. So this site was created to solve one simple problem:
+            After going through the process multiple times and always forgetting something, I created my
+            own checklist. Although much of the information is available somewhere,
+            it’s scattered, inconsistent, and often outdated. I wanted a clear checklist. Something printable, 
+            that I could tick off as I prepared. This site was created to solve one simple problem:
           </p>
 
           <p className="mt-3 text-xl font-extrabold text-slate-900">
@@ -68,7 +51,7 @@ export default function AboutPage() {
             Each checklist is structured so you can print it out, put it in your
             document folder, and physically tick off each item as you prepare.
             No scrolling through blog posts at the counter. No guessing what you
-            forgot. Just a clean, practical list you can rely on.
+            forgot. Just a clean, free, practical list.
           </p>
 
           <p className="mt-4 text-slate-700 leading-relaxed">

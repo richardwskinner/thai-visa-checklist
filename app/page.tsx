@@ -12,17 +12,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#eef3fb]">
-      <div className="mx-auto w-full max-w-5xl px-5">
-        {/* Hero */}
-        <div className="pt-12 pb-2 text-center">
-          <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight text-slate-900">
-            Thai Visa Checklist
-          </h1>
-
-          <p className="mt-4 text-lg text-slate-600">
-            100% Free checklists for Thai visa applications
-          </p>
-        </div>
+      <div className="mx-auto w-full max-w-5xl px-3 pt-3">
 
         <Card className="mt-2 rounded-3xl border-0 bg-white shadow-sm">
           <CardContent className="p-8">
@@ -32,7 +22,7 @@ export default function HomePage() {
               </h2>
             </div>
 
-            <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2">
               {VISAS.map((v) =>
                 v.disabled ? (
                   <div
@@ -54,7 +44,7 @@ export default function HomePage() {
                   <Link
                     key={v.slug}
                     href={v.href}
-                    className={`group relative w-full rounded-2xl ${v.bg} px-7 py-7 text-left text-white shadow-md transition hover:shadow-lg hover:-translate-y-2`}
+                    className={`group relative w-full rounded-2xl ${v.bg} px-7 py-7 text-left text-white shadow-md transition hover:-translate-y-2 hover:shadow-lg`}
                   >
                     <div className="text-3xl font-extrabold tracking-tight">
                       <span className="mr-3">{v.emoji}</span>
@@ -69,7 +59,7 @@ export default function HomePage() {
 
               <Link
                 href="/tdac"
-                className="group relative sm:col-span-2 rounded-2xl bg-sky-600 px-7 py-10 text-center text-white shadow-md transition hover:shadow-lg hover:-translate-y-2"
+                className="group relative rounded-2xl bg-sky-600 px-7 py-10 text-center text-white shadow-md transition hover:-translate-y-2 hover:shadow-lg sm:col-span-2"
               >
                 <div className="text-3xl font-extrabold tracking-tight">
                   <span className="mr-3">✈️</span>
@@ -84,34 +74,6 @@ export default function HomePage() {
             <div className="mt-7 text-center text-sm text-slate-500">
               Requirements can vary by immigration office — always confirm locally.
             </div>
-
-            {/* Navigation Links */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm font-medium">
-  <Link
-    href="/guides"
-    className="text-slate-600 underline underline-offset-4 hover:text-slate-900"
-  >
-    Guides
-  </Link>
-
-  <span className="text-slate-300">•</span>
-
-  <Link
-    href="/about"
-    className="text-slate-600 underline underline-offset-4 hover:text-slate-900"
-  >
-    About
-  </Link>
-
-  <span className="text-slate-300">•</span>
-
-  <Link
-    href="/get-in-touch"
-    className="text-slate-600 underline underline-offset-4 hover:text-slate-900"
-  >
-    Get in Touch
-  </Link>
-</div>
           </CardContent>
         </Card>
       </div>

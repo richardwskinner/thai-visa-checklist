@@ -215,7 +215,6 @@ export default function NinetyDayCalculator() {
       </div>
 
       <div className="mt-3 text-xs text-slate-600">
-        Calendar tip: set a reminder for <span className="font-semibold">15 days before</span> the due date.
       </div>
     </div>
   );

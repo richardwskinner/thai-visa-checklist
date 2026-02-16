@@ -90,14 +90,14 @@ export default function NinetyDayReportingpage() {
                 <h2 className="text-xl font-extrabold text-slate-900">How to report</h2>
 
                 <div className="mt-4 space-y-4">
-                  <div className="rounded-2xl border border-slate-200 p-5">
+                  <div className="rounded-2xl border border-violet-200 bg-violet-50/30 p-5">
                     <h3 className="font-bold text-slate-900">In person</h3>
                     <p className="mt-1 text-slate-700">
                       Visit your local immigration office with your documents. This is the most reliable method. Processing is usually same-day, but arrive early to beat the queues.
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border border-slate-200 p-5">
+                  <div className="rounded-2xl border border-violet-200 bg-violet-50/30 p-5">
                     <h3 className="font-bold text-slate-900">Online</h3>
                     <p className="mt-1 text-slate-700">
                       Use the official immigration website. You must have completed at least one in-person report before you can use the online system. The system can be unreliable — submit a few days early in case it fails.
@@ -112,14 +112,14 @@ export default function NinetyDayReportingpage() {
                     </a>
                   </div>
 
-                  <div className="rounded-2xl border border-slate-200 p-5">
+                  <div className="rounded-2xl border border-violet-200 bg-violet-50/30 p-5">
                     <h3 className="font-bold text-slate-900">By mail</h3>
                     <p className="mt-1 text-slate-700">
                       Send the TM.47 form and passport copies by registered mail to your local immigration office at least 15 days before your due date. Include a stamped self-addressed envelope so they can return your receipt.
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border border-slate-200 p-5">
+                  <div className="rounded-2xl border border-violet-200 bg-violet-50/30 p-5">
                     <h3 className="font-bold text-slate-900">Through an agent</h3>
                     <p className="mt-1 text-slate-700">
                       A licensed visa agent can submit on your behalf. This is the most convenient option but comes with a service fee.

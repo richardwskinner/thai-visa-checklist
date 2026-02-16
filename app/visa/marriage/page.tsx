@@ -338,8 +338,9 @@ export default function MarriageVisaPage() {
             -webkit-print-color-adjust: exact;
           }
 
-          /* Defensive: remove shadows/extra rendering that can push content to page 2 */
           * { box-shadow: none !important; }
+
+          header { display: none !important; }
         }
       `}</style>
     </div>
