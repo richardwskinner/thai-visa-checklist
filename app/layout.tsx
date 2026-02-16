@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
@@ -33,11 +34,15 @@ function Header() {
             {/* Left spacer (desktop only) */}
             <div className="hidden sm:block" />
 
-            {/* Title */}
-            <Link href="/" className="text-center">
-              <div className="text-2xl font-black tracking-tight text-slate-900 sm:text-4xl">
-                Thai Visa Checklist
-              </div>
+            {/* Logo + Subtitle */}
+            <Link href="/" className="flex flex-col items-center">
+              <Image
+                src="/logo-full.svg"
+                alt="Thai Visa Checklist"
+                width={295}
+                height={40}
+                priority
+              />
               <div className="mt-1 text-sm font-medium text-slate-500">
                 Free checklists for Thai visa applications
               </div>
