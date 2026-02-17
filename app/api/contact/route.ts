@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -25,31 +26,31 @@ export async function POST(request: Request) {
 
     // Validate required fields
     if (!data.name || !data.email || !data.message) {
-      return new Response(
-        JSON.stringify({ error: "Missing required fields" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
       );
     }
 
     // Validate field types and lengths
     if (typeof data.name !== "string" || data.name.trim().length === 0 || data.name.length > 100) {
-      return new Response(
-        JSON.stringify({ error: "Invalid name" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+      return NextResponse.json(
+        { error: "Invalid name" },
+        { status: 400 }
       );
     }
 
     if (typeof data.email !== "string" || !isValidEmail(data.email) || data.email.length > 255) {
-      return new Response(
-        JSON.stringify({ error: "Invalid email address" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+      return NextResponse.json(
+        { error: "Invalid email address" },
+        { status: 400 }
       );
     }
 
     if (typeof data.message !== "string" || data.message.trim().length === 0 || data.message.length > 5000) {
-      return new Response(
-        JSON.stringify({ error: "Invalid message" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+      return NextResponse.json(
+        { error: "Invalid message" },
+        { status: 400 }
       );
     }
 
@@ -71,15 +72,12 @@ export async function POST(request: Request) {
       `,
     });
 
-    return new Response(
-      JSON.stringify({ success: true }),
-      { status: 200, headers: { "Content-Type": "application/json" } }
-    );
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Contact form error:", error);
-    return new Response(
-      JSON.stringify({ error: "Internal server error" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
     );
   }
 }
