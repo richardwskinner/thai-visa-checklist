@@ -5,42 +5,28 @@ import { useState } from "react";
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    setError(null);
-    setSent(false);
 
     const formData = new FormData(e.currentTarget);
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const message = formData.get("message") as string;
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, message }),
-      });
+    await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.get("name"),
+        email: formData.get("email"),
+        message: formData.get("message"),
+      }),
+    });
 
-      if (!response.ok) {
-        const data = await response.json().catch(() => ({}));
-        setError(data.error || "Failed to send message. Please try again.");
-        return;
-      }
-
-      setSent(true);
-      e.currentTarget.reset();
-    } catch (err) {
-      console.error("Contact form error:", err);
-      setError("Failed to send message. Please check your connection and try again.");
-    } finally {
-      setLoading(false);
-    }
+    setLoading(false);
+    setSent(true);
+    e.currentTarget.reset();
   }
 
   return (
@@ -55,7 +41,7 @@ export default function ContactPage() {
               Contact
             </h1>
             <p className="mt-3 text-slate-600">
-              Have an idea or need help? We’d love to hear from you.
+              Have an idea or need help? We'd love to hear from you.
             </p>
           </div>
 
@@ -112,12 +98,6 @@ export default function ContactPage() {
             {sent && (
               <div className="rounded-xl bg-green-50 border border-green-200 p-4 text-green-700 text-sm text-center">
                 Message sent successfully — I'll reply soon.
-              </div>
-            )}
-
-            {error && (
-              <div className="rounded-xl bg-red-50 border border-red-200 p-4 text-red-700 text-sm text-center">
-                {error}
               </div>
             )}
           </form>
