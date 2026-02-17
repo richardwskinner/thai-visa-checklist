@@ -38,6 +38,7 @@ export default function ContactPage() {
       setSent(true);
       e.currentTarget.reset();
     } catch (err) {
+      setSent(false);
       setError("Failed to send message. Please check your connection and try again.");
     } finally {
       setLoading(false);
