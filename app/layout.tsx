@@ -44,7 +44,7 @@ function Header() {
                 priority
               />
               <div className="mt-1 text-sm font-medium text-slate-500">
-                Free checklists for Thai visa applications
+                
               </div>
             </Link>
 
@@ -76,16 +76,63 @@ function Header() {
   );
 }
 
+function Footer() {
+  return (
+    <footer className="border-t border-slate-200">
+      <div className="mx-auto w-full max-w-5xl px-4 sm:px-5 py-5">
+        <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
+          <p className="text-base text-slate-400">
+            © {new Date().getFullYear()} Thai Visa Checklist
+          </p>
+          <div className="flex items-center gap-5">
+            <a
+              href="mailto:hello@thaivisachecklist.com"
+              className="text-base text-slate-400 hover:text-slate-600"
+            >
+              hello@thaivisachecklist.com
+            </a>
+            <a
+              href="https://instagram.com/thaivisachecklist"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-slate-600"
+              aria-label="Instagram"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
         <Header />
 
         {/* This controls the gap between top bar and page content */}
         <main className="pt-2">{children}</main>
+
+        <Footer />
 
         {/* Google Analytics */}
         <Script

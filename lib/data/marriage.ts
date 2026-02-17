@@ -27,12 +27,12 @@ export const marriageChecklist: VisaChecklist = {
     {
       title: "Personal Documents",
       items: [
-        { text: "Passport (Must be valid for at least 18 months)", required: true },
-        { text: "1x Passport Photo taken within 6 months(4x6 cm)", required: true },
+        { text: "Passport (Valid at least 18 months with 2+ blank pages)", required: true },
+        { text: "2x passport photos (4×6 cm)", required: true },
         { text: "TM.30 Receipt", required: true },
         { text: "90 Day Report Receipt", required: false },
         {
-          text: "Passport Photocopies: Photo Page, Previous Visa Stamp & Latest Entry Stamp",
+          text: "Photocopy: Photo Page, Visa Stamp & Latest Entry Stamp",
           required: true,
         },
       ],
@@ -42,22 +42,22 @@ export const marriageChecklist: VisaChecklist = {
       title: "Relationship & Accommodation",
       items: [
         { text: "Your spouse in person", required: true },
-        { text: "Copy of spouse's National ID", required: true },
-        { text: "Copy of spouse's Blue Book (Tabian Baan)", required: true },
+        { text: "Copy of spouse National ID", required: true },
+        { text: "Copy of spouse Blue Book (Tabian Baan)", required: true },
+        { text: "Renting a house or condo - Rental Contract, Copy of Landlords ID & House Book", required: true },
         {
-          text: "Thai Marriage Certificate Kor Ror 3 (original + copy)",
+          text: "Thai Marriage Certificate Kor Ror 3 - original + copy",
           required: true,
         },
         {
-          text: "Kor Ror 2 (updated same year) (original + copy)",
+          text: "Kor Ror 2 (updated same year) - original + copy",
           required: true,
         },
         {
-          text: "4 Family photos (2 inside home + 2 outside home)",
+          text: "4 Family photos (2 inside home + 2 outside home) on one page",
           required: true,
         },
-        { text: "Hand-drawn map (major roads nearby)", required: true },
-        { text: "House/Condo contract", required: true },
+        { text: "Hand-drawn map with major roads nearby", required: true },
         { text: "Children's birth certificate (if applicable)", required: false },
         { text: "Spouse name change document (if applicable)", required: false },
         {
@@ -86,7 +86,7 @@ export const marriageChecklist: VisaChecklist = {
         },
         {
           text:
-            "400,000 THB in bank (at least 3 months prior) OR 40,000 THB monthly salary (certified)",
+            "400,000thb in bank (at least 3 months prior) OR 40,000thb monthly salary with supporting documents",
           required: true,
         },
       ],
@@ -99,7 +99,8 @@ export const marriageChecklist: VisaChecklist = {
   ],
 
   tips: [
-    "Download TM.7 and STM forms and prepare in advance",
+    "Download all forms and prepare in advance",
+    "Normally only 1 Passport photo is required, however, sometimes 2 is requested",
     "Prepare two copies of your documents (not always required, but recommended)",
     "Sign the bottom corner of every copy",
   ],
