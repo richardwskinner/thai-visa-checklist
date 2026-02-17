@@ -72,7 +72,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-7 text-center text-sm text-slate-500">
-              Requirements can vary by immigration office — always confirm locally.
+              Requirements can vary by immigration office - always confirm locally.
             </div>
           </CardContent>
         </Card>

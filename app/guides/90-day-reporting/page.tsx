@@ -17,7 +17,7 @@ const TM47_PORTAL = "https://tm47.immigration.go.th";
 export default function NinetyDayReportingpage() {
   return (
     <div className="min-h-screen bg-[#eef3fb]">
-      <div className="mx-auto w-full max-w-5xl px-4 sm:px-5">
+      <div className="mx-auto w-full max-w-5xl px-4 sm:px-5 overflow-hidden">
         <div className="pt-6 sm:pt-8">
           <Link
             href="/guides"
@@ -28,7 +28,7 @@ export default function NinetyDayReportingpage() {
         </div>
 
         <Card className="mt-4 sm:mt-6 rounded-3xl border-0 bg-white shadow-sm">
-          <CardContent className="p-6 sm:p-10">
+          <CardContent className="p-4 sm:p-10">
             {/* Header (stack on mobile) */}
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-violet-100">

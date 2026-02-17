@@ -134,7 +134,7 @@ export default function NinetyDayCalculator() {
 
   return (
     <div className="mt-6 rounded-2xl border border-violet-200 bg-violet-50 p-5 sm:p-6">
-      {/* Stack header on mobile + prevent overflow */}
+      {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <div className="min-w-0">
           <h3 className="text-lg font-extrabold text-slate-900">Due Date Calculator</h3>
@@ -150,18 +150,21 @@ export default function NinetyDayCalculator() {
       </div>
 
       <div className="mt-5 space-y-4">
+        {/* ✅ iOS date overflow fix */}
         <div className="min-w-0">
           <label className="block text-sm font-semibold text-slate-700">
             Date you last entered Thailand (or last report)
           </label>
 
-          {/* iOS date inputs can overflow unless you force max/min widths */}
-          <input
-            type="date"
-            value={baseDate}
-            onChange={(e) => setBaseDate(e.target.value)}
-            className="mt-2 w-full min-w-0 max-w-full rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
-          />
+          <div className="mt-2 w-full min-w-0 overflow-hidden rounded-xl border border-slate-300 bg-white">
+            <input
+              type="date"
+              value={baseDate}
+              onChange={(e) => setBaseDate(e.target.value)}
+              className="block w-full min-w-0 bg-transparent px-4 py-2 text-sm text-slate-900 outline-none
+                         appearance-none [-webkit-appearance:none] focus:ring-2 focus:ring-violet-400"
+            />
+          </div>
         </div>
 
         <div className="rounded-xl border border-slate-200 bg-white p-4">
@@ -179,7 +182,7 @@ export default function NinetyDayCalculator() {
         </div>
       </div>
 
-      {/* Buttons: full width on mobile */}
+      {/* Buttons */}
       <div className="mt-5 grid gap-3 sm:flex sm:flex-wrap">
         <a
           href={result?.googleUrl ?? "#"}
