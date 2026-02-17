@@ -27,18 +27,16 @@ export default function ContactPage() {
         body: JSON.stringify({ name, email, message }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
         setError(data.error || "Failed to send message. Please try again.");
-        setLoading(false);
         return;
       }
 
       setSent(true);
       e.currentTarget.reset();
     } catch (err) {
-      setSent(false);
+      console.error("Contact form error:", err);
       setError("Failed to send message. Please check your connection and try again.");
     } finally {
       setLoading(false);
