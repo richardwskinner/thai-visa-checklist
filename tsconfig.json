@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "app/guides/90-day-reporting/NinetyDayDueDateTool"  ],
   "exclude": ["node_modules"]
 }

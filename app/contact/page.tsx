@@ -1,31 +1,47 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  async function handleSubmit(e: any) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
+    setError(null);
+    setSent(false);
 
-    const form = e.target;
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
 
-    await fetch("/api/contact", {
-      method: "POST",
-      body: JSON.stringify({
-        name: form.name.value,
-        email: form.email.value,
-        message: form.message.value,
-      }),
-    });
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
 
-    setLoading(false);
-    setSent(true);
-    form.reset();
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Failed to send message. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      setSent(true);
+      e.currentTarget.reset();
+    } catch (err) {
+      setError("Failed to send message. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -54,6 +70,8 @@ export default function ContactPage() {
               </label>
               <input
                 name="name"
+                type="text"
+                autoComplete="name"
                 required
                 className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-400"
               />
@@ -66,6 +84,7 @@ export default function ContactPage() {
               <input
                 name="email"
                 type="email"
+                autoComplete="email"
                 required
                 className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-400"
               />
@@ -93,7 +112,13 @@ export default function ContactPage() {
 
             {sent && (
               <div className="rounded-xl bg-green-50 border border-green-200 p-4 text-green-700 text-sm text-center">
-                Message sent successfully — I’ll reply soon.
+                Message sent successfully — I'll reply soon.
+              </div>
+            )}
+
+            {error && (
+              <div className="rounded-xl bg-red-50 border border-red-200 p-4 text-red-700 text-sm text-center">
+                {error}
               </div>
             )}
           </form>
