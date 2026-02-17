@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     const sanitizedMessage = sanitizeHTML(data.message.trim());
 
     // Send email
-    const result = await resend.emails.send({
+    await resend.emails.send({
       from: "onboarding@resend.dev",
       to: "richardskinnermail@gmail.com",
       subject: "New message from Thai Visa Checklist",
@@ -70,14 +70,6 @@ export async function POST(request: Request) {
         <p style="white-space: pre-wrap;">${sanitizedMessage}</p>
       `,
     });
-
-    if (result.error) {
-      console.error("Resend error:", result.error);
-      return new Response(
-        JSON.stringify({ error: "Failed to send email" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
-      );
-    }
 
     return new Response(
       JSON.stringify({ success: true }),
