@@ -20,7 +20,7 @@ export interface VisaChecklist {
 
 export const marriageChecklist: VisaChecklist = {
   title: 'Non-Immigrant Type "O" (Marriage)',
-  subtitle: "Annual extention of stay based on Marriage to Thai National",
+  subtitle: "Annual extension of stay based on Marriage to Thai National",
   lastUpdated: "11 Feb 2026",
 
   sections: [

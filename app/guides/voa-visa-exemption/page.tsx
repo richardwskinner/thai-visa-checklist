@@ -10,14 +10,10 @@ export const metadata: Metadata = {
     "Confused between Thailand visa exemption and visa on arrival? This guide explains the differences, who qualifies, typical stay length, fees, and what to check before you fly.",
 };
 
+const THAI_E_VISA = "https://www.thaievisa.go.th/";
+
 const MFA_VOA_PDF =
   "https://image.mfa.go.th/mfa/0/zE6021nSnu/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3/VOA.pdf";
-
-const EVOA_VFS_INFO =
-  "https://thailandevoa.vfsevisa.com/thailand/online/home/information";
-
-const EVOA_VFS_FEES =
-  "https://thailandevoa.vfsevisa.com/thailand/online/home/visa-fees";
 
 export default function ThailandEntryOptionsPage() {
   return (
@@ -45,18 +41,34 @@ export default function ThailandEntryOptionsPage() {
 
             <div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50 p-6">
               <p className="text-lg font-semibold text-blue-900">
-                Most travellers should use <span className="underline underline-offset-4">visa exemption</span> if eligible.
-                Visa on Arrival is for a smaller set of nationalities and usually involves a fee.
+                Most travellers should use{" "}
+                <span className="underline underline-offset-4">visa exemption</span>{" "}
+                if eligible. Visa on Arrival is for a smaller set of nationalities and usually
+                involves a fee.
               </p>
               <p className="mt-2 text-sm text-blue-900/80">
                 Always confirm your passport’s latest eligibility and stay length before travel.
               </p>
+
+              <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
+                <a
+                  href={THAI_E_VISA}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+                >
+                  Check eligibility on the official Thai e-Visa site{" "}
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+                
+              </div>
             </div>
 
             <div className="mt-10 space-y-8">
-
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">Quick decision (30 seconds)</h2>
+                <h2 className="text-xl font-extrabold text-slate-900">
+                  Quick decision (30 seconds)
+                </h2>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   <div className="rounded-2xl border border-teal-200 bg-teal-50/30 p-5">
                     <h3 className="font-bold text-slate-900">Choose Visa Exemption if…</h3>
@@ -101,14 +113,25 @@ export default function ThailandEntryOptionsPage() {
                   </div>
                 </div>
 
-                <div className="mt-4">
+                <div className="mt-4 space-y-2">
+                  <a
+                    href={THAI_E_VISA}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-blue-700 underline underline-offset-2"
+                  >
+                    Official Thai e-Visa portal (check eligibility){" "}
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+
                   <a
                     href={MFA_VOA_PDF}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm font-medium text-blue-700 underline underline-offset-2"
                   >
-                    Official MFA Visa on Arrival reference (PDF) <ExternalLink className="h-4 w-4" />
+                    Official MFA Visa on Arrival reference (PDF){" "}
+                    <ExternalLink className="h-4 w-4" />
                   </a>
                 </div>
               </section>
@@ -120,11 +143,23 @@ export default function ThailandEntryOptionsPage() {
                   <li>Onward ticket</li>
                   <li>Accommodation details</li>
                   <li>Proof of funds (best to be prepared)</li>
+                  <li>
+                    Complete the{" "}
+                    <Link
+                      href="/tdac"
+                      className="font-semibold text-blue-700 underline underline-offset-2"
+                    >
+                      Thailand Digital Arrival Card (TDAC)
+                    </Link>{" "}
+                    before you fly
+                  </li>
                 </ul>
               </section>
 
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">Visa on Arrival (VOA): extra items</h2>
+                <h2 className="text-xl font-extrabold text-slate-900">
+                  Visa on Arrival (VOA): extra items
+                </h2>
                 <ul className="mt-3 list-disc space-y-2 pl-6 text-slate-700">
                   <li>Completed VOA form</li>
                   <li>Photo (4×6 cm commonly requested)</li>
@@ -133,30 +168,19 @@ export default function ThailandEntryOptionsPage() {
               </section>
 
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">Optional: eVOA</h2>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-slate-200 p-5">
-                    <a
-                      href={EVOA_VFS_INFO}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-medium text-blue-700 underline underline-offset-2"
-                    >
-                      eVOA info page <ExternalLink className="h-4 w-4" />
-                    </a>
-                  </div>
-
-                  <div className="rounded-2xl border border-slate-200 p-5">
-                    <a
-                      href={EVOA_VFS_FEES}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-medium text-blue-700 underline underline-offset-2"
-                    >
-                      eVOA fees page <ExternalLink className="h-4 w-4" />
-                    </a>
-                  </div>
-                </div>
+                <h2 className="text-xl font-extrabold text-slate-900">
+                  Need more time?
+                </h2>
+                <p className="mt-2 text-slate-700">
+                  If you want to stay longer, you can apply for a{" "}
+                  <Link
+                    href="/guides/tourist-extension"
+                    className="font-semibold text-blue-700 underline underline-offset-2"
+                  >
+                    30-day tourist visa extension
+                  </Link>{" "}
+                  at your local immigration office before your permitted stay expires.
+                </p>
               </section>
 
               <section className="rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5">
@@ -167,7 +191,6 @@ export default function ThailandEntryOptionsPage() {
                   <p>• No photo / no cash (VOA)</p>
                 </div>
               </section>
-
             </div>
           </CardContent>
         </Card>

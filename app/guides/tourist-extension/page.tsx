@@ -57,7 +57,15 @@ export default function TouristExtensionPage() {
                 </h2>
 
                 <ul className="mt-3 list-disc space-y-2 pl-6 text-slate-700">
-                  <li>Visa Exemption entries</li>
+                  <li>
+                    <Link
+                      href="/guides/voa-visa-exemption"
+                      className="font-semibold text-emerald-700 underline underline-offset-2"
+                    >
+                      Visa Exemption
+                    </Link>{" "}
+                    entries
+                  </li>
                   <li>Single-entry Tourist Visa (TR)</li>
                   <li>Some Visa on Arrival cases (confirm locally)</li>
                 </ul>
@@ -107,7 +115,15 @@ export default function TouristExtensionPage() {
                   </li>
                   <li>1x passport photo (4x6 cm)</li>
                   <li>Photocopies of passport photo page + entry stamp</li>
-                  <li>TM.30 receipt (if applicable)</li>
+                  <li>
+                    <Link
+                      href="/guides/tm30"
+                      className="font-semibold text-emerald-700 underline underline-offset-2"
+                    >
+                      TM.30
+                    </Link>{" "}
+                    receipt (if applicable)
+                  </li>
                 </ul>
               </section>
 
@@ -121,7 +137,14 @@ export default function TouristExtensionPage() {
                   Major offices include Bangkok (Chaeng Wattana), Chiang Mai, Phuket, Pattaya, and others.
                 </p>
                 <p className="mt-3 text-slate-700">
-                  It’s best to apply 5–7 days before your expiry date.
+                  It&apos;s best to apply 5–7 days before your expiry date. If you haven&apos;t already, make sure you&apos;ve completed the{" "}
+                  <Link
+                    href="/tdac"
+                    className="font-semibold text-emerald-700 underline underline-offset-2"
+                  >
+                    Thailand Digital Arrival Card (TDAC)
+                  </Link>{" "}
+                  before arriving in Thailand.
                 </p>
               </section>
 

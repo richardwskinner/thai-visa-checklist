@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, ExternalLink, MapPin } from "lucide-react";
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -166,12 +167,39 @@ export default function TM30Page() {
                 <ul className="mt-4 space-y-3">
                   <li className="flex items-start gap-3 text-slate-700">
                     <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
-                    <span>The TM.30 receipt is required for visa extensions.</span>
+                    <span>The TM.30 receipt is required for visa extensions, including{" "}
+                      <Link
+                        href="/visa/marriage"
+                        className="font-semibold text-teal-700 underline underline-offset-2"
+                      >
+                        marriage
+                      </Link>{" "}
+                      and{" "}
+                      <Link
+                        href="/visa/retirement"
+                        className="font-semibold text-teal-700 underline underline-offset-2"
+                      >
+                        retirement
+                      </Link>{" "}
+                      visas.</span>
                   </li>
 
                   <li className="flex items-start gap-3 text-slate-700">
                     <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
-                    <span>It is often required for 90-day reporting and re-entry permits.</span>
+                    <span>It is often required for{" "}
+                      <Link
+                        href="/guides/90-day-reporting"
+                        className="font-semibold text-teal-700 underline underline-offset-2"
+                      >
+                        90-day reporting
+                      </Link>{" "}
+                      and{" "}
+                      <Link
+                        href="/guides/re-entry-permit"
+                        className="font-semibold text-teal-700 underline underline-offset-2"
+                      >
+                        re-entry permits
+                      </Link>.</span>
                   </li>
 
                   <li className="flex items-start gap-3 text-slate-700">
@@ -198,7 +226,13 @@ export default function TM30Page() {
 
                   <li className="flex items-start gap-3 text-slate-700">
                     <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
-                    <span>Foreigners may face problems extending visas or completing 90-day reporting.</span>
+                    <span>Foreigners may face problems extending visas or completing{" "}
+                      <Link
+                        href="/guides/90-day-reporting"
+                        className="font-semibold text-teal-700 underline underline-offset-2"
+                      >
+                        90-day reporting
+                      </Link>.</span>
                   </li>
 
                   <li className="flex items-start gap-3 text-slate-700">

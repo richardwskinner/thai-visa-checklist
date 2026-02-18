@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { CalendarPlus } from "lucide-react";
+import { analytics } from "@/lib/analytics";
 
 function toISODateUTC(d: Date) {
   const yyyy = d.getUTCFullYear();
@@ -119,6 +120,7 @@ export default function NinetyDayCalculator() {
 
   function downloadICS() {
     if (!result) return;
+    analytics.trackCalendarExport('ics');
     const blob = new Blob([result.ics], { type: "text/calendar;charset=utf-8" });
     const url = URL.createObjectURL(blob);
 
@@ -159,7 +161,12 @@ export default function NinetyDayCalculator() {
           <input
             type="date"
             value={baseDate}
-            onChange={(e) => setBaseDate(e.target.value)}
+            onChange={(e) => {
+              setBaseDate(e.target.value);
+              if (e.target.value) {
+                analytics.trackCalculatorUse();
+              }
+            }}
             className="mt-2 block w-full max-w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5
                        text-base text-slate-900 outline-none
                        appearance-none [-webkit-appearance:none] [font-size:16px]
@@ -192,7 +199,11 @@ export default function NinetyDayCalculator() {
             result ? "bg-violet-600 hover:bg-violet-700" : "cursor-not-allowed bg-slate-300"
           }`}
           onClick={(e) => {
-            if (!result) e.preventDefault();
+            if (!result) {
+              e.preventDefault();
+            } else {
+              analytics.trackCalendarExport('google');
+            }
           }}
         >
           Add to Google Calendar

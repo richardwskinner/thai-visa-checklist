@@ -53,7 +53,14 @@ export default function ReEntryPermitPage() {
               <div>
                 <h2 className="text-xl font-extrabold text-slate-900">Who needs one</h2>
                 <p className="mt-2 text-slate-700">
-                  Anyone on a single-entry visa or extension of stay who plans to leave Thailand and return. This includes holders of Non-Immigrant O (retirement, marriage), Non-Immigrant B (work), education visas, and most extensions of stay. If you have a multiple-entry visa, you do not need a re-entry permit.
+                  Anyone on a single-entry visa or extension of stay who plans to leave Thailand and return. This includes holders of Non-Immigrant O (retirement, marriage), Non-Immigrant B (work), education visas, and most extensions of stay. If you have a multiple-entry visa, you do not need a re-entry permit. Note that when you return to Thailand, your{" "}
+                  <Link
+                    href="/guides/90-day-reporting"
+                    className="font-semibold text-orange-700 underline underline-offset-2"
+                  >
+                    90-day reporting
+                  </Link>{" "}
+                  count resets from your new entry date.
                 </p>
               </div>
 
@@ -121,7 +128,14 @@ export default function ReEntryPermitPage() {
               <div>
                 <h2 className="text-xl font-extrabold text-slate-900">When you return to Thailand</h2>
                 <p className="mt-2 text-slate-700">
-                  Make sure the immigration officer sees your re-entry permit stamp when you arrive back. Open your passport to the re-entry page. If they miss it, you may get a tourist stamp instead and your visa will be lost. When filling out the TDAC, enter your re-entry permit number in the visa number field.
+                  Make sure the immigration officer sees your re-entry permit stamp when you arrive back. Open your passport to the re-entry page. If they miss it, you may get a tourist stamp instead and your visa will be lost. When filling out the{" "}
+                  <Link
+                    href="/tdac"
+                    className="font-semibold text-orange-700 underline underline-offset-2"
+                  >
+                    TDAC
+                  </Link>
+                  , enter your re-entry permit number in the visa number field.
                 </p>
               </div>
             </div>
@@ -132,7 +146,14 @@ export default function ReEntryPermitPage() {
                 <p>You must get the re-entry permit before you leave Thailand - you cannot get one from abroad.</p>
                 <p>The re-entry permit expires when your visa expires, not separately.</p>
                 <p>A re-entry permit does not extend your stay, it only preserves it.</p>
-                <p>After returning, your landlord must file a new TM.30 within 24 hours.</p>
+                <p>After returning, your landlord must file a new{" "}
+                  <Link
+                    href="/guides/tm30"
+                    className="font-semibold text-orange-700 underline underline-offset-2"
+                  >
+                    TM.30
+                  </Link>{" "}
+                  within 24 hours.</p>
               </div>
             </div>
 

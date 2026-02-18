@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Printer } from "lucide-react";
 import { marriageChecklist } from "@/lib/data/marriage";
 import type { ChecklistItem } from "@/lib/data/marriage";
+import { analytics } from "@/lib/analytics";
 
 /* ── Storage keys ── */
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:checked:v1";
@@ -95,7 +96,7 @@ function Section({
   const classes = fontSizeClasses[fontSize];
 
   return (
-    <div className="mt-6 print:mt-3">
+    <div className="mt-6 print:mt-2">
       <div className={`${classes.sectionTitle} font-extrabold text-slate-900`}>{title}</div>
       <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700 print:mt-1" />
 
@@ -107,7 +108,7 @@ function Section({
               <Checkbox
                 checked={!!checked[key]}
                 onCheckedChange={() => onToggle(key)}
-                className="h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                className="h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-[#249C0F] data-[state=checked]:border-[#249C0F]"
               />
               <div className={`${classes.itemText} text-slate-900 leading-snug`}>
                 {item.text}
@@ -133,58 +134,61 @@ function Section({
 
 /* ── Main page ── */
 export default function MarriageVisaPage() {
-  const [checked, setChecked] = useState<Record<string, boolean>>({});
-  const [fontSize, setFontSize] = useState<FontSize>("small");
-  const [loaded, setLoaded] = useState(false);
-
-  const classes = fontSizeClasses[fontSize];
-
-  // Load saved progress + font size
-  useEffect(() => {
+  const [checked, setChecked] = useState<Record<string, boolean>>(() => {
+    if (typeof window === "undefined") return {};
     try {
       const raw = localStorage.getItem(STORAGE_KEY_CHECKED);
       if (raw) {
         const parsed = JSON.parse(raw);
-        if (parsed && typeof parsed === "object") setChecked(parsed);
-      }
-
-      const savedSize = localStorage.getItem(STORAGE_KEY_FONTSIZE);
-      if (savedSize === "small" || savedSize === "medium" || savedSize === "large") {
-        setFontSize(savedSize);
+        if (parsed && typeof parsed === "object") return parsed as Record<string, boolean>;
       }
     } catch {
       // ignore
     }
-    setLoaded(true);
-  }, []);
+    return {};
+  });
+  const [fontSize, setFontSize] = useState<FontSize>(() => {
+    if (typeof window === "undefined") return "small";
+    const savedSize = localStorage.getItem(STORAGE_KEY_FONTSIZE);
+    if (savedSize === "small" || savedSize === "medium" || savedSize === "large") {
+      return savedSize;
+    }
+    return "small";
+  });
+
+  const classes = fontSizeClasses[fontSize];
 
   // Save progress
   useEffect(() => {
-    if (!loaded) return;
     try {
       localStorage.setItem(STORAGE_KEY_CHECKED, JSON.stringify(checked));
     } catch {
       // ignore
     }
-  }, [checked, loaded]);
+  }, [checked]);
 
   // Save font size preference
   useEffect(() => {
-    if (!loaded) return;
     try {
       localStorage.setItem(STORAGE_KEY_FONTSIZE, fontSize);
     } catch {
       // ignore
     }
-  }, [fontSize, loaded]);
+  }, [fontSize]);
 
   const handleToggle = (key: string) => {
-    setChecked((prev) => ({ ...prev, [key]: !prev[key] }));
+    setChecked((prev) => {
+      const newValue = !prev[key];
+      // Track the event
+      analytics.trackChecklistItem('marriage', key, newValue);
+      return { ...prev, [key]: newValue };
+    });
   };
 
   const handleReset = () => {
     if (window.confirm("Reset all checkboxes? This cannot be undone.")) {
       setChecked({});
+      analytics.trackReset('marriage');
     }
   };
 
@@ -217,7 +221,10 @@ export default function MarriageVisaPage() {
                 {(["small", "medium", "large"] as const).map((size) => (
                   <button
                     key={size}
-                    onClick={() => setFontSize(size)}
+                    onClick={() => {
+                      setFontSize(size);
+                      analytics.trackFontSizeChange(size, 'marriage');
+                    }}
                     className={`rounded-lg px-3 py-1 text-sm font-medium transition capitalize ${
                       fontSize === size
                         ? "bg-indigo-600 text-white"
@@ -239,7 +246,10 @@ export default function MarriageVisaPage() {
             </Button>
 
             <Button
-              onClick={() => window.print()}
+              onClick={() => {
+                analytics.trackPrint('marriage');
+                window.print();
+              }}
               className="h-12 rounded-2xl bg-blue-600 px-5 text-base hover:bg-blue-700"
             >
               <Printer className="mr-2 h-5 w-5" /> Print
@@ -248,8 +258,8 @@ export default function MarriageVisaPage() {
         </div>
 
         {/* Content */}
-        <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm print:mt-0 print:rounded-none print:shadow-none">
-          <CardContent className="p-10 print:p-6 print:pb-0">
+        <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm print:mt-0 print:rounded-none print:shadow-none print:scale-95">
+          <CardContent className="p-10 print:p-4 print:pb-0">
             <h1 className={`${classes.title} text-center font-extrabold tracking-tight text-slate-900`}>
               {marriageChecklist.title}
             </h1>
@@ -266,12 +276,12 @@ export default function MarriageVisaPage() {
                 <div>{pct}%</div>
               </div>
               <div className="mt-2">
-                <Progress value={pct} className="h-3 [&>div]:bg-green-500" />
+                <Progress value={pct} className="h-3 [&>div]:bg-[#249C0F]" />
               </div>
             </div>
 
             {/* Application forms (screen: under progress bar / print: still included) */}
-            <div className="mt-8 print:mt-6">
+            <div className="mt-8 print:mt-4">
               <div className={`${fontSizeClasses[fontSize].sectionTitle} font-extrabold text-slate-900`}>
                 Application forms
               </div>
@@ -281,7 +291,7 @@ export default function MarriageVisaPage() {
                 <Checkbox
                   checked={!!checked["__forms__"]}
                   onCheckedChange={() => handleToggle("__forms__")}
-                  className="mt-1 h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                  className="mt-1 h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-[#249C0F] data-[state=checked]:border-[#249C0F]"
                 />
 
                 <div className="flex-1">
@@ -309,16 +319,21 @@ export default function MarriageVisaPage() {
             ))}
 
             {/* Tips */}
-            <div className="mt-8 rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5 print:mt-4 print:p-4">
+            <div className="mt-8 rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5 print:mt-2 print:p-4 print:break-inside-auto">
               <div className={`${classes.itemText} font-bold text-amber-900`}>Extra Tips:</div>
               <ul className={`mt-2 list-disc space-y-1 pl-6 ${classes.label} text-amber-900`}>
                 {marriageChecklist.tips.map((tip) => (
                   <li key={tip}>{tip}</li>
                 ))}
               </ul>
+
+              {/* Print-only footer with website name */}
+              <div className="hidden print:block mt-4 pt-3 border-t border-amber-200 text-center text-[10px] text-amber-600">
+                thaivisachecklist.com
+              </div>
             </div>
 
-            {/* This separator/footer is what often causes the “blank second page” — hide on print */}
+            {/* This separator/footer is what often causes the "blank second page" — hide on print */}
             <div className="mt-8 print:hidden">
               <Separator />
             </div>
@@ -329,18 +344,57 @@ export default function MarriageVisaPage() {
       {/* Print styles */}
       <style>{`
         @media print {
-          @page { margin: 0.5in; }
+          @page {
+            margin: 0.3in;
+            size: letter;
+          }
 
-          html, body { height: auto !important; }
+          html, body {
+            height: auto !important;
+            overflow: visible !important;
+          }
+
           body {
             margin: 0 !important;
             print-color-adjust: exact;
             -webkit-print-color-adjust: exact;
           }
 
-          * { box-shadow: none !important; }
+          * {
+            box-shadow: none !important;
+          }
+
+          /* Prevent page breaks inside elements */
+          h1, h2, h3, h4, h5, h6 {
+            page-break-after: avoid !important;
+            break-after: avoid !important;
+          }
+
+          /* Prevent orphans and widows */
+          p, li {
+            orphans: 3;
+            widows: 3;
+          }
+
+          /* Keep sections together */
+          section, div[class*="Section"] {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+          }
+
+          /* Allow tips section to break if needed */
+          .print\\:break-inside-auto {
+            page-break-inside: auto !important;
+            break-inside: auto !important;
+          }
+
+          /* Scale content to fit on one page — zoom affects layout, transform does not */
+          .print\\:scale-95 {
+            zoom: 0.90 !important;
+          }
 
           header { display: none !important; }
+          footer { display: none !important; }
         }
       `}</style>
     </div>

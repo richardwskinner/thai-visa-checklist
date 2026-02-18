@@ -6,11 +6,6 @@ import {
   PlaneTakeoff,
   MapPin,
   Globe,
-  PlusCircle,
-  Waves,
-  Umbrella,
-  WavesArrowDown,
-  SunDim,
   Sun,
 } from "lucide-react";
 import type { Metadata } from "next";

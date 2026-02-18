@@ -22,7 +22,7 @@ export interface VisaChecklist {
 export const retirementChecklist: VisaChecklist = {
   id: "retirement-extension",
   title: 'Non-Immigrant "O" (Retirement Visa)',
-  subtitle: "Annual extension of stay based for retirement purposes",
+  subtitle: "Annual extension of stay based on retirement purposes",
   lastUpdated: "13 Feb 2026",
   sections: [
     {

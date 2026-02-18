@@ -170,43 +170,6 @@ export default function NinetyDayReportingpage() {
                   </div>
                 </div>
 
-                {/* Related guides (mobile-friendly cards) */}
-                <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                  <div className="font-bold text-slate-900">Related guides</div>
-                  <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    {[
-                      {
-                        href: "/guides/re-entry-permit",
-                        title: "Re-Entry Permits",
-                        desc: "Don’t lose your visa when you travel.",
-                      },
-                      {
-                        href: "/guides/tm30",
-                        title: "TM.30 Explained",
-                        desc: "Address reporting rules + why receipts matter.",
-                      },
-                      {
-                        href: "/guides/visa-entry-options",
-                        title: "Visa Exemption vs VOA",
-                        desc: "Which entry option applies to your passport.",
-                      },
-                      {
-                        href: "/tdac",
-                        title: "Thailand Digital Arrival Card (TDAC)",
-                        desc: "Complete TDAC before you arrive.",
-                      },
-                    ].map((g) => (
-                      <Link
-                        key={g.href}
-                        href={g.href}
-                        className="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-1 hover:shadow-sm"
-                      >
-                        <div className="font-bold text-slate-900 break-words">{g.title}</div>
-                        <div className="mt-1 text-sm text-slate-600">{g.desc}</div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
               </section>
 
               <section>

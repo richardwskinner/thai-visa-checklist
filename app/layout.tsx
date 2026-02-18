@@ -31,10 +31,17 @@ function Header() {
         <div className="py-3 sm:py-2">
           {/* Mobile: stacked | Desktop: 3-col */}
           <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-0">
-            {/* Left spacer (desktop only) */}
-            <div className="hidden sm:block" />
+            {/* Left link (desktop only) */}
+            <div className="hidden sm:block">
+              <Link
+                href="/"
+                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+              >
+                Checklists
+              </Link>
+            </div>
 
-            {/* Logo + Subtitle */}
+            {/* Logo */}
             <Link href="/" className="flex flex-col items-center">
               <Image
                 src="/logo-full.svg"
@@ -43,9 +50,6 @@ function Header() {
                 height={40}
                 priority
               />
-              <div className="mt-1 text-sm font-medium text-slate-500">
-                
-              </div>
             </Link>
 
             {/* Nav (centered on mobile, right on desktop) */}
@@ -81,13 +85,13 @@ function Footer() {
     <footer className="border-t border-slate-200">
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-5 py-5">
         <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
-          <p className="text-base text-slate-400">
+          <p className="text-sm font-semibold text-slate-600">
             © {new Date().getFullYear()} Thai Visa Checklist
           </p>
           <div className="flex items-center gap-5">
             <a
               href="mailto:hello@thaivisachecklist.com"
-              className="text-base text-slate-400 hover:text-slate-600"
+              className="text-sm font-semibold text-slate-600 hover:text-slate-900"
             >
               hello@thaivisachecklist.com
             </a>
