@@ -73,4 +73,12 @@ export const analytics = {
       visa_type: visaType,
     });
   },
+
+  // Track homepage checklist selection
+  trackHomepageSelect: (checklist: string, destination: string) => {
+    trackEvent('homepage_select_checklist', {
+      checklist,
+      destination,
+    });
+  },
 };
