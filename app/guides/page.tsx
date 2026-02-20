@@ -7,6 +7,7 @@ import {
   MapPin,
   Globe,
   Sun,
+  Home,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -70,6 +71,15 @@ const guides = [
     icon: Sun,
     color: "bg-emerald-100",
     iconColor: "text-emerald-600",
+  },
+  {
+    title: "Yellow Book (Tabien Baan)",
+    description:
+      "What it is, who can apply, and how to get one from your local district office.",
+    href: "/guides/yellow-book",
+    icon: Home,
+    color: "bg-amber-100",
+    iconColor: "text-amber-600",
   },
 ];
 
