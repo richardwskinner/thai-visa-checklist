@@ -8,6 +8,7 @@ import {
   Globe,
   Sun,
   Home,
+  IdCard,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -80,6 +81,15 @@ const guides = [
     icon: Home,
     color: "bg-amber-100",
     iconColor: "text-amber-600",
+  },
+  {
+    title: "Thai Pink ID Card",
+    description:
+      "What it is, who can apply, and how to get one from your local district office.",
+    href: "/guides/pink-id-card",
+    icon: IdCard,
+    color: "bg-rose-100",
+    iconColor: "text-rose-600",
   },
 ];
 

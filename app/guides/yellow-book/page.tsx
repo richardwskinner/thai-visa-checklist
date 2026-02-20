@@ -46,12 +46,10 @@ export default function YellowBookPage() {
                 <h2 className="text-xl font-extrabold text-slate-900">What it is</h2>
                 <p className="mt-2 text-slate-700">
                   The Yellow Book (Tabien Baan) records that a foreigner lives at a specific Thai address.
-                  It is issued by the local district office (Amphur/Khet).
-                </p>
-                <p className="mt-2 text-slate-700">
-                  It does not replace your passport, visa status, 90-day reporting, or visa extensions.
+                  It is issued by the local district office (Amphur/Khet). It does not replace your passport, visa status, 90-day reporting, or visa extensions.
                   It also does not grant residency rights.
                 </p>
+
               </section>
 
               <section>
@@ -100,7 +98,7 @@ export default function YellowBookPage() {
                     "Visit your local district office (Amphur/Khet) with original documents",
                     "Submit the application and supporting copies",
                     "The office verifies your address and eligibility and may request additional documents",
-                    "If approved, the Yellow Book is issued the same day or scheduled for collection",
+                    "If approved, the Yellow Book can be issued the same day or scheduled for collection",
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-3 text-slate-700">
                       <div className="h-2 w-2 shrink-0 rounded-full bg-amber-500" />
@@ -108,6 +106,9 @@ export default function YellowBookPage() {
                     </div>
                   ))}
                 </div>
+                <p className="mt-3 text-slate-700">
+                  Processing time varies depending on the district office.
+                </p>
               </section>
 
               <section>
