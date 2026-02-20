@@ -89,6 +89,16 @@ export default function YellowBookPage() {
                     </div>
                   ))}
                 </div>
+                <p className="mt-3 text-slate-700">
+                  If you are unsure about TM.30, see our{" "}
+                  <Link
+                    href="/guides/tm30"
+                    className="font-semibold text-amber-700 underline underline-offset-2"
+                  >
+                    TM.30 guide
+                  </Link>
+                  .
+                </p>
               </section>
 
               <section>
@@ -137,9 +147,19 @@ export default function YellowBookPage() {
               <div className="font-bold text-amber-900">Important</div>
               <div className="mt-2 space-y-1 text-sm text-amber-900">
                 <p>
-                  Requirements vary significantly by district office - it is best to call in advance to confirm what they require.
+                  Requirements vary significantly by district office - it is best to call in advance to confirm what
+                  they require.
                 </p>
-                <p>The Yellow Book does not replace 90-day reporting or visa extensions.</p>
+                <p>
+                  The Yellow Book does not replace{" "}
+                  <Link
+                    href="/guides/90-day-reporting"
+                    className="font-semibold text-amber-700 underline underline-offset-2"
+                  >
+                    90-day reporting
+                  </Link>{" "}
+                  or visa extensions.
+                </p>
                 <p>Bring extra signed copies of documents to avoid repeat trips.</p>
               </div>
             </div>

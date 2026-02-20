@@ -55,6 +55,12 @@ function Header() {
             {/* Nav (centered on mobile, right on desktop) */}
             <nav className="flex items-center justify-center gap-4 sm:justify-end sm:gap-6">
               <Link
+                href="/"
+                className="text-sm font-semibold text-slate-600 hover:text-slate-900 sm:hidden"
+              >
+                Checklists
+              </Link>
+              <Link
                 href="/guides"
                 className="text-sm font-semibold text-slate-600 hover:text-slate-900"
               >

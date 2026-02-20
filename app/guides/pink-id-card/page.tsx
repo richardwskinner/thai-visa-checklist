@@ -46,8 +46,14 @@ export default function PinkIdCardPage() {
                 <h2 className="text-xl font-extrabold text-slate-900">What it is</h2>
                 <p className="mt-2 text-slate-700">
                   The Pink ID card is an identification card for eligible foreigners registered at a Thai address.
-                  It is usually issued through your local district office (Amphur/Khet), often after Yellow Book
-                  registration.
+                  It is usually issued through your local district office (Amphur/Khet), often after{" "}
+                  <Link
+                    href="/guides/yellow-book"
+                    className="font-semibold text-rose-700 underline underline-offset-2"
+                  >
+                    Yellow Book registration
+                  </Link>
+                  .
                 </p>
               </section>
 
