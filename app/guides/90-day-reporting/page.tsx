@@ -13,10 +13,59 @@ export const metadata: Metadata = {
 
 const TM47_URL = "https://www.immigration.go.th/wp-content/uploads/2022/10/18.Form-TM-47.pdf";
 const TM47_PORTAL = "https://tm47.immigration.go.th";
+const FAQS = [
+  {
+    question: "Does 90-day reporting extend my visa?",
+    answer:
+      "No. It does not extend your visa or permission of stay. It only updates your address record with immigration.",
+  },
+  {
+    question: "When can I submit my 90-day report?",
+    answer:
+      "You can usually report 15 days before your due date until 7 days after your due date.",
+  },
+  {
+    question: "What happens if I miss 90-day reporting?",
+    answer:
+      "If you report late yourself, the fine is typically 2,000 THB. If you are found before reporting, the fine can be higher.",
+  },
+  {
+    question: "Does leaving Thailand reset the 90-day count?",
+    answer:
+      "Yes. If you leave and re-enter Thailand, the 90-day count starts again from your latest entry date.",
+  },
+  {
+    question: "Why was my online 90-day report rejected?",
+    answer:
+      "Unfortunately the system does not provide a specific reason. Common reasons for rejection include not having previously completed at least one 90-day report in person, or address details that do not match your registered TM.30 information. Double-check all passport and address details carefully and try to submit again.",
+  },
+  {
+    question: "What do you do if you lose your 90-Day Report receipt?",
+    answer:
+      "Go to your local immigration office with your passport and explain that the receipt was lost. In some offices, you can proceed with your next 90-day report in person without the old slip. In other offices, they may ask for a police report confirming the loss before allowing the next filing.",
+  },
+] as const;
 
 export default function NinetyDayReportingpage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-[#eef3fb]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-5 overflow-hidden">
         <div className="pt-6 sm:pt-8">
           <Link
@@ -84,7 +133,7 @@ export default function NinetyDayReportingpage() {
                 <NinetyDayCalculator />
 
                 <p className="mt-4 text-sm text-slate-600">
-                  Coming into Thailand soon? You may also need the{" "}
+                  Coming into Thailand soon? You will need to complete the{" "}
                   <Link
                     href="/tdac"
                     className="font-semibold text-violet-700 underline underline-offset-2"
@@ -173,11 +222,15 @@ export default function NinetyDayReportingpage() {
               </section>
 
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">What happens if you miss it</h2>
-                <p className="mt-2 text-slate-700">
-                  If you report late yourself, the fine is 2,000 THB. If you are caught by an immigration officer before you
-                  report, the fine can be up to 5,000 THB. Repeated non-compliance can complicate future visa extensions.
-                </p>
+                <h2 className="text-xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+                <div className="mt-4 space-y-5">
+                  {FAQS.map((faq) => (
+                    <div key={faq.question}>
+                      <h3 className="text-base font-bold text-slate-900">{faq.question}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-700">{faq.answer}</p>
+                    </div>
+                  ))}
+                </div>
               </section>
             </div>
 

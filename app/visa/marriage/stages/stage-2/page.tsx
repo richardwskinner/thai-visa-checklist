@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Printer } from "lucide-react";
 import { analytics } from "@/lib/analytics";
+import ChecklistNotice from "@/components/checklist-notice";
 
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:stage2:checked:v1";
 const STORAGE_KEY_FONTSIZE = "thai-visa-checklist:fontsize:v1";
@@ -303,6 +304,9 @@ export default function MarriageStageTwoPage() {
 
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm print:mt-0 print:rounded-none print:shadow-none print:scale-95">
           <CardContent className="p-6 sm:p-10 print:p-4 print:pb-0">
+            <div className="mb-6 print:hidden">
+              <ChecklistNotice />
+            </div>
             <h1 className={`${classes.title} text-center font-extrabold tracking-tight text-slate-900`}>
               {stageTwoChecklist.title}
             </h1>

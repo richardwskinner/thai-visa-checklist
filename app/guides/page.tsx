@@ -9,6 +9,7 @@ import {
   Sun,
   Home,
   IdCard,
+  BadgeCheck,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -90,6 +91,15 @@ const guides = [
     icon: IdCard,
     color: "bg-rose-100",
     iconColor: "text-rose-600",
+  },
+  {
+    title: "Passport Renewal and Stamp Transfer",
+    description:
+      "How to renew your passport in Thailand and transfer visa or extension stamps to your new passport before your next filing.",
+    href: "/guides/passport-renewal-stamp-transfer",
+    icon: BadgeCheck,
+    color: "bg-cyan-100",
+    iconColor: "text-cyan-700",
   },
 ];
 

@@ -83,6 +83,22 @@ export default function HomePage() {
                   >
                     Revenue Department <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
                   </a>
+                  <a
+                    href="https://thai.tourismthailand.org/Home"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
+                  >
+                    Tourism Authority of Thailand <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
+                  </a>
+                  <a
+                    href="https://www.airportthai.co.th/en/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
+                  >
+                    Airports of Thailand <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
+                  </a>
                 </div>
               </div>
             </section>

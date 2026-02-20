@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft } from "lucide-react";
 import { analytics } from "@/lib/analytics";
+import ChecklistNotice from "@/components/checklist-notice";
 
 const STORAGE_KEY = "thai-visa-checklist:retirement:stage1:checked:v1";
 
@@ -193,6 +194,9 @@ export default function RetirementStageOnePage() {
 
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
           <CardContent className="p-6 sm:p-10">
+            <div className="mb-6">
+              <ChecklistNotice />
+            </div>
             <h1 className="text-center text-3xl font-extrabold tracking-tight text-slate-900">
               {stageOneChecklist.title}
             </h1>

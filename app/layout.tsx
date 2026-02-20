@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import SiteHeader from "@/components/site-header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,68 +22,6 @@ export const metadata: Metadata = {
   description:
     "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, business visa and more. Never miss a document again, and hopefully no second trips to immigration.",
 };
-
-function Header() {
-  return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur">
-      <div className="mx-auto w-full max-w-5xl px-4 sm:px-5">
-        <div className="py-3 sm:py-2">
-          {/* Mobile: stacked | Desktop: 3-col */}
-          <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-0">
-            {/* Left link (desktop only) */}
-            <div className="hidden sm:block">
-              <Link
-                href="/"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
-              >
-                Checklists
-              </Link>
-            </div>
-
-            {/* Logo */}
-            <Link href="/" className="flex flex-col items-center">
-              <Image
-                src="/logo-full.svg"
-                alt="Thai Visa Checklist"
-                width={295}
-                height={40}
-                priority
-              />
-            </Link>
-
-            {/* Nav (centered on mobile, right on desktop) */}
-            <nav className="flex items-center justify-center gap-4 sm:justify-end sm:gap-6">
-              <Link
-                href="/"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900 sm:hidden"
-              >
-                Checklists
-              </Link>
-              <Link
-                href="/guides"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
-              >
-                Guides
-              </Link>
-              <Link
-                href="/about"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
-              >
-                About
-              </Link>
-              <Link
-                href="/contact"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
-              >
-                Contact
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-}
 
 function Footer() {
   return (
@@ -137,7 +74,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
-        <Header />
+        <SiteHeader />
 
         {/* This controls the gap between top bar and page content */}
         <main className="pt-2">{children}</main>
