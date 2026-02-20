@@ -22,7 +22,7 @@ const guides = [
   {
     title: "90-Day Reporting",
     description:
-      "Who needs to report, when to do it, and how to file online, by mail, or in person.",
+      "What is 90-day reporting in Thailand, who must file, when it is due, and how to report online or in person.",
     href: "/guides/90-day-reporting",
     icon: CalendarClock,
     color: "bg-violet-100",
@@ -31,7 +31,7 @@ const guides = [
   {
     title: "Re-Entry Permits",
     description:
-      "How to keep your visa when you travel. Single vs multiple, costs, and where to apply.",
+      "What is a Thai re-entry permit, do you need one, and how to apply before leaving Thailand.",
     href: "/guides/re-entry-permit",
     icon: PlaneTakeoff,
     color: "bg-orange-100",
@@ -40,7 +40,7 @@ const guides = [
   {
     title: "TM.30 Explained",
     description:
-      "What TM.30 is, who files it, and why you need the receipt for visa extensions.",
+      "What is TM.30, who must file it, when it is required, and why it matters for visa extensions.",
     href: "/guides/tm30",
     icon: MapPin,
     color: "bg-teal-100",
@@ -49,7 +49,7 @@ const guides = [
   {
     title: "Thailand Digital Arrival Card (TDAC)",
     description:
-      "How to fill in the TDAC before you arrive in Thailand.",
+      "What is the Thailand Digital Arrival Card (TDAC), who needs it, and how to submit it before arrival.",
     href: "/tdac",
     icon: Globe,
     color: "bg-blue-100",
@@ -58,7 +58,7 @@ const guides = [
   {
     title: "Visa Exemption & Visa on Arrival (VOA)",
     description:
-      "Stay length, eligibility, fees, documents required, and common mistakes.",
+      "Thailand visa exemption vs visa on arrival: who qualifies, how long you can stay, and what documents you need.",
     href: "/guides/voa-visa-exemption",
     icon: Globe,
     color: "bg-indigo-100",
@@ -67,7 +67,7 @@ const guides = [
   {
     title: "Tourist Visa Extension (30 Days)",
     description:
-      "How to extend your tourist visa or visa exemption. Fee, documents required, and where to apply.",
+      "How to extend a Thailand tourist visa or visa exemption by 30 days, including fees, documents, and process.",
     href: "/guides/tourist-extension",
     icon: Sun,
     color: "bg-emerald-100",
@@ -76,7 +76,7 @@ const guides = [
   {
     title: "Yellow Book (Tabien Baan)",
     description:
-      "What it is, who can apply, and how to get one from your local district office.",
+      "What is the Yellow Book (Tabien Baan), who can get one, what documents you need, and how to apply in Thailand.",
     href: "/guides/yellow-book",
     icon: Home,
     color: "bg-amber-100",
@@ -85,7 +85,7 @@ const guides = [
   {
     title: "Thai Pink ID Card",
     description:
-      "What it is, who can apply, and how to get one from your local district office.",
+      "What is the Thai Pink ID card, who qualifies, which documents are required, and how to apply at your local district office.",
     href: "/guides/pink-id-card",
     icon: IdCard,
     color: "bg-rose-100",
