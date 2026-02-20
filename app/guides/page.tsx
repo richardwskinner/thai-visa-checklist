@@ -101,10 +101,11 @@ export default function GuidesPage() {
         {/* Page heading */}
         <div className="pt-10 text-center sm:pt-12">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">
-            Immigration Guides
+            Thailand Visa and Document Guides
           </h1>
           <p className="mt-3 text-lg text-slate-600">
-            Free, simple guides to help you understand Thai immigration requirements
+            Free, simple step-by-step guides for visas, extensions, reporting, and residency documents.
+
           </p>
         </div>
 
