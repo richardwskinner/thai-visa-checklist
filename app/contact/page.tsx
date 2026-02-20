@@ -41,7 +41,7 @@ export default function ContactPage() {
               Contact
             </h1>
             <p className="mt-3 text-slate-600">
-              Have an idea or need help? We&apos;d love to hear from you.
+              Have a suggestion or need help? Get in touch!
             </p>
           </div>
 
