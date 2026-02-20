@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 const stages = [
   {
     stage: 1,
-    title: "Stage 1 - Apply Abroad (Recommended)",
+    title: "Apply Abroad (Recommended)",
     description:
-      "Apply for a Non-Immigrant O visa at a Thai embassy or consulate in your home country, or a neighboring country, such as Laos or Vietnam.",
+      "Apply for a 90-Day Non-Immigrant O visa at a Thai embassy or consulate in your home country, or neighboring country, such as Laos or Vietnam.",
     available: true,
     href: "/visa/marriage/stages/stage-1",
   },
@@ -22,15 +22,15 @@ const stages = [
     stage: 2,
     title: "Convert Visa in Thailand (If required)",
     description:
-      "If you are already in Thailand on a Tourist or Visa-Exempt entry, convert your current visa to a Non-Immigrant O (Marriage) at your local immigration office.",
+      "If you're in Thailand on a Tourist or Visa-Exempt, and want to convert to a Non-Immigrant O Visa (Marriage).",
     available: true,
     href: "/visa/marriage/stages/stage-2",
   },
   {
     stage: 3,
-    title: "Stage 3 - 1 Year Extension",
+    title: "1 Year Extension",
     description:
-      "Extend your Non-Immigrant O visa for one year based on marriage to a Thai national. Full Checklist included.",
+      "Extend your Non-Immigrant O visa for one year based on marriage to a Thai national - Full Checklist included.",
     available: true,
     href: "/visa/marriage",
   },
@@ -39,13 +39,13 @@ const stages = [
 const postExtensionStages = [
   {
     stage: 4,
-    title: "Stage 4 - 90-Day Reporting",
+    title: "90-Day Reporting",
     description: "Report your address to immigration every 90 days while on a long-stay visa.",
     href: "/guides/90-day-reporting",
   },
   {
     stage: 5,
-    title: "Stage 5 - Re-Entry Permit",
+    title: "Re-Entry Permit",
     description: "Get a re-entry permit before leaving Thailand to keep your visa valid.",
     href: "/guides/re-entry-permit",
   },
