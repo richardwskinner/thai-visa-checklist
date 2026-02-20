@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const stages = [
   {
     stage: 1,
-    title: "Stage 1 - Apply Abroad",
+    title: "Stage 1 - Apply Abroad (Recommended)",
     description:
       "Apply for a Non-Immigrant O visa at a Thai embassy or consulate in your home country, or a neighboring country, such as Laos or Vietnam.",
     available: true,
@@ -20,9 +20,9 @@ const stages = [
   },
   {
     stage: 2,
-    title: "Stage 2 - Change Visa in Thailand",
+    title: "Convert Visa in Thailand (If required)",
     description:
-      "Convert to a Non-Immigrant O based on marriage at your local immigration office.",
+      "If you are already in Thailand on a Tourist or Visa-Exempt entry, convert your current visa to a Non-Immigrant O (Marriage) at your local immigration office.",
     available: true,
     href: "/visa/marriage/stages/stage-2",
   },

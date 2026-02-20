@@ -37,7 +37,7 @@ const stageTwoChecklist: {
   tips: string[];
 } = {
   title: "Marriage Visa Stage 2",
-  subtitle: "Change Visa in Thailand to Non-Immigrant O (Marriage)",
+  subtitle: "Convert Visa in Thailand to Non-Immigrant O (Marriage)",
   sections: [
     {
       title: "Pre-check Eligibility",
@@ -343,7 +343,7 @@ export default function MarriageStageTwoPage() {
                     TM.86 → Used if converting from Tourist Visa.
                   </div>
                   <div className={`${classes.label} text-slate-700`}>
-                    TM.87 → Used if converting from Visa Exempt or Non-Immigrant.
+                    TM.87 → Used if converting from Visa Exempt.
                   </div>
                 </div>
               </label>
