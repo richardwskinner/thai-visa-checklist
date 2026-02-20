@@ -5,7 +5,7 @@ import { ArrowLeft, ExternalLink, PlaneTakeoff } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Re-Entry Permit in Thailand — How to protect Your Visa When You Travel outside of the country",
+  title: "Re-Entry Permit in Thailand - How to protect Your Visa When You Travel outside of the country",
   description:
     "Everything you need to know about the Thailand re-entry permit. Single vs multiple, how to get one at the airport or immigration office, costs, and what happens if you forget.",
 };
@@ -93,7 +93,7 @@ export default function ReEntryPermitPage() {
     </li>
     <li>Fee in cash</li>
     <li>
-      TM.8 form —{" "}
+      TM.8 form -{" "}
       <a
         href={TM8_URL}
         target="_blank"
@@ -112,7 +112,7 @@ export default function ReEntryPermitPage() {
                   <div className="rounded-2xl border border-slate-200 p-5">
                     <h3 className="font-bold text-slate-900">At the airport (same day as departure)</h3>
                     <p className="mt-1 text-slate-700">
-                      All major international airports — Suvarnabhumi, Don Mueang, Chiang Mai, Phuket, and Hat Yai - have re-entry permit counters. They are located after passport control in the departure area. Arrive early in case there is any delay.
+                      All major international airports - Suvarnabhumi, Don Mueang, Chiang Mai, Phuket, and Hat Yai - have re-entry permit counters. They are located after passport control in the departure area. Arrive early in case there is any delay.
                     </p>
                   </div>
 

@@ -5,7 +5,7 @@ import { ArrowLeft, ExternalLink, Globe } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Thailand Entry Options — Visa Exemption vs Visa on Arrival (VOA)",
+  title: "Thailand Entry Options - Visa Exemption vs Visa on Arrival (VOA)",
   description:
     "Confused between Thailand visa exemption and visa on arrival? This guide explains the differences, who qualifies, typical stay length, fees, and what to check before you fly.",
 };
@@ -197,7 +197,7 @@ export default function ThailandEntryOptionsPage() {
 
         <div className="py-8 text-xs text-slate-500">
           <Separator className="mb-4" />
-          Rules can change and may vary by checkpoint — always confirm before you travel.
+          Rules can change and may vary by checkpoint - always confirm before you travel.
         </div>
       </div>
     </div>

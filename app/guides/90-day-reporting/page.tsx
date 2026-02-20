@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import NinetyDayCalculator from "./NinetyDayCalculator";
 
 export const metadata: Metadata = {
-  title: "90-Day Reporting in Thailand — What It Is and How to Do It",
+  title: "90-Day Reporting in Thailand - What It Is and How to Do It",
   description:
     "Everything you need to know about 90-day reporting in Thailand. Who needs to report, when to do it, how to report online, by mail, or in person, and what happens if you miss it.",
 };
@@ -42,7 +42,7 @@ export default function NinetyDayReportingpage() {
             <div className="mt-6 rounded-2xl border border-violet-200 bg-violet-50 p-5 sm:p-6">
               <p className="text-base sm:text-lg font-semibold text-violet-900">
                 If you stay in Thailand for more than 90 consecutive days, you must report your current address to immigration.
-                This is not a visa extension — it’s a separate legal requirement.
+                This is not a visa extension - it’s a separate legal requirement.
               </p>
               <p className="mt-3 text-sm text-violet-900/80">
                 If you’ve recently changed address or moved hotels, also read our{" "}
@@ -60,7 +60,7 @@ export default function NinetyDayReportingpage() {
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">Who needs to report</h2>
                 <p className="mt-2 text-slate-700">
-                  All foreigners staying in Thailand for more than 90 consecutive days on any long-term visa — including work,
+                  All foreigners staying in Thailand for more than 90 consecutive days on any long-term visa - including work,
                   retirement, marriage, education, DTV, and Thailand Elite visas. If you plan to travel while on a long-stay visa,
                   make sure you understand{" "}
                   <Link
@@ -77,7 +77,7 @@ export default function NinetyDayReportingpage() {
                 <h2 className="text-xl font-extrabold text-slate-900">When to report</h2>
                 <p className="mt-2 text-slate-700">
                   You can report from 15 days before your due date up to 7 days after it. This gives you a roughly 3-week
-                  window. Your due date is exactly 90 days from your latest entry into Thailand or from your last report —
+                  window. Your due date is exactly 90 days from your latest entry into Thailand or from your last report -
                   whichever is more recent. If you leave Thailand and return, the 90-day count resets from your new entry date.
                 </p>
 
@@ -111,7 +111,7 @@ export default function NinetyDayReportingpage() {
                   <div className="flex items-center gap-3 text-slate-700">
                     <div className="h-2 w-2 shrink-0 rounded-full bg-violet-500" />
                     <span className="min-w-0">
-                      TM.47 form —{" "}
+                      TM.47 form -{" "}
                       <a
                         href={TM47_URL}
                         target="_blank"
@@ -141,7 +141,7 @@ export default function NinetyDayReportingpage() {
                     <h3 className="font-bold text-slate-900">Online</h3>
                     <p className="mt-1 text-slate-700">
                       Use the official immigration website. You must have completed at least one in-person report before you can
-                      use the online system. The system can be unreliable — submit a few days early in case it fails.
+                      use the online system. The system can be unreliable - submit a few days early in case it fails.
                     </p>
                     <a
                       href={TM47_PORTAL}
@@ -184,9 +184,9 @@ export default function NinetyDayReportingpage() {
             <div className="mt-10 rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5">
               <div className="font-bold text-amber-900">Good to know</div>
               <div className="mt-2 space-y-1 text-sm text-amber-900">
-                <p>90-day reporting does not extend your visa — it only confirms your address.</p>
+                <p>90-day reporting does not extend your visa - it only confirms your address.</p>
                 <p>Set a calendar reminder 15 days before your due date so you never miss it.</p>
-                <p>The online system is famously unreliable near deadlines — don&apos;t leave it to the last day.</p>
+                <p>The online system is famously unreliable near deadlines - don&apos;t leave it to the last day.</p>
                 <p>LTR visa holders only need to report once per year instead of every 90 days.</p>
               </div>
             </div>

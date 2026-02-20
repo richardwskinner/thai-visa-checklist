@@ -13,7 +13,7 @@ import {
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Thailand Visa & Immigration Guides — Free Help for Expats",
+  title: "Thailand Visa & Immigration Guides - Free Help for Expats",
   description:
     "Free, easy-to-read guides on Thai immigration topics including 90-day reporting, tourist visa extensions, re-entry permits, TM.30, visa exemption, and the Thailand Digital Arrival Card (TDAC).",
 };
@@ -137,7 +137,7 @@ export default function GuidesPage() {
         {/* Footer note */}
         <div className="py-10 text-xs text-slate-500">
           <Separator className="mb-4" />
-          Information is provided for guidance only. Requirements can vary by immigration office — always confirm locally.
+          Information is provided for guidance only. Requirements can vary by immigration office - always confirm locally.
         </div>
       </div>
     </div>

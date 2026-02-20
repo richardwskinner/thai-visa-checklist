@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Thai Visa Checklist — Free Document Checklists for Thailand Visas",
+    default: "Thai Visa Checklist - Free Document Checklists for Thailand Visas",
     template: "%s | Thai Visa Checklist",
   },
   description:

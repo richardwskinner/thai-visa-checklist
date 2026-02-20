@@ -333,7 +333,7 @@ export default function MarriageVisaPage() {
               </div>
             </div>
 
-            {/* This separator/footer is what often causes the "blank second page" — hide on print */}
+            {/* This separator/footer is what often causes the "blank second page" - hide on print */}
             <div className="mt-8 print:hidden">
               <Separator />
             </div>
@@ -388,7 +388,7 @@ export default function MarriageVisaPage() {
             break-inside: auto !important;
           }
 
-          /* Scale content to fit on one page — zoom affects layout, transform does not */
+          /* Scale content to fit on one page - zoom affects layout, transform does not */
           .print\\:scale-95 {
             zoom: 0.90 !important;
           }

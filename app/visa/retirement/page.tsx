@@ -388,7 +388,7 @@ export default function RetirementVisaPage() {
             break-inside: auto !important;
           }
 
-          /* Scale content to fit on one page — zoom affects layout, transform does not */
+          /* Scale content to fit on one page - zoom affects layout, transform does not */
           .print\\:scale-95 {
             zoom: 0.90 !important;
           }

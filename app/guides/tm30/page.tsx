@@ -6,7 +6,7 @@ import { ArrowLeft, ExternalLink, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "TM.30 in Thailand — What It Is and Who Needs to File It",
+  title: "TM.30 in Thailand - What It Is and Who Needs to File It",
   description:
     "A simple guide to the TM.30 notification in Thailand. What it is, who is responsible, how to file it online or in person, and why it matters for your visa.",
 };

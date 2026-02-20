@@ -142,7 +142,7 @@ export default function RetirementStagesPage() {
         </Card>
 
         <div className="py-6 text-center text-sm text-slate-500">
-          Requirements can vary by immigration office — always confirm locally.
+          Requirements can vary by immigration office - always confirm locally.
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import Image from "next/image";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "About Thai Visa Checklist — why it exists, how it helps, and how to connect with trusted visa agents.",
+    "About Thai Visa Checklist - why it exists, how it helps, and how to connect with trusted visa agents.",
 };
 
 export default function AboutPage() {
@@ -73,7 +73,7 @@ export default function AboutPage() {
   </p>
 </div>
           <p className="mt-10 text-sm text-slate-500">
-            Until then — bring extra copies.
+            Until then - bring extra copies.
           </p>
         </div>
       </div>

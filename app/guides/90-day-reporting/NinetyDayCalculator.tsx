@@ -189,7 +189,7 @@ export default function NinetyDayCalculator() {
         </div>
       </div>
 
-      {/* Buttons — always stack on mobile */}
+      {/* Buttons - always stack on mobile */}
       <div className="mt-5 flex flex-col gap-3">
         <a
           href={result?.googleUrl ?? "#"}

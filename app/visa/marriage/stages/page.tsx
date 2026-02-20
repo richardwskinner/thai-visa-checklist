@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Marriage Visa Stages — Non-Immigrant O (Marriage)",
+  title: "Marriage Visa Stages - Non-Immigrant O (Marriage)",
   description:
     "Choose your stage in the Thai marriage visa process. Apply abroad, convert in Thailand, or extend your 1-year stay.",
 };
@@ -144,7 +144,7 @@ export default function MarriageStagesPage() {
         </Card>
 
         <div className="py-6 text-center text-sm text-slate-500">
-          Requirements can vary by immigration office — always confirm locally.
+          Requirements can vary by immigration office - always confirm locally.
         </div>
       </div>
     </div>

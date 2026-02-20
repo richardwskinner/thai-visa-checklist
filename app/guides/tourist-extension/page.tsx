@@ -5,7 +5,7 @@ import { ArrowLeft, ExternalLink, PlusCircle } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Thailand Tourist Visa Extension (30 Days) — How to Extend Your Stay",
+  title: "Thailand Tourist Visa Extension (30 Days) - How to Extend Your Stay",
   description:
     "How to extend your Thailand tourist visa or visa exemption by 30 days. Requirements, documents needed, fee, where to apply, and common mistakes to avoid.",
 };
@@ -103,7 +103,7 @@ export default function TouristExtensionPage() {
                 <ul className="mt-3 list-disc space-y-2 pl-6 text-slate-700">
                   <li>Passport (original)</li>
                   <li>
-                    TM.7 form —{" "}
+                    TM.7 form -{" "}
                     <a
                       href={TM7_FORM}
                       target="_blank"
@@ -187,7 +187,7 @@ export default function TouristExtensionPage() {
 
         <div className="py-8 text-xs text-slate-500">
           <Separator className="mb-4" />
-          Information based on Thai Immigration guidance. Requirements can vary by office — always confirm locally.
+          Information based on Thai Immigration guidance. Requirements can vary by office - always confirm locally.
         </div>
       </div>
     </div>
