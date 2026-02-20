@@ -27,8 +27,8 @@ export const marriageChecklist: VisaChecklist = {
     {
       title: "Personal Documents",
       items: [
-        { text: "Passport (Valid at least 18 months with 2+ blank pages)", required: true },
-        { text: "2x passport photos (4×6 cm)", required: true },
+        { text: "Passport (Valid at least 6 months with 2+ blank pages)", required: true },
+        { text: "2x passport photos, taken within 6-months (4×6 cm)", required: true },
         { text: "TM.30 Receipt", required: true },
         { text: "90 Day Report Receipt", required: false },
         {
@@ -42,9 +42,9 @@ export const marriageChecklist: VisaChecklist = {
       title: "Relationship & Accommodation",
       items: [
         { text: "Your spouse in person", required: true },
-        { text: "Copy of spouse National ID", required: true },
-        { text: "Copy of spouse Blue Book (Tabian Baan)", required: true },
-        { text: "Renting a house or condo - Rental Contract, Copy of Landlords ID & House Book", required: true },
+        { text: "Thai spouse National ID + copy", required: true },
+        { text: "Copy of spouse Blue Book (Tabien Baan)", required: true },
+        { text: "Renting a house or condo - Rental Contract, Copy of Landlord's ID & House Book", required: true },
         {
           text: "Thai Marriage Certificate Kor Ror 3 - original + copy",
           required: true,
@@ -58,7 +58,7 @@ export const marriageChecklist: VisaChecklist = {
           required: true,
         },
         { text: "Hand-drawn map with major roads nearby", required: true },
-        { text: "Children's birth certificate (if applicable)", required: false },
+        { text: "Child's birth certificate (if applicable)", required: false },
         { text: "Spouse name change document (if applicable)", required: false },
         {
           text: "Signed letter from spouse confirming ongoing marriage",
@@ -86,7 +86,7 @@ export const marriageChecklist: VisaChecklist = {
         },
         {
           text:
-            "400,000thb in bank (at least 3 months prior) OR 40,000thb monthly salary with supporting documents",
+            "400,000 THB in bank (at least 3 months prior) OR 40,000 THB monthly salary with supporting documents",
           required: true,
         },
       ],

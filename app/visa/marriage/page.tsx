@@ -208,8 +208,8 @@ export default function MarriageVisaPage() {
         {/* Top actions */}
         <div className="flex flex-col gap-3 pt-8 print:hidden sm:flex-row sm:items-center sm:justify-between">
           <Button asChild className="h-12 justify-start rounded-2xl bg-slate-600 px-5 text-base hover:bg-slate-700">
-            <Link href="/">
-              <ArrowLeft className="mr-2 h-5 w-5" /> Back to Visa Selection
+            <Link href="/visa/marriage/stages">
+              <ArrowLeft className="mr-2 h-5 w-5" /> Back to Marriage Visa Stages
             </Link>
           </Button>
 

@@ -14,15 +14,17 @@ const stages = [
     stage: 1,
     title: "Stage 1 - Apply Abroad",
     description:
-      "Apply for a 90-Day Non-Immigrant O visa at a Thai embassy or consulate in your home country, or if you're already in Thailand you can leave and apply for this in a neighboring country.",
-    available: false,
+      "Apply for a Non-Immigrant O visa at a Thai embassy or consulate in your home country, or a neighboring country, such as Laos or Vietnam.",
+    available: true,
+    href: "/visa/marriage/stages/stage-1",
   },
   {
     stage: 2,
     title: "Stage 2 - Change Visa in Thailand",
     description:
       "Convert to a Non-Immigrant O based on marriage at your local immigration office.",
-    available: false,
+    available: true,
+    href: "/visa/marriage/stages/stage-2",
   },
   {
     stage: 3,
