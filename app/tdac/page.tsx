@@ -38,7 +38,7 @@ export default function TDACPage() {
 
             <div className="mt-6 rounded-2xl bg-sky-50 border border-sky-200 p-6">
               <p className="text-lg font-semibold text-sky-900">
-                Since 1 May 2025, all non-Thai nationals must complete the TDAC online before entering Thailand - by air, land, or sea. No more paper arrival cards.
+                Since 1 May 2025, all non-Thai nationals must complete the TDAC online before entering Thailand - by air, land, or sea. No more paper arrival cards (TM.6).
               </p>
             </div>
 
@@ -108,7 +108,7 @@ export default function TDACPage() {
               <div className="font-bold text-amber-900">Good to know</div>
               <div className="mt-2 text-sm text-amber-900 space-y-1">
                 <p>All details must be entered in English.</p>
-                <p>The TDAC is not a visa - you still need the correct visa or exemption.</p>
+                <p>The TDAC is not a visa, it's a digital arrival card - you still need the correct visa or exemption eligibility.</p>
                 <p>It takes about 3–5 minutes to fill out if you have your info ready.</p>
               </div>
             </div>

@@ -78,7 +78,7 @@ export default function PinkIdCardPage() {
                 <div className="mt-3 grid gap-2">
                   {[
                     "Passport + copies (bio page, visa, latest entry stamp)",
-                    "Yellow Book (Tabien Baan Leuang), if already issued",
+                    "Yellow Book (Tabien Baan), if already issued",
                     "Proof of current address",
                     "House owner's ID and/or presence at office (depends on district)",
                     "Marriage certificate (if applying via Thai spouse address)",
