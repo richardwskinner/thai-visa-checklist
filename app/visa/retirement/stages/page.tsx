@@ -64,7 +64,7 @@ export default function RetirementStagesPage() {
               </Link>
             </div>
 
-            <div className="text-center">
+            <div className="mt-5 text-center sm:mt-6">
               <div className="text-4xl">🏖️</div>
               <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">
                 Retirement Visa

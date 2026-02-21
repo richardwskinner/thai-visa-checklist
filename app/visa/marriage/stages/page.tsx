@@ -20,7 +20,7 @@ const stages = [
   },
   {
     stage: 2,
-    title: "Convert Visa in Thailand (If required)",
+    title: "Convert Visa in Thailand to Non-O",
     description:
       "If you're in Thailand on a Tourist or Visa-Exempt, and want to convert to a Non-Immigrant O Visa (Marriage).",
     available: true,
@@ -66,7 +66,7 @@ export default function MarriageStagesPage() {
               </Link>
             </div>
 
-            <div className="text-center">
+            <div className="mt-5 text-center sm:mt-6">
               <div className="text-4xl">💑</div>
               <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">
                 Marriage Visa

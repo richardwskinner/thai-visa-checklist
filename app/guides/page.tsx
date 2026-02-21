@@ -10,6 +10,7 @@ import {
   Home,
   IdCard,
   BadgeCheck,
+  AlertTriangle,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -91,6 +92,15 @@ const guides = [
     icon: IdCard,
     color: "bg-rose-100",
     iconColor: "text-rose-600",
+  },
+  {
+    title: "Overstay in Thailand",
+    description:
+      "Overstay fines, blacklist rules, and what to do now based on official Thai immigration notices.",
+    href: "/guides/overstay-thailand",
+    icon: AlertTriangle,
+    color: "bg-red-100",
+    iconColor: "text-red-700",
   },
   {
     title: "Passport Renewal and Stamp Transfer",
