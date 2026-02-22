@@ -99,6 +99,14 @@ export default function HomePage() {
                   >
                     Airports of Thailand <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
                   </a>
+                  <a
+                    href="https://thaiextension.vfsevisa.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
+                  >
+                    Thai e-Extension Portal <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
+                  </a>
                 </div>
               </div>
             </section>

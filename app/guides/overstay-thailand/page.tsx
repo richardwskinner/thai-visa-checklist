@@ -100,6 +100,9 @@ export default function OverstayThailandGuidePage() {
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">Blacklist rules (official notice table)</h2>
 
+                <p className="mt-2 text-sm text-slate-600 sm:hidden">
+                  Swipe left/right to view the full table on mobile.
+                </p>
                 <div className="mt-4 overflow-x-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
                   <div className="text-base font-bold text-slate-900">Voluntary Surrender</div>
                   <table className="mt-3 w-full min-w-[620px] border-collapse text-left text-sm">
@@ -177,9 +180,11 @@ export default function OverstayThailandGuidePage() {
                 <div className="mt-4 space-y-3">
                   {FAQS.map((faq) => (
                     <details key={faq.question} className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                      <summary className="list-none cursor-pointer pr-6 text-base font-bold text-slate-900">
-                        <span>{faq.question}</span>
-                        <span className="float-right text-slate-500 transition group-open:rotate-45">+</span>
+                      <summary className="flex list-none cursor-pointer items-start justify-between gap-3 text-base font-bold text-slate-900">
+                        <span className="min-w-0">{faq.question}</span>
+                        <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                          +
+                        </span>
                       </summary>
                       <p className="mt-2 text-sm leading-relaxed text-slate-700">{faq.answer}</p>
                     </details>
