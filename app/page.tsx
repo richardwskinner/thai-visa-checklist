@@ -34,7 +34,7 @@ export default function HomePage() {
             <section className="mt-8">
               <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
                 <div className="text-center text-sm font-bold text-slate-800">Official Government Resources</div>
-                <div className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+                <div className="mt-4 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-3">
                   <a
                     href="https://www.immigration.go.th/"
                     target="_blank"

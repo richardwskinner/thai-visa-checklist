@@ -100,10 +100,54 @@ export default function OverstayThailandGuidePage() {
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">Blacklist rules (official notice table)</h2>
 
-                <p className="mt-2 text-sm text-slate-600 sm:hidden">
-                  Swipe left/right to view the full table on mobile.
-                </p>
-                <div className="mt-4 overflow-x-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                <div className="mt-4 space-y-4 sm:hidden">
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                    <div className="text-base font-bold text-slate-900">Voluntary Surrender</div>
+                    <div className="mt-3 space-y-2">
+                      {[
+                        ["Less than 90 days", "No blacklist"],
+                        ["More than 90 days", "1 year"],
+                        ["More than 1 year", "3 years"],
+                        ["More than 3 years", "5 years"],
+                        ["More than 5 years", "10 years"],
+                      ].map(([duration, blacklist]) => (
+                        <div key={duration} className="rounded-xl border border-slate-200 bg-white p-3">
+                          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            Overstay Duration
+                          </div>
+                          <div className="mt-1 font-semibold text-slate-900">{duration}</div>
+                          <div className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            Blacklist Period
+                          </div>
+                          <div className="mt-1 text-slate-700">{blacklist}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                    <div className="text-base font-bold text-slate-900">Arrested</div>
+                    <div className="mt-3 space-y-2">
+                      {[
+                        ["Less than 1 year", "5 years"],
+                        ["More than 1 year", "10 years"],
+                      ].map(([duration, blacklist]) => (
+                        <div key={duration} className="rounded-xl border border-slate-200 bg-white p-3">
+                          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            Overstay Duration
+                          </div>
+                          <div className="mt-1 font-semibold text-slate-900">{duration}</div>
+                          <div className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            Blacklist Period
+                          </div>
+                          <div className="mt-1 text-slate-700">{blacklist}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 hidden overflow-x-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:block sm:p-5">
                   <div className="text-base font-bold text-slate-900">Voluntary Surrender</div>
                   <table className="mt-3 w-full min-w-[620px] border-collapse text-left text-sm">
                     <thead className="text-slate-900">
