@@ -89,6 +89,17 @@ export const visaNews: VisaNewsItem[] = [
       "https://www.bangkokpost.com/thailand/general/3198863/land-transport-department-to-allow-online-licence-renewals",
   },
   {
+    slug: "aot-charge-justification-opinion-2026",
+    title: "Bangkok Post Opinion Questions AOT Passenger Charge Increase",
+    summary:
+      "A Bangkok Post opinion piece argues Airports of Thailand should better justify the planned passenger service charge increase by clearly showing what travelers will receive in return and how the added revenue will be used.",
+    category: "Transport",
+    publishedAt: "2026-02-23",
+    sourceLabel: "Bangkok Post",
+    sourceUrl:
+      "https://www.bangkokpost.com/opinion/opinion/3203025/airports-of-thailand-must-justify-charge",
+  },
+  {
     slug: "new-year-2026-five-day-holiday-tourism-boost",
     title: "Thailand Declares 5-Day New Year Holiday to Support Tourism",
     summary:

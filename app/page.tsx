@@ -19,10 +19,7 @@ export default function HomePage() {
         <Card className="rounded-3xl border border-slate-200/80 bg-white/95 shadow-[0_8px_30px_rgba(15,23,42,0.06)]">
           <CardContent className="p-8 sm:p-10">
             <div className="text-center">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
-                Free Printable Checklists
-              </div>
-              <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
+              <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">
                 Which Thailand Visa Are You Applying For?
               </h2>
               <p className="mt-2 text-base text-slate-600">

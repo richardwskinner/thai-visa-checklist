@@ -62,9 +62,32 @@ function getSourceLogo(sourceLabel: string, sourceUrl: string) {
   }
 }
 
-function SourceLink({ sourceLabel, sourceUrl }: { sourceLabel: string; sourceUrl: string }) {
+function SourceLogoBadge({ sourceLabel, sourceUrl }: { sourceLabel: string; sourceUrl: string }) {
   const sourceLogo = getSourceLogo(sourceLabel, sourceUrl);
 
+  if (!sourceLogo) return null;
+
+  return (
+    <a
+      href={sourceUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open source: ${sourceLabel}`}
+      title={sourceLabel}
+      className="inline-flex h-10 w-16 items-center justify-center overflow-hidden rounded-md border border-slate-200 bg-white px-1.5 shadow-sm hover:border-slate-300"
+    >
+      <img
+        src={sourceLogo}
+        alt=""
+        aria-hidden="true"
+        className="max-h-7 w-auto object-contain"
+        loading="lazy"
+      />
+    </a>
+  );
+}
+
+function SourceLink({ sourceLabel, sourceUrl }: { sourceLabel: string; sourceUrl: string }) {
   return (
     <a
       href={sourceUrl}
@@ -72,17 +95,6 @@ function SourceLink({ sourceLabel, sourceUrl }: { sourceLabel: string; sourceUrl
       rel="noopener noreferrer"
       className="inline-flex items-center gap-1.5 font-semibold text-blue-700 hover:text-blue-900"
     >
-      {sourceLogo ? (
-        <span className="inline-flex h-7 w-10 items-center justify-center overflow-hidden rounded-sm border border-slate-200 bg-white px-1">
-          <img
-            src={sourceLogo}
-            alt=""
-            aria-hidden="true"
-            className="max-h-5 w-auto object-contain"
-            loading="lazy"
-          />
-        </span>
-      ) : null}
       {sourceLabel} <ExternalLink className="h-3.5 w-3.5" />
     </a>
   );
@@ -149,15 +161,18 @@ export default async function VisaNewsPage({
             <div className="grid gap-5 sm:grid-cols-2">
               {pinned.map((item) => (
                 <Card key={item.slug} className="rounded-3xl border-0 bg-white shadow-sm">
-                  <CardContent className="p-6">
+                  <CardContent className="relative p-6">
+                    <div className="absolute right-6 top-6">
+                      <SourceLogoBadge sourceLabel={item.sourceLabel} sourceUrl={item.sourceUrl} />
+                    </div>
                     <div
-                      className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
+                      className={`inline-flex rounded-full px-3 py-1 pr-3 text-xs font-semibold ${
                         categoryStyles[item.category] ?? "bg-slate-100 text-slate-700"
                       }`}
                     >
                       {item.category}
                     </div>
-                    <h2 className="mt-3 text-lg font-bold text-slate-900">{item.title}</h2>
+                    <h2 className="mt-3 pr-20 text-lg font-bold text-slate-900">{item.title}</h2>
                     <p className="mt-2 text-sm text-slate-600">{item.summary}</p>
                     <div className="mt-4 space-y-1 text-xs text-slate-500">
                       <div className="flex items-center gap-1.5">
@@ -189,7 +204,10 @@ export default async function VisaNewsPage({
           <div className="space-y-4">
             {updates.map((item) => (
               <Card key={item.slug} className="rounded-3xl border-0 bg-white shadow-sm">
-                <CardContent className="p-6">
+                <CardContent className="relative p-6">
+                  <div className="absolute right-6 top-6">
+                    <SourceLogoBadge sourceLabel={item.sourceLabel} sourceUrl={item.sourceUrl} />
+                  </div>
                   <div
                     className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
                       categoryStyles[item.category] ?? "bg-slate-100 text-slate-700"
@@ -197,7 +215,7 @@ export default async function VisaNewsPage({
                   >
                     {item.category}
                   </div>
-                  <h2 className="mt-3 text-lg font-bold text-slate-900">{item.title}</h2>
+                  <h2 className="mt-3 pr-20 text-lg font-bold text-slate-900">{item.title}</h2>
                   <p className="mt-2 text-sm text-slate-600">{item.summary}</p>
                   <div className="mt-4 text-xs text-slate-500">
                     Published {formatDate(item.publishedAt)}
