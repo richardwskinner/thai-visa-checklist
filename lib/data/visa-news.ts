@@ -1,4 +1,4 @@
-export type VisaNewsCategory = "Visa" | "Immigration" | "Travel";
+export type VisaNewsCategory = "Visa" | "Immigration" | "Travel" | "Transport";
 
 export type VisaNewsItem = {
   slug: string;
@@ -76,6 +76,17 @@ export const visaNews: VisaNewsItem[] = [
     sourceLabel: "Bangkok Post",
     sourceUrl:
       "https://www.bangkokpost.com/thailand/general/3201739/thailand-to-raise-international-passenger-fee-in-june",
+  },
+  {
+    slug: "dlt-online-licence-renewals-2026",
+    title: "DLT Plans Online Driving Licence Renewals",
+    summary:
+      "Thailand's Land Transport Department says eligible motorists will be able to renew licences online under a phased rollout, with implementation tied to digital medical-certificate verification and related system checks.",
+    category: "Transport",
+    publishedAt: "2026-02-17",
+    sourceLabel: "Bangkok Post",
+    sourceUrl:
+      "https://www.bangkokpost.com/thailand/general/3198863/land-transport-department-to-allow-online-licence-renewals",
   },
   {
     slug: "new-year-2026-five-day-holiday-tourism-boost",

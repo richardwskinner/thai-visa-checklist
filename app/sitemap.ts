@@ -12,6 +12,10 @@ const routes: Array<{
   { path: "/visa-news", changeFrequency: "daily", priority: 0.9 },
   { path: "/about", changeFrequency: "monthly", priority: 0.5 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/disclaimer", changeFrequency: "monthly", priority: 0.4 },
+  { path: "/privacy-policy", changeFrequency: "monthly", priority: 0.4 },
+  { path: "/terms-of-use", changeFrequency: "monthly", priority: 0.4 },
+  { path: "/cookie-policy", changeFrequency: "monthly", priority: 0.4 },
   { path: "/tdac", changeFrequency: "weekly", priority: 0.8 },
   { path: "/thailand-public-holidays-2026", changeFrequency: "monthly", priority: 0.7 },
 
@@ -34,6 +38,8 @@ const routes: Array<{
   { path: "/guides/pink-id-card", changeFrequency: "monthly", priority: 0.7 },
   { path: "/guides/passport-renewal-stamp-transfer", changeFrequency: "monthly", priority: 0.7 },
   { path: "/guides/overstay-thailand", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/guides/thai-driving-licence", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/guides/opening-bank-account-thailand", changeFrequency: "monthly", priority: 0.8 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

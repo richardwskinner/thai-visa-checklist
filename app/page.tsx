@@ -1,8 +1,57 @@
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink } from "lucide-react";
 import HomeVisaGrid from "@/components/home-visa-grid";
 import type { Metadata } from "next";
+
+const resourceLinks: Array<{ label: string; href: string; logo?: string }> = [
+  {
+    label: "Thai Immigration Bureau",
+    href: "https://www.immigration.go.th/",
+    logo: "/Important-links-logos/Immigration-bureau.png",
+  },
+  {
+    label: "Thai e-Visa Official Portal",
+    href: "https://www.thaievisa.go.th/",
+    logo: "/Important-links-logos/mfa_logo.webp",
+  },
+  {
+    label: "Ministry of Foreign Affairs",
+    href: "https://www.mfa.go.th/",
+    logo: "/Important-links-logos/mfa_logo.webp",
+  },
+  {
+    label: "Thailand.go.th",
+    href: "https://thailand.go.th/home",
+    logo: "/Important-links-logos/Sawasdee-thailand.png",
+  },
+  {
+    label: "90-Day Reporting Portal",
+    href: "https://tm47.immigration.go.th/",
+    logo: "/Important-links-logos/Immigration-bureau.png",
+  },
+  {
+    label: "TM.30 Portal",
+    href: "https://tm30.immigration.go.th/",
+    logo: "/Important-links-logos/Immigration-bureau.png",
+  },
+  {
+    label: "Revenue Department",
+    href: "https://www.rd.go.th/english",
+    logo: "/Important-links-logos/The-revenue-dept.svg",
+  },
+  {
+    label: "Tourism Authority of Thailand",
+    href: "https://thai.tourismthailand.org/Home",
+    logo: "/Important-links-logos/amazing-thailand.png",
+  },
+  {
+    label: "Airports of Thailand",
+    href: "https://www.airportthai.co.th/en/",
+    logo: "/Important-links-logos/AOT.png",
+  },
+];
 
 export const metadata: Metadata = {
   title: "Thai Visa Checklist Helper - Free Document Checklists for Thailand Visas",
@@ -35,78 +84,32 @@ export default function HomePage() {
               <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
                 <div className="text-center text-sm font-bold text-slate-800">Official Government Resources</div>
                 <div className="mt-4 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-3">
-                  <a
-                    href="https://www.immigration.go.th/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
-                  >
-                    Thai Immigration Bureau <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
-                  </a>
-                  <a
-                    href="https://www.thaievisa.go.th/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
-                  >
-                    Thai e-Visa Official Portal <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
-                  </a>
-                  <a
-                    href="https://www.mfa.go.th/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
-                  >
-                    Ministry of Foreign Affairs <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
-                  </a>
-                  <a
-                    href="https://tm47.immigration.go.th/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
-                  >
-                    90-Day Reporting Portal <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
-                  </a>
-                  <a
-                    href="https://tm30.immigration.go.th/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
-                  >
-                    TM.30 Portal <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
-                  </a>
-                  <a
-                    href="https://www.rd.go.th/english"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
-                  >
-                    Revenue Department <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
-                  </a>
-                  <a
-                    href="https://thai.tourismthailand.org/Home"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
-                  >
-                    Tourism Authority of Thailand <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
-                  </a>
-                  <a
-                    href="https://www.airportthai.co.th/en/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
-                  >
-                    Airports of Thailand <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
-                  </a>
-                  <a
-                    href="https://thaiextension.vfsevisa.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:text-slate-900"
-                  >
-                    Thai e-Extension Portal <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
-                  </a>
+                  {resourceLinks.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={link.label}
+                      title={link.label}
+                      className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-slate-700 hover:text-slate-900"
+                    >
+                      {link.logo ? (
+                        <span className="flex h-10 w-14 shrink-0 items-center justify-center rounded-md bg-white px-1">
+                          <Image
+                            src={link.logo}
+                            alt=""
+                            aria-hidden="true"
+                            width={48}
+                            height={32}
+                            className="max-h-8 w-auto object-contain"
+                          />
+                        </span>
+                      ) : null}
+                      <span className="min-w-0">{link.label}</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
+                    </a>
+                  ))}
                 </div>
               </div>
             </section>

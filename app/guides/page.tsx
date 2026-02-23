@@ -11,6 +11,8 @@ import {
   IdCard,
   BadgeCheck,
   AlertTriangle,
+  CarFront,
+  Landmark,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -110,6 +112,24 @@ const guides = [
     icon: BadgeCheck,
     color: "bg-cyan-100",
     iconColor: "text-cyan-700",
+  },
+  {
+    title: "Thai Driving Licence for Foreigners",
+    description:
+      "How foreigners can get a driving licence in Thailand, including common documents, tests, and DLT application steps.",
+    href: "/guides/thai-driving-licence",
+    icon: CarFront,
+    color: "bg-sky-100",
+    iconColor: "text-sky-700",
+  },
+  {
+    title: "Opening a Thai Bank Account (Foreigner)",
+    description:
+      "How foreigners can open a bank account in Thailand, what documents banks may ask for, and why branch policy matters.",
+    href: "/guides/opening-bank-account-thailand",
+    icon: Landmark,
+    color: "bg-emerald-100",
+    iconColor: "text-emerald-700",
   },
 ];
 

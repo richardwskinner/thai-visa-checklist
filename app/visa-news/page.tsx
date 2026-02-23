@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -14,6 +15,16 @@ const categoryStyles: Record<string, string> = {
   Visa: "bg-blue-100 text-blue-800",
   Immigration: "bg-rose-100 text-rose-800",
   Travel: "bg-violet-100 text-violet-800",
+  Transport: "bg-amber-100 text-amber-800",
+};
+
+const newsFilters = ["All", "Visa", "Immigration", "Travel", "Transport"] as const;
+const filterChipStyles: Record<(typeof newsFilters)[number], string> = {
+  All: "bg-slate-100 text-slate-700 border-slate-200",
+  Visa: "bg-blue-100 text-blue-800 border-blue-200",
+  Immigration: "bg-rose-100 text-rose-800 border-rose-200",
+  Travel: "bg-violet-100 text-violet-800 border-violet-200",
+  Transport: "bg-amber-100 text-amber-800 border-amber-200",
 };
 
 function formatDate(dateString: string) {
@@ -24,13 +35,44 @@ function formatDate(dateString: string) {
   });
 }
 
-export default function VisaNewsPage() {
+export default async function VisaNewsPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ category?: string }>;
+}) {
+  const params = searchParams ? await searchParams : undefined;
+  const requestedCategory = params?.category;
+  const activeFilter = newsFilters.includes(requestedCategory as (typeof newsFilters)[number])
+    ? (requestedCategory as (typeof newsFilters)[number])
+    : "All";
+
   const byNewest = [...visaNews].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
-  const pinned = byNewest.filter((item) => item.isPinned).slice(0, 2);
+  const filtered = activeFilter === "All" ? byNewest : byNewest.filter((item) => item.category === activeFilter);
+  const showPinned = activeFilter === "All";
+  const pinned = showPinned ? filtered.filter((item) => item.isPinned).slice(0, 2) : [];
   const pinnedSlugs = new Set(pinned.map((item) => item.slug));
-  const updates = byNewest.filter((item) => !pinnedSlugs.has(item.slug));
+  const updates = showPinned ? filtered.filter((item) => !pinnedSlugs.has(item.slug)) : filtered;
+
+  const filterLinks = newsFilters.map((filter) => {
+    const isActive = activeFilter === filter;
+    const href = filter === "All" ? "/visa-news" : `/visa-news?category=${encodeURIComponent(filter)}`;
+    const base = filterChipStyles[filter];
+    return (
+      <Link
+        key={filter}
+        href={href}
+        className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${
+          isActive
+            ? `${base} ring-1 ring-inset ring-current`
+            : `${base} opacity-70 hover:opacity-100`
+        }`}
+      >
+        {filter}
+      </Link>
+    );
+  });
 
   return (
     <div className="min-h-screen bg-[#eef3fb]">
@@ -42,11 +84,14 @@ export default function VisaNewsPage() {
           </p>
         </div>
 
-        {pinned.length > 0 && (
+        {showPinned && pinned.length > 0 && (
           <section className="mt-10">
-            <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-slate-700">
-              <Pin className="h-4 w-4" />
-              Pinned Updates
+            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-slate-700">
+                <Pin className="h-4 w-4" />
+                Pinned Updates
+              </div>
+              <div className="flex flex-wrap items-center gap-2">{filterLinks}</div>
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               {pinned.map((item) => (
@@ -86,7 +131,15 @@ export default function VisaNewsPage() {
         )}
 
         <section className="mt-10">
-          <div className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-700">Latest Updates</div>
+          {!showPinned && (
+            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="text-sm font-bold uppercase tracking-wide text-slate-700">Latest Updates</div>
+              <div className="flex flex-wrap items-center gap-2">{filterLinks}</div>
+            </div>
+          )}
+          {showPinned && (
+            <div className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-700">Latest Updates</div>
+          )}
           <div className="space-y-4">
             {updates.map((item) => (
               <Card key={item.slug} className="rounded-3xl border-0 bg-white shadow-sm">
@@ -117,6 +170,13 @@ export default function VisaNewsPage() {
                 </CardContent>
               </Card>
             ))}
+            {updates.length === 0 && (
+              <Card className="rounded-3xl border-0 bg-white shadow-sm">
+                <CardContent className="p-6 text-sm text-slate-600">
+                  No news items found for <span className="font-semibold text-slate-900">{activeFilter}</span>.
+                </CardContent>
+              </Card>
+            )}
           </div>
         </section>
 

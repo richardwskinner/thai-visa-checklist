@@ -41,12 +41,6 @@ export default function SiteHeader() {
                 Visa News
               </Link>
               <Link
-                href="/thailand-public-holidays-2026"
-                className="whitespace-nowrap text-sm font-semibold leading-tight text-slate-600 hover:text-slate-900"
-              >
-                Thai Public Holidays
-              </Link>
-              <Link
                 href="/guides"
                 className="whitespace-nowrap text-sm font-semibold leading-tight text-slate-600 hover:text-slate-900"
               >

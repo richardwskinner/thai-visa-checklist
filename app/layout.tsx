@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
@@ -27,11 +28,37 @@ function Footer() {
   return (
     <footer className="border-t border-slate-200">
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-5 py-5">
-        <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
-          <p className="text-sm font-semibold text-slate-600">
+        <div className="flex flex-col items-center gap-3 text-center sm:grid sm:grid-cols-3 sm:items-center sm:gap-4 sm:text-left">
+          <p className="text-sm font-semibold text-slate-600 sm:justify-self-start">
             © {new Date().getFullYear()} Thai Visa Checklist
           </p>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:justify-self-center">
+            <Link
+              href="/thailand-public-holidays-2026"
+              className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+            >
+              Thai Public Holidays
+            </Link>
+            <Link
+              href="/disclaimer"
+              className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+            >
+              Disclaimer
+            </Link>
+            <Link
+              href="/privacy-policy"
+              className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms-of-use"
+              className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+            >
+              Terms of Use
+            </Link>
+          </div>
+          <div className="flex items-center gap-5 sm:justify-self-end">
             <a
               href="mailto:hello@thaivisachecklist.com"
               className="text-sm font-semibold text-slate-600 hover:text-slate-900"
