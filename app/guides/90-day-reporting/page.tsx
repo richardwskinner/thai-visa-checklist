@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 
 const TM47_URL = "https://www.immigration.go.th/wp-content/uploads/2022/10/18.Form-TM-47.pdf";
 const TM47_PORTAL = "https://tm47.immigration.go.th";
+const NINETY_DAY_RECEIPT_EXAMPLE_URL = "/examples/90-day-report-example.pdf";
 const FAQS = [
   {
     question: "Does 90-day reporting extend my visa?",
@@ -152,6 +153,21 @@ export default function NinetyDayReportingpage() {
                   <div className="flex items-center gap-3 text-slate-700">
                     <div className="h-2 w-2 shrink-0 rounded-full bg-violet-500" />
                     <span className="min-w-0">
+                      90-day report receipt{" "}
+                      <a
+                        href={NINETY_DAY_RECEIPT_EXAMPLE_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-medium text-violet-700 underline underline-offset-2"
+                      >
+                        View example <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <div className="h-2 w-2 shrink-0 rounded-full bg-violet-500" />
+                    <span className="min-w-0">
                       TM.47 form -{" "}
                       <a
                         href={TM47_URL}
@@ -208,6 +224,15 @@ export default function NinetyDayReportingpage() {
                         </li>
                         <li>
                           Previous notification of staying over 90 days (if any).
+                          {" "}
+                          <a
+                            href={NINETY_DAY_RECEIPT_EXAMPLE_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 font-medium text-violet-700 underline underline-offset-2"
+                          >
+                            Example receipt <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
                         </li>
                         <li>
                           Complete Form TM.47 and sign it.

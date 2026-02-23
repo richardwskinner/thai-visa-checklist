@@ -337,6 +337,44 @@ export default function MarriageVisaPage() {
               </div>
             </div>
 
+            {/* FAQ (screen only) */}
+            <div className="mt-8 print:hidden">
+              <div className="text-lg font-extrabold text-slate-900">FAQ</div>
+              <div className="mt-3 space-y-3">
+                <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-sm font-bold text-slate-900 sm:text-base">
+                    <span className="min-w-0">
+                      Do I need to keep the 400,000 THB in my account during the &quot;under consideration&quot; period for a
+                      marriage extension in Bangkok?
+                    </span>
+                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                    There is no published rule requiring the 400,000 THB to remain after submission. Bangkok usually issues a short under consideration stamp of around 21 days. Officers previously asked to see an updated bank book on collection day, but this is not common now. It's best to confirm with your officer and avoid moving funds until final approval.
+                  </p>
+                </details>
+
+                <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-sm font-bold text-slate-900 sm:text-base">
+                    <span className="min-w-0">
+                      Can I leave Thailand during the marriage extension &quot;under consideration&quot; period?
+                    </span>
+                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                    In many cases, yes, if you obtain a re-entry permit and return before the under consideration stamp
+                    expires. However, you should confirm this with your immigration office when you apply, because some
+                    offices may schedule a home visit during the under consideration period and you may need to coordinate
+                    your travel around that.
+                  </p>
+                </details>
+              </div>
+            </div>
+
             {/* This separator/footer is what often causes the "blank second page" - hide on print */}
             <div className="mt-8 print:hidden">
               <Separator />

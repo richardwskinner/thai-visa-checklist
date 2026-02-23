@@ -77,4 +77,15 @@ export const visaNews: VisaNewsItem[] = [
     sourceUrl:
       "https://www.bangkokpost.com/thailand/general/3201739/thailand-to-raise-international-passenger-fee-in-june",
   },
+  {
+    slug: "new-year-2026-five-day-holiday-tourism-boost",
+    title: "Thailand Declares 5-Day New Year Holiday to Support Tourism",
+    summary:
+      "Thailand approved an extended five-day New Year break (Dec 31, 2025 to Jan 4, 2026), including a special holiday on Jan 2, to encourage domestic travel and consumer spending.",
+    category: "Travel",
+    publishedAt: "2025-11-08",
+    sourceLabel: "Bangkok Post",
+    sourceUrl:
+      "https://www.bangkokpost.com/thailand/general/3132730/thailand-declares-5day-new-year-holiday-to-boost-tourism-economy",
+  },
 ];

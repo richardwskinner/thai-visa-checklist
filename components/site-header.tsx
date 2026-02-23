@@ -12,33 +12,24 @@ export default function SiteHeader() {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur">
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-5">
         <div className="py-3 sm:py-2">
-          <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-0">
-            <div className="hidden sm:block">
+          <div className="grid gap-2">
+            <div className="flex items-center justify-center">
+              <Link href="/" className="flex flex-col items-center">
+                <Image
+                  src="/logo-full.svg"
+                  alt="Thai Visa Checklist"
+                  width={295}
+                  height={40}
+                  priority
+                />
+              </Link>
+            </div>
+
+            <nav className="flex items-center justify-center gap-4 sm:gap-6">
               {showChecklists && (
                 <Link
                   href="/"
                   className="text-sm font-semibold text-slate-600 hover:text-slate-900"
-                >
-                  Checklists
-                </Link>
-              )}
-            </div>
-
-            <Link href="/" className="flex flex-col items-center">
-              <Image
-                src="/logo-full.svg"
-                alt="Thai Visa Checklist"
-                width={295}
-                height={40}
-                priority
-              />
-            </Link>
-
-            <nav className="flex items-center justify-center gap-4 sm:justify-end sm:gap-6">
-              {showChecklists && (
-                <Link
-                  href="/"
-                  className="text-sm font-semibold text-slate-600 hover:text-slate-900 sm:hidden"
                 >
                   Checklists
                 </Link>
@@ -48,6 +39,12 @@ export default function SiteHeader() {
                 className="text-sm font-semibold text-slate-600 hover:text-slate-900"
               >
                 Visa News
+              </Link>
+              <Link
+                href="/thailand-public-holidays-2026"
+                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+              >
+                Thai Public Holidays
               </Link>
               <Link
                 href="/guides"

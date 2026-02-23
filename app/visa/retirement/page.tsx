@@ -338,6 +338,28 @@ export default function RetirementVisaPage() {
               </div>
             </div>
 
+            {/* FAQ (screen only) */}
+            <div className="mt-8 print:hidden">
+              <div className="text-lg font-extrabold text-slate-900">FAQ</div>
+              <div className="mt-3 space-y-3">
+                <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-sm font-bold text-slate-900 sm:text-base">
+                    <span className="min-w-0">
+                      How far in advance can I apply for a retirement extension at Chaeng Wattana?
+                    </span>
+                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                    At Chaeng Wattana (Immigration Division 1), a common rule is that you can apply when you have 45
+                    days or less remaining on your current stamp. Office practice can change, so confirm with the
+                    office before you go.
+                  </p>
+                </details>
+              </div>
+            </div>
+
             <div className="mt-8 print:hidden">
               <Separator />
             </div>

@@ -98,7 +98,7 @@ export default function OverstayThailandGuidePage() {
               </section>
 
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">Blacklist rules (official notice table)</h2>
+                <h2 className="text-xl font-extrabold text-slate-900">Blacklist rules</h2>
 
                 <div className="mt-4 space-y-4 sm:hidden">
                   <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">

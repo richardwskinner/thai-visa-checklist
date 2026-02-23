@@ -12,21 +12,21 @@ export const metadata: Metadata = {
 const stages = [
   {
     stage: 1,
-    title: "Stage 1 - Enter Thailand",
+    title: "Apply Abroad (Recommended)",
     description:
       "Arrive on a Visa Exemption, Tourist Visa, or Non-Immigrant O issued from a Thai embassy abroad.",
     available: false,
   },
   {
     stage: 2,
-    title: "Stage 2 - Convert to Non-O",
+    title: "Convert Visa in Thailand to Non-O",
     description:
       "If you entered on a tourist visa or visa exemption, convert to a Non-Immigrant O (retirement) at immigration.",
     available: false,
   },
   {
     stage: 3,
-    title: "Stage 3 - 1 Year Extension",
+    title: "1 Year Extension",
     description:
       "Extend your Non-Immigrant O visa for one year based on retirement (age 50+). Full checklist included.",
     available: true,
@@ -37,13 +37,13 @@ const stages = [
 const postExtensionStages = [
   {
     stage: 4,
-    title: "Stage 4 - 90-Day Reporting",
+    title: "90-Day Reporting",
     description: "Report your address to immigration every 90 days while on a long-stay visa.",
     href: "/guides/90-day-reporting",
   },
   {
     stage: 5,
-    title: "Stage 5 - Re-Entry Permit",
+    title: "Re-Entry Permit",
     description: "Get a re-entry permit before leaving Thailand to keep your visa valid.",
     href: "/guides/re-entry-permit",
   },

@@ -269,6 +269,17 @@ export default function RetirementStageTwoPage() {
                   <li key={tip}>{tip}</li>
                 ))}
               </ul>
+              <div className="mt-2 text-xs text-amber-900 print:hidden">
+                Hand-drawn map example:{" "}
+                <a
+                  href="/examples/hand-drawn-map-example.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold underline underline-offset-2"
+                >
+                  View example map
+                </a>
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -61,7 +61,12 @@ export const retirementChecklist: VisaChecklist = {
         { text: "Copy of lease/rental agreement", required: false },
         { text: "Copy of landlord's ID card (if Thai) or passport (if foreigner)", required: false },
         { text: "Copy of house book (Tabian Baan) for the property", required: false },
-        { text: "Hand-drawn map to your residence (some offices require this)", required: false },
+        {
+          text: "Hand-drawn map to your residence (some offices require this)",
+          required: false,
+          noteLink: "View example map",
+          noteUrl: "/examples/hand-drawn-map-example.jpg",
+        },
         { text: "Photos of your residence (some offices require this)", required: false },
       ],
     },

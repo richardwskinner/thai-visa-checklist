@@ -57,7 +57,12 @@ export const marriageChecklist: VisaChecklist = {
           text: "4 Family photos (2 inside home + 2 outside home) on one page",
           required: true,
         },
-        { text: "Hand-drawn map with major roads nearby", required: true },
+        {
+          text: "Hand-drawn map with major roads nearby",
+          required: true,
+          noteLink: "View example map",
+          noteUrl: "/examples/hand-drawn-map-example.jpg",
+        },
         { text: "Child's birth certificate (if applicable)", required: false },
         { text: "Spouse name change document (if applicable)", required: false },
         {
@@ -100,8 +105,7 @@ export const marriageChecklist: VisaChecklist = {
 
   tips: [
     "Download all forms and prepare in advance",
-    "Normally only 1 Passport photo is required, however, sometimes 2 is requested",
+    "Generally 1 Passport photo is enough, however, sometimes 2 is requested",
     "Prepare two copies of your documents (not always required, but recommended)",
-    "Sign the bottom corner of every copy",
   ],
 };

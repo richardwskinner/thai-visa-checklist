@@ -168,6 +168,27 @@ export default function TouristExtensionPage() {
                 </p>
               </section>
 
+              <section>
+                <h2 className="text-xl font-extrabold text-slate-900">FAQ</h2>
+                <div className="mt-4 space-y-3">
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">
+                        If my passport stamp says 7 August, when do I need to leave Thailand?
+                      </span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      If your permitted stay stamp shows 7 August, you should depart Thailand before 11:59 PM on 7 August.
+                      Do not stay past midnight into 8 August. To reduce risk, leave earlier in the day in case of delays or
+                      checkpoint issues.
+                    </p>
+                  </details>
+                </div>
+              </section>
+
               {/* Common mistakes */}
               <section className="rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5">
                 <div className="font-bold text-amber-900">

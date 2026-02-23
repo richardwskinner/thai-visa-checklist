@@ -13,6 +13,7 @@ const routes: Array<{
   { path: "/about", changeFrequency: "monthly", priority: 0.5 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.5 },
   { path: "/tdac", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/thailand-public-holidays-2026", changeFrequency: "monthly", priority: 0.7 },
 
   { path: "/visa/marriage/stages", changeFrequency: "weekly", priority: 0.9 },
   { path: "/visa/marriage/stages/stage-1", changeFrequency: "weekly", priority: 0.8 },

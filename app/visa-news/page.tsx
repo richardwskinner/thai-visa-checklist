@@ -122,7 +122,6 @@ export default function VisaNewsPage() {
 
         <div className="mt-10 text-xs text-slate-500">
           <Separator className="mb-4" />
-          Always verify final requirements with official Thai government sources and your local immigration office.
         </div>
       </div>
     </div>
