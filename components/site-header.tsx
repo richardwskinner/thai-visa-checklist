@@ -25,42 +25,42 @@ export default function SiteHeader() {
               </Link>
             </div>
 
-            <nav className="flex items-center justify-center gap-4 sm:gap-6">
+            <nav className="grid grid-cols-3 gap-x-3 gap-y-2 text-center sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-6">
               {showChecklists && (
                 <Link
                   href="/"
-                  className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+                  className="justify-self-center text-sm font-semibold leading-tight text-slate-600 hover:text-slate-900"
                 >
                   Checklists
                 </Link>
               )}
               <Link
                 href="/visa-news"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+                className="justify-self-center text-sm font-semibold leading-tight text-slate-600 hover:text-slate-900"
               >
                 Visa News
               </Link>
               <Link
                 href="/thailand-public-holidays-2026"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+                className="justify-self-center text-sm font-semibold leading-tight text-slate-600 hover:text-slate-900"
               >
                 Thai Public Holidays
               </Link>
               <Link
                 href="/guides"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+                className="justify-self-center text-sm font-semibold leading-tight text-slate-600 hover:text-slate-900"
               >
                 Guides
               </Link>
               <Link
                 href="/about"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+                className="justify-self-center text-sm font-semibold leading-tight text-slate-600 hover:text-slate-900"
               >
                 About
               </Link>
               <Link
                 href="/contact"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+                className="justify-self-center text-sm font-semibold leading-tight text-slate-600 hover:text-slate-900"
               >
                 Contact
               </Link>
