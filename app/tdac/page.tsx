@@ -108,7 +108,7 @@ export default function TDACPage() {
               <div className="font-bold text-amber-900">Good to know</div>
               <div className="mt-2 text-sm text-amber-900 space-y-1">
                 <p>All details must be entered in English.</p>
-                <p>The TDAC is not a visa, it's a digital arrival card - you still need the correct visa or exemption eligibility.</p>
+                <p>The TDAC is not a visa, it&apos;s a digital arrival card - you still need the correct visa or exemption eligibility.</p>
                 <p>It takes about 3–5 minutes to fill out if you have your info ready.</p>
               </div>
             </div>

@@ -32,7 +32,12 @@ export const retirementChecklist: VisaChecklist = {
         { text: "2x Passport Photo, taken within 6 months (4×6 cm)", required: true },
         { text: "Passport Photocopies: Photo Page, Previous Visa Stamp & Latest Entry Stamp", required: true },
         { text: "TM.30 Receipt", required: true },
-        { text: "90-Day Report Receipt", required: false },
+        {
+          text: "90-Day Report Receipt",
+          required: false,
+          noteLink: "Example receipt",
+          noteUrl: "/examples/90-day-report-example.pdf",
+        },
       ],
     },
     {

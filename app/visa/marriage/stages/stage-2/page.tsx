@@ -10,12 +10,15 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Printer } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 import ChecklistNotice from "@/components/checklist-notice";
+import ExampleLink from "@/components/example-link";
 
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:stage2:checked:v1";
 const STORAGE_KEY_FONTSIZE = "thai-visa-checklist:fontsize:v1";
 
 type ChecklistItem = {
   text: string;
+  noteLink?: string;
+  noteUrl?: string;
 };
 
 type ChecklistSection = {
@@ -66,7 +69,11 @@ const stageTwoChecklist: {
         { text: "Thai Marriage Certificate Kor Ror 3 - original + copy"},
         { text: "Kor Ror 2 (updated same year) - original + copy" },
         { text: "4 family photos (2 inside home + 2 outside home) on one page" },
-        { text: "Hand-drawn map with major roads nearby" },
+        {
+          text: "Hand-drawn map with major roads nearby",
+          noteLink: "Example",
+          noteUrl: "/examples/hand-drawn-map-example.jpg",
+        },
         { text: "Child's birth certificate (if applicable)" },
         { text: "Spouse name change document (if applicable)" },
         { text: "Signed letter from spouse confirming ongoing marriage"},
@@ -175,7 +182,17 @@ function Section({
                 onCheckedChange={() => onToggle(key)}
                 className="h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-[#249C0F] data-[state=checked]:border-[#249C0F]"
               />
-              <div className={`${classes.itemText} text-slate-900 leading-snug`}>{item.text}</div>
+              <div className={`${classes.itemText} text-slate-900 leading-snug`}>
+                {item.text}
+                {item.noteLink && item.noteUrl && (
+                  <ExampleLink
+                    href={item.noteUrl}
+                    label={item.noteLink}
+                    className="ml-2 align-middle"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                )}
+              </div>
             </label>
           );
         })}

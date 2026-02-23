@@ -4,54 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { ExternalLink } from "lucide-react";
 import HomeVisaGrid from "@/components/home-visa-grid";
 import type { Metadata } from "next";
-
-const resourceLinks: Array<{ label: string; href: string; logo?: string }> = [
-  {
-    label: "Thai Immigration Bureau",
-    href: "https://www.immigration.go.th/",
-    logo: "/Important-links-logos/Immigration-bureau.png",
-  },
-  {
-    label: "Thai e-Visa Official Portal",
-    href: "https://www.thaievisa.go.th/",
-    logo: "/Important-links-logos/mfa_logo.webp",
-  },
-  {
-    label: "Ministry of Foreign Affairs",
-    href: "https://www.mfa.go.th/",
-    logo: "/Important-links-logos/mfa_logo.webp",
-  },
-  {
-    label: "Thailand.go.th",
-    href: "https://thailand.go.th/home",
-    logo: "/Important-links-logos/Sawasdee-thailand.png",
-  },
-  {
-    label: "90-Day Reporting Portal",
-    href: "https://tm47.immigration.go.th/",
-    logo: "/Important-links-logos/Immigration-bureau.png",
-  },
-  {
-    label: "TM.30 Portal",
-    href: "https://tm30.immigration.go.th/",
-    logo: "/Important-links-logos/Immigration-bureau.png",
-  },
-  {
-    label: "Revenue Department",
-    href: "https://www.rd.go.th/english",
-    logo: "/Important-links-logos/The-revenue-dept.svg",
-  },
-  {
-    label: "Tourism Authority of Thailand",
-    href: "https://thai.tourismthailand.org/Home",
-    logo: "/Important-links-logos/amazing-thailand.png",
-  },
-  {
-    label: "Airports of Thailand",
-    href: "https://www.airportthai.co.th/en/",
-    logo: "/Important-links-logos/AOT.png",
-  },
-];
+import { resourceLinks } from "@/lib/data/resource-links";
 
 export const metadata: Metadata = {
   title: "Thai Visa Checklist Helper - Free Document Checklists for Thailand Visas",
@@ -66,7 +19,10 @@ export default function HomePage() {
         <Card className="rounded-3xl border border-slate-200/80 bg-white/95 shadow-[0_8px_30px_rgba(15,23,42,0.06)]">
           <CardContent className="p-8 sm:p-10">
             <div className="text-center">
-              <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">
+              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+                Free Printable Checklists
+              </div>
+              <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
                 Which Thailand Visa Are You Applying For?
               </h2>
               <p className="mt-2 text-base text-slate-600">

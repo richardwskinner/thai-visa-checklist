@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, ExternalLink, CalendarClock } from "lucide-react";
 import type { Metadata } from "next";
 import NinetyDayCalculator from "./NinetyDayCalculator";
+import ExampleLink from "@/components/example-link";
 
 export const metadata: Metadata = {
   title: "90-Day Reporting in Thailand - What It Is and How to Do It",
@@ -225,14 +226,11 @@ export default function NinetyDayReportingpage() {
                         <li>
                           Previous notification of staying over 90 days (if any).
                           {" "}
-                          <a
+                          <ExampleLink
                             href={NINETY_DAY_RECEIPT_EXAMPLE_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 font-medium text-violet-700 underline underline-offset-2"
-                          >
-                            Example receipt <ExternalLink className="h-3.5 w-3.5" />
-                          </a>
+                            label="Example receipt"
+                            className="ml-1 border-violet-200 bg-violet-50 text-violet-700 hover:bg-violet-100"
+                          />
                         </li>
                         <li>
                           Complete Form TM.47 and sign it.

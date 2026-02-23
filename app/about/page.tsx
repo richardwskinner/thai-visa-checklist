@@ -30,34 +30,28 @@ export default function AboutPage() {
 </div>
 
           <p className="mt-6 text-slate-700 leading-relaxed">
-            Thai Visa Checklist started one morning while standing in the immigration
-            office, holding a numbered ticket and wondering whether a missing
-            photocopy was about to ruin my day.
-          </p>
+  Thai Visa Checklist started one morning in a crowded immigration office, holding a numbered ticket and wondering whether one missing photocopy was about to ruin my day.
+</p>
 
-          <p className="mt-4 text-slate-700 leading-relaxed">
-            After going through the process multiple times and always forgetting something, I created my
-            own checklist. Although much of the information is available somewhere,
-            it’s scattered, inconsistent, and often outdated. I wanted a clear checklist. Something printable, 
-            that I could tick off as I prepared. This site was created to solve one simple problem:
-          </p>
+<p className="mt-4 text-slate-700 leading-relaxed">
+  I had already been through the process a few times, and somehow there was always something missing. A copy I did not know I needed. A form another office had never asked for. One thing I learned quickly is that different immigration offices, and even different officers, can ask for slightly different documents. That uncertainty is what makes the process stressful.
+</p>
 
-          <p className="mt-3 text-xl font-extrabold text-slate-900">
-            Make immigration day predictable.
-          </p>
+<p className="mt-4 text-slate-700 leading-relaxed">
+  So I built my own checklist for my marriage visa extension. Not just the minimum requirements, but everything I had ever been asked for. I wanted one clear, structured list based on my successful applications and real conversations with immigration officers. Something I could print, place on top of my documents, and tick off one by one so I knew I had everything covered.
+</p>
 
-          <p className="mt-6 text-slate-700 leading-relaxed">
-            Each checklist is structured so you can print it out, put it in your
-            document folder, and physically tick off each item as you prepare.
-            No scrolling through blog posts at the counter. No guessing what you
-            forgot. Just a clean, free, practical list.
-          </p>
+<p className="mt-3 text-xl font-extrabold text-slate-900">
+  Make immigration day predictable.
+</p>
 
-          <p className="mt-4 text-slate-700 leading-relaxed">
-            Thai Visa Checklist is completely free to use. No login. No hidden
-            fees. Just straightforward checklists designed to reduce second
-            trips to immigration.
-          </p>
+<p className="mt-6 text-slate-700 leading-relaxed">
+  Each checklist is designed so you can print it, organise your documents properly, and walk into immigration feeling prepared. No scrolling through long blog posts at the counter. No guessing what might be requested. Just a clean, practical checklist that helps reduce the chance of extra trips.
+</p>
+
+<p className="mt-4 text-slate-700 leading-relaxed">
+  Thai Visa Checklist is completely free to use. No login. No hidden fees. Just something I wish I had the first time I walked into immigration.
+</p>
 
          <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-5">
   <p className="text-slate-800 leading-relaxed">

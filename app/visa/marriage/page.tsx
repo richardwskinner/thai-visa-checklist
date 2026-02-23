@@ -12,6 +12,7 @@ import { marriageChecklist } from "@/lib/data/marriage";
 import type { ChecklistItem } from "@/lib/data/marriage";
 import { analytics } from "@/lib/analytics";
 import ChecklistNotice from "@/components/checklist-notice";
+import ExampleLink from "@/components/example-link";
 
 /* ── Storage keys ── */
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:checked:v1";
@@ -114,15 +115,12 @@ function Section({
               <div className={`${classes.itemText} text-slate-900 leading-snug`}>
                 {item.text}
                 {item.noteLink && item.noteUrl && (
-                  <a
+                  <ExampleLink
                     href={item.noteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ml-2 text-blue-700 underline underline-offset-2 print:hidden"
+                    label="Example"
+                    className="ml-2 align-middle"
                     onClick={(e) => e.stopPropagation()}
-                  >
-                    {item.noteLink}
-                  </a>
+                  />
                 )}
               </div>
             </label>
@@ -352,7 +350,7 @@ export default function MarriageVisaPage() {
                     </span>
                   </summary>
                   <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                    There is no published rule requiring the 400,000 THB to remain after submission. Bangkok usually issues a short under consideration stamp of around 21 days. Officers previously asked to see an updated bank book on collection day, but this is not common now. It's best to confirm with your officer and avoid moving funds until final approval.
+                    There is no published rule requiring the 400,000 THB to remain after submission. Bangkok usually issues a short under consideration stamp of around 21 days. Officers previously asked to see an updated bank book on collection day, but this is not common now. It&apos;s best to confirm with your officer and avoid moving funds until final approval.
                   </p>
                 </details>
 

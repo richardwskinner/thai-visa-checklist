@@ -12,6 +12,7 @@ import { retirementChecklist } from "@/lib/data/retirement";
 import type { ChecklistItem } from "@/lib/data/retirement";
 import { analytics } from "@/lib/analytics";
 import ChecklistNotice from "@/components/checklist-notice";
+import ExampleLink from "@/components/example-link";
 
 /* ── Storage keys ── */
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:retirement:checked:v1";
@@ -111,19 +112,20 @@ function Section({
                 className="h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-[#249C0F] data-[state=checked]:border-[#249C0F]"
               />
               <div className={`${classes.itemText} text-slate-900 leading-snug`}>
-                {item.text.split("\n").map((line, i) => (
-  <span key={i} className="block">{line}</span>
-))}
+                {item.text.includes("\n")
+                  ? item.text.split("\n").map((line, i) => (
+                      <span key={i} className="block">
+                        {line}
+                      </span>
+                    ))
+                  : item.text}
                 {item.noteLink && item.noteUrl && (
-                  <a
+                  <ExampleLink
                     href={item.noteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ml-2 text-blue-700 underline underline-offset-2 print:hidden"
+                    label="Example"
+                    className="ml-2 align-middle"
                     onClick={(e) => e.stopPropagation()}
-                  >
-                    {item.noteLink}
-                  </a>
+                  />
                 )}
               </div>
             </label>

@@ -30,7 +30,12 @@ export const marriageChecklist: VisaChecklist = {
         { text: "Passport (Valid at least 6 months with 2+ blank pages)", required: true },
         { text: "2x passport photos, taken within 6-months (4×6 cm)", required: true },
         { text: "TM.30 Receipt", required: true },
-        { text: "90 Day Report Receipt", required: false },
+        {
+          text: "90 Day Report Receipt",
+          required: false,
+          noteLink: "Example receipt",
+          noteUrl: "/examples/90-day-report-example.pdf",
+        },
         {
           text: "Photocopy: Photo Page, Visa Stamp & Latest Entry Stamp",
           required: true,
@@ -60,7 +65,7 @@ export const marriageChecklist: VisaChecklist = {
         {
           text: "Hand-drawn map with major roads nearby",
           required: true,
-          noteLink: "View example map",
+          noteLink: "view example",
           noteUrl: "/examples/hand-drawn-map-example.jpg",
         },
         { text: "Child's birth certificate (if applicable)", required: false },

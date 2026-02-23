@@ -35,6 +35,59 @@ function formatDate(dateString: string) {
   });
 }
 
+function getSourceLogo(sourceLabel: string, sourceUrl: string) {
+  const label = sourceLabel.toLowerCase();
+
+  if (label.includes("immigration bureau")) {
+    return "/resource-logos/Immigration-bureau.png";
+  }
+
+  if (label.includes("royal thai embassy")) {
+    return "/resource-logos/Royal-thai-embassy.jpg";
+  }
+
+  if (label.includes("mfa")) {
+    return "/resource-logos/mfa_logo.webp";
+  }
+
+  if (label.includes("bangkok post")) {
+    return "/resource-logos/BangkokPost.png";
+  }
+
+  try {
+    const url = new URL(sourceUrl);
+    return `https://www.google.com/s2/favicons?sz=64&domain_url=${encodeURIComponent(url.origin)}`;
+  } catch {
+    return null;
+  }
+}
+
+function SourceLink({ sourceLabel, sourceUrl }: { sourceLabel: string; sourceUrl: string }) {
+  const sourceLogo = getSourceLogo(sourceLabel, sourceUrl);
+
+  return (
+    <a
+      href={sourceUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1.5 font-semibold text-blue-700 hover:text-blue-900"
+    >
+      {sourceLogo ? (
+        <span className="inline-flex h-7 w-10 items-center justify-center overflow-hidden rounded-sm border border-slate-200 bg-white px-1">
+          <img
+            src={sourceLogo}
+            alt=""
+            aria-hidden="true"
+            className="max-h-5 w-auto object-contain"
+            loading="lazy"
+          />
+        </span>
+      ) : null}
+      {sourceLabel} <ExternalLink className="h-3.5 w-3.5" />
+    </a>
+  );
+}
+
 export default async function VisaNewsPage({
   searchParams,
 }: {
@@ -114,14 +167,7 @@ export default async function VisaNewsPage({
                     </div>
                     <div className="mt-4 text-sm text-slate-600">
                       Source:{" "}
-                      <a
-                        href={item.sourceUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 font-semibold text-blue-700 hover:text-blue-900"
-                      >
-                        {item.sourceLabel} <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
+                      <SourceLink sourceLabel={item.sourceLabel} sourceUrl={item.sourceUrl} />
                     </div>
                   </CardContent>
                 </Card>
@@ -158,14 +204,7 @@ export default async function VisaNewsPage({
                   </div>
                   <div className="mt-4 text-sm text-slate-600">
                     Source:{" "}
-                    <a
-                      href={item.sourceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 font-semibold text-blue-700 hover:text-blue-900"
-                    >
-                      {item.sourceLabel} <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
+                    <SourceLink sourceLabel={item.sourceLabel} sourceUrl={item.sourceUrl} />
                   </div>
                 </CardContent>
               </Card>
