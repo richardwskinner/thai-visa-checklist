@@ -92,10 +92,10 @@ export default function HomePage() {
                       rel="noopener noreferrer"
                       aria-label={link.label}
                       title={link.label}
-                      className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-slate-700 hover:text-slate-900"
+                      className="grid w-full grid-cols-[3.75rem_minmax(0,1fr)_1rem] items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-left text-slate-700 hover:text-slate-900"
                     >
                       {link.logo ? (
-                        <span className="flex h-10 w-14 shrink-0 items-center justify-center rounded-md bg-white px-1">
+                        <span className="flex h-10 w-14 items-center justify-center rounded-md bg-white px-1">
                           <Image
                             src={link.logo}
                             alt=""
@@ -105,9 +105,11 @@ export default function HomePage() {
                             className="max-h-8 w-auto object-contain"
                           />
                         </span>
-                      ) : null}
-                      <span className="min-w-0">{link.label}</span>
-                      <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
+                      ) : (
+                        <span className="flex h-10 w-14 items-center justify-center rounded-md bg-slate-50" />
+                      )}
+                      <span className="min-w-0 leading-snug">{link.label}</span>
+                      <ExternalLink className="h-3.5 w-3.5 justify-self-end text-slate-400" />
                     </a>
                   ))}
                 </div>
