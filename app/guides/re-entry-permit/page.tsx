@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, ExternalLink, PlaneTakeoff } from "lucide-react";
 import type { Metadata } from "next";
+import ExampleLink from "@/components/example-link";
 
 export const metadata: Metadata = {
   title: "Re-Entry Permit in Thailand - How to protect Your Visa When You Travel outside of the country",
@@ -153,7 +154,8 @@ export default function ReEntryPermitPage() {
                   >
                     TM.30
                   </Link>{" "}
-                  within 24 hours.</p>
+                  within 24 hours.{" "}
+                  <ExampleLink href="/examples/TM.30-example.png" label="TM.30 receipt example" className="ml-1" /></p>
               </div>
             </div>
 

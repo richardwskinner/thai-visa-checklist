@@ -31,7 +31,12 @@ export const retirementChecklist: VisaChecklist = {
         { text: "Passport (Must be valid for at least 18 months)", required: true },
         { text: "2x Passport Photo, taken within 6 months (4×6 cm)", required: true },
         { text: "Passport Photocopies: Photo Page, Previous Visa Stamp & Latest Entry Stamp", required: true },
-        { text: "TM.30 Receipt", required: true },
+        {
+          text: "TM.30 Receipt",
+          required: true,
+          noteLink: "Example",
+          noteUrl: "/examples/TM.30-example.png",
+        },
         {
           text: "90-Day Report Receipt",
           required: false,

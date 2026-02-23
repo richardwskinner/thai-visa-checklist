@@ -47,7 +47,11 @@ const stageTwoChecklist: {
       title: "Pre-check Eligibility",
       items: [
         { text: "You have at least 15 days remaining (some offices require 21 days)" },
-        { text: "TM.30 address reporting is completed (receipt required)" },
+        {
+          text: "TM.30 address reporting is completed (receipt required)",
+          noteLink: "Example",
+          noteUrl: "/examples/TM.30-example.png",
+        },
       ],
     },
     {

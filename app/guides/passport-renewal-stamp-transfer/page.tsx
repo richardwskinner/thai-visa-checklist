@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, ExternalLink, IdCard } from "lucide-react";
+import ExampleLink from "@/components/example-link";
 
 export const metadata: Metadata = {
   title: "Renewing Your Passport in Thailand and Transferring Visa Stamps",
@@ -143,7 +144,8 @@ export default function PassportStampTransferGuidePage() {
                   <Link href="/guides/tm30" className="font-semibold text-rose-700 underline underline-offset-2">
                     TM.30 guide
                   </Link>
-                  .
+                  .{" "}
+                  <ExampleLink href="/examples/TM.30-example.png" label="TM.30 receipt example" className="ml-1" />
                 </p>
               </section>
 

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, ExternalLink, MapPin } from "lucide-react";
+import ExampleLink from "@/components/example-link";
 
 import type { Metadata } from "next";
 
@@ -45,7 +46,10 @@ export default function TM30Page() {
 
             <div className="mt-10 space-y-8">
               <div>
-                <h2 className="text-xl font-extrabold text-slate-900">What is TM.30</h2>
+                <div className="flex flex-wrap items-center gap-2">
+                  <h2 className="text-xl font-extrabold text-slate-900">What is TM.30</h2>
+                  <ExampleLink href="/examples/TM.30-example.png" label="Receipt example" />
+                </div>
                 <p className="mt-2 text-slate-700">
                   TM.30 stands for &quot;Notification from House-Master, Owner or the Possessor of the
                   Residence where Alien has Stayed.&quot; Under the Immigration Act of 1979, any

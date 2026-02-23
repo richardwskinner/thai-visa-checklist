@@ -40,6 +40,12 @@ function Footer() {
               Thai Public Holidays
             </Link>
             <Link
+              href="/forms"
+              className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+            >
+              Immigration Forms
+            </Link>
+            <Link
               href="/disclaimer"
               className="text-sm font-semibold text-slate-600 hover:text-slate-900"
             >

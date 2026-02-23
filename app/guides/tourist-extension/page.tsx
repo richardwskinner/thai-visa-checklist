@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, ExternalLink, PlusCircle } from "lucide-react";
 import type { Metadata } from "next";
+import ExampleLink from "@/components/example-link";
 
 export const metadata: Metadata = {
   title: "Thailand Tourist Visa Extension (30 Days) - How to Extend Your Stay",
@@ -122,7 +123,8 @@ export default function TouristExtensionPage() {
                     >
                       TM.30
                     </Link>{" "}
-                    receipt (if applicable)
+                    receipt (if applicable){" "}
+                    <ExampleLink href="/examples/TM.30-example.png" label="Example" className="ml-1" />
                   </li>
                 </ul>
               </section>

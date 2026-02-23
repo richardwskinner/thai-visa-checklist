@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Home } from "lucide-react";
 import type { Metadata } from "next";
+import ExampleLink from "@/components/example-link";
 
 export const metadata: Metadata = {
   title: "What Is a Yellow Book (Tabien Baan) and How to Get One?",
@@ -97,7 +98,8 @@ export default function YellowBookPage() {
                   >
                     TM.30 guide
                   </Link>
-                  .
+                  .{" "}
+                  <ExampleLink href="/examples/TM.30-example.png" label="TM.30 receipt example" className="ml-1" />
                 </p>
               </section>
 

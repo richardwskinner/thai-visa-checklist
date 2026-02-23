@@ -96,7 +96,7 @@ export default function NinetyDayReportingpage() {
                 This is not a visa extension, it’s a separate legal requirement.
               </p>
               <p className="mt-3 text-sm text-violet-900/80">
-                If you’ve recently changed address or moved hotels, ensure your{" "}
+                If you’ve recently changed address, ensure your{" "}
                 <Link
                   href="/guides/tm30"
                   className="font-semibold text-violet-800 underline underline-offset-2"

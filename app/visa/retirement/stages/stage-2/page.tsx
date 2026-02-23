@@ -9,11 +9,14 @@ import { Progress } from "@/components/ui/progress";
 import { ArrowLeft } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 import ChecklistNotice from "@/components/checklist-notice";
+import ExampleLink from "@/components/example-link";
 
 const STORAGE_KEY = "thai-visa-checklist:retirement:stage2:checked:v1";
 
 type ChecklistItem = {
   text: string;
+  noteLink?: string;
+  noteUrl?: string;
 };
 
 type ChecklistSection = {
@@ -62,7 +65,11 @@ const stageTwoChecklist: {
         { text: "Passport original" },
         { text: "Copies of passport bio page, latest entry stamp, and visa/status page" },
         { text: "TM.6 copy if your passport includes departure card records" },
-        { text: "TM.30 receipt for your current address" },
+        {
+          text: "TM.30 receipt for your current address",
+          noteLink: "Example",
+          noteUrl: "/examples/TM.30-example.png",
+        },
       ],
     },
     {
@@ -135,7 +142,17 @@ function Section({
                 onCheckedChange={() => onToggle(key)}
                 className="h-5 w-5 rounded-md data-[state=checked]:bg-[#249C0F] data-[state=checked]:border-[#249C0F]"
               />
-              <div className="text-sm leading-snug text-slate-900">{item.text}</div>
+              <div className="text-sm leading-snug text-slate-900">
+                {item.text}
+                {item.noteLink && item.noteUrl && (
+                  <ExampleLink
+                    href={item.noteUrl}
+                    label={item.noteLink}
+                    className="ml-2 align-middle"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                )}
+              </div>
             </label>
           );
         })}
