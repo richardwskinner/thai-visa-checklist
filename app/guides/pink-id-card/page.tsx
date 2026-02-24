@@ -46,7 +46,7 @@ export default function PinkIdCardPage() {
                 <h2 className="text-xl font-extrabold text-slate-900">What it is</h2>
                 <p className="mt-2 text-slate-700">
                   The Pink ID card is an identification card for eligible foreigners registered at a Thai address.
-                  It is usually issued through your local district office (Amphur/Khet), often after{" "}
+                  It is issued through your local district office (Amphur/Khet), often after{" "}
                   <Link
                     href="/guides/yellow-book"
                     className="font-semibold text-rose-700 underline underline-offset-2"
@@ -62,8 +62,7 @@ export default function PinkIdCardPage() {
                 <div className="mt-3 grid gap-2">
                   {[
                     "Foreigners legally staying in Thailand",
-                    "Applicants with an address registered in Thailand (commonly via Yellow Book)",
-                    "People who can provide originals and Thai translations if requested",
+                    "Applicants with an address registered in a Yellow Book (Tabien Baan)",
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-3 text-slate-700">
                       <div className="h-2 w-2 shrink-0 rounded-full bg-rose-500" />
@@ -78,8 +77,8 @@ export default function PinkIdCardPage() {
                 <div className="mt-3 grid gap-2">
                   {[
                     "Passport + copies (bio page, visa, latest entry stamp)",
-                    "Yellow Book (Tabien Baan), if already issued",
-                    "Proof of current address",
+                    "Yellow Book (Tabien Baan)",
+                    "Thai translation of your passport",
                     "House owner's ID and/or presence at office (depends on district)",
                     "Marriage certificate (if applying via Thai spouse address)",
                     "Recent photo(s), if required by district office",
@@ -125,13 +124,55 @@ export default function PinkIdCardPage() {
                   ))}
                 </div>
               </section>
+
+              <section>
+                <h2 className="text-xl font-extrabold text-slate-900">FAQ</h2>
+                <div className="mt-4 space-y-3">
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">Can I get a Pink ID on a tourist visa?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      Generally no. Most district offices require a long-term visa or valid extension of stay.
+                    </p>
+                  </details>
+
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">Is the Thai Pink ID card useful for foreigners?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      Yes, it can be useful for everyday identification and address verification in Thailand. It may even open the doors to Thai pricing at national parks; however, this is at the discretion of the individual staff member or organisation.
+                    </p>
+                  </details>
+
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">How much does it cost?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      There is usually no significant official fee, but minor administrative fees may apply depending on the district office.
+                    </p>
+                  </details>
+                </div>
+              </section>
             </div>
 
             <div className="mt-10 rounded-lg border-l-4 border-rose-500 bg-rose-50 p-5">
               <div className="font-bold text-rose-900">Important</div>
               <div className="mt-2 space-y-1 text-sm text-rose-900">
                 <p>Requirements vary by district office and can change without notice.</p>
-                <p>Some offices require a Yellow Book first before issuing a Pink ID card.</p>
+                <p>It does not replace your passport, you are still required by law to carry your passport</p>
+                <p>Most offices require a Yellow Book first before issuing a Pink ID card.</p>
                 <p>Always call your local Amphur/Khet in advance and confirm their exact checklist.</p>
               </div>
             </div>

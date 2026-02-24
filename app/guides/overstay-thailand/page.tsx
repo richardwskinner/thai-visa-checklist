@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { AlertTriangle, ArrowLeft, ExternalLink } from "lucide-react";
+import ThailandOverstayChecker from "@/components/thailand-overstay-checker";
 
 export const metadata: Metadata = {
   title: "Overstay in Thailand - Fines, Blacklist Rules and What To Do",
@@ -89,6 +90,8 @@ export default function OverstayThailandGuidePage() {
             </div>
 
             <div className="mt-8 space-y-8 sm:mt-10">
+              <ThailandOverstayChecker />
+
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">Official fine amount</h2>
                 <p className="mt-2 text-slate-700">
