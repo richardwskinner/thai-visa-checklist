@@ -4,18 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 const TRANSLATE_LANGUAGES = [
   { code: "en", label: "English", flag: "🇺🇸" },
-  { code: "th", label: "Thai", flag: "🇹🇭" },
-  { code: "zh-CN", label: "Chinese", flag: "🇨🇳" },
-  { code: "ru", label: "Russian", flag: "🇷🇺" },
-  { code: "hi", label: "Hindi", flag: "🇮🇳" },
-  { code: "ar", label: "Arabic", flag: "🇸🇦" },
-  { code: "fr", label: "French", flag: "🇫🇷" },
-  { code: "de", label: "German", flag: "🇩🇪" },
-  { code: "ja", label: "Japanese", flag: "🇯🇵" },
-  { code: "ko", label: "Korean", flag: "🇰🇷" },
+  { code: "th", label: "ไทย", flag: "🇹🇭" },
+  { code: "zh-CN", label: "中文", flag: "🇨🇳" },
+  { code: "ru", label: "Русский", flag: "🇷🇺" },
+  { code: "hi", label: "हिन्दी", flag: "🇮🇳" },
+  { code: "ar", label: "العربية", flag: "🇸🇦" },
+  { code: "fr", label: "Français", flag: "🇫🇷" },
+  { code: "de", label: "Deutsch", flag: "🇩🇪" },
+  { code: "ja", label: "日本語", flag: "🇯🇵" },
+  { code: "ko", label: "한국어", flag: "🇰🇷" },
 ] as const;
 
 function setGoogleTranslateCookie(languageCode: string) {
@@ -101,18 +102,22 @@ export default function SiteHeader() {
             </div>
 
             <div className="absolute right-2 top-1/2 hidden -translate-y-1/2 items-center sm:flex">
-              <select
-                value={selectedLanguage}
-                onChange={(e) => handleTranslateChange(e.target.value)}
-                className="h-8 rounded-md border border-slate-200 bg-white px-2 text-xs font-medium text-slate-700"
-                aria-label="Select website language"
-              >
-                {TRANSLATE_LANGUAGES.map((lang) => (
-                  <option key={lang.code} value={lang.code}>
-                    {lang.flag} {lang.label}
-                  </option>
-                ))}
-              </select>
+              <div className="relative">
+                <select
+                  value={selectedLanguage}
+                  onChange={(e) => handleTranslateChange(e.target.value)}
+                  className="notranslate h-8 appearance-none rounded-md border border-slate-200 bg-white pl-2 pr-8 text-xs font-medium text-slate-700"
+                  aria-label="Select website language"
+                  translate="no"
+                >
+                  {TRANSLATE_LANGUAGES.map((lang) => (
+                    <option key={lang.code} value={lang.code}>
+                      {lang.flag} {lang.label}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-500" />
+              </div>
             </div>
 
             <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-center sm:gap-6">
@@ -151,18 +156,22 @@ export default function SiteHeader() {
             </nav>
 
             <div className="flex items-center justify-center pt-1 text-xs text-slate-500 sm:hidden">
-              <select
-                value={selectedLanguage}
-                onChange={(e) => handleTranslateChange(e.target.value)}
-                className="h-8 rounded-md border border-slate-200 bg-white px-2 text-xs font-medium text-slate-700"
-                aria-label="Select website language"
-              >
-                {TRANSLATE_LANGUAGES.map((lang) => (
-                  <option key={lang.code} value={lang.code}>
-                    {lang.flag} {lang.label}
-                  </option>
-                ))}
-              </select>
+              <div className="relative">
+                <select
+                  value={selectedLanguage}
+                  onChange={(e) => handleTranslateChange(e.target.value)}
+                  className="notranslate h-8 appearance-none rounded-md border border-slate-200 bg-white pl-2 pr-8 text-xs font-medium text-slate-700"
+                  aria-label="Select website language"
+                  translate="no"
+                >
+                  {TRANSLATE_LANGUAGES.map((lang) => (
+                    <option key={lang.code} value={lang.code}>
+                      {lang.flag} {lang.label}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-500" />
+              </div>
 
               <div id="google_translate_element" className="hidden" aria-hidden="true" />
             </div>

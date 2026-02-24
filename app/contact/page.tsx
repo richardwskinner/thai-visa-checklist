@@ -58,7 +58,7 @@ export default function ContactPage() {
                 type="text"
                 autoComplete="name"
                 required
-                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-400"
+                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-slate-400"
               />
             </div>
 
@@ -71,7 +71,7 @@ export default function ContactPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-400"
+                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-slate-400"
               />
             </div>
 
@@ -83,14 +83,14 @@ export default function ContactPage() {
                 name="message"
                 rows={4}
                 required
-                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-400"
+                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-slate-400"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 py-3 font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
+              className="w-full rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 py-3 font-semibold text-white shadow-md transition hover:from-sky-600 hover:to-blue-700 hover:shadow-lg disabled:opacity-50"
             >
               {loading ? "Sending..." : "Send Message"}
             </button>

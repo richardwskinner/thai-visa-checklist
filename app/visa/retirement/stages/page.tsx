@@ -96,17 +96,17 @@ export default function RetirementStagesPage() {
                 ) : (
                   <div
                     key={s.stage}
-                    className="flex items-center gap-5 rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6 opacity-60"
+                    className="flex items-center gap-4 sm:gap-5 rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6 opacity-60"
                   >
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-300 text-lg font-extrabold text-white">
                       {s.stage}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3">
-                        <span className="text-lg font-extrabold text-slate-900">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                        <span className="min-w-0 text-lg font-extrabold text-slate-900">
                           {s.title}
                         </span>
-                        <span className="rounded-full bg-slate-200 px-3 py-0.5 text-xs font-semibold text-slate-500">
+                        <span className="shrink-0 rounded-full bg-slate-200 px-3 py-0.5 text-xs font-semibold text-slate-500">
                           Coming soon
                         </span>
                       </div>
