@@ -13,6 +13,7 @@ import {
   AlertTriangle,
   CarFront,
   Landmark,
+  Globe2,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -130,6 +131,15 @@ const guides = [
     icon: Landmark,
     color: "bg-emerald-100",
     iconColor: "text-emerald-700",
+  },
+  {
+    title: "Do I Need a Visa for Thailand?",
+    description:
+      "Check if you likely need a visa, qualify for visa exemption, or can use Visa on Arrival based on official Thai government source lists.",
+    href: "/guides/do-i-need-a-visa-thailand",
+    icon: Globe2,
+    color: "bg-blue-100",
+    iconColor: "text-blue-700",
   },
 ];
 

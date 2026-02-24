@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Marriage Visa Checklist - Thailand Non-Immigrant O (Spouse) | Thai Visa Checklist Helper",
+  title: "Thailand Visa Checklists | Thai Visa Checklist",
   description:
-    "Complete document checklist for the Thailand Marriage Visa (Non-Immigrant Type O for Spouse). Includes all required forms, personal documents, proof of funds, and tips from experience.",
+    "Printable Thailand visa document checklists, stage guides, and immigration form help for common visa routes including marriage and retirement.",
 };
 
 export default function MarriageVisaLayout({ children }: { children: React.ReactNode }) {

@@ -41,6 +41,7 @@ const routes: Array<{
   { path: "/guides/overstay-thailand", changeFrequency: "monthly", priority: 0.8 },
   { path: "/guides/thai-driving-licence", changeFrequency: "monthly", priority: 0.8 },
   { path: "/guides/opening-bank-account-thailand", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/guides/do-i-need-a-visa-thailand", changeFrequency: "weekly", priority: 0.9 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

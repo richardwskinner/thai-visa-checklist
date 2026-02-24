@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Retirement Visa Checklist - Thailand Non-Immigrant O (Retirement)",
+  title: "Retirement Visa - 1 Year Extension Checklist | Thai Visa Checklist",
   description:
-    "Complete document checklist for the Thailand Retirement Visa extension (Non-Immigrant Type O, aged 50+). Includes all required forms, financial documents, proof of funds, and tips.",
+    "Printable checklist for a 1-year Thailand Retirement Visa extension (Non-Immigrant O, age 50+), including forms, financial documents, and immigration filing tips.",
 };
 
 export default function RetirementVisaLayout({ children }: { children: React.ReactNode }) {

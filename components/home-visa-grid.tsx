@@ -41,13 +41,27 @@ export default function HomeVisaGrid() {
       <Link
         href="/tdac"
         onClick={() => analytics.trackHomepageSelect("tdac", "/tdac")}
-        className="group relative rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 px-7 py-10 text-center text-white shadow-sm ring-1 ring-black/10 transition hover:-translate-y-0.5 hover:shadow-md sm:col-span-2"
+        className="group relative rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 px-7 py-7 text-left text-white shadow-sm ring-1 ring-black/10 transition hover:-translate-y-0.5 hover:shadow-md"
       >
         <div className="text-3xl font-extrabold tracking-tight">
           <span className="mr-3">✈️</span>
           TDAC
         </div>
         <div className="mt-2 text-lg font-semibold text-white/85">Thailand Digital Arrival Card</div>
+      </Link>
+
+      <Link
+        href="/guides/do-i-need-a-visa-thailand"
+        onClick={() =>
+          analytics.trackHomepageSelect("do-i-need-a-visa", "/guides/do-i-need-a-visa-thailand")
+        }
+        className="group relative rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-600 px-7 py-7 text-left text-white shadow-sm ring-1 ring-black/10 transition hover:-translate-y-0.5 hover:shadow-md"
+      >
+        <div className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+          <span className="mr-3">🛂</span>
+          Do I Need a Visa?
+        </div>
+        <div className="mt-2 text-lg font-semibold text-white/85">Thailand travel entry checker</div>
       </Link>
     </div>
   );
