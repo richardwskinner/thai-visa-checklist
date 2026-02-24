@@ -126,16 +126,29 @@
 }
 
 /* Hide Google Translate's top banner and injected page offset */
+iframe.goog-te-banner-frame,
 iframe.goog-te-banner-frame.skiptranslate {
   display: none !important;
 }
 
+html,
 body {
   top: 0 !important;
+  margin-top: 0 !important;
 }
 
 .skiptranslate iframe {
   max-width: 0 !important;
   max-height: 0 !important;
   border: 0 !important;
+}
+
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-tooltip,
+.goog-tooltip:hover,
+.VIpgJd-ZVi9od-ORHb-OEVmcd {
+  display: none !important;
+  visibility: hidden !important;
 }
