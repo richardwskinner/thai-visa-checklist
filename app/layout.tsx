@@ -127,6 +127,29 @@ export default function RootLayout({
             gtag('config', 'G-1ZS42RQ843');
           `}
         </Script>
+
+        {/* Google Translate website widget */}
+        <Script id="google-translate-init" strategy="afterInteractive">
+          {`
+            window.googleTranslateElementInit = function () {
+              if (!window.google || !window.google.translate) return;
+              var el = document.getElementById('google_translate_element');
+              if (!el || el.childElementCount > 0) return;
+              new window.google.translate.TranslateElement(
+                {
+                  pageLanguage: 'en',
+                  autoDisplay: false,
+                  layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+                },
+                'google_translate_element'
+              );
+            };
+          `}
+        </Script>
+        <Script
+          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

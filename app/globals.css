@@ -124,3 +124,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Hide Google Translate's top banner and injected page offset */
+iframe.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.skiptranslate iframe {
+  max-width: 0 !important;
+  max-height: 0 !important;
+  border: 0 !important;
+}

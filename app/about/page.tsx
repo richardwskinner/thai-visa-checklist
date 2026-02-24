@@ -50,7 +50,7 @@ export default function AboutPage() {
 </p>
 
 <p className="mt-4 text-slate-700 leading-relaxed">
-  Thai Visa Checklist is completely free to use. No login. No hidden fees. Just something I wish I had the first time I walked into immigration.
+  Thai Visa Checklist was created in 2026 after years of navigating Thailand’s immigration system firsthand. It remains completely free to use - no login, no hidden fees, just practical guidance based on real experience.
 </p>
 
          <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-5">
