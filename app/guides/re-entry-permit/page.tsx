@@ -3,7 +3,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, ExternalLink, PlaneTakeoff } from "lucide-react";
 import type { Metadata } from "next";
-import ExampleLink from "@/components/example-link";
 
 export const metadata: Metadata = {
   title: "Re-Entry Permit in Thailand - How to protect Your Visa When You Travel outside of the country",
@@ -12,10 +11,59 @@ export const metadata: Metadata = {
 };
 
 const TM8_URL = "https://www.immigration.go.th/wp-content/uploads/2022/10/5.%E0%B8%84%E0%B8%B3%E0%B8%82%E0%B8%AD%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%8D%E0%B8%B2%E0%B8%95%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%81%E0%B8%A5%E0%B8%B1%E0%B8%9A%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A1%E0%B8%B2%E0%B9%83%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%AD%E0%B8%B2%E0%B8%93%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%B5%E0%B8%81-%E0%B8%95%E0%B8%A1.8.pdf";
+const FAQS = [
+  {
+    question: "Can I get a re-entry permit at Chiangmai International Airport (CNX)?",
+    answer:
+      "Yes, it is commonly reported that the re-entry permit counter at CNX is open 24/7. It is located before immigration, on the right-hand side. Arrive early and confirm on the day in case airport procedures or staffing change.",
+  },
+  {
+    question: "Can I get a re-entry permit at Suvarnabhumi Airport (BKK)?",
+    answer:
+      "Yes, it is commonly reported that the re-entry permit counter at Suvarnabhumi Airport (BKK) is open 24/7. You can apply for either a single or a multiple re-entry permit. It is located down the escalator to the right, after security. Arrive early and confirm on the day in case airport procedures or staffing change.",
+  },
+  {
+    question: "Can I get a re-entry permit at Don Mueang International Airport (DMK)?",
+    answer:
+      "Yes, it is commonly reported that the re-entry permit counter at Don Mueang International Airport (DMK) is open 24/7. You can apply for either a single or a multiple re-entry permit. It is located just after behind the immigration officers. Arrive early and confirm on the day in case airport procedures or staffing change.",
+  },
+  {
+    question: "What happens if I leave Thailand without a re-entry permit?",
+    answer:
+      "Your extension of stay is automatically cancelled when you leave Thailand. You would need to apply for a new visa to return.",
+  },
+  {
+    question: "How long is a re-entry permit valid?",
+    answer:
+      "It is valid until the expiry date of your current extension of stay, not 1 year from issue.",
+  },
+  {
+    question: "What if I forgot to get one and already left Thailand?",
+    answer:
+      "If you leave without a re-entry permit, your extension is cancelled immediately. You must apply for a new visa before returning.",
+  },
+] as const;
 
 export default function ReEntryPermitPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-[#eef3fb]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="mx-auto w-full max-w-5xl px-5">
         <div className="pt-8">
           <Link
@@ -39,7 +87,7 @@ export default function ReEntryPermitPage() {
 
             <div className="mt-6 rounded-2xl bg-orange-50 border border-orange-200 p-6">
               <p className="text-lg font-semibold text-orange-900">
-                If you leave Thailand without a re-entry permit, your visa is automatically cancelled the moment you depart. This applies to most single-entry and extended visas including retirement, marriage, work, and education visas.
+                If you leave Thailand without a re-entry permit, your permission to stay (extension of stay) will automatically be cancelled upon departure. This applies to single-entry and extended visas including retirement, marriage, work, and education visas.
               </p>
             </div>
 
@@ -61,7 +109,14 @@ export default function ReEntryPermitPage() {
                   >
                     90-day reporting
                   </Link>{" "}
-                  count resets from your new entry date.
+                  count resets from your new entry date and your landlord must file a new{" "}
+                  <Link
+                    href="/guides/tm30"
+                    className="font-semibold text-orange-700 underline underline-offset-2"
+                  >
+                    TM.30
+                  </Link>{" "}
+                  within 24 hours.
                 </p>
               </div>
 
@@ -75,7 +130,7 @@ export default function ReEntryPermitPage() {
                   </div>
                   <div className="rounded-2xl border border-orange-200 bg-orange-50/30 p-5">
                     <h3 className="font-bold text-slate-900">Multiple re-entry</h3>
-                    <p className="mt-1 text-slate-700">Unlimited trips out and back. Valid until your visa expires.</p>
+                    <p className="mt-1 text-slate-700">Unlimited trips. Valid until your visa expires.</p>
                     <p className="mt-2 text-2xl font-extrabold text-slate-900">3,800 THB</p>
                   </div>
                 </div>
@@ -87,21 +142,20 @@ export default function ReEntryPermitPage() {
 
   <ul className="mt-3 list-disc space-y-2 pl-6 text-slate-700">
     <li>Passport</li>
-    <li>1x photo (4×6 cm)</li>
+    <li>1x passport photo (4×6 cm)</li>
     <li>
-      Photocopies of your passport photo page, visa page, and latest entry stamp
-      <span className="text-slate-500"> (not always necessary)</span>
+      Photocopies: Passport bio page, visa page, and latest entry stamp (not always required).
     </li>
     <li>Fee in cash</li>
     <li>
-      TM.8 form -{" "}
+      TM.8 form {" "}
       <a
         href={TM8_URL}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-1 font-medium text-orange-700 underline underline-offset-2"
       >
-        Download PDF <ExternalLink className="h-3.5 w-3.5" />
+        Download Form <ExternalLink className="h-3.5 w-3.5" />
       </a>
     </li>
   </ul>
@@ -113,14 +167,14 @@ export default function ReEntryPermitPage() {
                   <div className="rounded-2xl border border-slate-200 p-5">
                     <h3 className="font-bold text-slate-900">At the airport (same day as departure)</h3>
                     <p className="mt-1 text-slate-700">
-                      All major international airports - Suvarnabhumi, Don Mueang, Chiang Mai, Phuket, and Hat Yai - have re-entry permit counters. They are located after passport control in the departure area. Arrive early in case there is any delay.
+                      All major international airports - Suvarnabhumi, Don Mueang, Chiang Mai, Phuket, and Hat Yai, have re-entry permit counters. Arrive early in case there is any delay.
                     </p>
                   </div>
 
                   <div className="rounded-2xl border border-slate-200 p-5">
                     <h3 className="font-bold text-slate-900">At any immigration office (in advance)</h3>
                     <p className="mt-1 text-slate-700">
-                      You can apply days or weeks before your trip at your local immigration office. Bring a photo and all documents. Processing takes 10 minutes to an hour depending on the queue.
+                      You can apply any time while your current extension of stay is valid at your local immigration office. Bring a passport photo and all documents. Processing takes 10 minutes to an hour depending on the queue.
                     </p>
                   </div>
                 </div>
@@ -129,7 +183,7 @@ export default function ReEntryPermitPage() {
               <div>
                 <h2 className="text-xl font-extrabold text-slate-900">When you return to Thailand</h2>
                 <p className="mt-2 text-slate-700">
-                  Make sure the immigration officer sees your re-entry permit stamp when you arrive back. Open your passport to the re-entry page. If they miss it, you may get a tourist stamp instead and your visa will be lost. When filling out the{" "}
+                  Make sure the immigration officer sees your re-entry permit stamp when you arrive back. When filling out the{" "}
                   <Link
                     href="/tdac"
                     className="font-semibold text-orange-700 underline underline-offset-2"
@@ -139,6 +193,23 @@ export default function ReEntryPermitPage() {
                   , enter your re-entry permit number in the visa number field.
                 </p>
               </div>
+
+              <section>
+                <h2 className="text-xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+                <div className="mt-4 space-y-3">
+                  {FAQS.map((faq) => (
+                    <details key={faq.question} className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                      <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                        <span className="min-w-0">{faq.question}</span>
+                        <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                          +
+                        </span>
+                      </summary>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-700">{faq.answer}</p>
+                    </details>
+                  ))}
+                </div>
+              </section>
             </div>
 
             <div className="mt-10 rounded-lg bg-amber-50 border-l-4 border-amber-500 p-5">
@@ -147,15 +218,6 @@ export default function ReEntryPermitPage() {
                 <p>You must get the re-entry permit before you leave Thailand - you cannot get one from abroad.</p>
                 <p>The re-entry permit expires when your visa expires, not separately.</p>
                 <p>A re-entry permit does not extend your stay, it only preserves it.</p>
-                <p>After returning, your landlord must file a new{" "}
-                  <Link
-                    href="/guides/tm30"
-                    className="font-semibold text-orange-700 underline underline-offset-2"
-                  >
-                    TM.30
-                  </Link>{" "}
-                  within 24 hours.{" "}
-                  <ExampleLink href="/examples/TM.30-example.png" label="TM.30 receipt example" className="ml-1" /></p>
               </div>
             </div>
 

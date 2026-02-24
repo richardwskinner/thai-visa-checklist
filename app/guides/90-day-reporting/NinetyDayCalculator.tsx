@@ -99,7 +99,7 @@ export default function NinetyDayCalculator() {
       `Your 90-day reporting window opens today.\n\n` +
       `Due date: ${formatPretty(dueISO)}\n` +
       `Window: ${formatPretty(openISO)} to ${formatPretty(lateISO)}\n\n` +
-      `Tip: Do it early (online can be unreliable).`;
+      `Do it early (online can be unreliable).`;
 
     const googleUrl = buildGoogleCalendarUrl({
       title,
@@ -140,10 +140,6 @@ export default function NinetyDayCalculator() {
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <h3 className="text-lg font-extrabold text-slate-900">Due Date Calculator</h3>
-          <p className="mt-1 text-sm text-slate-700">
-            Enter your <span className="font-semibold">last entry date</span> or{" "}
-            <span className="font-semibold">last 90-day report date</span>.
-          </p>
         </div>
 
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
@@ -151,11 +147,11 @@ export default function NinetyDayCalculator() {
         </div>
       </div>
 
-      <div className="mt-5 space-y-4">
+      <div className="mt-4 space-y-4">
         {/* Date input */}
         <div className="min-w-0">
           <label className="block text-sm font-semibold text-slate-700">
-            Date you last entered Thailand (or last report)
+            Enter your last entry date or last 90-day report date.
           </label>
 
           <input

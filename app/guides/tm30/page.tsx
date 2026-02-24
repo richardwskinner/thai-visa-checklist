@@ -12,9 +12,44 @@ export const metadata: Metadata = {
     "A simple guide to the TM.30 notification in Thailand. What it is, who is responsible, how to file it online or in person, and why it matters for your visa.",
 };
 
+const FAQS = [
+  {
+    question: "How do I know if my TM.30 was filed?",
+    answer:
+      "Ask your landlord for the Receipt of Notification (paper) or a downloaded confirmation from the online system.",
+  },
+  {
+    question: "What if I lose my TM.30 receipt?",
+    answer:
+      "The landlord can log into the online system and download another copy. If it was filed in person, immigration may reprint it or ask for it to be filed again.",
+  },
+  {
+    question: "Do I need a new TM.30 every time I travel?",
+    answer:
+      "Yes. If you return to your home address in Thailand after traveling abroad or staying at a hotel within Thailand, a new TM.30 should be filed within 24 hours of your return.",
+  },
+] as const;
+
 export default function TM30Page() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-[#eef3fb]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="mx-auto w-full max-w-5xl px-5">
         <div className="pt-8">
           <Link
@@ -51,8 +86,7 @@ export default function TM30Page() {
                   <ExampleLink href="/examples/TM.30-example.png" label="Receipt example" />
                 </div>
                 <p className="mt-2 text-slate-700">
-                  TM.30 stands for &quot;Notification from House-Master, Owner or the Possessor of the
-                  Residence where Alien has Stayed.&quot; Under the Immigration Act of 1979, any
+                  TM.30 is a form used to report where a foreigner is staying in Thailand. Under the Immigration Act of 1979, any
                   property owner, landlord, or hotel hosting a foreigner must notify immigration of that
                   foreigner&apos;s stay within 24 hours of arrival. It is not a visa and does not affect
                   how long you can stay. It simply tells the government where you live.
@@ -71,7 +105,7 @@ export default function TM30Page() {
 
                   <li className="flex items-start gap-3 text-slate-700">
                     <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
-                    <span>Hotels and serviced apartments file this automatically.</span>
+                    <span>Hotels and serviced apartments file this automatically when you check in.</span>
                   </li>
 
                   <li className="flex items-start gap-3 text-slate-700">
@@ -105,25 +139,8 @@ export default function TM30Page() {
                 </div>
                 <p className="mt-3 text-slate-700">
                   Even if you return to the same address after travelling abroad, a new TM.30 may be
-                  required depending on your local immigration office.
+                  required.
                 </p>
-              </div>
-
-              <div>
-                <h2 className="text-xl font-extrabold text-slate-900">What documents are needed</h2>
-                <div className="mt-3 grid gap-2">
-                  {[
-                    "Landlord's ID card or passport",
-                    "Copy of house book (Tabien Baan) or title deed",
-                    "Foreigner's passport copy (photo page, visa page, latest entry stamp)",
-                    "Lease or rental agreement (some offices require this)",
-                  ].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-slate-700">
-                      <div className="h-2 w-2 rounded-full bg-teal-500 shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
               </div>
 
               <div>
@@ -132,35 +149,28 @@ export default function TM30Page() {
                   <div className="rounded-2xl border border-slate-200 p-5">
                     <h3 className="font-bold text-slate-900">Online</h3>
                     <p className="mt-1 text-slate-700">
-                      The landlord can register on the official TM.30 website and file notifications
-                      digitally. This is the fastest method and provides a downloadable receipt.
+                      The landlord can register on the{" "}
+                      <a
+                        href="https://tm30.immigration.go.th"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-medium text-teal-700 underline underline-offset-2"
+                      >
+                        official TM.30 online portal <ExternalLink className="h-3.5 w-3.5" />
+                      </a>{" "}
+                      and file notifications digitally. This is the fastest method and provides a downloadable receipt which the foreigner should keep.
                     </p>
-                    <a
-                      href="https://tm30.immigration.go.th"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-teal-700 underline underline-offset-2"
-                    >
-                      Official TM.30 Online Portal <ExternalLink className="h-4 w-4" />
-                    </a>
                   </div>
 
                   <div className="rounded-2xl border border-slate-200 p-5">
                     <h3 className="font-bold text-slate-900">In person</h3>
                     <p className="mt-1 text-slate-700">
                       The landlord (or authorized person) visits the local immigration office with the
-                      documents. After filing, they receive a stamped receipt - the &quot;Receipt of
-                      Notification&quot; - which the foreigner should keep.
+                      documents. After filing, they receive a stamped receipt, the &quot;Receipt of
+                      Notification&quot;, which the foreigner should keep.
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border border-slate-200 p-5">
-                    <h3 className="font-bold text-slate-900">Via the Section 38 app</h3>
-                    <p className="mt-1 text-slate-700">
-                      Thai Immigration has a mobile application that landlords can use to submit TM.30
-                      notifications and download receipts digitally.
-                    </p>
-                  </div>
                 </div>
               </div>
 
@@ -196,13 +206,6 @@ export default function TM30Page() {
                         className="font-semibold text-teal-700 underline underline-offset-2"
                       >
                         90-day reporting
-                      </Link>{" "}
-                      and{" "}
-                      <Link
-                        href="/guides/re-entry-permit"
-                        className="font-semibold text-teal-700 underline underline-offset-2"
-                      >
-                        re-entry permits
                       </Link>.</span>
                   </li>
 
@@ -245,6 +248,23 @@ export default function TM30Page() {
                   </li>
                 </ul>
               </div>
+
+              <section>
+                <h2 className="text-xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+                <div className="mt-4 space-y-3">
+                  {FAQS.map((faq) => (
+                    <details key={faq.question} className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                      <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                        <span className="min-w-0">{faq.question}</span>
+                        <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                          +
+                        </span>
+                      </summary>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-700">{faq.answer}</p>
+                    </details>
+                  ))}
+                </div>
+              </section>
             </div>
 
             <div className="mt-10 rounded-lg bg-amber-50 border-l-4 border-amber-500 p-5">
@@ -261,10 +281,7 @@ export default function TM30Page() {
                 <p>
                   Keep a copy of your Receipt of Notification safe - you will need it at immigration.
                 </p>
-                <p>
-                  If you lose your receipt, you may need a police report before immigration will issue a
-                  replacement.
-                </p>
+                
               </div>
             </div>
           </CardContent>

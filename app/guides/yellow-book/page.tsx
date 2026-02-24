@@ -76,8 +76,9 @@ export default function YellowBookPage() {
                 </p>
                 <div className="mt-3 grid gap-2">
                   {[
-                    "Passport + copies (bio page, visa sticker, latest entry stamp)",
-                    "Thai translation of passport (often required)",
+                    "Passport and copies (bio page, visa and latest entry stamp)",
+                    "Notarised copy of your passport from your Embassy",
+                    "Thai translation of Passport",
                     "Proof of address (Blue House Book copy, ownership papers, or rental contract)",
                     "House owner's ID card + presence at the office (commonly required)",
                     "TM.30 receipt (often requested)",
@@ -86,38 +87,43 @@ export default function YellowBookPage() {
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-3 text-slate-700">
                       <div className="h-2 w-2 shrink-0 rounded-full bg-amber-500" />
-                      <span>{item}</span>
+                      <span>
+                        {item === "TM.30 receipt (often requested)" ? (
+                          <>
+                            {item}{" "}
+                            <ExampleLink
+                              href="/examples/TM.30-example.png"
+                              label="View example"
+                              className="ml-1"
+                            />
+                          </>
+                        ) : (
+                          item
+                        )}
+                      </span>
                     </div>
                   ))}
                 </div>
-                <p className="mt-3 text-slate-700">
-                  If you are unsure about TM.30, see our{" "}
-                  <Link
-                    href="/guides/tm30"
-                    className="font-semibold text-amber-700 underline underline-offset-2"
-                  >
-                    TM.30 guide
-                  </Link>
-                  .{" "}
-                  <ExampleLink href="/examples/TM.30-example.png" label="TM.30 receipt example" className="ml-1" />
-                </p>
               </section>
 
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">How the process usually works</h2>
-                <div className="mt-3 grid gap-2">
+                <ol className="mt-3 space-y-3">
                   {[
-                    "Visit your local district office (Amphur/Khet) with original documents",
+                    "Call or visit your local district office (Amphur/Khet) to enquire about the required documents",
+                    "Visit your local district office with original documents",
                     "Submit the application and supporting copies",
                     "The office verifies your address and eligibility and may request additional documents",
                     "If approved, the Yellow Book can be issued the same day or scheduled for collection",
-                  ].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-slate-700">
-                      <div className="h-2 w-2 shrink-0 rounded-full bg-amber-500" />
-                      <span>{item}</span>
-                    </div>
+                  ].map((step, index) => (
+                    <li key={step} className="flex items-start gap-3 text-slate-700">
+                      <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-100 text-sm font-bold text-amber-700">
+                        {index + 1}
+                      </span>
+                      <span>{step}</span>
+                    </li>
                   ))}
-                </div>
+                </ol>
                 <p className="mt-3 text-slate-700">
                   Processing time varies depending on the district office.
                 </p>
@@ -125,7 +131,7 @@ export default function YellowBookPage() {
 
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">
-                  Why people get one (Acceptance depends on the institution)
+                  What can it be used for?
                 </h2>
                 <p className="mt-2 text-slate-700">A Yellow Book can simplify proof of address for:</p>
                 <div className="mt-3 grid gap-2">
@@ -138,18 +144,114 @@ export default function YellowBookPage() {
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-3 text-slate-700">
                       <div className="h-2 w-2 shrink-0 rounded-full bg-amber-500" />
-                      <span>{item}</span>
+                      <span>
+                        {item === "Applying for a Pink ID card (Foreigner ID)" ? (
+                          <>
+                            Applying for a{" "}
+                            <Link
+                              href="/guides/pink-id-card"
+                              className="font-semibold text-amber-700 underline underline-offset-2"
+                            >
+                              Pink ID card
+                            </Link>
+                            {" "}(Foreigner ID)
+                          </>
+                        ) : (
+                          item
+                        )}
+                      </span>
                     </div>
                   ))}
+                </div>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-extrabold text-slate-900">FAQ</h2>
+                <div className="mt-4 space-y-3">
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">Do I need to own property to apply?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      No. You can be registered at a rented property if the owner cooperates and attends the district office.
+                    </p>
+                  </details>
+
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">Does the Yellow Book replace TM.30?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      No. TM.30 is an immigration requirement for reporting a foreigner&apos;s address. The Yellow Book is a civil registration document. They are separate systems.
+                    </p>
+                  </details>
+
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">Does it replace 90-day reporting?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      No. You must still complete 90-day reporting if required by your visa type.
+                    </p>
+                  </details>
+
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">What happens if I move to a new address?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      You must update your registration at the new district office. You can only be registered at one address at a time.
+                    </p>
+                  </details>
+
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">How much does it cost?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      There is usually no significant official fee, but minor administrative fees may apply depending on the district office.
+                    </p>
+                  </details>
+
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">
+                        Does the Yellow Book give me permanent residency?
+                      </span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
+                      <p>No. It does not grant permanent residency, citizenship, or any immigration
+                        status. It only records your address in the Thai house registration system.
+                      </p>
+                    </div>
+                  </details>
                 </div>
               </section>
             </div>
 
             <div className="mt-10 rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5">
-              <div className="font-bold text-amber-900">Important</div>
+              <div className="font-bold text-amber-900">Good to know</div>
               <div className="mt-2 space-y-1 text-sm text-amber-900">
                 <p>
-                  Requirements vary significantly by district office - it is best to call in advance to confirm what
+                  Requirements vary significantly by district office, it is best to call in advance to confirm what
                   they require.
                 </p>
                 <p>

@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, ExternalLink, Globe2 } from "lucide-react";
+import { ArrowLeft, Globe2 } from "lucide-react";
 import ThailandVisaNeedChecker from "@/components/thailand-visa-need-checker";
-import { DATASET_LAST_CHECKED, VISA_ELIGIBILITY_SOURCES } from "@/lib/data/thai-visa-eligibility";
+import { VISA_ELIGIBILITY_SOURCES } from "@/lib/data/thai-visa-eligibility";
 
 export const metadata: Metadata = {
   title: "Do I Need a Visa for Thailand?",
@@ -63,7 +63,7 @@ export default function DoINeedAVisaThailandPage() {
                       rel="noopener noreferrer"
                       className="font-semibold text-blue-700 underline underline-offset-2"
                     >
-                      source
+                      Royal Thai Embassy
                     </a>
                     ), then checks whether your planned stay fits the allowed period.
                   </p>
@@ -71,40 +71,6 @@ export default function DoINeedAVisaThailandPage() {
                     It does not replace embassy advice or immigration officer discretion at entry.
                   </p>
                 </div>
-              </section>
-
-              <section>
-                <h2 className="text-xl font-extrabold text-slate-900">Official sources used (current checker data)</h2>
-                <div className="mt-3 flex flex-col gap-2 text-sm">
-                  <a
-                    href={VISA_ELIGIBILITY_SOURCES.klEmbassyVisaHub}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-semibold text-blue-700 underline underline-offset-2"
-                  >
-                    Royal Thai Embassy Kuala Lumpur - Visa Exemption / VOA (official source hub)
-                    <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                  <a
-                    href={VISA_ELIGIBILITY_SOURCES.eVisa}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-semibold text-blue-700 underline underline-offset-2"
-                  >
-                    Thai e-Visa Official Portal
-                    <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                  <a
-                    href={VISA_ELIGIBILITY_SOURCES.tdac}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-semibold text-blue-700 underline underline-offset-2"
-                  >
-                    TDAC Official Site
-                    <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-                <p className="mt-4 text-xs text-slate-500">Checker dataset last reviewed: {DATASET_LAST_CHECKED}</p>
               </section>
             </div>
           </CardContent>

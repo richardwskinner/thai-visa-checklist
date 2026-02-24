@@ -36,7 +36,7 @@ const stageOneChecklist: {
       title: "Eligibility & Entry Plan",
       items: [
         { text: "You are at least 50 years old by the time you apply for retirement extension" },
-        { text: "Passport valid for at least 18 months (recommended for smooth extension process)" },
+        { text: "Passport valid for at least 12 months (recommended for smooth extension process)" },
         { text: "Choose your entry route: Visa Exemption, Tourist Visa, or Non-Immigrant O from abroad" },
       ],
     },

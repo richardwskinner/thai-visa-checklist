@@ -60,14 +60,14 @@ export default function TouristExtensionPage() {
                 <ul className="mt-3 list-disc space-y-2 pl-6 text-slate-700">
                   <li>
                     <Link
-                      href="/guides/voa-visa-exemption"
+                      href="/guides/do-i-need-a-visa-thailand"
                       className="font-semibold text-emerald-700 underline underline-offset-2"
                     >
                       Visa Exemption
                     </Link>{" "}
                     entries
                   </li>
-                  <li>Single-entry Tourist Visa (TR)</li>
+                  <li>Single-entry Tourist Visa</li>
                   <li>Some Visa on Arrival cases (confirm locally)</li>
                 </ul>
 
@@ -114,8 +114,8 @@ export default function TouristExtensionPage() {
                       Download <ExternalLink className="h-3.5 w-3.5" />
                     </a>
                   </li>
-                  <li>1x passport photo (4x6 cm)</li>
-                  <li>Photocopies of passport photo page + entry stamp</li>
+                  <li>1x passport photo, taken within 6 months (4x6 cm)</li>
+                  <li>Photocopies of passport photo page and entry stamp</li>
                   <li>
                     <Link
                       href="/guides/tm30"
@@ -137,16 +137,6 @@ export default function TouristExtensionPage() {
                 <p className="mt-2 text-slate-700">
                   Apply at your local immigration office before your permitted stay expires.
                   Major offices include Bangkok (Chaeng Wattana), Chiang Mai, Phuket, Pattaya, and others.
-                </p>
-                <p className="mt-3 text-slate-700">
-                  It&apos;s best to apply 5–7 days before your expiry date. If you haven&apos;t already, make sure you&apos;ve completed the{" "}
-                  <Link
-                    href="/tdac"
-                    className="font-semibold text-emerald-700 underline underline-offset-2"
-                  >
-                    Thailand Digital Arrival Card (TDAC)
-                  </Link>{" "}
-                  before arriving in Thailand.
                 </p>
               </section>
 
@@ -175,6 +165,56 @@ export default function TouristExtensionPage() {
                 <div className="mt-4 space-y-3">
                   <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
                     <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">Does the extension start from the approval date?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
+                      <p>No. The 30-day extension begins from your original expiry date, not from the date you apply.
+                      </p>
+                    </div>
+                  </details>
+
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">When should I apply?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
+                      <p>You must apply before your current permitted stay expires. It is common to apply in the final week before expiry.</p>
+                    </div>
+                  </details>
+
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">Can I extend more than once?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
+                      <p>No. You can normally only receive one 30-day extension per entry. If you want to stay longer, you will need to leave Thailand and re-enter or apply for a different visa.
+                      </p>
+                    </div>
+                  </details>
+
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                      <span className="min-w-0">How much does a tourist visa extension cost?</span>
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      The fee is 1,900 THB, payable at the immigration office (cash).
+                    </p>
+                  </details>
+
+                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
                       <span className="min-w-0">
                         If my passport stamp says 7 August, when do I need to leave Thailand?
                       </span>
@@ -191,16 +231,24 @@ export default function TouristExtensionPage() {
                 </div>
               </section>
 
-              {/* Common mistakes */}
+              {/* Good to know */}
               <section className="rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5">
                 <div className="font-bold text-amber-900">
-                  Common mistakes
+                  Good to know
                 </div>
                 <div className="mt-2 space-y-1 text-sm text-amber-900">
-                  <p>• Waiting until the last day</p>
-                  <p>• No TM.30 receipt</p>
-                  <p>• Incorrect photo size</p>
-                  <p>• Missing photocopies</p>
+                  <p>• You must apply before your current stay expires.</p>
+                  <p>
+                    • Overstaying results in fines (500 THB per day).{" "}
+                    <Link
+                      href="/guides/overstay-thailand"
+                      className="font-semibold text-amber-900 underline underline-offset-2"
+                    >
+                      See overstay rules
+                    </Link>
+                    .
+                  </p>
+                  <p>• Extensions are granted at the discretion of immigration officers.</p>
                 </div>
               </section>
 

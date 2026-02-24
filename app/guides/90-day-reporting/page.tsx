@@ -46,6 +46,11 @@ const FAQS = [
     answer:
       "Go to your local immigration office with your passport and explain that the receipt was lost. In some offices, you can proceed with your next 90-day report in person without the old slip. In other offices, they may ask for a police report confirming the loss before allowing the next filing.",
   },
+  {
+    question: "Do LTR visa holders need to report every 90 days?",
+    answer:
+      "No. LTR visa holders only need to report once per year instead of every 90 days.",
+  },
 ] as const;
 
 export default function NinetyDayReportingpage() {
@@ -119,7 +124,7 @@ export default function NinetyDayReportingpage() {
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">When to report</h2>
                 <p className="mt-2 text-slate-700">
-                  You can report from 15 days before your due date up to 7 days after it. This gives you a roughly 3-week
+                  You can report from 15 days before your due date up to 7 days after it, giving you a 3-week
                   window. Your due date is exactly 90 days from your latest entry into Thailand or from your last report -
                   whichever is more recent. If you leave Thailand and return, the 90-day count resets from your new entry date.
                 </p>
@@ -143,7 +148,6 @@ export default function NinetyDayReportingpage() {
                 <div className="mt-3 grid gap-2">
                   {[
                     "Passport (original for in-person, copies for mail/online)",
-                    "Previous 90-day report receipt (if applicable)",
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-3 text-slate-700">
                       <div className="h-2 w-2 shrink-0 rounded-full bg-violet-500" />
@@ -154,7 +158,7 @@ export default function NinetyDayReportingpage() {
                   <div className="flex items-center gap-3 text-slate-700">
                     <div className="h-2 w-2 shrink-0 rounded-full bg-violet-500" />
                     <span className="min-w-0">
-                      90-day report receipt{" "}
+                      Previous 90-day report receipt (If applicable){" "}
                       <a
                         href={NINETY_DAY_RECEIPT_EXAMPLE_URL}
                         target="_blank"
@@ -191,7 +195,7 @@ export default function NinetyDayReportingpage() {
                     <h3 className="font-bold text-slate-900">In person</h3>
                     <p className="mt-1 text-slate-700">
                       Visit your local immigration office with your documents. This is the most reliable method. Processing is
-                      done same-day, but arrive early to beat the queues.
+                      done same-day, but it is advisable to arrive early to beat the queues.
                     </p>
                   </div>
 
@@ -217,14 +221,14 @@ export default function NinetyDayReportingpage() {
                       <p className="text-sm font-semibold">Notification by registered mail:</p>
                       <ol className="list-decimal space-y-1 pl-5 text-sm">
                         <li>
-                          Photocopy of passport pages: front bio page (name/surname/passport number), current visa, last
+                          Photocopy of passport: Front bio page (name/surname/passport number), current visa, last
                           entry stamp, and latest extension stamp.
                         </li>
                         <li>
                           TDAC arrival record details.
                         </li>
                         <li>
-                          Previous notification of staying over 90 days (if any).
+                          Previous notification of staying over 90 days (if applicable).
                           {" "}
                           <ExampleLink
                             href={NINETY_DAY_RECEIPT_EXAMPLE_URL}
@@ -287,9 +291,8 @@ export default function NinetyDayReportingpage() {
               <div className="font-bold text-amber-900">Good to know</div>
               <div className="mt-2 space-y-1 text-sm text-amber-900">
                 <p>90-day reporting does not extend your visa, it only confirms your address.</p>
-                <p>Set a calendar reminder 15 days before your due date so you never miss it.</p>
+                <p>Set a calendar reminder or make a note 15 days before your due date so you never miss it.</p>
                 <p>The online system is famously unreliable near deadlines, don&apos;t leave it to the last day.</p>
-                <p>LTR visa holders only need to report once per year instead of every 90 days.</p>
               </div>
             </div>
           </CardContent>

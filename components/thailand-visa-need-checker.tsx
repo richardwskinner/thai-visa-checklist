@@ -83,7 +83,7 @@ export default function ThailandVisaNeedChecker() {
   return (
     <section className="rounded-2xl border border-slate-200 bg-slate-50/60 p-4 sm:p-6">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-xl font-extrabold text-slate-900">Visa Need Checker</h2>
+        <h2 className="text-xl font-extrabold text-slate-900">Thailand Visa Eligibility</h2>
         <div className="text-xs text-slate-500">Official-source dataset • Checked {DATASET_LAST_CHECKED}</div>
       </div>
 
@@ -179,7 +179,7 @@ export default function ThailandVisaNeedChecker() {
           disabled={!hasValidDates}
           className="inline-flex items-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          Check visa need
+          Check Here
         </button>
       </div>
 
@@ -189,7 +189,22 @@ export default function ThailandVisaNeedChecker() {
             {result.kind === "visa_required" || result.kind === "manual_check" ? "⚠️ " : "✅ "}
             {result.title}
           </div>
-          <p className="mt-2 text-sm leading-relaxed">{result.detail}</p>
+          <p className="mt-2 text-sm leading-relaxed">
+            {result.detail}
+            {(result.kind === "visa_required" || result.kind === "manual_check") && (
+              <>
+                {" "}
+                <a
+                  href={VISA_ELIGIBILITY_SOURCES.eVisa}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-semibold underline underline-offset-2"
+                >
+                  Thai e-Visa Official Site <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </>
+            )}
+          </p>
           {result.notes.length > 0 && (
             <ul className="mt-3 space-y-1 text-sm">
               {result.notes.map((note) => (
@@ -235,16 +250,6 @@ export default function ThailandVisaNeedChecker() {
               </a>
               ).
             </p>
-            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs">
-              <a
-                href={VISA_ELIGIBILITY_SOURCES.eVisa}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 font-semibold underline underline-offset-2"
-              >
-                Thai e-Visa Official Site <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-            </div>
           </div>
         </div>
       )}

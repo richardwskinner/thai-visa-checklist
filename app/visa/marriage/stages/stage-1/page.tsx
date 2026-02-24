@@ -32,12 +32,12 @@ const stageOneChecklist: {
   tips: string[];
 } = {
   title: "Marriage Visa - Stage 1",
-  subtitle: "Apply for Non-Immigrant O - To stay with Thai family residing in Thailand (More than 60 days)",
+  subtitle: "Apply for Non-O Visa - To stay with Thai family residing in Thailand (More than 60 days)",
   sections: [
     {
       title: "1) Key Rules Before Applying",
       items: [
-        { text: "Apply outside of Thailand (home country or neighboring country such as Laos or Vietnam)" }, 
+        { text: "Apply outside of Thailand (Your home country or a neighboring country such as Laos or Vietnam)" }, 
         { text: "Have proof that you're physically in that country, such as an entry stamp or visa"},
         { text: "Passport validity: 6+ months (single entry)" },
       ],
@@ -48,7 +48,7 @@ const stageOneChecklist: {
         { text: "Passport bio page" },
         { text: "Photo, taken within last 6 months" },
         { text: "Document indicating current location (utility bill or entry stamp/visa)" },
-        { text: "Show one of the following: monthly income 40,000 THB+ OR bank balance 400,000 THB+" },
+        { text: "One of the following: monthly income 40,000 THB+ OR bank balance 400,000 THB+" },
         { text: "Bank statement covering the last 3 months" },
         { text: "Marriage certificate (Kor Ror 2 and Kor Ror 3 if married in Thailand)" },
         { text: "Thai spouse ID card" },
