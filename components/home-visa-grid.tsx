@@ -5,9 +5,11 @@ import { VISAS } from "@/lib/data/visas";
 import { analytics } from "@/lib/analytics";
 
 export default function HomeVisaGrid() {
+  const hiddenVisaSlugs = new Set(["business", "education"]);
+
   return (
     <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2">
-      {VISAS.map((v) =>
+      {VISAS.filter((v) => !hiddenVisaSlugs.has(v.slug)).map((v) =>
         v.disabled ? (
           <div
             key={v.slug}

@@ -87,8 +87,8 @@ export default function SiteHeader() {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur">
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-5">
         <div className="py-3 sm:py-2">
-          <div className="grid gap-2">
-            <div className="relative flex items-center justify-center">
+          <div className="relative grid gap-2">
+            <div className="flex items-center justify-center">
               <Link href="/" className="flex flex-col items-center">
                 <Image
                   src="/logo-full.svg"
@@ -98,21 +98,21 @@ export default function SiteHeader() {
                   priority
                 />
               </Link>
+            </div>
 
-              <div className="absolute right-0 top-1/2 hidden -translate-y-1/2 items-center sm:flex">
-                <select
-                  value={selectedLanguage}
-                  onChange={(e) => handleTranslateChange(e.target.value)}
-                  className="h-8 rounded-md border border-slate-200 bg-white px-2 text-xs font-medium text-slate-700"
-                  aria-label="Select website language"
-                >
-                  {TRANSLATE_LANGUAGES.map((lang) => (
-                    <option key={lang.code} value={lang.code}>
-                      {lang.flag} {lang.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="absolute right-2 top-1/2 hidden -translate-y-1/2 items-center sm:flex">
+              <select
+                value={selectedLanguage}
+                onChange={(e) => handleTranslateChange(e.target.value)}
+                className="h-8 rounded-md border border-slate-200 bg-white px-2 text-xs font-medium text-slate-700"
+                aria-label="Select website language"
+              >
+                {TRANSLATE_LANGUAGES.map((lang) => (
+                  <option key={lang.code} value={lang.code}>
+                    {lang.flag} {lang.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-center sm:gap-6">
