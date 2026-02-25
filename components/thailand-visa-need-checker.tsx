@@ -104,20 +104,22 @@ export default function ThailandVisaNeedChecker() {
           : "border-rose-200 bg-rose-50 text-rose-900";
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-slate-50/60 p-4 sm:p-6">
-      <div className="flex items-center justify-between gap-3">
+    <section className="max-w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/60 p-4 sm:p-6">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
         <h2 className="text-xl font-extrabold text-slate-900">Thailand Visa Eligibility</h2>
-        <div className="text-xs text-slate-500">Official-source dataset • Checked {DATASET_LAST_CHECKED}</div>
+        <div className="text-xs text-slate-500 sm:text-right">
+          Official-source dataset • Checked {DATASET_LAST_CHECKED}
+        </div>
       </div>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        <label className="block">
+        <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-700">Passport nationality</span>
-          <div className="relative mt-1">
+          <div className="relative mt-1 min-w-0">
             <select
               value={nationality}
               onChange={(e) => setNationality(e.target.value)}
-              className="w-full appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 pr-10 text-sm text-slate-900"
+              className="block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 pr-10 text-sm text-slate-900"
             >
               {nationalityOptions.map((option) => (
                 <option key={option} value={option}>
@@ -132,13 +134,13 @@ export default function ThailandVisaNeedChecker() {
           </p>
         </label>
 
-        <label className="block">
+        <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-700">Entry method</span>
-          <div className="relative mt-1">
+          <div className="relative mt-1 min-w-0">
             <select
               value={entryMethod}
               onChange={(e) => setEntryMethod(e.target.value as EntryMethod)}
-              className="w-full appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 pr-10 text-sm text-slate-900"
+              className="block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 pr-10 text-sm text-slate-900"
             >
               <option value="air">Air</option>
               <option value="land">Land</option>
@@ -148,32 +150,34 @@ export default function ThailandVisaNeedChecker() {
           </div>
         </label>
 
-        <label className="block">
+        <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-700">Planned entry date</span>
           <input
             type="date"
+            lang="en-GB"
             value={entryDate}
             onChange={(e) => setEntryDate(e.target.value)}
-            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
           />
         </label>
 
-        <label className="block">
+        <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-700">Planned departure date</span>
           <input
             type="date"
+            lang="en-GB"
             value={departureDate}
             onChange={(e) => setDepartureDate(e.target.value)}
-            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
           />
         </label>
-        <label className="block">
+        <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-700">Passport type</span>
-          <div className="relative mt-1">
+          <div className="relative mt-1 min-w-0">
             <select
               value={passportType}
               onChange={(e) => setPassportType(e.target.value as "ordinary" | "travel_document" | "diplomatic_official")}
-              className="w-full appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 pr-10 text-sm text-slate-900"
+              className="block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 pr-10 text-sm text-slate-900"
             >
               <option value="ordinary">Ordinary passport</option>
               <option value="travel_document">Travel document / passport substitute</option>
