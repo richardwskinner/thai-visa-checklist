@@ -159,14 +159,11 @@ export default function NinetyDayReportingpage() {
                     <div className="h-2 w-2 shrink-0 rounded-full bg-violet-500" />
                     <span className="min-w-0">
                       Previous 90-day report receipt (If applicable){" "}
-                      <a
+                      <ExampleLink
                         href={NINETY_DAY_RECEIPT_EXAMPLE_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 font-medium text-violet-700 underline underline-offset-2"
-                      >
-                        View example <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
+                        label="View example"
+                        className="ml-1 align-middle"
+                      />
                     </span>
                   </div>
 
