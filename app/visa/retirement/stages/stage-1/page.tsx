@@ -81,7 +81,7 @@ function FormChips() {
           href={form.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100"
           onClick={(e) => e.stopPropagation()}
         >
           {form.code}
@@ -192,11 +192,12 @@ export default function RetirementStageOnePage() {
           </Button>
         </div>
 
+        <div className="mt-6">
+          <ChecklistNotice />
+        </div>
+
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
           <CardContent className="p-6 sm:p-10">
-            <div className="mb-6">
-              <ChecklistNotice />
-            </div>
             <h1 className="text-center text-3xl font-extrabold tracking-tight text-slate-900">
               {stageOneChecklist.title}
             </h1>
@@ -246,7 +247,7 @@ export default function RetirementStageOnePage() {
             ))}
 
             <div className="mt-8 rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5">
-              <div className="text-sm font-bold text-amber-900">Extra tips</div>
+              <div className="text-sm font-bold text-amber-900">Notes</div>
               <ul className="mt-2 list-disc space-y-1 pl-6 text-xs text-amber-900">
                 {stageOneChecklist.tips.map((tip) => (
                   <li key={tip}>{tip}</li>
@@ -255,6 +256,7 @@ export default function RetirementStageOnePage() {
             </div>
           </CardContent>
         </Card>
+
       </div>
     </div>
   );

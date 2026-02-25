@@ -20,28 +20,24 @@ const FAQS = [
   {
     question: "Can I get a re-entry permit at Suvarnabhumi Airport (BKK)?",
     answer:
-      "Yes, it is commonly reported that the re-entry permit counter at Suvarnabhumi Airport (BKK) is open 24/7. You can apply for either a single or a multiple re-entry permit. It is located down the escalator to the right, after security. Arrive early and confirm on the day in case airport procedures or staffing change.",
+      "Yes, it is commonly reported that the re-entry permit counter at Suvarnabhumi Airport (BKK) is open 24/7. You can apply for either a single or a multiple re-entry permit. It is located down the escalator to the right, after security, just before immigration. Arrive early and confirm on the day in case airport procedures or staffing change.",
   },
   {
     question: "Can I get a re-entry permit at Don Mueang International Airport (DMK)?",
     answer:
-      "Yes, it is commonly reported that the re-entry permit counter at Don Mueang International Airport (DMK) is open 24/7. You can apply for either a single or a multiple re-entry permit. It is located just after behind the immigration officers. Arrive early and confirm on the day in case airport procedures or staffing change.",
+      "Yes, it is commonly reported that the re-entry permit counter at Don Mueang International Airport (DMK) is open 24/7. You can apply for either a single or a multiple re-entry permit. It is located just behind the immigration officers. Arrive early and confirm on the day in case airport procedures or staffing change.",
   },
   {
     question: "What happens if I leave Thailand without a re-entry permit?",
     answer:
-      "Your extension of stay is automatically cancelled when you leave Thailand. You would need to apply for a new visa to return.",
+      "Your extension of stay is automatically cancelled when you leave Thailand. You would need to apply for a new visa.",
   },
   {
     question: "How long is a re-entry permit valid?",
     answer:
       "It is valid until the expiry date of your current extension of stay, not 1 year from issue.",
   },
-  {
-    question: "What if I forgot to get one and already left Thailand?",
-    answer:
-      "If you leave without a re-entry permit, your extension is cancelled immediately. You must apply for a new visa before returning.",
-  },
+  
 ] as const;
 
 export default function ReEntryPermitPage() {

@@ -13,6 +13,7 @@ import type { ChecklistItem } from "@/lib/data/retirement";
 import { analytics } from "@/lib/analytics";
 import ChecklistNotice from "@/components/checklist-notice";
 import ExampleLink from "@/components/example-link";
+import PrintChecklistHeader from "@/components/print-checklist-header";
 
 /* ── Storage keys ── */
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:retirement:checked:v1";
@@ -38,7 +39,7 @@ function FormChips() {
           href={f.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100
+          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100
                      print:bg-white print:text-slate-900 print:border-slate-300"
           onClick={(e) => e.stopPropagation()}
         >
@@ -261,12 +262,14 @@ export default function RetirementVisaPage() {
           </div>
         </div>
 
+        <div className="mt-6 print:hidden">
+          <ChecklistNotice />
+        </div>
+
         {/* Content */}
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm print:mt-0 print:rounded-none print:shadow-none print:scale-95">
-          <CardContent className="p-10 print:p-4 print:pb-0">
-            <div className="mb-6 print:hidden">
-              <ChecklistNotice />
-            </div>
+          <CardContent className="p-10 print:px-4 print:pt-0 print:pb-0">
+            <PrintChecklistHeader />
             <h1 className={`${classes.title} text-center font-extrabold tracking-tight text-slate-900`}>
               {retirementChecklist.title}
             </h1>
@@ -327,46 +330,37 @@ export default function RetirementVisaPage() {
 
             {/* Tips */}
             <div className="mt-8 rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5 print:mt-2 print:p-4 print:break-inside-auto">
-              <div className={`${classes.itemText} font-bold text-amber-900`}>Extra Tips:</div>
+              <div className={`${classes.itemText} font-bold text-amber-900`}>Notes</div>
               <ul className={`mt-2 list-disc space-y-1 pl-6 ${classes.label} text-amber-900`}>
                 {retirementChecklist.tips.map((tip) => (
                   <li key={tip}>{tip}</li>
                 ))}
               </ul>
-
-              {/* Print-only footer with website name */}
-              <div className="hidden print:block mt-4 pt-3 border-t border-amber-200 text-center text-[10px] text-amber-600">
-                thaivisachecklist.com
-              </div>
             </div>
 
-            {/* FAQ (screen only) */}
-            <div className="mt-8 print:hidden">
-              <div className="text-lg font-extrabold text-slate-900">FAQ</div>
-              <div className="mt-3 space-y-3">
-                <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                  <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-sm font-bold text-slate-900 sm:text-base">
-                    <span className="min-w-0">
-                      How far in advance can I apply for a retirement extension at Chaeng Wattana?
-                    </span>
-                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                      +
-                    </span>
-                  </summary>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                    At Chaeng Wattana (Immigration Division 1), a common rule is that you can apply when you have 45
-                    days or less remaining on your current stamp. Office practice can change, so confirm with the
-                    office before you go.
-                  </p>
-                </details>
-              </div>
-            </div>
-
-            <div className="mt-8 print:hidden">
-              <Separator />
-            </div>
           </CardContent>
         </Card>
+
+        <div className="mt-6 print:hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="text-lg font-extrabold text-slate-900">FAQ</div>
+          <div className="mt-3 space-y-3">
+            <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-sm font-bold text-slate-900 sm:text-base">
+                <span className="min-w-0">
+                  How far in advance can I apply for a retirement extension at Chaeng Wattana?
+                </span>
+                <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                At Chaeng Wattana (Immigration Division 1), a common rule is that you can apply when you have 45
+                days or less remaining on your current stamp. Office practice can change, so confirm with the
+                office before you go.
+              </p>
+            </details>
+          </div>
+        </div>
       </div>
 
       {/* Print styles */}

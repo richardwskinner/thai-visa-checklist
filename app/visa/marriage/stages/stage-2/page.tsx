@@ -11,6 +11,7 @@ import { ArrowLeft, Printer } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 import ChecklistNotice from "@/components/checklist-notice";
 import ExampleLink from "@/components/example-link";
+import PrintChecklistHeader from "@/components/print-checklist-header";
 
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:stage2:checked:v1";
 const STORAGE_KEY_FONTSIZE = "thai-visa-checklist:fontsize:v1";
@@ -145,7 +146,7 @@ function FormChips() {
           href={form.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100 print:bg-white print:text-slate-900 print:border-slate-300"
+          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100 print:bg-white print:text-slate-900 print:border-slate-300"
           onClick={(e) => e.stopPropagation()}
         >
           {form.code}
@@ -323,11 +324,13 @@ export default function MarriageStageTwoPage() {
           </div>
         </div>
 
+        <div className="mt-6 print:hidden">
+          <ChecklistNotice />
+        </div>
+
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm print:mt-0 print:rounded-none print:shadow-none print:scale-95">
-          <CardContent className="p-6 sm:p-10 print:p-4 print:pb-0">
-            <div className="mb-6 print:hidden">
-              <ChecklistNotice />
-            </div>
+          <CardContent className="p-6 sm:p-10 print:px-4 print:pt-0 print:pb-0">
+            <PrintChecklistHeader />
             <h1 className={`${classes.title} text-center font-extrabold tracking-tight text-slate-900`}>
               {stageTwoChecklist.title}
             </h1>
@@ -386,23 +389,17 @@ export default function MarriageStageTwoPage() {
             ))}
 
             <div className="mt-8 rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5 print:mt-2 print:p-4 print:break-inside-auto">
-              <div className={`${classes.itemText} font-bold text-amber-900`}>Extra Tips:</div>
+              <div className={`${classes.itemText} font-bold text-amber-900`}>Notes</div>
               <ul className={`mt-2 list-disc space-y-1 pl-6 ${classes.label} text-amber-900`}>
                 {stageTwoChecklist.tips.map((tip) => (
                   <li key={tip}>{tip}</li>
                 ))}
               </ul>
-
-              <div className="hidden print:block mt-4 pt-3 border-t border-amber-200 text-center text-[10px] text-amber-600">
-                thaivisachecklist.com
-              </div>
             </div>
 
-            <div className="mt-8 print:hidden">
-              <Separator />
-            </div>
           </CardContent>
         </Card>
+
       </div>
 
       <style>{`

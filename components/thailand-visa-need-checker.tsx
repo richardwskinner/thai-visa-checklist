@@ -39,6 +39,29 @@ function diffCalendarDaysInclusive(entryDate: string, departureDate: string) {
   return diff + 1;
 }
 
+function renderNoteWithLinks(note: string) {
+  const token = "MFA-linked";
+  if (!note.includes(token)) return note;
+
+  const [before, ...rest] = note.split(token);
+  const after = rest.join(token);
+
+  return (
+    <>
+      {before}
+      <a
+        href={VISA_ELIGIBILITY_SOURCES.klEmbassyVisaHub}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-semibold underline underline-offset-2"
+      >
+        {token}
+      </a>
+      {after}
+    </>
+  );
+}
+
 export default function ThailandVisaNeedChecker() {
   const today = new Date();
   const defaultEntry = toIsoDate(today);
@@ -208,7 +231,7 @@ export default function ThailandVisaNeedChecker() {
           {result.notes.length > 0 && (
             <ul className="mt-3 space-y-1 text-sm">
               {result.notes.map((note) => (
-                <li key={note}>• {note}</li>
+                <li key={note}>• {renderNoteWithLinks(note)}</li>
               ))}
             </ul>
           )}

@@ -38,13 +38,19 @@ function Footer() {
                 href="/thailand-public-holidays-2026"
                 className="text-sm font-semibold text-slate-600 hover:text-slate-900"
               >
-                Thai Public Holidays
+                Public Holidays
               </Link>
               <Link
                 href="/forms"
                 className="text-sm font-semibold text-slate-600 hover:text-slate-900"
               >
                 Immigration Forms
+              </Link>
+              <Link
+                href="/tools"
+                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+              >
+                Thai Visa Calculators
               </Link>
               <Link
                 href="/disclaimer"
