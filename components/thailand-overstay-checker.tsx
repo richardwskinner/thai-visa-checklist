@@ -90,24 +90,24 @@ export default function ThailandOverstayChecker() {
   }, [entryDate, plannedDepartureDate, stayGrantedDays]);
 
   return (
-    <section className="rounded-2xl border border-red-200 bg-red-50/70 p-4 sm:p-6">
+    <section className="overflow-hidden rounded-2xl border border-red-200 bg-red-50/70 p-4 sm:p-6">
       <h2 className="text-xl font-extrabold text-slate-900">Leave Date / Overstay Checker</h2>
       <p className="mt-2 text-sm text-slate-700">
 Enter your planned departure date to estimate your permitted stay, overstay days, fines, and potential blacklist risk.
       </p>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-3">
-        <label className="block">
+        <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-700">Entry date</span>
           <input
             type="date"
             value={entryDate}
             onChange={(e) => setEntryDate(e.target.value)}
-            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="mt-1 block w-full min-w-0 max-w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
           />
         </label>
 
-        <label className="block">
+        <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-700">Stay granted (days)</span>
           <input
             type="number"
@@ -115,17 +115,17 @@ Enter your planned departure date to estimate your permitted stay, overstay days
             inputMode="numeric"
             value={stayGrantedDays}
             onChange={(e) => setStayGrantedDays(e.target.value)}
-            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="mt-1 block w-full min-w-0 max-w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
           />
         </label>
 
-        <label className="block">
+        <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-700">Planned departure date</span>
           <input
             type="date"
             value={plannedDepartureDate}
             onChange={(e) => setPlannedDepartureDate(e.target.value)}
-            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="mt-1 block w-full min-w-0 max-w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
           />
         </label>
       </div>
