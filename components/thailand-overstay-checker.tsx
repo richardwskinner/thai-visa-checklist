@@ -103,7 +103,7 @@ Enter your planned departure date to estimate your permitted stay, overstay days
             type="date"
             value={entryDate}
             onChange={(e) => setEntryDate(e.target.value)}
-            className="mt-1 block w-full min-w-0 max-w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
           />
         </label>
 
@@ -115,7 +115,7 @@ Enter your planned departure date to estimate your permitted stay, overstay days
             inputMode="numeric"
             value={stayGrantedDays}
             onChange={(e) => setStayGrantedDays(e.target.value)}
-            className="mt-1 block w-full min-w-0 max-w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="mt-1 block w-full min-w-0 max-w-full box-border rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
           />
         </label>
 
@@ -125,7 +125,7 @@ Enter your planned departure date to estimate your permitted stay, overstay days
             type="date"
             value={plannedDepartureDate}
             onChange={(e) => setPlannedDepartureDate(e.target.value)}
-            className="mt-1 block w-full min-w-0 max-w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
           />
         </label>
       </div>
