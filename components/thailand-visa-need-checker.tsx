@@ -71,9 +71,6 @@ export default function ThailandVisaNeedChecker() {
   const [entryMethod, setEntryMethod] = useState<EntryMethod>("air");
   const [entryDate, setEntryDate] = useState(defaultEntry);
   const [departureDate, setDepartureDate] = useState(defaultDeparture);
-  const [passportType, setPassportType] = useState<"ordinary" | "travel_document" | "diplomatic_official">(
-    "ordinary"
-  );
   const [checkedSignature, setCheckedSignature] = useState<string | null>(null);
 
   const plannedStayDays = useMemo(() => diffCalendarDaysInclusive(entryDate, departureDate), [entryDate, departureDate]);
@@ -85,12 +82,12 @@ export default function ThailandVisaNeedChecker() {
         purpose: "tourism",
         entryMethod,
         plannedStayDays: plannedStayDays ?? 1,
-        passportDocumentType: passportType === "travel_document" ? "travel_document" : "ordinary_passport",
-        passportClass: passportType === "diplomatic_official" ? "diplomatic_official" : "regular",
+        passportDocumentType: "ordinary_passport",
+        passportClass: "regular",
       }),
-    [entryMethod, nationality, passportType, plannedStayDays]
+    [entryMethod, nationality, plannedStayDays]
   );
-  const currentSignature = `${nationality}|${entryMethod}|${entryDate}|${departureDate}|${passportType}`;
+  const currentSignature = `${nationality}|${entryMethod}|${entryDate}|${departureDate}`;
   const hasChecked = checkedSignature === currentSignature;
   const hasValidDates = plannedStayDays !== null;
 
@@ -170,21 +167,6 @@ export default function ThailandVisaNeedChecker() {
             onChange={(e) => setDepartureDate(e.target.value)}
             className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
           />
-        </label>
-        <label className="block min-w-0">
-          <span className="text-sm font-semibold text-slate-700">Passport type</span>
-          <div className="relative mt-1 min-w-0">
-            <select
-              value={passportType}
-              onChange={(e) => setPassportType(e.target.value as "ordinary" | "travel_document" | "diplomatic_official")}
-              className="block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 pr-10 text-sm text-slate-900"
-            >
-              <option value="ordinary">Ordinary passport</option>
-              <option value="travel_document">Travel document / passport substitute</option>
-              <option value="diplomatic_official">Diplomatic / official passport</option>
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-          </div>
         </label>
       </div>
 
