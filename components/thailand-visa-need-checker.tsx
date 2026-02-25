@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
@@ -65,7 +64,9 @@ function renderNoteWithLinks(note: string) {
 export default function ThailandVisaNeedChecker() {
   const today = new Date();
   const defaultEntry = toIsoDate(today);
-  const defaultDeparture = toIsoDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() + 29));
+  const defaultDeparture = toIsoDate(
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 29)
+  );
 
   const [nationality, setNationality] = useState("USA");
   const [entryMethod, setEntryMethod] = useState<EntryMethod>("air");
@@ -73,20 +74,21 @@ export default function ThailandVisaNeedChecker() {
   const [departureDate, setDepartureDate] = useState(defaultDeparture);
   const [checkedSignature, setCheckedSignature] = useState<string | null>(null);
 
-  const plannedStayDays = useMemo(() => diffCalendarDaysInclusive(entryDate, departureDate), [entryDate, departureDate]);
+  const plannedStayDays = useMemo(
+    () => diffCalendarDaysInclusive(entryDate, departureDate),
+    [entryDate, departureDate]
+  );
 
   const result = useMemo(
     () =>
       evaluateThailandVisaNeed({
         nationality,
-        purpose: "tourism",
         entryMethod,
         plannedStayDays: plannedStayDays ?? 1,
-        passportDocumentType: "ordinary_passport",
-        passportClass: "regular",
       }),
     [entryMethod, nationality, plannedStayDays]
   );
+
   const currentSignature = `${nationality}|${entryMethod}|${entryDate}|${departureDate}`;
   const hasChecked = checkedSignature === currentSignature;
   const hasValidDates = plannedStayDays !== null;
@@ -96,9 +98,7 @@ export default function ThailandVisaNeedChecker() {
       ? "border-emerald-200 bg-emerald-50 text-emerald-900"
       : result.kind === "voa"
         ? "border-blue-200 bg-blue-50 text-blue-900"
-        : result.kind === "manual_check"
-          ? "border-amber-200 bg-amber-50 text-amber-900"
-          : "border-rose-200 bg-rose-50 text-rose-900";
+        : "border-rose-200 bg-rose-50 text-rose-900";
 
   return (
     <section className="max-w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/60 p-4 sm:p-6">
@@ -194,26 +194,53 @@ export default function ThailandVisaNeedChecker() {
 
       {hasChecked && (
         <div className={`mt-5 rounded-2xl border p-4 sm:p-5 ${resultStyle}`}>
-          <div className="text-lg font-extrabold">
-            {result.kind === "visa_required" || result.kind === "manual_check" ? "⚠️ " : "✅ "}
-            {result.title}
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+            <div className="text-lg font-extrabold">
+              {result.kind === "visa_required" ? "⚠️ " : "✅ "}
+              {result.title}
+            </div>
+            <p className="text-sm sm:text-right">
+              <span className="font-semibold">Source:</span>{" "}
+              <a
+                href={VISA_ELIGIBILITY_SOURCES.klEmbassyVisaHub}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 font-semibold underline underline-offset-2"
+              >
+                Royal Thai Embassy <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+            </p>
           </div>
-          <p className="mt-2 text-sm leading-relaxed">
-            {result.detail}
-            {(result.kind === "visa_required" || result.kind === "manual_check") && (
-              <>
-                {" "}
-                <a
-                  href={VISA_ELIGIBILITY_SOURCES.eVisa}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-semibold underline underline-offset-2"
-                >
-                  Thai e-Visa Official Site <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-              </>
-            )}
-          </p>
+
+          {result.detail && (
+            <>
+              <p className="mt-2 text-sm leading-relaxed">{result.detail}</p>
+
+              {result.longStayVisaHint && result.extensionHint?.likelyEligibleFromVisaExempt && (
+                <div className="mt-3 text-sm leading-relaxed">
+                  <p>You will likely need a long-stay visa before travel.</p>
+                  <p className="mt-3">
+                    While it is technically possible to leave and re-enter on a new visa-exempt period, frequent visa
+                    runs may raise concerns and entry is always at the discretion of the immigration officer.
+                  </p>
+                </div>
+              )}
+
+              {!result.longStayVisaHint && result.extensionHint?.likelyEligibleFromVisaExempt && (
+                <p className="mt-2 text-sm leading-relaxed">
+                  You will need a 30-day extension inside Thailand - subject to immigration approval.{" "}
+                  <Link
+                    href="/guides/tourist-extension"
+                    className="font-semibold underline underline-offset-2"
+                  >
+                    See our tourist extension guide
+                  </Link>
+                  .
+                </p>
+              )}
+            </>
+          )}
+
           {result.notes.length > 0 && (
             <ul className="mt-3 space-y-1 text-sm">
               {result.notes.map((note) => (
@@ -222,42 +249,24 @@ export default function ThailandVisaNeedChecker() {
             </ul>
           )}
 
-          {result.extensionHint?.likelyEligibleFromVisaExempt && (
-            <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-              <p>
-                If you enter visa-free and need longer than {result.extensionHint.currentAllowanceDays} days, many
-                travellers can apply for an extension inside Thailand (commonly a 30-day tourist/visa-exempt
-                extension, subject to immigration approval).
-              </p>
-              <p className="mt-2">
-                <Link
-                  href="/guides/tourist-extension"
-                  className="font-semibold underline underline-offset-2"
-                >
-                  See our tourist extension guide
-                </Link>
-                .
-              </p>
-            </div>
-          )}
-
           <div className="mt-4 rounded-xl border border-slate-200/80 bg-white/80 p-3 text-sm text-slate-800">
             <p>
-              <span className="font-semibold">Important:</span> Temporary policy changes, special cases, or checkpoint
-              restrictions can affect entry. Final permission and length of stay is decided by the immigration officer
-              at entry.
+              <span className="font-semibold">Important:</span> Entry rules can change without notice. Final
+              permission and length of stay are always decided by the immigration officer on arrival. It is best to
+              confirm current requirements with the relevant Thai embassy or official government source before travel.
             </p>
-            <p className="mt-2">
-              <span className="font-semibold">TDAC:</span> You must complete TDAC within 3 days before arrival (
-              <a
-                href={VISA_ELIGIBILITY_SOURCES.tdac}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold underline underline-offset-2"
+          </div>
+
+          <div className="mt-3 rounded-xl border border-blue-200 bg-blue-50 p-3 text-sm text-blue-900">
+            <p>
+              <span className="font-semibold">Thailand Digital Arrival Card (TDAC)</span> must be completed before
+              arrival.{" "}
+              <Link
+                href="/tdac"
+                className="font-semibold underline underline-offset-2 hover:text-blue-950"
               >
-                Submit here
-              </a>
-              ).
+                Learn more
+              </Link>
             </p>
           </div>
         </div>

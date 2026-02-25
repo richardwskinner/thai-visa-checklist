@@ -1,7 +1,4 @@
-export type Purpose = "tourism" | "short_business" | "other";
 export type EntryMethod = "air" | "land" | "sea";
-export type PassportDocumentType = "ordinary_passport" | "travel_document";
-export type PassportClass = "regular" | "diplomatic_official";
 
 export type BilateralOrdinaryRule = {
   days: number;
@@ -258,30 +255,12 @@ export type VisaEligibilityResult =
         reason: "longer_than_visa_exempt_plus_extension";
         totalDaysWithCommonExtension: number;
       };
-    }
-  | {
-      kind: "manual_check";
-      title: string;
-      detail: string;
-      notes: string[];
-      extensionHint?: {
-        likelyEligibleFromVisaExempt: true;
-        currentAllowanceDays: number;
-        commonExtensionDays?: number;
-      };
-      longStayVisaHint?: {
-        reason: "longer_than_visa_exempt_plus_extension";
-        totalDaysWithCommonExtension: number;
-      };
     };
 
 export function evaluateThailandVisaNeed(params: {
   nationality: string;
-  purpose: Purpose;
   entryMethod: EntryMethod;
   plannedStayDays: number;
-  passportDocumentType: PassportDocumentType;
-  passportClass: PassportClass;
 }): VisaEligibilityResult {
   const nationality = normalizeNationality(params.nationality);
   const notes: string[] = [];
@@ -292,40 +271,6 @@ export function evaluateThailandVisaNeed(params: {
       title: "Need a visa before travel",
       detail:
         "Your nationality is not in this checker’s local official-source list, so you should verify on the official Thai e-Visa / embassy pages before travel.",
-      notes,
-    };
-  }
-
-  if (params.passportClass === "diplomatic_official") {
-    return {
-      kind: "manual_check",
-      title: "Check diplomatic / official passport rules",
-      detail:
-        "Diplomatic and official passport rules follow separate bilateral agreements and may differ from ordinary passport rules.",
-      notes: [
-        "Use the official diplomatic/official passport bilateral exemption list from the MFA-linked source.",
-      ],
-    };
-  }
-
-  if (params.passportDocumentType === "travel_document") {
-    return {
-      kind: "manual_check",
-      title: "Check rules for travel documents",
-      detail:
-        "Visa exemption / VOA eligibility can differ for travel documents or passport substitutes, even if ordinary passports are exempt.",
-      notes: [
-        "Check the official MFA/embassy lists and confirm with the airline and embassy before travel.",
-      ],
-    };
-  }
-
-  if (params.purpose === "other") {
-    return {
-      kind: "visa_required",
-      title: "Likely need a visa before travel",
-      detail:
-        "This checker only estimates ordinary-passport eligibility for tourism and short business visits. Other purposes usually require a visa in advance.",
       notes,
     };
   }
@@ -356,8 +301,7 @@ export function evaluateThailandVisaNeed(params: {
         kind: "visa_exempt",
         days: bestVisaExemptDays,
         title: `You can travel visa-free for up to ${bestVisaExemptDays} days`,
-        detail:
-          "Based on the official MFA-linked visa exemption lists for ordinary passports (tourism / short business).",
+        detail: "",
         notes,
       };
     }
@@ -367,11 +311,11 @@ export function evaluateThailandVisaNeed(params: {
     return {
       kind: "visa_required",
       title: needsLongStayVisa
-        ? "You may need a longer-stay visa route"
-        : "Your visa-exempt entry does not cover the full stay",
+        ? "Your stay is longer than the visa-free limit"
+        : "Your visa-exempt does not cover the full stay",
       detail: needsLongStayVisa
-        ? `Your planned stay exceeds the standard visa-exempt period plus a common extension (${totalDaysWithCommonExtension} days total). You may need to apply for a long-stay visa. While it is possible to leave the country and re-enter on a new visa-exempt period, frequent “visa runs” may raise concerns with immigration authorities, and entry could be denied at the discretion of the immigration officer.`
-        : `Your planned stay (${params.plannedStayDays} days) is longer than the visa-exempt stay (${bestVisaExemptDays} days). You will need an extension in Thailand or a visa before travel depending on your plan and immigration approval.`,
+        ? `Your planned stay exceeds the visa-exempt period plus a common 30-day extension (${totalDaysWithCommonExtension} days total).`
+        : `Your planned stay (${params.plannedStayDays} days) is longer than the visa-exempt stay (${bestVisaExemptDays} days).`,
       notes,
       extensionHint: {
         likelyEligibleFromVisaExempt: true,
@@ -394,22 +338,22 @@ export function evaluateThailandVisaNeed(params: {
         kind: "voa",
         days: 15,
         title: "You can use Visa on Arrival (VOA) for 15 days",
-        detail:
-          "Based on the official MFA-linked VOA list. Check approved entry checkpoints and current VOA conditions before travel.",
+        detail: "Check approved entry checkpoints and current VOA conditions before travel.",
         notes,
       };
     }
     return {
       kind: "visa_required",
       title: "Need a visa before travel",
-      detail: "Your planned stay is longer than the typical 15-day Visa on Arrival stay period.",
+      detail:
+        "Your planned stay is longer than the typical 15-day Visa on Arrival stay period. You will likely need a long-stay visa before travel.",
       notes,
     };
   }
 
   return {
     kind: "visa_required",
-      title: "Need a visa before travel",
+    title: "Need a visa before travel",
     detail:
       "Your nationality does not appear in the current ordinary-passport visa exemption or VOA lists used by this checker.",
     notes,
