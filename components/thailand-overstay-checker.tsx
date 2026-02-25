@@ -30,9 +30,9 @@ function diffDaysUtc(a: Date, b: Date) {
 
 function formatDate(date: Date | null) {
   if (!date) return "-";
-  return date.toLocaleDateString(undefined, {
+  return date.toLocaleDateString("en-GB", {
     year: "numeric",
-    month: "short",
+    month: "long",
     day: "numeric",
     timeZone: "UTC",
   });
@@ -93,7 +93,7 @@ export default function ThailandOverstayChecker() {
     <section className="overflow-hidden rounded-2xl border border-red-200 bg-red-50/70 p-4 sm:p-6">
       <h2 className="text-xl font-extrabold text-slate-900">Leave Date / Overstay Checker</h2>
       <p className="mt-2 text-sm text-slate-700">
-Enter your planned departure date to estimate your permitted stay, overstay days, fines, and potential blacklist risk.
+Enter your dates and permitted stay to estimate any overstay days, fines, and potential blacklist risk.
       </p>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-3">
@@ -101,6 +101,7 @@ Enter your planned departure date to estimate your permitted stay, overstay days
           <span className="text-sm font-semibold text-slate-700">Entry date</span>
           <input
             type="date"
+            lang="en-GB"
             value={entryDate}
             onChange={(e) => setEntryDate(e.target.value)}
             className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
@@ -123,6 +124,7 @@ Enter your planned departure date to estimate your permitted stay, overstay days
           <span className="text-sm font-semibold text-slate-700">Planned departure date</span>
           <input
             type="date"
+            lang="en-GB"
             value={plannedDepartureDate}
             onChange={(e) => setPlannedDepartureDate(e.target.value)}
             className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"

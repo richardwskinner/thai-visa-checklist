@@ -1,4 +1,10 @@
-export type VisaNewsCategory = "Visa" | "Immigration" | "Travel" | "Transport";
+export type VisaNewsCategory =
+  | "Policy"
+  | "Border"
+  | "Reporting"
+  | "Fees"
+  | "Official"
+  | "Life";
 
 export type VisaNewsItem = {
   slug: string;
@@ -17,7 +23,7 @@ export const visaNews: VisaNewsItem[] = [
     title: "Thailand Reviewing 60-Day Visa-Free Stays",
     summary:
       "Thai authorities are reviewing the 60-day visa-free stay framework after complaints about misuse, with possible policy adjustments under consideration.",
-    category: "Visa",
+    category: "Policy",
     publishedAt: "2026-02-18",
     isPinned: true,
     sourceLabel: "Bangkok Post",
@@ -29,7 +35,7 @@ export const visaNews: VisaNewsItem[] = [
     title: "Immigration Tightens Screening of Repeat Visa-Run Patterns",
     summary:
       "Immigration announced stricter checks on repeated visa-run behavior, with possible entry refusal after repeated unjustified runs and closer review of extensions and overstays.",
-    category: "Immigration",
+    category: "Border",
     publishedAt: "2025-11-12",
     isPinned: true,
     sourceLabel: "Thai Immigration Bureau",
@@ -40,7 +46,7 @@ export const visaNews: VisaNewsItem[] = [
     title: "Overstay Fines Waived for Flood-Stranded Tourists in 8 Southern Provinces",
     summary:
       "Immigration approved a temporary overstay fine waiver for foreigners unable to depart due to severe flooding in Songkhla, Nakhon Si Thammarat, Phatthalung, Trang, Satun, Pattani, Yala, and Narathiwat (applies 20 Nov to 31 Dec 2025).",
-    category: "Immigration",
+    category: "Fees",
     publishedAt: "2025-11-28",
     sourceLabel: "Thai Immigration Bureau",
     sourceUrl: "https://www.immigration.go.th/?p=34124",
@@ -50,7 +56,7 @@ export const visaNews: VisaNewsItem[] = [
     title: "Thai e-Visa Rolled Out Globally from January 1, 2025",
     summary:
       "The Ministry of Foreign Affairs announced the global launch of the Thai e-Visa system across Royal Thai Embassies and Consulates, available via thaievisa.go.th from January 1, 2025.",
-    category: "Visa",
+    category: "Official",
     publishedAt: "2024-12-17",
     isPinned: true,
     sourceLabel: "MFA Announcement",
@@ -61,7 +67,7 @@ export const visaNews: VisaNewsItem[] = [
     title: "TDAC Became Mandatory from May 1, 2025",
     summary:
       "All non-Thai nationals entering Thailand by air, land, or sea must submit TDAC online within 3 days before arrival.",
-    category: "Immigration",
+    category: "Reporting",
     publishedAt: "2025-04-21",
     sourceLabel: "Royal Thai Embassy (KL)",
     sourceUrl: "https://kualalumpur.thaiembassy.org/en/publicservice/thailand-digital-arrival-card-tdac",
@@ -71,7 +77,7 @@ export const visaNews: VisaNewsItem[] = [
     title: "Thailand to Raise International Passenger Fee in June",
     summary:
       "Authorities plan to increase the international passenger service charge from June 20, 2026, which may affect total outbound travel costs.",
-    category: "Travel",
+    category: "Fees",
     publishedAt: "2026-02-20",
     sourceLabel: "Bangkok Post",
     sourceUrl:
@@ -82,7 +88,7 @@ export const visaNews: VisaNewsItem[] = [
     title: "DLT Plans Online Driving Licence Renewals",
     summary:
       "Thailand's Land Transport Department says eligible motorists will be able to renew licences online under a phased rollout, with implementation tied to digital medical-certificate verification and related system checks.",
-    category: "Transport",
+    category: "Life",
     publishedAt: "2026-02-17",
     sourceLabel: "Bangkok Post",
     sourceUrl:
@@ -93,7 +99,7 @@ export const visaNews: VisaNewsItem[] = [
     title: "Bangkok Post Opinion Questions AOT Passenger Charge Increase",
     summary:
       "A Bangkok Post opinion piece argues Airports of Thailand should better justify the planned passenger service charge increase by clearly showing what travelers will receive in return and how the added revenue will be used.",
-    category: "Transport",
+    category: "Fees",
     publishedAt: "2026-02-23",
     sourceLabel: "Bangkok Post",
     sourceUrl:
@@ -104,7 +110,7 @@ export const visaNews: VisaNewsItem[] = [
     title: "Thailand Declares 5-Day New Year Holiday to Support Tourism",
     summary:
       "Thailand approved an extended five-day New Year break (Dec 31, 2025 to Jan 4, 2026), including a special holiday on Jan 2, to encourage domestic travel and consumer spending.",
-    category: "Travel",
+    category: "Life",
     publishedAt: "2025-11-08",
     sourceLabel: "Bangkok Post",
     sourceUrl:

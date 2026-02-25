@@ -160,7 +160,7 @@ export default function GuidesPage() {
         </div>
 
         {/* Guide cards */}
-        <div className="mt-10 grid gap-5 sm:grid-cols-2">
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {guides.map((guide) => (
             <Link key={guide.href} href={guide.href}>
               <Card className="h-full rounded-3xl border-0 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">

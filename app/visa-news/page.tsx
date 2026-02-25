@@ -12,19 +12,23 @@ export const metadata: Metadata = {
 };
 
 const categoryStyles: Record<string, string> = {
-  Visa: "bg-blue-100 text-blue-800",
-  Immigration: "bg-rose-100 text-rose-800",
-  Travel: "bg-violet-100 text-violet-800",
-  Transport: "bg-amber-100 text-amber-800",
+  Policy: "bg-blue-100 text-blue-800",
+  Border: "bg-emerald-100 text-emerald-800",
+  Reporting: "bg-yellow-100 text-yellow-800",
+  Fees: "bg-orange-100 text-orange-800",
+  Official: "bg-violet-100 text-violet-800",
+  Life: "bg-stone-100 text-stone-800",
 };
 
-const newsFilters = ["All", "Visa", "Immigration", "Travel", "Transport"] as const;
+const newsFilters = ["All", "Policy", "Border", "Reporting", "Fees", "Official", "Life"] as const;
 const filterChipStyles: Record<(typeof newsFilters)[number], string> = {
   All: "bg-slate-100 text-slate-700 border-slate-200",
-  Visa: "bg-blue-100 text-blue-800 border-blue-200",
-  Immigration: "bg-rose-100 text-rose-800 border-rose-200",
-  Travel: "bg-violet-100 text-violet-800 border-violet-200",
-  Transport: "bg-amber-100 text-amber-800 border-amber-200",
+  Policy: "bg-blue-100 text-blue-800 border-blue-200",
+  Border: "bg-emerald-100 text-emerald-800 border-emerald-200",
+  Reporting: "bg-yellow-100 text-yellow-800 border-yellow-200",
+  Fees: "bg-orange-100 text-orange-800 border-orange-200",
+  Official: "bg-violet-100 text-violet-800 border-violet-200",
+  Life: "bg-stone-100 text-stone-800 border-stone-200",
 };
 
 function formatDate(dateString: string) {
@@ -201,7 +205,7 @@ export default async function VisaNewsPage({
           {showPinned && (
             <div className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-700">Latest Updates</div>
           )}
-          <div className="space-y-4">
+          <div className="grid gap-5 sm:grid-cols-2">
             {updates.map((item) => (
               <Card key={item.slug} className="rounded-3xl border-0 bg-white shadow-sm">
                 <CardContent className="relative p-6">
