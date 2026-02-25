@@ -265,6 +265,15 @@ export function evaluateThailandVisaNeed(params: {
   const nationality = normalizeNationality(params.nationality);
   const notes: string[] = [];
 
+  if (!Number.isFinite(params.plannedStayDays) || params.plannedStayDays < 1) {
+    return {
+      kind: "visa_required",
+      title: "Enter valid travel dates",
+      detail: "Planned stay length must be at least 1 day (inclusive of entry and departure dates).",
+      notes,
+    };
+  }
+
   if (!nationality) {
     return {
       kind: "visa_required",

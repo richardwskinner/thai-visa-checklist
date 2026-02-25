@@ -101,7 +101,7 @@ export default function TDACPage() {
 
             <div className="mt-6 rounded-2xl bg-sky-50 border border-sky-200 p-6">
               <p className="text-lg font-semibold text-sky-900">
-                Since 1 May 2025, all non-Thai nationals must complete the TDAC online before entering Thailand by air, land, or sea. No more paper arrival cards (TM.6).
+                Since 1 May 2025, all non-Thai nationals must complete the TDAC online for free before entering Thailand by air, land, or sea. No more paper arrival cards (TM.6).
               </p>
             </div>
 

@@ -17,7 +17,7 @@ const toolSections = [
   {
     title: "Do I Need a Visa for Thailand?",
     description:
-      "Check visa status based on nationality, entry method, and stay length.",
+      "Check visa status based on nationality and stay length.",
     href: "/guides/do-i-need-a-visa-thailand",
     hrefLabel: "Open visa checker guide",
     icon: Calculator,

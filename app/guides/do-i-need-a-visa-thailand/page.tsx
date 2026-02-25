@@ -9,7 +9,7 @@ import { VISA_ELIGIBILITY_SOURCES } from "@/lib/data/thai-visa-eligibility";
 export const metadata: Metadata = {
   title: "Do I Need a Visa for Thailand?",
   description:
-    "Check if you need a visa for Thailand based on passport nationality, entry method, and planned stay using official Thai government source lists.",
+    "Check if you need a visa for Thailand based on passport nationality and planned stay using official Thai government source lists.",
 };
 
 export default function DoINeedAVisaThailandPage() {

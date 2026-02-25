@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   DATASET_LAST_CHECKED,
-  EntryMethod,
   evaluateThailandVisaNeed,
   nationalityOptions,
   VISA_ELIGIBILITY_SOURCES,
@@ -69,7 +68,6 @@ export default function ThailandVisaNeedChecker() {
   );
 
   const [nationality, setNationality] = useState("USA");
-  const [entryMethod, setEntryMethod] = useState<EntryMethod>("air");
   const [entryDate, setEntryDate] = useState(defaultEntry);
   const [departureDate, setDepartureDate] = useState(defaultDeparture);
   const [checkedSignature, setCheckedSignature] = useState<string | null>(null);
@@ -83,13 +81,13 @@ export default function ThailandVisaNeedChecker() {
     () =>
       evaluateThailandVisaNeed({
         nationality,
-        entryMethod,
+        entryMethod: "air",
         plannedStayDays: plannedStayDays ?? 1,
       }),
-    [entryMethod, nationality, plannedStayDays]
+    [nationality, plannedStayDays]
   );
 
-  const currentSignature = `${nationality}|${entryMethod}|${entryDate}|${departureDate}`;
+  const currentSignature = `${nationality}|${entryDate}|${departureDate}`;
   const hasChecked = checkedSignature === currentSignature;
   const hasValidDates = plannedStayDays !== null;
 
@@ -109,7 +107,7 @@ export default function ThailandVisaNeedChecker() {
         </div>
       </div>
 
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+      <div className="mt-4 grid gap-4">
         <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-700">Passport nationality</span>
           <div className="relative mt-1 min-w-0">
@@ -126,48 +124,31 @@ export default function ThailandVisaNeedChecker() {
             </select>
             <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           </div>
-          <p className="mt-1 text-xs text-slate-500">
-            If your nationality is not listed, check Thai eVisa or your nearest embassy.
-          </p>
         </label>
 
-        <label className="block min-w-0">
-          <span className="text-sm font-semibold text-slate-700">Entry method</span>
-          <div className="relative mt-1 min-w-0">
-            <select
-              value={entryMethod}
-              onChange={(e) => setEntryMethod(e.target.value as EntryMethod)}
-              className="block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 pr-10 text-sm text-slate-900"
-            >
-              <option value="air">Air</option>
-              <option value="land">Land</option>
-              <option value="sea">Sea</option>
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-          </div>
-        </label>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="block min-w-0">
+            <span className="text-sm font-semibold text-slate-700">Planned entry date</span>
+            <input
+              type="date"
+              lang="en-GB"
+              value={entryDate}
+              onChange={(e) => setEntryDate(e.target.value)}
+              className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            />
+          </label>
 
-        <label className="block min-w-0">
-          <span className="text-sm font-semibold text-slate-700">Planned entry date</span>
-          <input
-            type="date"
-            lang="en-GB"
-            value={entryDate}
-            onChange={(e) => setEntryDate(e.target.value)}
-            className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
-          />
-        </label>
-
-        <label className="block min-w-0">
-          <span className="text-sm font-semibold text-slate-700">Planned departure date</span>
-          <input
-            type="date"
-            lang="en-GB"
-            value={departureDate}
-            onChange={(e) => setDepartureDate(e.target.value)}
-            className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
-          />
-        </label>
+          <label className="block min-w-0">
+            <span className="text-sm font-semibold text-slate-700">Planned departure date</span>
+            <input
+              type="date"
+              lang="en-GB"
+              value={departureDate}
+              onChange={(e) => setDepartureDate(e.target.value)}
+              className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            />
+          </label>
+        </div>
       </div>
 
       <div className="mt-3 text-sm text-slate-600">
@@ -200,7 +181,7 @@ export default function ThailandVisaNeedChecker() {
               {result.title}
             </div>
             <p className="text-sm sm:text-right">
-              <span className="font-semibold">Source:</span>{" "}
+              <span className="font-semibold">Stay length source:</span>{" "}
               <a
                 href={VISA_ELIGIBILITY_SOURCES.klEmbassyVisaHub}
                 target="_blank"
@@ -263,7 +244,7 @@ export default function ThailandVisaNeedChecker() {
               arrival.{" "}
               <Link
                 href="/tdac"
-                className="font-semibold underline underline-offset-2 hover:text-blue-950"
+                className="inline-flex items-center rounded-full border border-blue-300 bg-white px-2.5 py-0.5 text-xs font-semibold text-blue-800 hover:border-blue-400 hover:bg-blue-100 hover:text-blue-950"
               >
                 Learn more
               </Link>
