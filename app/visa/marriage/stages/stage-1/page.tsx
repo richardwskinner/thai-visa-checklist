@@ -38,23 +38,23 @@ const stageOneChecklist: {
     {
       title: "1) Key Rules Before Applying",
       items: [
-        { text: "Apply outside of Thailand (Your home country or a neighboring country such as Laos or Vietnam)" }, 
+        { text: "Apply outside of Thailand (your home country or a neighboring country like Laos or Vietnam)" }, 
         { text: "Have proof that you're physically in that country, such as an entry stamp or visa"},
         { text: "Passport validity: 6+ months (single entry)" },
       ],
     },
     {
-      title: "2) Required Documents (Upload to eVisa)",
+      title: "2) Required Documents (upload to eVisa)",
       items: [
         { text: "Passport bio page" },
-        { text: "Photo, taken within last 6 months" },
+        { text: "2x passport photos, taken within 6-months (4×6 cm)" },
         { text: "Document indicating current location (utility bill or entry stamp/visa)" },
         { text: "One of the following: monthly income 40,000 THB+ OR bank balance 400,000 THB+" },
-        { text: "Bank statement covering the last 3 months" },
+        { text: "Bank statement covering the last 3 months (Bank statement covering the last 3 months)" },
         { text: "Marriage certificate (Kor Ror 2 and Kor Ror 3 if married in Thailand)" },
         { text: "Thai spouse ID card" },
         { text: "Thai spouse house registration (Tabien Baan)" },
-        { text: "Invitation/supporting letter from your spouse (sponsor letter) (recommended)" },
+        { text: "Invitation/supporting letter from your spouse (sponsor letter)" },
       ],
     },
     {
@@ -70,7 +70,7 @@ const stageOneChecklist: {
       title: "4) After Submission",
       items: [
         { text: "You will receive a QR code via the eVisa System" },
-        { text: "Visit selected embassy to pay visa fee" },
+        { text: "Pay the visa fee - some accept online payment, others require in-person payment" },
         { text: "Processing is typically 3-5 working days" },
         { text: "Remain in that country until approved" },
       ],

@@ -6,13 +6,13 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Marriage Visa Stages - Non-Immigrant O (Marriage)",
   description:
-    "Choose your stage in the Thai marriage visa process. Apply abroad, convert in Thailand, or extend your 1-year stay.",
+    "Choose your stage in the Thai marriage visa process. Start with Stage 1 or Stage 2 (not both), then continue to extension and ongoing requirements.",
 };
 
 const stages = [
   {
     stage: 1,
-    title: "Apply Abroad (Recommended)",
+    title: "Apply outside of Thailand (Recommended)",
     description:
       "Apply for a 90-Day Non-Immigrant O visa at a Thai embassy or consulate in your home country, or neighboring country, such as Laos or Vietnam.",
     available: true,
@@ -76,17 +76,19 @@ export default function MarriageStagesPage() {
               </p>
             </div>
 
-            <div className="mt-6 grid gap-4">
-              {stages.map((s) =>
+            <div className="mt-6">
+              <div className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                Choose Your Starting Point
+              </div>
+              <div className="mt-3 grid gap-4">
+                {stages.slice(0, 2).map((s, index) =>
                 s.available ? (
                   <Link
                     key={s.stage}
                     href={s.href!}
                     className="group flex items-center gap-5 rounded-2xl border-2 border-pink-200 bg-pink-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-pink-300"
                   >
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-pink-600 text-lg font-extrabold text-white">
-                      {s.stage}
-                    </div>
+                    <div className="flex h-12 w-3 shrink-0 rounded-full bg-pink-600" />
                     <div className="flex-1 min-w-0">
                       <div className="text-lg font-extrabold text-slate-900">
                         {s.title}
@@ -116,10 +118,33 @@ export default function MarriageStagesPage() {
                     </div>
                   </div>
                 )
-              )}
+                )}
+              </div>
             </div>
 
-            {/* Post-extension stages */}
+            <div className="mt-6">
+              <div className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                Then Continue
+              </div>
+            </div>
+
+            <div className="mt-3 grid gap-4">
+              {stages.slice(2).map((s) => (
+                <Link
+                  key={s.stage}
+                  href={s.href!}
+                  className="group flex items-center gap-5 rounded-2xl border-2 border-pink-200 bg-pink-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-pink-300"
+                >
+                  <div className="flex h-12 w-3 shrink-0 rounded-full bg-pink-600" />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-lg font-extrabold text-slate-900">{s.title}</div>
+                    <p className="mt-1 text-sm text-slate-600">{s.description}</p>
+                  </div>
+                  <ArrowRight className="h-5 w-5 shrink-0 text-pink-600 transition group-hover:translate-x-1" />
+                </Link>
+              ))}
+            </div>
+
             <div className="mt-4 grid gap-4">
               {postExtensionStages.map((s) => (
                 <Link
@@ -127,9 +152,7 @@ export default function MarriageStagesPage() {
                   href={s.href}
                   className="group flex items-center gap-5 rounded-2xl border-2 border-pink-200 bg-pink-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-pink-300"
                 >
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-pink-600 text-lg font-extrabold text-white">
-                    {s.stage}
-                  </div>
+                  <div className="flex h-12 w-3 shrink-0 rounded-full bg-pink-600" />
                   <div className="flex-1 min-w-0">
                     <div className="text-lg font-extrabold text-slate-900">
                       {s.title}

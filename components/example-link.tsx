@@ -42,10 +42,10 @@ export default function ExampleLink({
           if (e.defaultPrevented) return;
           setOpen(true);
         }}
-        className={`inline-flex items-center gap-1.5 rounded-full border border-slate-300/80 bg-gradient-to-b from-white to-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-[0_1px_2px_rgba(15,23,42,0.05)] transition hover:border-slate-400 hover:from-slate-50 hover:to-slate-100 hover:text-slate-900 print:hidden ${className}`}
+        className={`inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 print:hidden ${className}`}
       >
-        <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-slate-100 text-slate-600">
-          <Eye className="h-3 w-3" />
+        <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-slate-100 text-slate-600">
+          <Eye className="h-2.5 w-2.5" />
         </span>
         {label}
       </button>

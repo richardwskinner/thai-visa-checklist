@@ -28,8 +28,8 @@ export const retirementChecklist: VisaChecklist = {
     {
       title: "Personal Documents",
       items: [
-        { text: "Passport (Must be valid for at least 18 months)", required: true },
-        { text: "2x Passport Photo, taken within 6 months (4×6 cm)", required: true },
+        { text: "Passport (valid for at least 18 months)", required: true },
+        { text: "2x passport photos, taken within 6 months (4×6 cm)", required: true },
         { text: "Passport Photocopies: Photo Page, Previous Visa Stamp & Latest Entry Stamp", required: true },
         {
           text: "TM.30 Receipt",
@@ -77,11 +77,11 @@ export const retirementChecklist: VisaChecklist = {
           noteLink: "View example map",
           noteUrl: "/examples/hand-drawn-map-example.jpg",
         },
-        { text: "Photos of your residence (some offices require this)", required: false },
+        { text: "4 photos (2 inside home + 2 outside home) on one page", required: false },
       ],
     },
     {
-      title: "Health Insurance (required for O-A visa holders only)",
+      title: "Health Insurance (Non O-A visa holders only)",
       items: [
         { text: "Health insurance policy covering the full stay period", required: false },
         { text: "Minimum 40,000 THB outpatient coverage", required: false },

@@ -92,11 +92,11 @@ export const marriageChecklist: VisaChecklist = {
           required: true,
         },
         {
-          text: "Bank statement covering last 6 months (issued within 7 days of appointment)",
+          text: "Bank statement covering last 6 months (within 7 days of appointment)",
           required: true,
         },
         {
-          text: "Official bank letter confirming account holder details (Same day recommended)",
+          text: "Official bank letter confirming account holder details (within 7 days of appointment)",
           required: true,
         },
         {
@@ -109,7 +109,7 @@ export const marriageChecklist: VisaChecklist = {
 
     {
       title: "Payment",
-      items: [{ text: "1,900 THB", required: true }],
+      items: [{ text: "1,900 THB Cash", required: true }],
     },
   ],
 
