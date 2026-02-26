@@ -16,8 +16,9 @@ const routes: Array<{
   { path: "/disclaimer", changeFrequency: "monthly", priority: 0.4 },
   { path: "/privacy-policy", changeFrequency: "monthly", priority: 0.4 },
   { path: "/terms-of-use", changeFrequency: "monthly", priority: 0.4 },
-  { path: "/cookie-policy", changeFrequency: "monthly", priority: 0.4 },
   { path: "/tdac", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/tools", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/offical-goverment-links", changeFrequency: "monthly", priority: 0.7 },
   { path: "/thailand-public-holidays-2026", changeFrequency: "monthly", priority: 0.7 },
 
   { path: "/visa/marriage/stages", changeFrequency: "weekly", priority: 0.9 },

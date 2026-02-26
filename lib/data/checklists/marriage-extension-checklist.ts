@@ -1,28 +1,9 @@
-export interface ChecklistItem {
-  text: string;
-  required: boolean;
-  noteLink?: string;
-  noteUrl?: string;
-}
+import type { ChecklistData } from "./types";
 
-export interface ChecklistSection {
-  title: string;
-  items: ChecklistItem[];
-}
-
-export interface VisaChecklist {
-  title: string;
-  subtitle: string;
-  lastUpdated: string;
-  sections: ChecklistSection[];
-  tips: string[];
-}
-
-export const marriageChecklist: VisaChecklist = {
+export const marriageChecklist: ChecklistData = {
   title: 'Non-Immigrant Type "O" (Marriage)',
   subtitle: "Annual extension of stay based on Marriage to Thai National",
   lastUpdated: "11 Feb 2026",
-
   sections: [
     {
       title: "Personal Documents",
@@ -47,7 +28,6 @@ export const marriageChecklist: VisaChecklist = {
         },
       ],
     },
-
     {
       title: "Relationship & Accommodation",
       items: [
@@ -81,7 +61,6 @@ export const marriageChecklist: VisaChecklist = {
         },
       ],
     },
-
     {
       title: "Proof of Income / Funds",
       items: [
@@ -106,13 +85,11 @@ export const marriageChecklist: VisaChecklist = {
         },
       ],
     },
-
     {
       title: "Payment",
       items: [{ text: "1,900 THB Cash", required: true }],
     },
   ],
-
   tips: [
     "Download all forms and prepare in advance",
     "Generally 1 Passport photo is enough, however, sometimes 2 is requested",

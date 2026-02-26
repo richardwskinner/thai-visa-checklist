@@ -1,25 +1,6 @@
-export interface ChecklistItem {
-  text: string;
-  required: boolean;
-  noteLink?: string;
-  noteUrl?: string;
-}
+import type { ChecklistData } from "./types";
 
-export interface ChecklistSection {
-  title: string;
-  items: ChecklistItem[];
-}
-
-export interface VisaChecklist {
-  id: string;
-  title: string;
-  subtitle: string;
-  lastUpdated: string;
-  sections: ChecklistSection[];
-  tips: string[];
-}
-
-export const retirementChecklist: VisaChecklist = {
+export const retirementChecklist: ChecklistData = {
   id: "retirement-extension",
   title: 'Non-Immigrant "O" (Retirement Visa)',
   subtitle: "Annual extension of stay based on retirement purposes",
@@ -90,9 +71,7 @@ export const retirementChecklist: VisaChecklist = {
     },
     {
       title: "Payment",
-      items: [
-        { text: "1,900 THB", required: true },
-      ],
+      items: [{ text: "1,900 THB", required: true }],
     },
   ],
   tips: [
