@@ -41,8 +41,9 @@ export default function DoINeedAVisaThailandPage() {
                 Enter your travel dates and nationality to see if you&apos;re visa-exempt, or if you need a visa.
               </p>
               <p className="mt-3 text-sm text-blue-900/80">
-                This tool is intended to help people travelling to Thailand. Visa rules, permitted stay lengths, and
-                entry conditions are set by Thai immigration authorities and may change at any time.
+                This tool provides general guidance only. Visa rules, permitted stay lengths, and entry conditions are
+                set by Thai immigration authorities and may change at any time. It does not replace up-to-date
+                information from your local Thai embassy or consulate.
               </p>
             </div>
 

@@ -202,13 +202,11 @@ export default function ThailandVisaNeedChecker() {
               <p className="mt-2 text-sm leading-relaxed">{result.detail}</p>
 
               {result.longStayVisaHint && result.extensionHint?.likelyEligibleFromVisaExempt && (
-                <div className="mt-3 text-sm leading-relaxed">
-                  <p>You will likely need a long-stay visa before travel.</p>
-                  <p className="mt-3">
-                    While it is technically possible to leave and re-enter on a new visa-exempt period, frequent visa
-                    runs may raise concerns and entry is always at the discretion of the immigration officer.
-                  </p>
-                </div>
+                <p className="mt-3 text-sm leading-relaxed">
+                  You will likely need a long-stay visa before travel. While it is technically possible to leave and
+                  re-enter on a new visa-exempt period, frequent visa runs may raise concerns and entry is always at
+                  the discretion of the immigration officer.
+                </p>
               )}
 
               {!result.longStayVisaHint && result.extensionHint?.likelyEligibleFromVisaExempt && (

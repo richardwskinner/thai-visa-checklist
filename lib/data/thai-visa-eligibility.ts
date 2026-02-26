@@ -321,7 +321,7 @@ export function evaluateThailandVisaNeed(params: {
       kind: "visa_required",
       title: needsLongStayVisa
         ? "Your stay is longer than the visa-free limit"
-        : "Your visa-exempt does not cover the full stay",
+        : "Your visa-free entry does not cover the full stay",
       detail: needsLongStayVisa
         ? `Your planned stay exceeds the visa-exempt period plus a common 30-day extension (${totalDaysWithCommonExtension} days total).`
         : `Your planned stay (${params.plannedStayDays} days) is longer than the visa-exempt stay (${bestVisaExemptDays} days).`,
