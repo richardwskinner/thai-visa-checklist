@@ -32,9 +32,9 @@ function Footer() {
                   />
                 </Link>
                 <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-slate-600 md:mx-0">
-                  Free visa information, tools and practical guides for Thailand.
+                  Visa information, tools and practical guides for Thailand.
                 </p>
-                <div className="mt-5 flex flex-wrap items-center justify-center gap-4 md:justify-start">
+                <div className="mt-5 hidden flex-wrap items-center justify-center gap-4 md:flex md:justify-start">
                   <a
                     href="mailto:hello@thaivisachecklist.com"
                     className="text-sm font-semibold text-slate-700 hover:text-slate-900"
@@ -138,6 +138,38 @@ function Footer() {
                   </Link>
                 </div>
               </div>
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 md:hidden">
+              <a
+                href="mailto:hello@thaivisachecklist.com"
+                className="text-sm font-semibold text-slate-700 hover:text-slate-900"
+              >
+                hello@thaivisachecklist.com
+              </a>
+              <a
+                href="https://instagram.com/thaivisachecklist"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-slate-600"
+                aria-label="Instagram"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
             </div>
 
             <div className="mt-6 border-t border-slate-200 pt-4 text-center">
