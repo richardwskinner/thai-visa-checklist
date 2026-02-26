@@ -5,7 +5,10 @@ import "./globals.css";
 import Script from "next/script";
 import SiteHeader from "@/components/site-header";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://thaivisachecklist.com";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Thai Visa Checklist - Free Document Checklists for Thailand Visas",
     template: "%s | Thai Visa Checklist",

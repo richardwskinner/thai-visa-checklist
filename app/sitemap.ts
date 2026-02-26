@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.thaivisachecklist.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://thaivisachecklist.com";
 
 const routes: Array<{
   path: string;
