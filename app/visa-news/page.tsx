@@ -149,7 +149,7 @@ export default async function VisaNewsPage({
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">Thailand Visa News</h1>
           <p className="mt-3 text-lg text-slate-600">
-            Updates focused on visa policies, forms, and deadlines from official sources.
+            Updates focused on Thai visa news, policies, fees, and life in Thailand.
           </p>
         </div>
 
