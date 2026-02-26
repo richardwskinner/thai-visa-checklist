@@ -16,14 +16,9 @@ export const resourceLinks: ResourceLink[] = [
     logo: "/resource-logos/mfa_logo.webp",
   },
   {
-    label: "Ministry of Foreign Affairs",
-    href: "https://www.mfa.go.th/",
-    logo: "/resource-logos/mfa_logo.webp",
-  },
-  {
-    label: "Thailand.go.th",
-    href: "https://thailand.go.th/home",
-    logo: "/resource-logos/Sawasdee-thailand.png",
+    label: "Thailand Digital Arrival Card (TDAC)",
+    href: "https://tdac.immigration.go.th/arrival-card/#/home",
+    logo: "/resource-logos/Immigration-bureau.png",
   },
   {
     label: "90-Day Reporting Portal",
@@ -36,9 +31,24 @@ export const resourceLinks: ResourceLink[] = [
     logo: "/resource-logos/Immigration-bureau.png",
   },
   {
+    label: "Ministry of Foreign Affairs",
+    href: "https://www.mfa.go.th/",
+    logo: "/resource-logos/mfa_logo.webp",
+  },
+  {
+    label: "Thailand.go.th",
+    href: "https://thailand.go.th/home",
+    logo: "/resource-logos/Sawasdee-thailand.png",
+  },
+  {
     label: "Revenue Department",
     href: "https://www.rd.go.th/english",
     logo: "/resource-logos/The-revenue-dept.svg",
+  },
+  {
+    label: "Airports of Thailand",
+    href: "https://www.airportthai.co.th/en/",
+    logo: "/resource-logos/AOT.png",
   },
   {
     label: "Tourism Authority of Thailand",
@@ -46,8 +56,13 @@ export const resourceLinks: ResourceLink[] = [
     logo: "/resource-logos/amazing-thailand.png",
   },
   {
-    label: "Airports of Thailand",
-    href: "https://www.airportthai.co.th/en/",
-    logo: "/resource-logos/AOT.png",
+    label: "Board of Investment (BOI)",
+    href: "https://www.boi.go.th",
+    logo: "/resource-logos/BOI.png",
+  },
+  {
+    label: "Social Security Office (SSO)",
+    href: "https://www.sso.go.th/wpr/main",
+    logo: "/resource-logos/Social Security Office (SSO).png",
   },
 ] as const;

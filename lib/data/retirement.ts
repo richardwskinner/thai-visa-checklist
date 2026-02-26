@@ -60,7 +60,7 @@ export const retirementChecklist: VisaChecklist = {
         { text: "Bank book (original)", required: true },
         { text: "Bank book updated on the day of application + copy", required: true },
         { text: "Copy of bank book personal information page", required: true },
-        { text: "Official bank letter confirming account and balance (Same day recommended)", required: true },
+        { text: "Official bank letter confirming account and balance (within 7 days of appointment)", required: true },
         { text: "Bank statement for the past 3 months (renewals) or 2 months (first extension)", required: true },
         { text: "Embassy income/pension letter (if using income method)", required: false },
       ],

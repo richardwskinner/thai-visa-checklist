@@ -22,7 +22,7 @@ const stages = [
     stage: 2,
     title: "Convert Visa in Thailand to Non-O",
     description:
-      "If you're in Thailand on a Tourist or Visa-Exempt, and want to convert to a Non-Immigrant O Visa (Marriage).",
+      "If you're in Thailand on a Tourist or Visa-Exempt, and want to convert to a Non-Immigrant O Visa (Marriage). You may be required to show your proof of funds in a Thai bank account and with at least 15 days remaining on your current permission to stay. ",
     available: true,
     href: "/visa/marriage/stages/stage-2",
   },

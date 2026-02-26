@@ -45,16 +45,12 @@ export default function AboutPage() {
 I wanted one clear, structured list based on my successful applications and real conversations with immigration officers. Something I could print, place on top of my documents, and tick off one by one so I knew I had everything covered.
 </p>
 
-<p className="mt-3 text-xl font-extrabold text-slate-900">
-  Make immigration day predictable.
-</p>
-
 <p className="mt-6 text-slate-700 leading-relaxed">
   Each checklist is designed so you can print it, and walk into immigration feeling prepared. No scrolling through long blog posts at the counter. No guessing what might be requested. Just a clean, practical checklist that helps reduce the chance of extra trips.
 </p>
 
 <p className="mt-4 text-slate-700 leading-relaxed">
-  Thai Visa Checklist was created in 2026 after years of navigating Thailand’s immigration system firsthand. It remains completely free to use - no login, no hidden fees, just practical guidance based on real experience.
+  Thai Visa Checklist was created in 2026 after years of navigating Thailand’s immigration system firsthand. It is completely free to use - no login, no hidden fees - just practical guidance based on real experience, designed to make complex visa processes clearer and easier to understand through simple, visual checklists.
 </p>
 
          <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-5">
