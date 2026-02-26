@@ -14,7 +14,7 @@ export const VISAS: VisaInfo[] = [
     emoji: "💑",
     title: "Marriage Visa",
     subtitle: 'Non-Immigrant Type "O"',
-    bg: "bg-gradient-to-br from-pink-500 to-rose-600",
+    bg: "bg-gradient-to-br from-pink-400 to-pink-600",
     href: "/visa/marriage/stages",
   },
   {
@@ -22,7 +22,7 @@ export const VISAS: VisaInfo[] = [
     emoji: "🏖️",
     title: "Retirement Visa",
     subtitle: 'Non-Immigrant Type "O" 50+',
-    bg: "bg-gradient-to-br from-sky-500 to-blue-600",
+    bg: "bg-gradient-to-br from-violet-500 to-purple-600",
     href: "/visa/retirement/stages",
   },
   {

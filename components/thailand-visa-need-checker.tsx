@@ -124,6 +124,10 @@ export default function ThailandVisaNeedChecker() {
             </select>
             <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           </div>
+          <p className="mt-2 text-xs leading-relaxed text-slate-600">
+            If your country is not listed here, you will likely need a visa before travelling and should
+            check with your local Thai embassy.
+          </p>
         </label>
 
         <div className="grid gap-4 sm:grid-cols-2">

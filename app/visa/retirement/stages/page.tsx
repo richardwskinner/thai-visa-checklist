@@ -80,9 +80,9 @@ export default function RetirementStagesPage() {
                   <Link
                     key={s.stage}
                     href={s.href!}
-                    className="group flex items-center gap-5 rounded-2xl border-2 border-blue-200 bg-blue-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-blue-300"
+                    className="group flex items-center gap-5 rounded-2xl border-2 border-violet-200 bg-violet-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-violet-300"
                   >
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-600 text-lg font-extrabold text-white">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-violet-600 text-lg font-extrabold text-white">
                       {s.stage}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -91,7 +91,7 @@ export default function RetirementStagesPage() {
                       </div>
                       <p className="mt-1 text-sm text-slate-600">{s.description}</p>
                     </div>
-                    <ArrowRight className="h-5 w-5 shrink-0 text-blue-600 transition group-hover:translate-x-1" />
+                    <ArrowRight className="h-5 w-5 shrink-0 text-violet-600 transition group-hover:translate-x-1" />
                   </Link>
                 ) : (
                   <div
@@ -123,9 +123,9 @@ export default function RetirementStagesPage() {
                 <Link
                   key={s.stage}
                   href={s.href}
-                  className="group flex items-center gap-5 rounded-2xl border-2 border-blue-200 bg-blue-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-blue-300"
+                  className="group flex items-center gap-5 rounded-2xl border-2 border-violet-200 bg-violet-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-violet-300"
                 >
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-600 text-lg font-extrabold text-white">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-violet-600 text-lg font-extrabold text-white">
                     {s.stage}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -134,7 +134,7 @@ export default function RetirementStagesPage() {
                     </div>
                     <p className="mt-1 text-sm text-slate-600">{s.description}</p>
                   </div>
-                  <ArrowRight className="h-5 w-5 shrink-0 text-blue-600 transition group-hover:translate-x-1" />
+                  <ArrowRight className="h-5 w-5 shrink-0 text-violet-600 transition group-hover:translate-x-1" />
                 </Link>
               ))}
             </div>

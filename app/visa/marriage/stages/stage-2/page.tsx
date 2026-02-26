@@ -175,7 +175,7 @@ function Section({
   return (
     <div className="mt-6 print:mt-2">
       <div className={`${classes.sectionTitle} font-extrabold text-slate-900`}>{title}</div>
-      <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700 print:mt-1" />
+      <div className="mt-2 h-[3px] w-full rounded-full bg-pink-600 print:mt-1" />
 
       <div className="mt-3 grid gap-2 print:mt-1 print:gap-1">
         {items.map((item, idx) => {
@@ -294,7 +294,7 @@ export default function MarriageStageTwoPage() {
                     }}
                     className={`rounded-lg px-3 py-1 text-sm font-medium transition capitalize ${
                       fontSize === size
-                        ? "bg-indigo-600 text-white"
+                        ? "bg-pink-600 text-white"
                         : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                     }`}
                   >
@@ -317,7 +317,7 @@ export default function MarriageStageTwoPage() {
                 analytics.trackPrint("marriage-stage-2");
                 window.print();
               }}
-              className="h-12 rounded-2xl bg-blue-600 px-5 text-base hover:bg-blue-700"
+              className="h-12 rounded-2xl bg-pink-600 px-5 text-base hover:bg-pink-700"
             >
               <Printer className="mr-2 h-5 w-5" /> Print
             </Button>
@@ -352,7 +352,7 @@ export default function MarriageStageTwoPage() {
               <div className={`${fontSizeClasses[fontSize].sectionTitle} font-extrabold text-slate-900`}>
                 Application forms
               </div>
-              <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700 print:mt-1" />
+              <div className="mt-2 h-[3px] w-full rounded-full bg-pink-600 print:mt-1" />
 
               <label className="mt-4 flex cursor-pointer items-start gap-3 print:gap-2">
                 <Checkbox

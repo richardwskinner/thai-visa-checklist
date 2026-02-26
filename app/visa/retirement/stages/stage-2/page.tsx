@@ -130,7 +130,7 @@ function Section({
   return (
     <div className="mt-6">
       <div className="text-xl font-extrabold text-slate-900">{title}</div>
-      <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700" />
+      <div className="mt-2 h-[3px] w-full rounded-full bg-violet-600" />
 
       <div className="mt-3 grid gap-2">
         {items.map((item, idx) => {
@@ -251,7 +251,7 @@ export default function RetirementStageTwoPage() {
 
             <div className="mt-8">
               <div className="text-xl font-extrabold text-slate-900">Application forms</div>
-              <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700" />
+              <div className="mt-2 h-[3px] w-full rounded-full bg-violet-600" />
 
               <label className="mt-4 flex cursor-pointer items-start gap-3">
                 <Checkbox
