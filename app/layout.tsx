@@ -103,8 +103,11 @@ function Footer() {
                   <Link href="/visa-news" className="block text-sm font-medium text-slate-700 hover:text-slate-900">
                     Thai Visa News
                   </Link>
-                  <Link href="/guides" className="block text-sm font-medium text-slate-700 hover:text-slate-900">
-                    Guides
+                  <Link
+                    href="/offical-goverment-links"
+                    className="block text-sm font-medium text-slate-700 hover:text-slate-900"
+                  >
+                    Offical Goverment Links
                   </Link>
                   <Link
                     href="/thailand-public-holidays-2026"
