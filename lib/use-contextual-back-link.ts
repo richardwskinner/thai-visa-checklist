@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 
 const GUIDE_LABELS: Record<string, string> = {
@@ -18,26 +18,23 @@ function isSafeInternalPath(path: string) {
 
 export function useContextualBackLink(defaultHref: string, defaultLabel: string) {
   const searchParams = useSearchParams();
-  const [referrerBack, setReferrerBack] = useState<{ href: string; label: string } | null>(null);
 
   const returnTo = searchParams.get("returnTo");
   const returnLabel = searchParams.get("returnLabel");
 
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-
+  const referrerBack = useMemo(() => {
+    if (typeof document === "undefined") return null;
     try {
-      if (!document.referrer) return;
+      if (!document.referrer) return null;
       const refUrl = new URL(document.referrer);
-      if (refUrl.origin !== window.location.origin) return;
-      if (!refUrl.pathname.startsWith("/guides/")) return;
-
-      setReferrerBack({
+      if (refUrl.origin !== window.location.origin) return null;
+      if (!refUrl.pathname.startsWith("/guides/")) return null;
+      return {
         href: `${refUrl.pathname}${refUrl.search}`,
         label: GUIDE_LABELS[refUrl.pathname] ?? "Back to Guide",
-      });
+      };
     } catch {
-      // ignore invalid referrer URL
+      return null;
     }
   }, []);
 
@@ -48,4 +45,3 @@ export function useContextualBackLink(defaultHref: string, defaultLabel: string)
   if (referrerBack) return referrerBack;
   return { href: defaultHref, label: defaultLabel };
 }
-

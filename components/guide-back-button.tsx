@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -20,24 +20,21 @@ export default function GuideBackButton({
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [referrerHref, setReferrerHref] = useState<string | null>(null);
 
   const returnTo = searchParams.get("returnTo");
   const returnLabel = searchParams.get("returnLabel");
 
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-
+  const referrerHref = useMemo(() => {
+    if (typeof document === "undefined") return null;
     try {
-      if (!document.referrer) return;
+      if (!document.referrer) return null;
       const refUrl = new URL(document.referrer);
-      if (refUrl.origin !== window.location.origin) return;
-      if (!refUrl.pathname.startsWith(referrerPathPrefix)) return;
-      if (refUrl.pathname === pathname) return;
-
-      setReferrerHref(`${refUrl.pathname}${refUrl.search}`);
+      if (refUrl.origin !== window.location.origin) return null;
+      if (!refUrl.pathname.startsWith(referrerPathPrefix)) return null;
+      if (refUrl.pathname === pathname) return null;
+      return `${refUrl.pathname}${refUrl.search}`;
     } catch {
-      // ignore invalid referrer URL
+      return null;
     }
   }, [pathname, referrerPathPrefix]);
 

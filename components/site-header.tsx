@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 const TRANSLATE_LANGUAGES = [
@@ -57,11 +57,7 @@ function getCurrentGoogleTranslateCookie() {
 export default function SiteHeader() {
   const pathname = usePathname();
   const showChecklists = pathname !== "/";
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
-
-  useEffect(() => {
-    setSelectedLanguage(getCurrentGoogleTranslateCookie());
-  }, []);
+  const [selectedLanguage, setSelectedLanguage] = useState(() => getCurrentGoogleTranslateCookie());
 
   function handleTranslateChange(nextLanguage: string) {
     setSelectedLanguage(nextLanguage);

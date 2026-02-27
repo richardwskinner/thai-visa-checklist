@@ -34,7 +34,7 @@ export default function AboutPage() {
 </p>
 
 <p className="mt-4 text-slate-700 leading-relaxed">
-  I had already been through the process multiple times, and somehow there was always something missing. A form I didn't know I needed. A photocopy another office had never asked for. I learned quickly that different immigration offices, and even different officers, can ask for slightly different documents. That uncertainty is what makes the process stressful.
+  I had already been through the process multiple times, and somehow there was always something missing. A form I didn&apos;t know I needed. A photocopy another office had never asked for. I learned quickly that different immigration offices, and even different officers, can ask for slightly different documents. That uncertainty is what makes the process stressful.
 </p>
 
 <p className="mt-4 text-slate-700 leading-relaxed">

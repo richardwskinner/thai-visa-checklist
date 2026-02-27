@@ -7,7 +7,7 @@ export const retirementStageOneChecklist: ChecklistData = {
     {
       title: "1) Key Rules Before Applying",
       items: [
-        { text: "Apply outside Thailand in your home country or a neighboring country (such as Laos or Vietnam). Confirm they accept non-residents" },
+        { text: "Apply outside Thailand in your home country or a neighboring country (such as Laos or Vietnam)." },
         { text: "Have proof that you're physically in that country, such as an entry stamp or visa" },
         { text: "Be at least 50 years old at the time of application" },
         { text: "Passport valid at least 6 months (12 months recommended)" },
@@ -20,7 +20,7 @@ export const retirementStageOneChecklist: ChecklistData = {
         { text: "Passport bio page" },
         { text: "Passport photo, taken within 6-months (4×6 cm)" },
         { text: "Document indicating current location (entry stamp, visa, or proof of residence)" },
-        { text: "Proof of financial means: monthly income at least 65,000 THB, or bank balance equivalent to 800,000 THB, or a combination method meeting the annual threshold" },
+        { text: "One of the following: monthly income 65,000 THB+, or bank balance 800,000 THB+, or a combination" },
         { text: "Bank statements covering the last 3 months" },
         { text: "Proof of accommodation in Thailand (hotel booking or address details)" },
         { text: "Travel itinerary showing entry to and departure from Thailand" },
