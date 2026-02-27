@@ -14,6 +14,7 @@ import {
   CarFront,
   Landmark,
   Globe2,
+  FileText,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -140,6 +141,15 @@ const guides = [
     icon: Globe2,
     color: "bg-blue-100",
     iconColor: "text-blue-700",
+  },
+  {
+    title: "Foreigners Paying Tax in Thailand",
+    description:
+      "Simple guide to the Revenue Department's 2024 foreigner tax summary, including Thai-sourced income, remittances, and filing basics.",
+    href: "/guides/foreigners-paying-tax-thailand",
+    icon: FileText,
+    color: "bg-emerald-100",
+    iconColor: "text-emerald-700",
   },
 ];
 

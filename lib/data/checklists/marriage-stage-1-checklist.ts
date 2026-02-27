@@ -7,7 +7,7 @@ export const marriageStageOneChecklist: ChecklistData = {
     {
       title: "1) Key Rules Before Applying",
       items: [
-        { text: "Apply outside of Thailand (your home country or a neighboring country like Laos or Vietnam)" },
+        { text: "Apply outside of Thailand (home country or a neighboring country like Laos or Vietnam)" },
         { text: "Have proof that you're physically in that country, such as an entry stamp or visa" },
         { text: "Passport validity: 6+ months (single entry)" },
       ],
@@ -19,10 +19,10 @@ export const marriageStageOneChecklist: ChecklistData = {
         { text: "2x passport photos, taken within 6-months (4×6 cm)" },
         { text: "Document indicating current location (utility bill or entry stamp/visa)" },
         { text: "One of the following: monthly income 40,000 THB+ OR bank balance 400,000 THB+" },
-        { text: "Bank statement covering the last 3 months (Bank statement covering the last 3 months)" },
+        { text: "Bank statement covering the last 3 months (bank statement covering the last 3 months)" },
         { text: "Marriage certificate (Kor Ror 2 and Kor Ror 3 if married in Thailand)" },
         { text: "Thai spouse ID card" },
-        { text: "Thai spouse house registration (Tabien Baan)" },
+        { text: "Thai spouse house registration (tabien Baan)" },
         { text: "Invitation/supporting letter from your spouse (sponsor letter)" },
       ],
     },

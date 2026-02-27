@@ -19,6 +19,17 @@ export type VisaNewsItem = {
 
 export const visaNews: VisaNewsItem[] = [
   {
+    slug: "mfa-th-cam-situation-press-release-250226",
+    title: "MFA Press Release on the Thailand-Cambodia Situation (25 Feb 2026)",
+    summary:
+      "Thailand’s Ministry of Foreign Affairs published an official press release on the Thailand-Cambodia situation. Travelers should monitor official updates if regional border conditions could affect routes or entry plans.",
+    category: "Official",
+    publishedAt: "2026-02-25",
+    sourceLabel: "MFA Announcement",
+    sourceUrl:
+      "https://www.mfa.go.th/en/content/th-cam-situ-press-release-250226-en?page=5d5bd3cb15e39c306002a9ac&menu=5d5bd3cb15e39c306002a9ad",
+  },
+  {
     slug: "visa-free-stay-under-review-2026",
     title: "Thailand Reviewing 60-Day Visa-Free Stays",
     summary:
