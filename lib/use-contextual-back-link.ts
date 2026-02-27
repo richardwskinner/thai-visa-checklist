@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { useSearchParams } from "next/navigation";
 
 const GUIDE_LABELS: Record<string, string> = {
   "/guides/marriage-visa-thailand": "Back to Marriage Visa Guide",
@@ -17,10 +16,18 @@ function isSafeInternalPath(path: string) {
 }
 
 export function useContextualBackLink(defaultHref: string, defaultLabel: string) {
-  const searchParams = useSearchParams();
+  const queryBack = useMemo(() => {
+    if (typeof window === "undefined") {
+      return { returnTo: null as string | null, returnLabel: null as string | null };
+    }
+    const params = new URLSearchParams(window.location.search);
+    return {
+      returnTo: params.get("returnTo"),
+      returnLabel: params.get("returnLabel"),
+    };
+  }, []);
 
-  const returnTo = searchParams.get("returnTo");
-  const returnLabel = searchParams.get("returnLabel");
+  const { returnTo, returnLabel } = queryBack;
 
   const referrerBack = useMemo(() => {
     if (typeof document === "undefined") return null;
