@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -9,7 +9,18 @@ function isSafeInternalPath(path: string) {
   return path.startsWith("/") && !path.startsWith("//");
 }
 
-export default function GuideBackButton({
+function BackButtonLink({ href, label }: { href: string; label: string }) {
+  return (
+    <Link
+      href={href}
+      className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
+    >
+      <ArrowLeft className="h-5 w-5" /> {label}
+    </Link>
+  );
+}
+
+function GuideBackButtonInner({
   fallbackHref = "/guides",
   fallbackLabel = "Back to Guides",
   referrerPathPrefix = "/guides/",
@@ -49,12 +60,17 @@ export default function GuideBackButton({
         ? "Back to Previous Guide"
         : fallbackLabel;
 
+  return <BackButtonLink href={href} label={label} />;
+}
+
+export default function GuideBackButton(props: {
+  fallbackHref?: string;
+  fallbackLabel?: string;
+  referrerPathPrefix?: string;
+}) {
   return (
-    <Link
-      href={href}
-      className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-    >
-      <ArrowLeft className="h-5 w-5" /> {label}
-    </Link>
+    <Suspense fallback={<BackButtonLink href={props.fallbackHref ?? "/guides"} label={props.fallbackLabel ?? "Back to Guides"} />}>
+      <GuideBackButtonInner {...props} />
+    </Suspense>
   );
 }
