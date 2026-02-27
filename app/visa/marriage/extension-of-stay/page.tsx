@@ -6,7 +6,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Printer } from "lucide-react";
 import { marriageChecklist } from "@/lib/data/checklists/marriage-extension-checklist";
 import type { ChecklistItem } from "@/lib/data/checklists/types";

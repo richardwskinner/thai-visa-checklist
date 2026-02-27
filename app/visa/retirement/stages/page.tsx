@@ -99,7 +99,7 @@ export default function RetirementStagesPage() {
                 Choose Your Starting Point
               </div>
               <div className="mt-3 grid gap-4">
-                {stages.slice(0, 2).map((s, index) =>
+                {stages.slice(0, 2).map((s) =>
                 s.available ? (
                   <Link
                     key={s.stage}
