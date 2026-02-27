@@ -60,7 +60,7 @@ export default function ForeignersPayingTaxThailandGuidePage() {
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">Foreign Income</h2>
                 <p className="mt-3 text-slate-700">
-                  As of the 1 January 2024, if you stay in Thailand 180 days or more in the year foreign income that was earned and brought (remitted) to Thailand, it becomes taxable in Thailand.
+                  As of the 1 January 2024, if you stay in Thailand 180 days or more in the year foreign income that was earned and brought (remitted) to Thailand becomes taxable.
                 </p>
               </section>
 

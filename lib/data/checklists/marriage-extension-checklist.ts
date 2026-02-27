@@ -8,7 +8,7 @@ export const marriageChecklist: ChecklistData = {
     {
       title: "Personal Documents",
       items: [
-        { text: "Passport (Valid at least 6 months with 2+ blank pages)", required: true },
+        { text: "Passport (valid at least 6 months with 2+ blank pages)", required: true },
         { text: "2x passport photos, taken within 6-months (4×6 cm)", required: true },
         {
           text: "TM.30 Receipt",

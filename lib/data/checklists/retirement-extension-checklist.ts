@@ -71,7 +71,7 @@ export const retirementChecklist: ChecklistData = {
     },
     {
       title: "Payment",
-      items: [{ text: "1,900 THB", required: true }],
+      items: [{ text: "1,900 THB Cash", required: true }],
     },
   ],
   tips: [

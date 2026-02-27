@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import HomeVisaGrid from "@/components/home-visa-grid";
 import type { Metadata } from "next";
 
@@ -25,10 +24,6 @@ export default function HomePage() {
             </div>
 
             <HomeVisaGrid />
-
-            <div className="mt-8">
-              <Separator />
-            </div>
           </CardContent>
         </Card>
       </div>
