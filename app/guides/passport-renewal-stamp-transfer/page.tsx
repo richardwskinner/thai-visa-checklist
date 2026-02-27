@@ -2,8 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, ExternalLink, IdCard } from "lucide-react";
+import { ExternalLink, IdCard } from "lucide-react";
 import ExampleLink from "@/components/example-link";
+import GuideBackButton from "@/components/guide-back-button";
 
 export const metadata: Metadata = {
   title: "Renewing Your Passport in Thailand and Transferring Visa Stamps",
@@ -57,12 +58,7 @@ export default function PassportStampTransferGuidePage() {
 
       <div className="mx-auto w-full max-w-5xl overflow-hidden px-4 sm:px-5">
         <div className="pt-6 sm:pt-8">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-          >
-            <ArrowLeft className="h-5 w-5" /> Back to Guides
-          </Link>
+          <GuideBackButton />
         </div>
 
         <Card className="mt-4 rounded-3xl border-0 bg-white shadow-sm sm:mt-6">
@@ -137,11 +133,29 @@ export default function PassportStampTransferGuidePage() {
 
                 <p className="mt-4 text-sm text-slate-600">
                   Also useful:{" "}
-                  <Link href="/guides/re-entry-permit" className="font-semibold text-rose-700 underline underline-offset-2">
+                  <Link
+                    href={{
+                      pathname: "/guides/re-entry-permit",
+                      query: {
+                        returnTo: "/guides/passport-renewal-stamp-transfer",
+                        returnLabel: "Back to Passport Renewal Guide",
+                      },
+                    }}
+                    className="font-semibold text-rose-700 underline underline-offset-2"
+                  >
                     Re-entry permit guide
                   </Link>{" "}
                   and{" "}
-                  <Link href="/guides/tm30" className="font-semibold text-rose-700 underline underline-offset-2">
+                  <Link
+                    href={{
+                      pathname: "/guides/tm30",
+                      query: {
+                        returnTo: "/guides/passport-renewal-stamp-transfer",
+                        returnLabel: "Back to Passport Renewal Guide",
+                      },
+                    }}
+                    className="font-semibold text-rose-700 underline underline-offset-2"
+                  >
                     TM.30 guide
                   </Link>
                   .{" "}

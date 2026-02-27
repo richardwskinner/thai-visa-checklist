@@ -12,17 +12,19 @@ export const metadata: Metadata = {
 const stages = [
   {
     stage: 1,
-    title: "Apply outside of Thailand (Recommended)",
+    title: "Apply outside Thailand (Recommended)",
     description:
-      "Arrive on a Visa Exemption, Tourist Visa, or Non-Immigrant O issued from a Thai embassy abroad.",
-    available: false,
+      "Apply for a 90-day Non-Immigrant O visa at a Thai embassy or consulate in your home country, or neighboring country, such as Laos or Vietnam.",
+    available: true,
+    href: "/visa/retirement/stages/apply-outside-thailand",
   },
   {
     stage: 2,
     title: "Convert Visa in Thailand to Non-O",
     description:
       "If you entered on a tourist visa or visa exemption, convert to a Non-Immigrant O (retirement) at immigration.",
-    available: false,
+    available: true,
+    href: "/visa/retirement/stages/convert-in-thailand",
   },
   {
     stage: 3,
@@ -30,7 +32,13 @@ const stages = [
     description:
       "Extend your Non-Immigrant O visa for one year based on retirement (age 50+). Full checklist included.",
     available: true,
-    href: "/visa/retirement",
+    href: {
+      pathname: "/visa/retirement/extension-of-stay",
+      query: {
+        returnTo: "/visa/retirement/stages",
+        returnLabel: "Back to Retirement Stages",
+      },
+    },
   },
 ];
 
@@ -39,13 +47,25 @@ const postExtensionStages = [
     stage: 4,
     title: "90-Day Reporting",
     description: "Report your address to immigration every 90 days while on a long-stay visa.",
-    href: "/guides/90-day-reporting",
+    href: {
+      pathname: "/guides/90-day-reporting",
+      query: {
+        returnTo: "/visa/retirement/stages",
+        returnLabel: "Back to Retirement Stages",
+      },
+    },
   },
   {
     stage: 5,
     title: "Re-Entry Permit",
     description: "Get a re-entry permit before leaving Thailand to keep your visa valid.",
-    href: "/guides/re-entry-permit",
+    href: {
+      pathname: "/guides/re-entry-permit",
+      query: {
+        returnTo: "/visa/retirement/stages",
+        returnLabel: "Back to Retirement Stages",
+      },
+    },
   },
 ];
 
@@ -84,16 +104,16 @@ export default function RetirementStagesPage() {
                   <Link
                     key={s.stage}
                     href={s.href!}
-                    className="group flex items-center gap-5 rounded-2xl border-2 border-violet-200 bg-violet-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-violet-300"
+                    className="group flex items-center gap-5 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-emerald-300"
                   >
-                    <div className="flex h-12 w-3 shrink-0 rounded-full bg-violet-600" />
+                    <div className="flex h-12 w-3 shrink-0 rounded-full bg-emerald-600" />
                     <div className="flex-1 min-w-0">
                       <div className="text-lg font-extrabold text-slate-900">
                         {s.title}
                       </div>
                       <p className="mt-1 text-sm text-slate-600">{s.description}</p>
                     </div>
-                    <ArrowRight className="h-5 w-5 shrink-0 text-violet-600 transition group-hover:translate-x-1" />
+                    <ArrowRight className="h-5 w-5 shrink-0 text-emerald-600 transition group-hover:translate-x-1" />
                   </Link>
                 ) : (
                   <div
@@ -131,14 +151,14 @@ export default function RetirementStagesPage() {
                 <Link
                   key={s.stage}
                   href={s.href!}
-                  className="group flex items-center gap-5 rounded-2xl border-2 border-violet-200 bg-violet-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-violet-300"
+                  className="group flex items-center gap-5 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-emerald-300"
                 >
-                  <div className="flex h-12 w-3 shrink-0 rounded-full bg-violet-600" />
+                  <div className="flex h-12 w-3 shrink-0 rounded-full bg-emerald-600" />
                   <div className="flex-1 min-w-0">
                     <div className="text-lg font-extrabold text-slate-900">{s.title}</div>
                     <p className="mt-1 text-sm text-slate-600">{s.description}</p>
                   </div>
-                  <ArrowRight className="h-5 w-5 shrink-0 text-violet-600 transition group-hover:translate-x-1" />
+                  <ArrowRight className="h-5 w-5 shrink-0 text-emerald-600 transition group-hover:translate-x-1" />
                 </Link>
               ))}
             </div>
@@ -148,16 +168,16 @@ export default function RetirementStagesPage() {
                 <Link
                   key={s.stage}
                   href={s.href}
-                  className="group flex items-center gap-5 rounded-2xl border-2 border-violet-200 bg-violet-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-violet-300"
+                  className="group flex items-center gap-5 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-emerald-300"
                 >
-                  <div className="flex h-12 w-3 shrink-0 rounded-full bg-violet-600" />
+                  <div className="flex h-12 w-3 shrink-0 rounded-full bg-emerald-600" />
                   <div className="flex-1 min-w-0">
                     <div className="text-lg font-extrabold text-slate-900">
                       {s.title}
                     </div>
                     <p className="mt-1 text-sm text-slate-600">{s.description}</p>
                   </div>
-                  <ArrowRight className="h-5 w-5 shrink-0 text-violet-600 transition group-hover:translate-x-1" />
+                  <ArrowRight className="h-5 w-5 shrink-0 text-emerald-600 transition group-hover:translate-x-1" />
                 </Link>
               ))}
             </div>

@@ -57,7 +57,7 @@ export default function HomeVisaGrid() {
         onClick={() =>
           analytics.trackHomepageSelect("do-i-need-a-visa", "/guides/do-i-need-a-visa-thailand")
         }
-        className="group relative rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-600 px-7 py-7 text-left text-white shadow-sm ring-1 ring-black/10 transition hover:-translate-y-0.5 hover:shadow-md"
+        className="group relative rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 px-7 py-7 text-left text-white shadow-sm ring-1 ring-black/10 transition hover:-translate-y-0.5 hover:shadow-md"
       >
         <div className="text-2xl font-extrabold tracking-tight sm:text-3xl">
           <span className="mr-3">🛂</span>

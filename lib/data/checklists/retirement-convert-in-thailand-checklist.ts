@@ -1,8 +1,8 @@
 import type { ChecklistData } from "./types";
 
 export const retirementStageTwoChecklist: ChecklistData = {
-  title: "Retirement Visa Stage 2",
-  subtitle: "Convert your current status to Non-Immigrant O (Retirement) in Thailand",
+  title: "Convert Visa in Thailand to Non-O",
+  subtitle: "Non-Immigrant O - Retirement for foreigners aged 50 years or older",
   sections: [
     {
       title: "Pre-check Eligibility",

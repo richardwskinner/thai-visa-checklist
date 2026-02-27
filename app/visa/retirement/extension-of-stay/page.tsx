@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,25 +8,51 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Printer } from "lucide-react";
+import { retirementChecklist } from "@/lib/data/checklists/retirement-extension-checklist";
+import type { ChecklistItem } from "@/lib/data/checklists/types";
 import { analytics } from "@/lib/analytics";
 import ChecklistNotice from "@/components/checklist-notice";
 import ExampleLink from "@/components/example-link";
 import PrintChecklistHeader from "@/components/print-checklist-header";
-import { marriageStageTwoChecklist as stageTwoChecklist } from "@/lib/data/checklists/marriage-stage-2-checklist";
-import type { ChecklistItem } from "@/lib/data/checklists/types";
+import { useContextualBackLink } from "@/lib/use-contextual-back-link";
 
-const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:stage2:checked:v1";
+/* ── Storage keys ── */
+const STORAGE_KEY_CHECKED = "thai-visa-checklist:retirement:checked:v1";
 const STORAGE_KEY_FONTSIZE = "thai-visa-checklist:fontsize:v1";
 
+/* ── Application form links (compact pills) ── */
 const APPLICATION_FORMS = [
-  { code: "TM.86", url: "https://www.inter.chula.ac.th/wp-content/uploads/2022/02/TM86.pdf" },
-  { code: "TM.87", url: "https://www.inter.chula.ac.th/wp-content/uploads/2022/02/TM87.pdf" },
+  {
+    code: "TM.7",
+    url: "https://www.immigration.go.th/wp-content/uploads/2022/10/4.%E0%B8%84%E0%B8%B3%E0%B8%82%E0%B8%AD%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%8D%E0%B8%B2%E0%B8%95%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B9%83%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%AD%E0%B8%B2%E0%B8%93%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%A7%E0%B8%95%E0%B9%88%E0%B8%AD%E0%B9%84%E0%B8%9B-%E0%B8%95%E0%B8%A1.7.pdf",
+  },
   { code: "STM.2", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-2-FORM-2025.pdf" },
   { code: "STM.9", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-9-FORM-2025.pdf" },
   { code: "STM.11", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-11-FORM-2025.pdf" },
 ] as const;
 
+function FormChips() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {APPLICATION_FORMS.map((f) => (
+        <a
+          key={f.code}
+          href={f.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100
+                     print:bg-white print:text-slate-900 print:border-slate-300"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {f.code}
+          <span className="text-slate-400 print:hidden">↗</span>
+        </a>
+      ))}
+    </div>
+  );
+}
 
+/* ── Font size config ── */
 const fontSizeClasses = {
   small: {
     title: "text-2xl",
@@ -56,26 +82,7 @@ const fontSizeClasses = {
 
 type FontSize = keyof typeof fontSizeClasses;
 
-function FormChips() {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {APPLICATION_FORMS.map((form) => (
-        <a
-          key={form.code}
-          href={form.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100 print:bg-white print:text-slate-900 print:border-slate-300"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {form.code}
-          <span className="text-slate-400 print:hidden">↗</span>
-        </a>
-      ))}
-    </div>
-  );
-}
-
+/* ── Section component ── */
 function Section({
   title,
   items,
@@ -94,7 +101,7 @@ function Section({
   return (
     <div className="mt-6 print:mt-2">
       <div className={`${classes.sectionTitle} font-extrabold text-slate-900`}>{title}</div>
-      <div className="mt-2 h-[3px] w-full rounded-full bg-pink-600 print:mt-1" />
+      <div className="mt-2 h-[3px] w-full rounded-full bg-emerald-600 print:mt-1" />
 
       <div className="mt-3 grid gap-2 print:mt-1 print:gap-1">
         {items.map((item, idx) => {
@@ -107,11 +114,17 @@ function Section({
                 className="h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-[#249C0F] data-[state=checked]:border-[#249C0F]"
               />
               <div className={`${classes.itemText} text-slate-900 leading-snug`}>
-                {item.text}
+                {item.text.includes("\n")
+                  ? item.text.split("\n").map((line, i) => (
+                      <span key={i} className="block">
+                        {line}
+                      </span>
+                    ))
+                  : item.text}
                 {item.noteLink && item.noteUrl && (
                   <ExampleLink
                     href={item.noteUrl}
-                    label={item.noteLink}
+                    label="Example"
                     className="ml-2 align-middle"
                     onClick={(e) => e.stopPropagation()}
                   />
@@ -125,7 +138,8 @@ function Section({
   );
 }
 
-export default function MarriageStageTwoPage() {
+/* ── Main page ── */
+export default function RetirementVisaPage() {
   const [checked, setChecked] = useState<Record<string, boolean>>(() => {
     if (typeof window === "undefined") return {};
     try {
@@ -139,7 +153,6 @@ export default function MarriageStageTwoPage() {
     }
     return {};
   });
-
   const [fontSize, setFontSize] = useState<FontSize>(() => {
     if (typeof window === "undefined") return "small";
     const savedSize = localStorage.getItem(STORAGE_KEY_FONTSIZE);
@@ -151,6 +164,7 @@ export default function MarriageStageTwoPage() {
 
   const classes = fontSizeClasses[fontSize];
 
+  // Save progress
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY_CHECKED, JSON.stringify(checked));
@@ -159,6 +173,7 @@ export default function MarriageStageTwoPage() {
     }
   }, [checked]);
 
+  // Save font size preference
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY_FONTSIZE, fontSize);
@@ -170,7 +185,8 @@ export default function MarriageStageTwoPage() {
   const handleToggle = (key: string) => {
     setChecked((prev) => {
       const newValue = !prev[key];
-      analytics.trackChecklistItem("marriage-stage-2", key, newValue);
+      // Track the event
+      analytics.trackChecklistItem('retirement', key, newValue);
       return { ...prev, [key]: newValue };
     });
   };
@@ -178,29 +194,41 @@ export default function MarriageStageTwoPage() {
   const handleReset = () => {
     if (window.confirm("Reset all checkboxes? This cannot be undone.")) {
       setChecked({});
-      analytics.trackReset("marriage-stage-2");
+      analytics.trackReset('retirement');
     }
   };
 
+  // Total checklist items (data) + 1 extra for forms checkbox
   const total = useMemo(
-    () => stageTwoChecklist.sections.reduce((sum, section) => sum + section.items.length, 0),
+    () => retirementChecklist.sections.reduce((sum, s) => sum + s.items.length, 0),
     []
   );
   const totalWithForms = total + 1;
+
   const done = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
   const pct = totalWithForms ? Math.round((done / totalWithForms) * 100) : 0;
+  const { href: backHref, label: backLabel } = useContextualBackLink(
+    "/visa/retirement/stages",
+    "Back to Retirement Stages"
+  );
 
   return (
     <div className="min-h-screen bg-[#eef3fb] print:min-h-0 print:bg-white">
       <div className="mx-auto w-full max-w-5xl px-5 print:px-0">
+        {/* Top actions */}
         <div className="flex flex-col gap-3 pt-8 print:hidden sm:flex-row sm:items-center sm:justify-between">
           <Button asChild className="h-12 justify-start rounded-2xl bg-slate-600 px-5 text-base hover:bg-slate-700">
-            <Link href="/visa/marriage/stages">
-              <ArrowLeft className="mr-2 h-5 w-5" /> Back to Marriage Visa Stages
+            <Link href={backHref}>
+              <ArrowLeft className="mr-2 h-5 w-5" /> {backLabel}
             </Link>
           </Button>
 
           <div className="flex flex-wrap items-center gap-3">
+            <Button asChild variant="outline" className="h-12 rounded-2xl bg-white px-5 text-base hover:bg-slate-50">
+              <Link href="/contact">Send feedback</Link>
+            </Button>
+
+            {/* Font Size Selector */}
             <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm">
               <span className="text-sm font-medium text-slate-700">Text Size:</span>
               <div className="flex gap-1">
@@ -209,11 +237,11 @@ export default function MarriageStageTwoPage() {
                     key={size}
                     onClick={() => {
                       setFontSize(size);
-                      analytics.trackFontSizeChange(size, "marriage-stage-2");
+                      analytics.trackFontSizeChange(size, 'retirement');
                     }}
                     className={`rounded-lg px-3 py-1 text-sm font-medium transition capitalize ${
                       fontSize === size
-                        ? "bg-pink-600 text-white"
+                        ? "bg-emerald-600 text-white"
                         : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                     }`}
                   >
@@ -233,10 +261,10 @@ export default function MarriageStageTwoPage() {
 
             <Button
               onClick={() => {
-                analytics.trackPrint("marriage-stage-2");
+                analytics.trackPrint('retirement');
                 window.print();
               }}
-              className="h-12 rounded-2xl bg-pink-600 px-5 text-base hover:bg-pink-700"
+              className="h-12 rounded-2xl bg-emerald-600 px-5 text-base hover:bg-emerald-700"
             >
               <Printer className="mr-2 h-5 w-5" /> Print
             </Button>
@@ -247,14 +275,18 @@ export default function MarriageStageTwoPage() {
           <ChecklistNotice />
         </div>
 
+        {/* Content */}
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm print:mt-0 print:rounded-none print:shadow-none print:scale-95">
-          <CardContent className="p-6 sm:p-10 print:px-4 print:pt-0 print:pb-0">
+          <CardContent className="p-10 print:px-4 print:pt-0 print:pb-0">
             <PrintChecklistHeader />
             <h1 className={`${classes.title} text-center font-extrabold tracking-tight text-slate-900`}>
-              {stageTwoChecklist.title}
+              {retirementChecklist.title}
             </h1>
-            <p className={`mt-2 ${classes.subtitle} text-center text-slate-600`}>{stageTwoChecklist.subtitle}</p>
+            <p className={`mt-2 ${classes.subtitle} text-center text-slate-600`}>
+              {retirementChecklist.subtitle}
+            </p>
 
+            {/* Progress bar (screen only) */}
             <div className="mt-8 print:hidden">
               <div className={`flex items-center justify-between ${classes.progress} font-semibold text-slate-700`}>
                 <div>
@@ -267,36 +299,34 @@ export default function MarriageStageTwoPage() {
               </div>
             </div>
 
+            {/* Application forms */}
             <div className="mt-8 print:mt-4">
               <div className={`${fontSizeClasses[fontSize].sectionTitle} font-extrabold text-slate-900`}>
-                Application forms
+                Application Forms
               </div>
-              <div className="mt-2 h-[3px] w-full rounded-full bg-pink-600 print:mt-1" />
+              <div className="mt-2 h-[3px] w-full rounded-full bg-emerald-600 print:mt-1" />
 
               <label className="mt-4 flex cursor-pointer items-start gap-3 print:gap-2">
                 <Checkbox
-                  checked={!!checked.__forms__}
+                  checked={!!checked["__forms__"]}
                   onCheckedChange={() => handleToggle("__forms__")}
                   className="mt-1 h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-[#249C0F] data-[state=checked]:border-[#249C0F]"
                 />
+
                 <div className="flex-1">
                   <div className={`${classes.itemText} text-slate-900 leading-snug`}>
-                    Download and complete the required application forms:
+                    Download and complete the required application form:
                   </div>
+
                   <div className="mt-3 print:mt-2">
                     <FormChips />
-                  </div>
-                  <div className={`mt-2 ${classes.label} text-slate-700`}>
-                    TM.86 → Used if converting from Tourist Visa.
-                  </div>
-                  <div className={`${classes.label} text-slate-700`}>
-                    TM.87 → Used if converting from Visa Exempt.
                   </div>
                 </div>
               </label>
             </div>
 
-            {stageTwoChecklist.sections.map((section) => (
+            {/* Sections */}
+            {retirementChecklist.sections.map((section) => (
               <Section
                 key={section.title}
                 title={section.title}
@@ -307,10 +337,11 @@ export default function MarriageStageTwoPage() {
               />
             ))}
 
+            {/* Tips */}
             <div className="mt-8 rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5 print:mt-2 print:p-4 print:break-inside-auto">
               <div className={`${classes.itemText} font-bold text-amber-900`}>Notes</div>
               <ul className={`mt-2 list-disc space-y-1 pl-6 ${classes.label} text-amber-900`}>
-                {stageTwoChecklist.tips.map((tip) => (
+                {retirementChecklist.tips.map((tip) => (
                   <li key={tip}>{tip}</li>
                 ))}
               </ul>
@@ -319,8 +350,29 @@ export default function MarriageStageTwoPage() {
           </CardContent>
         </Card>
 
+        <div className="mt-6 print:hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="text-lg font-extrabold text-slate-900">FAQ</div>
+          <div className="mt-3 space-y-3">
+            <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-sm font-bold text-slate-900 sm:text-base">
+                <span className="min-w-0">
+                  How far in advance can I apply for a retirement extension at Chaeng Wattana?
+                </span>
+                <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                At Chaeng Wattana (Immigration Division 1), a common rule is that you can apply when you have 45
+                days or less remaining on your current stamp. Office practice can change, so confirm with the
+                office before you go.
+              </p>
+            </details>
+          </div>
+        </div>
       </div>
 
+      {/* Print styles */}
       <style>{`
         @media print {
           @page {
@@ -343,26 +395,31 @@ export default function MarriageStageTwoPage() {
             box-shadow: none !important;
           }
 
+          /* Prevent page breaks inside elements */
           h1, h2, h3, h4, h5, h6 {
             page-break-after: avoid !important;
             break-after: avoid !important;
           }
 
+          /* Prevent orphans and widows */
           p, li {
             orphans: 3;
             widows: 3;
           }
 
+          /* Keep sections together */
           section, div[class*="Section"] {
             page-break-inside: avoid !important;
             break-inside: avoid !important;
           }
 
+          /* Allow tips section to break if needed */
           .print\\:break-inside-auto {
             page-break-inside: auto !important;
             break-inside: auto !important;
           }
 
+          /* Scale content to fit on one page - zoom affects layout, transform does not */
           .print\\:scale-95 {
             zoom: 0.90 !important;
           }

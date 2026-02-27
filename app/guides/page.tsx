@@ -15,6 +15,7 @@ import {
   Landmark,
   Globe2,
   FileText,
+  Heart,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -141,6 +142,15 @@ const guides = [
     icon: Globe2,
     color: "bg-blue-100",
     iconColor: "text-blue-700",
+  },
+  {
+    title: "Thailand Marriage Visa",
+    description:
+      "Full marriage visa path in Thailand: 90-day Non-Immigrant O, bank account setup, fund seasoning, extension, and consideration period.",
+    href: "/guides/marriage-visa-thailand",
+    icon: Heart,
+    color: "bg-pink-100",
+    iconColor: "text-pink-700",
   },
   {
     title: "Foreigners Paying Tax in Thailand",

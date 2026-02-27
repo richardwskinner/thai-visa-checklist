@@ -82,8 +82,7 @@ function SourceLogoBadge({ sourceLabel, sourceUrl }: { sourceLabel: string; sour
     >
       <img
         src={sourceLogo}
-        alt=""
-        aria-hidden="true"
+        alt={`${sourceLabel} logo`}
         className="max-h-7 w-auto object-contain"
         loading="lazy"
       />

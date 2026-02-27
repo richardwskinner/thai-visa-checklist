@@ -2,7 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Building2, ExternalLink } from "lucide-react";
+import { Building2, ExternalLink } from "lucide-react";
+import GuideBackButton from "@/components/guide-back-button";
 
 const KBANK_FOREIGN_ACCOUNT_URL =
   "https://www.kasikornbank.com/en/personal/services/guides/Pages/foreigncustomer.aspx";
@@ -59,12 +60,7 @@ export default function OpeningBankAccountThailandPage() {
 
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-5">
         <div className="pt-6 sm:pt-8">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-          >
-            <ArrowLeft className="h-5 w-5" /> Back to Guides
-          </Link>
+          <GuideBackButton />
         </div>
 
         <Card className="mt-4 rounded-3xl border-0 bg-white shadow-sm sm:mt-6">
@@ -141,7 +137,16 @@ export default function OpeningBankAccountThailandPage() {
                 </div>
                 <p className="mt-4 text-sm text-slate-600">
                   For address evidence, some foreigners also use local documents such as a{" "}
-                  <Link href="/guides/yellow-book" className="font-semibold text-emerald-700 underline underline-offset-2">
+                  <Link
+                    href={{
+                      pathname: "/guides/yellow-book",
+                      query: {
+                        returnTo: "/guides/opening-bank-account-thailand",
+                        returnLabel: "Back to Opening Bank Account Guide",
+                      },
+                    }}
+                    className="font-semibold text-emerald-700 underline underline-offset-2"
+                  >
                     Yellow Book (Tabien Baan)
                   </Link>{" "}
                   where applicable.

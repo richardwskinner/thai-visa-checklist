@@ -1,7 +1,7 @@
 import type { ChecklistData } from "./types";
 
 export const marriageStageTwoChecklist: ChecklistData = {
-  title: "Marriage Visa Stage 2",
+  title: "Marriage Visa - 90-Day Non-Immigrant O",
   subtitle: "Convert Visa in Thailand to Non-Immigrant O (Marriage)",
   sections: [
     {

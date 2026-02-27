@@ -1,8 +1,8 @@
 import type { ChecklistData } from "./types";
 
 export const marriageStageOneChecklist: ChecklistData = {
-  title: "Marriage Visa - Stage 1",
-  subtitle: "Apply for Non-O Visa - To stay with Thai family residing in Thailand (More than 60 days)",
+  title: "Marriage Visa - 90-Day Non-Immigrant O",
+  subtitle: "Non-Immigrant O - To stay with Thai family residing in Thailand (More than 60 days)",
   sections: [
     {
       title: "1) Key Rules Before Applying",
@@ -16,7 +16,7 @@ export const marriageStageOneChecklist: ChecklistData = {
       title: "2) Required Documents (upload to eVisa)",
       items: [
         { text: "Passport bio page" },
-        { text: "2x passport photos, taken within 6-months (4×6 cm)" },
+        { text: "Passport photo, taken within 6-months (4×6 cm)" },
         { text: "Document indicating current location (utility bill or entry stamp/visa)" },
         { text: "One of the following: monthly income 40,000 THB+ OR bank balance 400,000 THB+" },
         { text: "Bank statement covering the last 3 months" },

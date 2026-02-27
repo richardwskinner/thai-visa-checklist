@@ -1,16 +1,21 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, ExternalLink, CalendarClock } from "lucide-react";
+import { ExternalLink, CalendarClock } from "lucide-react";
 import type { Metadata } from "next";
 import NinetyDayCalculator from "./NinetyDayCalculator";
 import ExampleLink from "@/components/example-link";
+import GuideBackButton from "@/components/guide-back-button";
 
 export const metadata: Metadata = {
   title: "90-Day Reporting in Thailand - What It Is and How to Do It",
   description:
     "Everything you need to know about 90-day reporting in Thailand. Who needs to report, when to do it, how to report online, by mail, or in person, and what happens if you miss it.",
 };
+
+function isSafeInternalPath(path: string) {
+  return path.startsWith("/") && !path.startsWith("//");
+}
 
 const TM47_URL = "https://www.immigration.go.th/wp-content/uploads/2022/10/18.Form-TM-47.pdf";
 const TM47_PORTAL = "https://tm47.immigration.go.th";
@@ -53,7 +58,23 @@ const FAQS = [
   },
 ] as const;
 
-export default function NinetyDayReportingpage() {
+export default async function NinetyDayReportingpage({
+  searchParams,
+}: {
+  searchParams: Promise<{ returnTo?: string; returnLabel?: string }>;
+}) {
+  const params = await searchParams;
+  const tm30Href =
+    params.returnTo && isSafeInternalPath(params.returnTo)
+      ? {
+          pathname: "/guides/tm30",
+          query: {
+            returnTo: params.returnTo,
+            returnLabel: params.returnLabel || "Back to Guide",
+          },
+        }
+      : "/guides/tm30";
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -75,12 +96,7 @@ export default function NinetyDayReportingpage() {
       />
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-5 overflow-hidden">
         <div className="pt-6 sm:pt-8">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-          >
-            <ArrowLeft className="h-5 w-5" /> Back to Guides
-          </Link>
+          <GuideBackButton />
         </div>
 
         <Card className="mt-4 sm:mt-6 rounded-3xl border-0 bg-white shadow-sm">
@@ -103,7 +119,7 @@ export default function NinetyDayReportingpage() {
               <p className="mt-3 text-sm text-violet-900/80">
                 If you’ve recently changed address, ensure your{" "}
                 <Link
-                  href="/guides/tm30"
+                  href={tm30Href}
                   className="font-semibold text-violet-800 underline underline-offset-2"
                 >
                   TM.30

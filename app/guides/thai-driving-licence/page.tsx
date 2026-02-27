@@ -2,7 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, CarFront, ExternalLink } from "lucide-react";
+import { CarFront, ExternalLink } from "lucide-react";
+import GuideBackButton from "@/components/guide-back-button";
 
 const DLT_NEW_LICENSE_URL = "https://www.dlt.go.th/en/new-license";
 const DLT_TWO_YEAR_LICENSE_URL = "https://www.dlt.go.th/en/two-year-license";
@@ -57,12 +58,7 @@ export default function ThaiDrivingLicenceGuidePage() {
 
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-5">
         <div className="pt-6 sm:pt-8">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-          >
-            <ArrowLeft className="h-5 w-5" /> Back to Guides
-          </Link>
+          <GuideBackButton />
         </div>
 
         <Card className="mt-4 rounded-3xl border-0 bg-white shadow-sm sm:mt-6">

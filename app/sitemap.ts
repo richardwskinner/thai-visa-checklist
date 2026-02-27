@@ -22,14 +22,14 @@ const routes: Array<{
   { path: "/thailand-public-holidays-2026", changeFrequency: "monthly", priority: 0.7 },
 
   { path: "/visa/marriage/stages", changeFrequency: "weekly", priority: 0.9 },
-  { path: "/visa/marriage/stages/stage-1", changeFrequency: "weekly", priority: 0.8 },
-  { path: "/visa/marriage/stages/stage-2", changeFrequency: "weekly", priority: 0.8 },
-  { path: "/visa/marriage", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/visa/marriage/stages/apply-outside-thailand", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/visa/marriage/stages/convert-in-thailand", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/visa/marriage/extension-of-stay", changeFrequency: "weekly", priority: 0.9 },
 
   { path: "/visa/retirement/stages", changeFrequency: "weekly", priority: 0.9 },
-  { path: "/visa/retirement/stages/stage-1", changeFrequency: "weekly", priority: 0.7 },
-  { path: "/visa/retirement/stages/stage-2", changeFrequency: "weekly", priority: 0.7 },
-  { path: "/visa/retirement", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/visa/retirement/stages/apply-outside-thailand", changeFrequency: "weekly", priority: 0.7 },
+  { path: "/visa/retirement/stages/convert-in-thailand", changeFrequency: "weekly", priority: 0.7 },
+  { path: "/visa/retirement/extension-of-stay", changeFrequency: "weekly", priority: 0.9 },
 
   { path: "/guides/90-day-reporting", changeFrequency: "weekly", priority: 0.8 },
   { path: "/guides/re-entry-permit", changeFrequency: "weekly", priority: 0.8 },
@@ -43,6 +43,7 @@ const routes: Array<{
   { path: "/guides/thai-driving-licence", changeFrequency: "monthly", priority: 0.8 },
   { path: "/guides/opening-bank-account-thailand", changeFrequency: "monthly", priority: 0.8 },
   { path: "/guides/do-i-need-a-visa-thailand", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/guides/marriage-visa-thailand", changeFrequency: "weekly", priority: 0.9 },
   { path: "/guides/foreigners-paying-tax-thailand", changeFrequency: "monthly", priority: 0.7 },
 ];
 

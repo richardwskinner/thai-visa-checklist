@@ -2,7 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, ExternalLink, Landmark } from "lucide-react";
+import { ExternalLink, Landmark } from "lucide-react";
+import GuideBackButton from "@/components/guide-back-button";
 
 const RD_FOREIGNERS_TAX_PDF =
   "https://www.rd.go.th/fileadmin/user_upload/lorkhor/newspr/2024/FOREIGNERS_PAY_TAX2024.pdf";
@@ -18,12 +19,7 @@ export default function ForeignersPayingTaxThailandGuidePage() {
     <div className="min-h-screen bg-[#eef3fb]">
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-5">
         <div className="pt-6 sm:pt-8">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-          >
-            <ArrowLeft className="h-5 w-5" /> Back to Guides
-          </Link>
+          <GuideBackButton />
         </div>
 
         <Card className="mt-4 rounded-3xl border-0 bg-white shadow-sm sm:mt-6">

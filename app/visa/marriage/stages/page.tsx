@@ -14,9 +14,9 @@ const stages = [
     stage: 1,
     title: "Apply outside of Thailand (Recommended)",
     description:
-      "Apply for a 90-Day Non-Immigrant O visa at a Thai embassy or consulate in your home country, or neighboring country, such as Laos or Vietnam.",
+      "Apply for a 90-day Non-Immigrant O visa at a Thai embassy or consulate in your home country, or neighboring country, such as Laos or Vietnam.",
     available: true,
-    href: "/visa/marriage/stages/stage-1",
+    href: "/visa/marriage/stages/apply-outside-thailand",
   },
   {
     stage: 2,
@@ -24,7 +24,7 @@ const stages = [
     description:
       "If you're in Thailand on a Tourist or Visa-Exempt, and want to convert to a Non-Immigrant O Visa (Marriage). You may be required to show your proof of funds in a Thai bank account and with at least 15 days remaining on your current permission to stay. ",
     available: true,
-    href: "/visa/marriage/stages/stage-2",
+    href: "/visa/marriage/stages/convert-in-thailand",
   },
   {
     stage: 3,
@@ -32,7 +32,7 @@ const stages = [
     description:
       "Extend your Non-Immigrant O visa for one year based on marriage to a Thai national - Full Checklist included.",
     available: true,
-    href: "/visa/marriage",
+    href: "/visa/marriage/extension-of-stay",
   },
 ];
 
@@ -41,7 +41,13 @@ const postExtensionStages = [
     stage: 4,
     title: "90-Day Reporting",
     description: "Report your address to immigration every 90 days while on a long-stay visa.",
-    href: "/guides/90-day-reporting",
+    href: {
+      pathname: "/guides/90-day-reporting",
+      query: {
+        returnTo: "/visa/marriage/stages",
+        returnLabel: "Back to Marriage Visa Stages",
+      },
+    },
   },
   {
     stage: 5,
@@ -67,7 +73,7 @@ export default function MarriageStagesPage() {
             </div>
 
             <div className="mt-5 text-center sm:mt-6">
-              <div className="text-4xl">💑</div>
+              <div className="text-4xl">🥂</div>
               <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">
                 Marriage Visa
               </h1>

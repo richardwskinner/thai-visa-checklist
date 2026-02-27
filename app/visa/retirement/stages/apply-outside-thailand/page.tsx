@@ -6,15 +6,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Printer } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 import ChecklistNotice from "@/components/checklist-notice";
 import PrintChecklistHeader from "@/components/print-checklist-header";
-import { marriageStageOneChecklist as stageOneChecklist } from "@/lib/data/checklists/marriage-stage-1-checklist";
+import { retirementStageOneChecklist as stageOneChecklist } from "@/lib/data/checklists/retirement-apply-outside-thailand-checklist";
 import type { ChecklistItem } from "@/lib/data/checklists/types";
+import { useContextualBackLink } from "@/lib/use-contextual-back-link";
 
-const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:stage1:checked:v1";
+const STORAGE_KEY_CHECKED = "thai-visa-checklist:retirement:stage1:checked:v1";
 const STORAGE_KEY_FONTSIZE = "thai-visa-checklist:fontsize:v1";
 
 const APPLICATION_FORMS = [{ code: "Thai e-Visa", url: "https://www.thaievisa.go.th" }] as const;
@@ -86,7 +86,7 @@ function Section({
   return (
     <div className="mt-6 print:mt-2">
       <div className={`${classes.sectionTitle} font-extrabold text-slate-900`}>{title}</div>
-      <div className="mt-2 h-[3px] w-full rounded-full bg-pink-600 print:mt-1" />
+      <div className="mt-2 h-[3px] w-full rounded-full bg-emerald-600 print:mt-1" />
 
       <div className="mt-3 grid gap-2 print:mt-1 print:gap-1">
         {items.map((item, idx) => {
@@ -107,7 +107,7 @@ function Section({
   );
 }
 
-export default function MarriageStageOnePage() {
+export default function RetirementStageOnePage() {
   const [checked, setChecked] = useState<Record<string, boolean>>(() => {
     if (typeof window === "undefined") return {};
     try {
@@ -152,7 +152,7 @@ export default function MarriageStageOnePage() {
   const handleToggle = (key: string) => {
     setChecked((prev) => {
       const newValue = !prev[key];
-      analytics.trackChecklistItem("marriage-stage-1", key, newValue);
+      analytics.trackChecklistItem("retirement-stage-1", key, newValue);
       return { ...prev, [key]: newValue };
     });
   };
@@ -160,7 +160,7 @@ export default function MarriageStageOnePage() {
   const handleReset = () => {
     if (window.confirm("Reset all checkboxes? This cannot be undone.")) {
       setChecked({});
-      analytics.trackReset("marriage-stage-1");
+      analytics.trackReset("retirement-stage-1");
     }
   };
 
@@ -168,20 +168,29 @@ export default function MarriageStageOnePage() {
     () => stageOneChecklist.sections.reduce((sum, section) => sum + section.items.length, 0),
     []
   );
+  const totalWithForms = total + 1;
   const done = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
-  const pct = total ? Math.round((done / total) * 100) : 0;
+  const pct = totalWithForms ? Math.round((done / totalWithForms) * 100) : 0;
+  const { href: backHref, label: backLabel } = useContextualBackLink(
+    "/visa/retirement/stages",
+    "Back to Retirement Stages"
+  );
 
   return (
     <div className="min-h-screen bg-[#eef3fb] print:min-h-0 print:bg-white">
       <div className="mx-auto w-full max-w-5xl px-5 print:px-0">
         <div className="flex flex-col gap-3 pt-8 print:hidden sm:flex-row sm:items-center sm:justify-between">
           <Button asChild className="h-12 justify-start rounded-2xl bg-slate-600 px-5 text-base hover:bg-slate-700">
-            <Link href="/visa/marriage/stages">
-              <ArrowLeft className="mr-2 h-5 w-5" /> Back to Marriage Visa Stages
+            <Link href={backHref}>
+              <ArrowLeft className="mr-2 h-5 w-5" /> {backLabel}
             </Link>
           </Button>
 
           <div className="flex flex-wrap items-center gap-3">
+            <Button asChild variant="outline" className="h-12 rounded-2xl bg-white px-5 text-base hover:bg-slate-50">
+              <Link href="/contact">Send feedback</Link>
+            </Button>
+
             <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm">
               <span className="text-sm font-medium text-slate-700">Text Size:</span>
               <div className="flex gap-1">
@@ -190,11 +199,11 @@ export default function MarriageStageOnePage() {
                     key={size}
                     onClick={() => {
                       setFontSize(size);
-                      analytics.trackFontSizeChange(size, "marriage-stage-1");
+                      analytics.trackFontSizeChange(size, "retirement-stage-1");
                     }}
                     className={`rounded-lg px-3 py-1 text-sm font-medium transition capitalize ${
                       fontSize === size
-                        ? "bg-pink-600 text-white"
+                        ? "bg-emerald-600 text-white"
                         : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                     }`}
                   >
@@ -214,10 +223,10 @@ export default function MarriageStageOnePage() {
 
             <Button
               onClick={() => {
-                analytics.trackPrint("marriage-stage-1");
+                analytics.trackPrint("retirement-stage-1");
                 window.print();
               }}
-              className="h-12 rounded-2xl bg-pink-600 px-5 text-base hover:bg-pink-700"
+              className="h-12 rounded-2xl bg-emerald-600 px-5 text-base hover:bg-emerald-700"
             >
               <Printer className="mr-2 h-5 w-5" /> Print
             </Button>
@@ -239,7 +248,7 @@ export default function MarriageStageOnePage() {
             <div className="mt-8 print:hidden">
               <div className={`flex items-center justify-between ${classes.progress} font-semibold text-slate-700`}>
                 <div>
-                  Progress: {done} of {total} items
+                  Progress: {done} of {totalWithForms} items
                 </div>
                 <div>{pct}%</div>
               </div>
@@ -276,62 +285,9 @@ export default function MarriageStageOnePage() {
                 ))}
               </ul>
             </div>
-
           </CardContent>
         </Card>
-
       </div>
-
-      <style>{`
-        @media print {
-          @page {
-            margin: 0.3in;
-            size: letter;
-          }
-
-          html, body {
-            height: auto !important;
-            overflow: visible !important;
-          }
-
-          body {
-            margin: 0 !important;
-            print-color-adjust: exact;
-            -webkit-print-color-adjust: exact;
-          }
-
-          * {
-            box-shadow: none !important;
-          }
-
-          h1, h2, h3, h4, h5, h6 {
-            page-break-after: avoid !important;
-            break-after: avoid !important;
-          }
-
-          p, li {
-            orphans: 3;
-            widows: 3;
-          }
-
-          section, div[class*="Section"] {
-            page-break-inside: avoid !important;
-            break-inside: avoid !important;
-          }
-
-          .print\\:break-inside-auto {
-            page-break-inside: auto !important;
-            break-inside: auto !important;
-          }
-
-          .print\\:scale-95 {
-            zoom: 0.90 !important;
-          }
-
-          header { display: none !important; }
-          footer { display: none !important; }
-        }
-      `}</style>
     </div>
   );
 }

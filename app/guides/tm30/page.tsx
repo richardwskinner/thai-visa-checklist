@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, ExternalLink, MapPin } from "lucide-react";
+import { ExternalLink, MapPin } from "lucide-react";
 import ExampleLink from "@/components/example-link";
+import GuideBackButton from "@/components/guide-back-button";
 
 import type { Metadata } from "next";
 
@@ -52,12 +53,7 @@ export default function TM30Page() {
       />
       <div className="mx-auto w-full max-w-5xl px-5">
         <div className="pt-8">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-          >
-            <ArrowLeft className="h-5 w-5" /> Back to Guides
-          </Link>
+          <GuideBackButton />
         </div>
 
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
@@ -183,14 +179,14 @@ export default function TM30Page() {
                     <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
                     <span>The TM.30 receipt is required for visa extensions, including{" "}
                       <Link
-                        href="/visa/marriage"
+                        href="/visa/marriage/extension-of-stay"
                         className="font-semibold text-teal-700 underline underline-offset-2"
                       >
                         marriage
                       </Link>{" "}
                       and{" "}
                       <Link
-                        href="/visa/retirement"
+                        href="/visa/retirement/extension-of-stay"
                         className="font-semibold text-teal-700 underline underline-offset-2"
                       >
                         retirement
@@ -202,7 +198,13 @@ export default function TM30Page() {
                     <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
                     <span>It is often required for{" "}
                       <Link
-                        href="/guides/90-day-reporting"
+                        href={{
+                          pathname: "/guides/90-day-reporting",
+                          query: {
+                            returnTo: "/guides/tm30",
+                            returnLabel: "Back to TM.30 Guide",
+                          },
+                        }}
                         className="font-semibold text-teal-700 underline underline-offset-2"
                       >
                         90-day reporting
@@ -235,7 +237,13 @@ export default function TM30Page() {
                     <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500 shrink-0" />
                     <span>Foreigners may face problems extending visas or completing{" "}
                       <Link
-                        href="/guides/90-day-reporting"
+                        href={{
+                          pathname: "/guides/90-day-reporting",
+                          query: {
+                            returnTo: "/guides/tm30",
+                            returnLabel: "Back to TM.30 Guide",
+                          },
+                        }}
                         className="font-semibold text-teal-700 underline underline-offset-2"
                       >
                         90-day reporting

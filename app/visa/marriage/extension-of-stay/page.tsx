@@ -14,6 +14,7 @@ import { analytics } from "@/lib/analytics";
 import ChecklistNotice from "@/components/checklist-notice";
 import ExampleLink from "@/components/example-link";
 import PrintChecklistHeader from "@/components/print-checklist-header";
+import { useContextualBackLink } from "@/lib/use-contextual-back-link";
 
 /* ── Storage keys ── */
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:checked:v1";
@@ -201,6 +202,10 @@ export default function MarriageVisaPage() {
 
   const done = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
   const pct = totalWithForms ? Math.round((done / totalWithForms) * 100) : 0;
+  const { href: backHref, label: backLabel } = useContextualBackLink(
+    "/visa/marriage/stages",
+    "Back to Marriage Visa Stages"
+  );
 
   return (
     <div className="min-h-screen bg-[#eef3fb] print:min-h-0 print:bg-white">
@@ -208,12 +213,16 @@ export default function MarriageVisaPage() {
         {/* Top actions */}
         <div className="flex flex-col gap-3 pt-8 print:hidden sm:flex-row sm:items-center sm:justify-between">
           <Button asChild className="h-12 justify-start rounded-2xl bg-slate-600 px-5 text-base hover:bg-slate-700">
-            <Link href="/visa/marriage/stages">
-              <ArrowLeft className="mr-2 h-5 w-5" /> Back to Marriage Visa Stages
+            <Link href={backHref}>
+              <ArrowLeft className="mr-2 h-5 w-5" /> {backLabel}
             </Link>
           </Button>
 
           <div className="flex flex-wrap items-center gap-3">
+            <Button asChild variant="outline" className="h-12 rounded-2xl bg-white px-5 text-base hover:bg-slate-50">
+              <Link href="/contact">Send feedback</Link>
+            </Button>
+
             {/* Font Size Selector */}
             <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm">
               <span className="text-sm font-medium text-slate-700">Text Size:</span>

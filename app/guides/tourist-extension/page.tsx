@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, ExternalLink, PlusCircle } from "lucide-react";
+import { ExternalLink, PlusCircle } from "lucide-react";
 import type { Metadata } from "next";
 import ExampleLink from "@/components/example-link";
+import GuideBackButton from "@/components/guide-back-button";
 
 export const metadata: Metadata = {
   title: "Thailand Tourist Visa Extension (30 Days) - How to Extend Your Stay",
@@ -20,12 +21,7 @@ export default function TouristExtensionPage() {
       <div className="mx-auto w-full max-w-5xl px-5">
 
         <div className="pt-8">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-          >
-            <ArrowLeft className="h-5 w-5" /> Back to Guides
-          </Link>
+          <GuideBackButton />
         </div>
 
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
@@ -60,7 +56,13 @@ export default function TouristExtensionPage() {
                 <ul className="mt-3 list-disc space-y-2 pl-6 text-slate-700">
                   <li>
                     <Link
-                      href="/guides/do-i-need-a-visa-thailand"
+                      href={{
+                        pathname: "/guides/do-i-need-a-visa-thailand",
+                        query: {
+                          returnTo: "/guides/tourist-extension",
+                          returnLabel: "Back to Tourist Extension Guide",
+                        },
+                      }}
                       className="font-semibold text-emerald-700 underline underline-offset-2"
                     >
                       Visa Exemption
@@ -118,7 +120,13 @@ export default function TouristExtensionPage() {
                   <li>Photocopies of passport photo page and entry stamp</li>
                   <li>
                     <Link
-                      href="/guides/tm30"
+                      href={{
+                        pathname: "/guides/tm30",
+                        query: {
+                          returnTo: "/guides/tourist-extension",
+                          returnLabel: "Back to Tourist Extension Guide",
+                        },
+                      }}
                       className="font-semibold text-emerald-700 underline underline-offset-2"
                     >
                       TM.30
@@ -241,7 +249,13 @@ export default function TouristExtensionPage() {
                   <p>
                     • Overstaying results in fines (500 THB per day).{" "}
                     <Link
-                      href="/guides/overstay-thailand"
+                      href={{
+                        pathname: "/guides/overstay-thailand",
+                        query: {
+                          returnTo: "/guides/tourist-extension",
+                          returnLabel: "Back to Tourist Extension Guide",
+                        },
+                      }}
                       className="font-semibold text-amber-900 underline underline-offset-2"
                     >
                       See overstay rules

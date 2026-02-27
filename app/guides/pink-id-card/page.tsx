@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, IdCard } from "lucide-react";
+import { IdCard } from "lucide-react";
 import type { Metadata } from "next";
+import GuideBackButton from "@/components/guide-back-button";
 
 export const metadata: Metadata = {
   title: "What Is a Thai Pink ID Card and How to Get One?",
@@ -15,12 +16,7 @@ export default function PinkIdCardPage() {
     <div className="min-h-screen bg-[#eef3fb]">
       <div className="mx-auto w-full max-w-5xl px-5">
         <div className="pt-8">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-          >
-            <ArrowLeft className="h-5 w-5" /> Back to Guides
-          </Link>
+          <GuideBackButton />
         </div>
 
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
@@ -48,7 +44,13 @@ export default function PinkIdCardPage() {
                   The Pink ID card is an identification card for eligible foreigners registered at a Thai address.
                   It is issued through your local district office (Amphur/Khet), often after{" "}
                   <Link
-                    href="/guides/yellow-book"
+                    href={{
+                      pathname: "/guides/yellow-book",
+                      query: {
+                        returnTo: "/guides/pink-id-card",
+                        returnLabel: "Back to Pink ID Card Guide",
+                      },
+                    }}
                     className="font-semibold text-rose-700 underline underline-offset-2"
                   >
                     Yellow Book registration

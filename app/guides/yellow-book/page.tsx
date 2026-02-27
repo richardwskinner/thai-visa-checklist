@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Home } from "lucide-react";
+import { Home } from "lucide-react";
 import type { Metadata } from "next";
 import ExampleLink from "@/components/example-link";
+import GuideBackButton from "@/components/guide-back-button";
 
 export const metadata: Metadata = {
   title: "What Is a Yellow Book (Tabien Baan) and How to Get One?",
@@ -16,12 +17,7 @@ export default function YellowBookPage() {
     <div className="min-h-screen bg-[#eef3fb]">
       <div className="mx-auto w-full max-w-5xl px-5">
         <div className="pt-8">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-          >
-            <ArrowLeft className="h-5 w-5" /> Back to Guides
-          </Link>
+          <GuideBackButton />
         </div>
 
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
@@ -149,7 +145,13 @@ export default function YellowBookPage() {
                           <>
                             Applying for a{" "}
                             <Link
-                              href="/guides/pink-id-card"
+                              href={{
+                                pathname: "/guides/pink-id-card",
+                                query: {
+                                  returnTo: "/guides/yellow-book",
+                                  returnLabel: "Back to Yellow Book Guide",
+                                },
+                              }}
                               className="font-semibold text-amber-700 underline underline-offset-2"
                             >
                               Pink ID card
@@ -257,7 +259,13 @@ export default function YellowBookPage() {
                 <p>
                   The Yellow Book does not replace{" "}
                   <Link
-                    href="/guides/90-day-reporting"
+                    href={{
+                      pathname: "/guides/90-day-reporting",
+                      query: {
+                        returnTo: "/guides/yellow-book",
+                        returnLabel: "Back to Yellow Book Guide",
+                      },
+                    }}
                     className="font-semibold text-amber-700 underline underline-offset-2"
                   >
                     90-day reporting

@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Globe } from "lucide-react";
+import { Globe } from "lucide-react";
 import type { Metadata } from "next";
+import GuideBackButton from "@/components/guide-back-button";
 
 export const metadata: Metadata = {
   title: "Thailand Entry Options - Visa Exemption vs Visa on Arrival (VOA)",
@@ -15,12 +16,7 @@ export default function ThailandEntryOptionsPage() {
     <div className="min-h-screen bg-[#eef3fb]">
       <div className="mx-auto w-full max-w-5xl px-5">
         <div className="pt-8">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-          >
-            <ArrowLeft className="h-5 w-5" /> Back to Guides
-          </Link>
+          <GuideBackButton />
         </div>
 
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
@@ -48,7 +44,13 @@ export default function ThailandEntryOptionsPage() {
 
               <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
                 <Link
-                  href="/guides/do-i-need-a-visa-thailand"
+                  href={{
+                    pathname: "/guides/do-i-need-a-visa-thailand",
+                    query: {
+                      returnTo: "/guides/voa-visa-exemption",
+                      returnLabel: "Back to VOA vs Visa Exemption Guide",
+                    },
+                  }}
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
                 >
                   Not sure? Use our Visa Checker (15 seconds).
@@ -122,7 +124,13 @@ export default function ThailandEntryOptionsPage() {
                 <p className="mt-2 text-slate-700">
                   If eligible, you may apply for a{" "}
                   <Link
-                    href="/guides/tourist-extension"
+                    href={{
+                      pathname: "/guides/tourist-extension",
+                      query: {
+                        returnTo: "/guides/voa-visa-exemption",
+                        returnLabel: "Back to VOA vs Visa Exemption Guide",
+                      },
+                    }}
                     className="font-semibold text-blue-700 underline underline-offset-2"
                   >
                     30-day tourist extension

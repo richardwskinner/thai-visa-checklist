@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, ExternalLink, PlaneTakeoff } from "lucide-react";
+import { ExternalLink, PlaneTakeoff } from "lucide-react";
 import type { Metadata } from "next";
+import GuideBackButton from "@/components/guide-back-button";
 
 export const metadata: Metadata = {
   title: "Re-Entry Permit in Thailand - How to protect Your Visa When You Travel outside of the country",
@@ -11,6 +12,10 @@ export const metadata: Metadata = {
 };
 
 const TM8_URL = "https://www.immigration.go.th/wp-content/uploads/2022/10/5.%E0%B8%84%E0%B8%B3%E0%B8%82%E0%B8%AD%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%8D%E0%B8%B2%E0%B8%95%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%81%E0%B8%A5%E0%B8%B1%E0%B8%9A%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A1%E0%B8%B2%E0%B9%83%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%AD%E0%B8%B2%E0%B8%93%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%B5%E0%B8%81-%E0%B8%95%E0%B8%A1.8.pdf";
+
+function isSafeInternalPath(path: string) {
+  return path.startsWith("/") && !path.startsWith("//");
+}
 const FAQS = [
   {
     question: "Can I get a re-entry permit at Chiangmai International Airport (CNX)?",
@@ -40,7 +45,26 @@ const FAQS = [
   
 ] as const;
 
-export default function ReEntryPermitPage() {
+export default async function ReEntryPermitPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ returnTo?: string; returnLabel?: string }>;
+}) {
+  const params = await searchParams;
+  const carryReturnContext =
+    params.returnTo && isSafeInternalPath(params.returnTo)
+      ? {
+          returnTo: params.returnTo,
+          returnLabel: params.returnLabel || "Back to Guide",
+        }
+      : undefined;
+  const ninetyDayHref = carryReturnContext
+    ? { pathname: "/guides/90-day-reporting", query: carryReturnContext }
+    : "/guides/90-day-reporting";
+  const tm30Href = carryReturnContext
+    ? { pathname: "/guides/tm30", query: carryReturnContext }
+    : "/guides/tm30";
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -62,12 +86,7 @@ export default function ReEntryPermitPage() {
       />
       <div className="mx-auto w-full max-w-5xl px-5">
         <div className="pt-8">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
-          >
-            <ArrowLeft className="h-5 w-5" /> Back to Guides
-          </Link>
+          <GuideBackButton />
         </div>
 
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
@@ -100,14 +119,14 @@ export default function ReEntryPermitPage() {
                 <p className="mt-2 text-slate-700">
                   Anyone on a single-entry visa or extension of stay who plans to leave Thailand and return. This includes holders of Non-Immigrant O (retirement, marriage), Non-Immigrant B (work), education visas, and most extensions of stay. If you have a multiple-entry visa, you do not need a re-entry permit. Note that when you return to Thailand, your{" "}
                   <Link
-                    href="/guides/90-day-reporting"
+                    href={ninetyDayHref}
                     className="font-semibold text-orange-700 underline underline-offset-2"
                   >
                     90-day reporting
                   </Link>{" "}
                   count resets from your new entry date and your landlord must file a new{" "}
                   <Link
-                    href="/guides/tm30"
+                    href={tm30Href}
                     className="font-semibold text-orange-700 underline underline-offset-2"
                   >
                     TM.30
