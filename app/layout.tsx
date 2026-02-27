@@ -15,6 +15,32 @@ export const metadata: Metadata = {
   },
   description:
     "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, business visa and more. Never miss a document again, and hopefully no second trips to immigration.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "Thai Visa Checklist",
+    title: "Thai Visa Checklist - Free Document Checklists for Thailand Visas",
+    description:
+      "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, business visa and more.",
+    images: [
+      {
+        url: "/thai-visa-checklist-logo-social.png",
+        width: 1200,
+        height: 630,
+        alt: "Thai Visa Checklist - Free document checklists and visa tools for Thailand",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Thai Visa Checklist - Free Document Checklists for Thailand Visas",
+    description:
+      "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, business visa and more.",
+    images: ["/thai-visa-checklist-logo-social.png"],
+  },
 };
 
 function Footer() {
