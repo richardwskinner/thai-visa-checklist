@@ -44,7 +44,7 @@ export default function MarriageVisaGuidePage() {
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">Step 1. Start with a 90-day Non-Immigrant O</h2>
                 <p className="mt-2 text-slate-700">
-                  Before applying for a 1-year extension, you must hold valid Non-Immigrant O status. You can either:
+                  Before applying for a 1-year extension, you must hold a valid Non-Immigrant O status. You can either:
                 </p>
                 <ul className="mt-3 list-disc space-y-2 pl-6 text-slate-700">
                   <li>

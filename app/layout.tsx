@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | Thai Visa Checklist",
   },
   description:
-    "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, business visa and more. Never miss a document again, and hopefully no second trips to immigration.",
+    "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, and more. Never miss a document again, and hopefully no second trips to immigration.",
   alternates: {
     canonical: "/",
   },
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "Thai Visa Checklist",
     title: "Thai Visa Checklist - Free Document Checklists for Thailand Visas",
     description:
-      "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, business visa and more.",
+      "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, and more.",
     images: [
       {
         url: "/thai-visa-checklist-logo-social.png",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Thai Visa Checklist - Free Document Checklists for Thailand Visas",
     description:
-      "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, business visa and more.",
+      "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, and more.",
     images: ["/thai-visa-checklist-logo-social.png"],
   },
 };
@@ -106,19 +106,19 @@ function Footer() {
                     href="/guides/90-day-reporting"
                     className="block text-sm font-medium text-slate-700 hover:text-slate-900"
                   >
-                    90-Day Report Guide
+                    90-Day Reporting Thailand
                   </Link>
                   <Link
                     href="/guides/do-i-need-a-visa-thailand"
                     className="block text-sm font-medium text-slate-700 hover:text-slate-900"
                   >
-                    Visa Checker
+                    Thailand Visa Eligibility
                   </Link>
                   <Link
                     href="/guides/overstay-thailand"
                     className="block text-sm font-medium text-slate-700 hover:text-slate-900"
                   >
-                    Overstay Calculator
+                    Overstay Checker Thailand
                   </Link>
                 </div>
               </div>

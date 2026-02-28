@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Thai Visa Checklist Helper - Free Document Checklists for Thailand Visas",
   description:
-    "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, business visa and more. Never miss a document again.",
+    "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, and more. Never miss a document again.",
 };
 
 export default function HomePage() {

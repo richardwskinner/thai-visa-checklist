@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 const TRANSLATE_LANGUAGES = [
@@ -54,10 +54,36 @@ function getCurrentGoogleTranslateCookie() {
   return match?.[1] || "en";
 }
 
+function formatThailandTime(timestamp: number) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Bangkok",
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(new Date(timestamp));
+
+  const get = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((part) => part.type === type)?.value ?? "";
+
+  return `${get("weekday")} ${get("day")} ${get("month")}, ${get("hour")}:${get("minute")} ICT`;
+}
+
 export default function SiteHeader() {
   const pathname = usePathname();
   const showChecklists = pathname !== "/";
   const [selectedLanguage, setSelectedLanguage] = useState(() => getCurrentGoogleTranslateCookie());
+  const [thailandNow, setThailandNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setThailandNow(Date.now());
+    }, 30000);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   function handleTranslateChange(nextLanguage: string) {
     setSelectedLanguage(nextLanguage);
@@ -151,7 +177,19 @@ export default function SiteHeader() {
               </Link>
             </nav>
 
+            <div
+              className="absolute left-2 top-1/2 hidden -translate-y-1/2 flex-col items-start text-xs text-slate-500 sm:flex"
+              aria-live="polite"
+            >
+              <span className="font-semibold">Thailand Time</span>
+              <span className="font-medium">{formatThailandTime(thailandNow)}</span>
+            </div>
+
             <div className="flex items-center justify-center pt-1 text-xs text-slate-500 sm:hidden">
+              <div className="mr-3 text-center">
+                <div className="font-semibold">Thailand Time</div>
+                <div className="font-medium">{formatThailandTime(thailandNow)}</div>
+              </div>
               <div className="relative">
                 <select
                   value={selectedLanguage}
