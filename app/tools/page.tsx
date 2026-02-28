@@ -10,7 +10,7 @@ import NinetyDayCalculator from "@/app/guides/90-day-reporting/NinetyDayCalculat
 export const metadata: Metadata = {
   title: "Thai Visa Calculators",
   description:
-    "Free Thailand visa and immigration tools including a 90-day report calculator, visa checker, and overstay calculator.",
+    "Free Thailand visa and immigration tools including a 90-day report calculator, visa checker, overstay calculator, and current Thailand time (ICT).",
 };
 
 const toolSections = [
@@ -57,6 +57,13 @@ export default function ToolsPage() {
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">Thai Visa Calculators</h1>
           <p className="mt-3 text-lg text-slate-600">
             Use these visa calculators directly here, or open the full guides for more details.
+          </p>
+          <p className="mt-2 text-sm text-slate-600">
+            Need timezone help?{" "}
+            <Link href="/thailand-time" className="font-semibold text-blue-700 underline underline-offset-2">
+              Check current Thailand time (ICT)
+            </Link>
+            .
           </p>
         </div>
 

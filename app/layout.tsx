@@ -14,7 +14,16 @@ export const metadata: Metadata = {
     template: "%s | Thai Visa Checklist",
   },
   description:
-    "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, and more. Never miss a document again, and hopefully no second trips to immigration.",
+    "Free, comprehensive document checklists for Thai visa applications, plus practical Thailand tools including current Thailand time (ICT). Marriage visa, retirement visa, and more.",
+  keywords: [
+    "Thailand visa checklist",
+    "Thailand visa requirements",
+    "Thailand immigration guides",
+    "current Thailand time",
+    "Thailand time now",
+    "time in Thailand",
+    "Thailand ICT time",
+  ],
   alternates: {
     canonical: "/",
   },
@@ -24,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "Thai Visa Checklist",
     title: "Thai Visa Checklist - Free Document Checklists for Thailand Visas",
     description:
-      "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, and more.",
+      "Free Thailand visa checklists and practical tools, including current Thailand time (ICT).",
     images: [
       {
         url: "/thai-visa-checklist-logo-social.png",
@@ -38,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Thai Visa Checklist - Free Document Checklists for Thailand Visas",
     description:
-      "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, and more.",
+      "Free Thailand visa checklists and practical tools, including current Thailand time (ICT).",
     images: ["/thai-visa-checklist-logo-social.png"],
   },
 };
@@ -101,6 +110,12 @@ function Footer() {
                 <div className="mt-3 space-y-2">
                   <Link href="/tools" className="block text-sm font-medium text-slate-700 hover:text-slate-900">
                     Thailand Visa Calculators
+                  </Link>
+                  <Link
+                    href="/thailand-time"
+                    className="block text-sm font-medium text-slate-700 hover:text-slate-900"
+                  >
+                    Thailand Time ICT
                   </Link>
                   <Link
                     href="/guides/90-day-reporting"

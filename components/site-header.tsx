@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Clock3 } from "lucide-react";
 
 const TRANSLATE_LANGUAGES = [
   { code: "en", label: "English", flag: "🇺🇸" },
@@ -181,13 +181,19 @@ export default function SiteHeader() {
               className="absolute left-2 top-1/2 hidden -translate-y-1/2 flex-col items-start text-xs text-slate-500 sm:flex"
               aria-live="polite"
             >
-              <span className="font-semibold">Thailand Time</span>
+              <span className="flex items-center gap-1.5 font-semibold">
+                <Clock3 className="h-3.5 w-3.5" />
+                Thailand Time
+              </span>
               <span className="font-medium">{formatThailandTime(thailandNow)}</span>
             </div>
 
             <div className="flex items-center justify-center pt-1 text-xs text-slate-500 sm:hidden">
               <div className="mr-3 text-center">
-                <div className="font-semibold">Thailand Time</div>
+                <div className="flex items-center justify-center gap-1.5 font-semibold">
+                  <Clock3 className="h-3.5 w-3.5" />
+                  Thailand Time
+                </div>
                 <div className="font-medium">{formatThailandTime(thailandNow)}</div>
               </div>
               <div className="relative">
