@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ChevronDown, Clock3 } from "lucide-react";
 
@@ -72,8 +71,6 @@ function formatThailandTime(timestamp: number) {
 }
 
 export default function SiteHeader() {
-  const pathname = usePathname();
-  const showChecklists = pathname !== "/";
   const [selectedLanguage, setSelectedLanguage] = useState(() => getCurrentGoogleTranslateCookie());
   const [thailandNow, setThailandNow] = useState(() => Date.now());
 
@@ -143,14 +140,6 @@ export default function SiteHeader() {
             </div>
 
             <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-center sm:gap-6">
-              {showChecklists && (
-                <Link
-                  href="/"
-                  className="whitespace-nowrap text-sm font-semibold leading-tight text-slate-600 hover:text-slate-900"
-                >
-                  Checklists
-                </Link>
-              )}
               <Link
                 href="/visa-news"
                 className="whitespace-nowrap text-sm font-semibold leading-tight text-slate-600 hover:text-slate-900"

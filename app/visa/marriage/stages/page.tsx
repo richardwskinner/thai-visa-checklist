@@ -78,7 +78,23 @@ export default function MarriageStagesPage() {
                 Marriage Visa
               </h1>
               <p className="mt-2 text-lg text-slate-600">
-                Non-Immigrant Type &quot;O&quot; based on Marriage to Thai National
+                Non-Immigrant &quot;O&quot; based on Marriage to Thai National
+              </p>
+              <p className="mt-2 text-sm text-slate-600">
+                Need a full step-by-step breakdown?{" "}
+                <Link
+                  href={{
+                    pathname: "/guides/marriage-visa-thailand",
+                    query: {
+                      returnTo: "/visa/marriage/stages",
+                      returnLabel: "Back to Marriage Visa Stages",
+                    },
+                  }}
+                  className="font-semibold text-pink-700 underline underline-offset-2"
+                >
+                  Learn more here
+                </Link>
+                .
               </p>
             </div>
 

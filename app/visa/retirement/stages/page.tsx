@@ -90,7 +90,7 @@ export default function RetirementStagesPage() {
                 Retirement Visa
               </h1>
               <p className="mt-2 text-lg text-slate-600">
-                Non-Immigrant Type &quot;O&quot; based on Retirement (50+)
+                Non-Immigrant &quot;O&quot; based on Retirement (50+)
               </p>
             </div>
 
