@@ -63,7 +63,7 @@ export default function PinkIdCardPage() {
                 <h2 className="text-xl font-extrabold text-slate-900">Who can apply</h2>
                 <div className="mt-3 grid gap-2">
                   {[
-                    "Foreigners legally staying in Thailand",
+                    "Foreigners legally staying in Thailand on a long-term visa or valid extension",
                     "Applicants with an address registered in a Yellow Book (Tabien Baan)",
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-3 text-slate-700">
@@ -95,19 +95,22 @@ export default function PinkIdCardPage() {
 
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">How the process usually works</h2>
-                <div className="mt-3 grid gap-2">
+                <ol className="mt-3 space-y-3">
                   {[
-                    "Visit your local district office (Amphur/Khet) with original documents",
-                    "Submit application and supporting copies",
-                    "Office verifies identity, address, and supporting records",
-                    "If approved, card is issued same day or scheduled for collection",
-                  ].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-slate-700">
-                      <div className="h-2 w-2 shrink-0 rounded-full bg-rose-500" />
-                      <span>{item}</span>
-                    </div>
+                    "Call or visit your local district office (Amphur/Khet) to confirm the required documents and current procedures.",
+                    "Visit your local district office with all original documents and required copies.",
+                    "Submit the application form and supporting documents.",
+                    "The office will verify your identity, address, and eligibility, and may request additional documents if needed.",
+                    "If approved, the Yellow Book may be issued the same day or scheduled for collection.",
+                  ].map((step, index) => (
+                    <li key={step} className="flex items-start gap-3 text-slate-700">
+                      <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-rose-100 text-sm font-bold text-rose-700">
+                        {index + 1}
+                      </span>
+                      <span>{step}</span>
+                    </li>
                   ))}
-                </div>
+                </ol>
               </section>
 
               <section>

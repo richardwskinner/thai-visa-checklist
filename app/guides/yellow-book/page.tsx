@@ -33,18 +33,17 @@ export default function YellowBookPage() {
 
             <div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-6">
               <p className="text-lg font-semibold text-amber-900">
-                The Yellow Book (Tabien Baan) is an official Thai house registration record for foreign residents.
+                The Yellow Book (often called a Tabien Baan or Thor.Ror.13 house registration book) is an official Thai house registration record for foreign residents.
                 It is not a visa, but it can make many administrative tasks easier.
               </p>
             </div>
 
             <div className="mt-10 space-y-8">
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">What it is</h2>
+                <h2 className="text-xl font-extrabold text-slate-900">What is it</h2>
                 <p className="mt-2 text-slate-700">
                   The Yellow Book (Tabien Baan) records that a foreigner lives at a specific Thai address.
-                  It is issued by the local district office (Amphur/Khet). It does not replace your passport, visa status, 90-day reporting, or visa extensions.
-                  It also does not grant residency rights.
+                  It is issued by the local district office (Amphur/Khet). It does not replace your passport, visa status, 90-day reporting, and does not grant residency rights. Thailand’s house registration system has two main types: the blue Tabien Baan (for Thai citizens/permanent residents) and the yellow Tabien Baan (Thor.Ror.13) for foreign residents.
                 </p>
 
               </section>
@@ -73,8 +72,7 @@ export default function YellowBookPage() {
                 <div className="mt-3 grid gap-2">
                   {[
                     "Passport and copies (bio page, visa and latest entry stamp)",
-                    "Notarised copy of your passport from your Embassy",
-                    "Thai translation of Passport",
+                    "Notarised copy of your passport and Thai translation",
                     "Proof of address (Blue House Book copy, ownership papers, or rental contract)",
                     "House owner's ID card + presence at the office (commonly required)",
                     "TM.30 receipt (often requested)",
@@ -270,9 +268,22 @@ export default function YellowBookPage() {
                   >
                     90-day reporting
                   </Link>{" "}
-                  or visa extensions.
+                  or{" "}
+                  <Link
+                    href={{
+                      pathname: "/guides/tm30",
+                      query: {
+                        returnTo: "/guides/yellow-book",
+                        returnLabel: "Back to Yellow Book Guide",
+                      },
+                    }}
+                    className="font-semibold text-amber-700 underline underline-offset-2"
+                  >
+                    TM.30
+                  </Link>
+                  .
                 </p>
-                <p>Bring extra signed copies of documents to avoid repeat trips.</p>
+                <p>Moving address requires re-registration at the new district office.</p>
               </div>
             </div>
           </CardContent>

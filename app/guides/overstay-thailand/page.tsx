@@ -218,6 +218,22 @@ export default function OverstayThailandGuidePage() {
               </section>
 
               <section>
+                <h2 className="text-xl font-extrabold text-slate-900">Special Cases</h2>
+                <div className="mt-3 grid gap-2">
+                  {[
+                    "Medical emergencies may be considered differently.",
+                    "Flight cancellations or natural disasters sometimes lead to discretionary leniency.",
+                    "Always ask immigration if there is a documented reason.",
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-3 text-slate-700">
+                      <div className="h-2 w-2 shrink-0 rounded-full bg-red-500" />
+                      <span className="min-w-0">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section>
                 <h2 className="text-xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
                 <div className="mt-4 space-y-3">
                   {FAQS.map((faq) => (

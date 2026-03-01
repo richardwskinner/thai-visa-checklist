@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ExternalLink, PlusCircle } from "lucide-react";
+import { ArrowLeft, ExternalLink, PlusCircle } from "lucide-react";
 import type { Metadata } from "next";
 import ExampleLink from "@/components/example-link";
-import GuideBackButton from "@/components/guide-back-button";
 
 export const metadata: Metadata = {
   title: "Thailand Tourist Visa Extension (30 Days) - How to Extend Your Stay",
@@ -21,7 +20,12 @@ export default function TouristExtensionPage() {
       <div className="mx-auto w-full max-w-5xl px-5">
 
         <div className="pt-8">
-          <GuideBackButton />
+          <Link
+            href="/guides"
+            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
+          >
+            <ArrowLeft className="h-5 w-5" /> Back to Guides
+          </Link>
         </div>
 
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
@@ -40,8 +44,7 @@ export default function TouristExtensionPage() {
             {/* Key Callout */}
             <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
               <p className="text-lg font-semibold text-emerald-900">
-                Most tourists can extend their stay once for 30 days at a local immigration office.
-                The standard fee is 1,900 THB.
+                This guide explains how to extend a tourist visa or visa exemption in Thailand for an additional 30 days - The standard fee is 1,900 THB. 
               </p>
             </div>
 
@@ -56,13 +59,7 @@ export default function TouristExtensionPage() {
                 <ul className="mt-3 list-disc space-y-2 pl-6 text-slate-700">
                   <li>
                     <Link
-                      href={{
-                        pathname: "/guides/do-i-need-a-visa-thailand",
-                        query: {
-                          returnTo: "/guides/tourist-extension",
-                          returnLabel: "Back to Tourist Extension Guide",
-                        },
-                      }}
+                      href="/guides/do-i-need-a-visa-thailand"
                       className="font-semibold text-emerald-700 underline underline-offset-2"
                     >
                       Visa Exemption
@@ -70,7 +67,7 @@ export default function TouristExtensionPage() {
                     entries
                   </li>
                   <li>Single-entry Tourist Visa</li>
-                  <li>Some Visa on Arrival cases (confirm locally)</li>
+                  <li>Visa on Arrival entries are generally not eligible for a standard 30-day extension.</li>
                 </ul>
 
                 <p className="mt-3 text-slate-700">
@@ -120,13 +117,7 @@ export default function TouristExtensionPage() {
                   <li>Photocopies of passport photo page and entry stamp</li>
                   <li>
                     <Link
-                      href={{
-                        pathname: "/guides/tm30",
-                        query: {
-                          returnTo: "/guides/tourist-extension",
-                          returnLabel: "Back to Tourist Extension Guide",
-                        },
-                      }}
+                      href="/guides/tm30"
                       className="font-semibold text-emerald-700 underline underline-offset-2"
                     >
                       TM.30
@@ -247,15 +238,9 @@ export default function TouristExtensionPage() {
                 <div className="mt-2 space-y-1 text-sm text-amber-900">
                   <p>• You must apply before your current stay expires.</p>
                   <p>
-                    • Overstaying results in fines (500 THB per day).{" "}
+                    • Overstaying results in a fine of 500 THB per day (up to 20,000 THB maximum).{" "}
                     <Link
-                      href={{
-                        pathname: "/guides/overstay-thailand",
-                        query: {
-                          returnTo: "/guides/tourist-extension",
-                          returnLabel: "Back to Tourist Extension Guide",
-                        },
-                      }}
+                      href="/guides/overstay-thailand"
                       className="font-semibold text-amber-900 underline underline-offset-2"
                     >
                       See overstay rules
