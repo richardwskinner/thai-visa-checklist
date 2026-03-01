@@ -87,12 +87,7 @@ export default function ThailandTimePage() {
       <div className="mx-auto w-full max-w-5xl px-4 pt-8 sm:px-5 sm:pt-10">
         <Card className="rounded-3xl border-0 bg-white shadow-sm">
           <CardContent className="p-4 sm:p-10">
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Thailand Time (ICT)</h1>
-            <p className="mt-3 text-slate-600">
-              Live Thailand time, and a simple side-by-side world time comparison.
-            </p>
-
-            <div className="mt-8">
+            <div>
               <ThailandTimeClient />
             </div>
 

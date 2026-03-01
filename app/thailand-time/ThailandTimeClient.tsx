@@ -31,7 +31,6 @@ const CITY_TIMEZONES = [
   { label: "Johannesburg", zone: "Africa/Johannesburg" },
   { label: "Kuala Lumpur", zone: "Asia/Kuala_Lumpur" },
   { label: "Lisbon", zone: "Europe/Lisbon" },
-  { label: "UTC", zone: "Etc/UTC" },
   { label: "London", zone: "Europe/London" },
   { label: "Los Angeles", zone: "America/Los_Angeles" },
   { label: "Madrid", zone: "Europe/Madrid" },
@@ -204,7 +203,11 @@ export default function ThailandTimeClient() {
   const localZone = useMemo(() => Intl.DateTimeFormat().resolvedOptions().timeZone || "Etc/UTC", []);
   const sourceOptions = useMemo(
     () => [
-      { label: "Your Local Time", zone: localZone, value: toSourceOptionValue("Your Local Time", localZone) },
+      {
+        label: "Detected Local Time Zone",
+        zone: localZone,
+        value: toSourceOptionValue("Detected Local Time Zone", localZone),
+      },
       ...CITY_TIMEZONES.map((city) => ({
         ...city,
         value: toSourceOptionValue(city.label, city.zone),
@@ -266,13 +269,15 @@ export default function ThailandTimeClient() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-sky-200 bg-sky-50 p-5 sm:p-6">
-        <div>
-          <div>
-            <div className="text-sm font-semibold uppercase tracking-wide text-sky-800">Thailand Time</div>
-            <div className="mt-1 text-3xl font-extrabold text-slate-900 sm:text-4xl">{thailandTime} ICT</div>
-            <div className="mt-1 text-sm text-slate-600">{thailandDate}</div>
+      <div className="mx-auto max-w-md rounded-2xl border border-sky-200 bg-sky-50 p-3 sm:p-4">
+        <div className="text-center">
+          <div className="flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wide text-sky-800">
+            <span aria-hidden="true">🇹🇭</span>
+            <span>Thailand Time</span>
+            <span aria-hidden="true">🇹🇭</span>
           </div>
+          <div className="mt-0.5 text-3xl font-extrabold text-slate-900 sm:text-4xl">{thailandTime} ICT</div>
+          <div className="mt-0.5 text-sm text-slate-600">{thailandDate}</div>
         </div>
       </div>
 
