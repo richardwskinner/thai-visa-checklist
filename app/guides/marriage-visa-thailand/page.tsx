@@ -32,11 +32,11 @@ export default function MarriageVisaGuidePage() {
 
             <div className="mt-6 rounded-2xl border border-pink-200 bg-pink-50 p-6">
               <p className="text-lg font-semibold text-pink-900">
-                This guide walks through the common process starting with a 90-day Non-Immigrant O, preparing financial evidence,
-                and applying for a 1-year extension based on marriage in Thailand.
+                This guide outlines the typical process for obtaining a 1-year extension of stay in Thailand based on
+                marriage, starting with a 90-day Non-Immigrant O visa.
               </p>
               <p className="mt-3 text-sm text-pink-900/80">
-                Rules and required documents vary by immigration office. Always confirm locally before you apply.
+                Requirements and procedures vary by immigration office. Always confirm locally before applying.
               </p>
             </div>
 
@@ -44,17 +44,24 @@ export default function MarriageVisaGuidePage() {
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">Step 1. Start with a 90-day Non-Immigrant O</h2>
                 <p className="mt-2 text-slate-700">
-                  Before applying for a 1-year extension, you must hold a valid Non-Immigrant O status. You can either:
+                  Before applying for a 1-year extension of stay, you must hold valid Non-Immigrant O status based on
+                  marriage.
                 </p>
-                <ul className="mt-3 list-disc space-y-2 pl-6 text-slate-700">
-                  <li>
-                    Apply for a 90-day Non-Immigrant O visa at a Thai Embassy in your home country
-                    or in a neighboring country of Thailand.
-                  </li>
-                  <li>
-                    Enter Thailand and convert in-country to Non-Immigrant O at immigration if eligible.
-                  </li>
-                </ul>
+                <p className="mt-3 text-slate-700">You can obtain this in one of two ways:</p>
+                <p className="mt-3 text-slate-700">
+                  <span className="font-semibold text-slate-900">Option 1 - Apply outside Thailand (Recommended):</span>{" "}
+                  Apply for a 90-day Non-Immigrant O visa at a Thai Embassy or Consulate in your home country or a
+                  neighboring country. This is generally the most straightforward route.
+                </p>
+                <p className="mt-3 text-slate-700">
+                  <span className="font-semibold text-slate-900">Option 2 - Convert inside Thailand (If eligible):</span>{" "}
+                  Enter Thailand on a visa-exempt entry or tourist visa and apply to convert to Non-Immigrant O at
+                  your local immigration office.
+                </p>
+                <p className="mt-3 text-slate-700">
+                  Some offices may require you to demonstrate that you can meet the financial requirements before
+                  approving the conversion.
+                </p>
                 <div className="mt-4 flex flex-wrap gap-3">
                   <Link
                     href={{
@@ -84,41 +91,28 @@ export default function MarriageVisaGuidePage() {
               </section>
 
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">Step 2. Open a Thai bank account</h2>
-                <p className="mt-2 text-slate-700">
-                  If using the 400,000 THB deposit method, open your bank account early so funds can season in time.
-                </p>
-                <p className="mt-3 text-slate-700">
-                  <Link
-                    href={{
-                      pathname: "/guides/opening-bank-account-thailand",
-                      query: {
-                        returnTo: "/guides/marriage-visa-thailand",
-                        returnLabel: "Back to Marriage Visa Guide",
-                      },
-                    }}
-                    className="font-semibold text-pink-700 underline underline-offset-2"
-                  >
-                    Opening a Thai bank account guide
-                  </Link>
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-xl font-extrabold text-slate-900">Step 3. Season your funds before extension</h2>
-                <p className="mt-2 text-slate-700">For a first extension, you are required to have:</p>
-                <ul className="mt-2 list-disc space-y-1 pl-6 text-slate-700">
-                  <li>400,000 THB deposited at least 2 months before applying.</li>
-                </ul>
-                <ul className="mt-2 list-disc space-y-1 pl-6 text-slate-700">
-                  <li>For renewals, some offices expect 3 months.</li>
+                <h2 className="text-xl font-extrabold text-slate-900">Step 2. Meet the Financial Requirements</h2>
+                <p className="mt-2 text-slate-700">For a marriage-based extension, you must meet one of the following:</p>
+                <ul className="mt-2 list-disc space-y-2 pl-6 text-slate-700">
+                  <li>400,000 THB deposited in a Thai bank account</li>
+                  <li>40,000 THB monthly income (supported by appropriate documentation)</li>
                 </ul>
               </section>
 
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">Step 4. Apply for the 1-year extension</h2>
+                <h2 className="text-xl font-extrabold text-slate-900">Step 3. Season Your Funds</h2>
+                <p className="mt-2 text-slate-700">If using the 400,000 THB deposit method:</p>
+                <ul className="mt-2 list-disc space-y-2 pl-6 text-slate-700">
+                  <li>For a first extension, funds must be deposited at least 2 months before applying.</li>
+                  <li>For renewals, many offices require 3 months.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h2 className="text-xl font-extrabold text-slate-900">Step 4. Apply for the 1-Year Extension</h2>
                 <p className="mt-2 text-slate-700">
-                  Apply at your local immigration office before your current permitted stay expires.
+                  Apply at your local immigration office before your current permitted stay expires. Many offices allow
+                  applications up to 30 days before expiry.
                 </p>
                 <div className="mt-4">
                   <Link
@@ -138,13 +132,19 @@ export default function MarriageVisaGuidePage() {
               </section>
 
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">Step 5. Under consideration period</h2>
+                <h2 className="text-xl font-extrabold text-slate-900">Step 5. Under Consideration Period</h2>
                 <p className="mt-2 text-slate-700">
-                  Marriage extensions are often placed under consideration, commonly 21-30 days. You will receive a stamp in your passport with a date to return for the final result.
-                  During this period, immigration may review documents, request more evidence, and in some cases do a
-                  home visit.
+                  Marriage extensions are commonly placed under consideration for 21-30 days.
                 </p>
-                
+                <p className="mt-3 text-slate-700">
+                  You will receive a stamp with a return date for the final result. During this period, immigration
+                  may:
+                </p>
+                <ul className="mt-2 list-disc space-y-2 pl-6 text-slate-700">
+                  <li>Review documents</li>
+                  <li>Request additional evidence</li>
+                  <li>Conduct a home visit</li>
+                </ul>
               </section>
 
               <section>

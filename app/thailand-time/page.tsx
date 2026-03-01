@@ -93,7 +93,7 @@ export default function ThailandTimePage() {
 
             <section className="mt-8">
               <h2 className="text-xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
-              <div className="mt-4 space-y-3">
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 {FAQS.map((faq) => (
                   <details key={faq.question} className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
                     <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">

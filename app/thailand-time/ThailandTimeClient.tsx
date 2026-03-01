@@ -320,7 +320,7 @@ export default function ThailandTimeClient() {
           </div>
           <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
             <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Thailand (ICT, UTC+7)</div>
-            <div className="mt-1 text-sm font-semibold text-slate-800">Asia/Bangkok</div>
+            <div className="mt-1 text-sm font-semibold text-slate-800">Bangkok, Thailand</div>
             <div className="mt-1 text-lg font-extrabold text-slate-900">
               {sourceInstantMs != null
                 ? formatDateTimeForZone(new Date(sourceInstantMs), THAILAND_TIMEZONE)

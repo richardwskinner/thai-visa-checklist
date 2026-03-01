@@ -32,14 +32,15 @@ export default function ThailandEntryOptionsPage() {
 
             <div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50 p-6">
               <p className="text-lg font-semibold text-blue-900">
-                Visa Exemption and Visa on Arrival are not the same. Visa Exemption means
-                eligible travellers can enter Thailand for free without applying for a visa in advance. Visa on Arrival, on the other hand, requires
-                travellers to apply for and pay for a short-term visa at the airport upon
-                arrival.
+                Visa Exemption and Visa on Arrival (VOA) are not the same.
               </p>
               <p className="mt-2 text-sm text-blue-900/80">
-                Always check your passport’s current eligibility and permitted length of stay
-                before traveling.
+                Visa Exemption allows eligible passport holders to enter Thailand without applying for a visa in
+                advance and without paying a visa fee. Visa on Arrival (VOA) requires eligible travellers to apply for
+                a short-term visa at the airport or border checkpoint upon arrival and pay a fee.
+              </p>
+              <p className="mt-2 text-sm text-blue-900/80">
+                Always check your passport’s eligibility and permitted length of stay before travelling.
               </p>
 
               <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
@@ -61,36 +62,42 @@ export default function ThailandEntryOptionsPage() {
             <div className="mt-10 space-y-8">
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">
-                  Quick decision (30 seconds)
+                  Key Differences
                 </h2>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-teal-200 bg-teal-50/30 p-5">
-                    <h3 className="font-bold text-slate-900">Choose Visa Exemption if…</h3>
-                    <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700">
-                      <li>Your passport is on the visa exemption list</li>
-                      <li>You want the simplest entry process</li>
-                      <li>You’re visiting for tourism</li>
-                    </ul>
+                <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200">
+                  <div className="grid grid-cols-2 bg-slate-100 text-sm font-bold text-slate-900">
+                    <div className="px-4 py-3">Visa Exemption</div>
+                    <div className="border-l border-slate-200 px-4 py-3">Visa on Arrival</div>
                   </div>
-
-                  <div className="rounded-2xl border border-blue-200 bg-blue-50/30 p-5">
-                    <h3 className="font-bold text-slate-900">Choose Visa on Arrival if…</h3>
-                    <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700">
-                      <li>Your passport qualifies for VOA but not exemption</li>
-                      <li>You are staying for tourism (commonly up to 15 days)</li>
-                      <li>You are prepared to pay the fee (commonly 2,000 THB)</li>
-                    </ul>
+                  <div className="grid grid-cols-2 text-sm text-slate-700">
+                    <div className="px-4 py-3">No visa required in advance</div>
+                    <div className="border-l border-slate-200 px-4 py-3">Visa issued at arrival</div>
+                  </div>
+                  <div className="grid grid-cols-2 border-t border-slate-200 text-sm text-slate-700">
+                    <div className="px-4 py-3">No visa fee</div>
+                    <div className="border-l border-slate-200 px-4 py-3">2,000 THB fee</div>
+                  </div>
+                  <div className="grid grid-cols-2 border-t border-slate-200 text-sm text-slate-700">
+                    <div className="px-4 py-3">Usually longer permitted stay</div>
+                    <div className="border-l border-slate-200 px-4 py-3">Shorter permitted stay (typically 15 days)</div>
+                  </div>
+                  <div className="grid grid-cols-2 border-t border-slate-200 text-sm text-slate-700">
+                    <div className="px-4 py-3">Faster immigration process</div>
+                    <div className="border-l border-slate-200 px-4 py-3">Additional paperwork at airport</div>
                   </div>
                 </div>
+                <p className="mt-3 text-sm text-slate-600">
+                  Permitted stay lengths vary by nationality and entry point.
+                </p>
               </section>
 
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">What to Prepare (Both Options)</h2>
                 <ul className="mt-3 list-disc space-y-2 pl-6 text-slate-700">
-                  <li>Passport (recommended 6+ months validity)</li>
+                  <li>Passport (recommended minimum 6 months validity)</li>
                   <li>Onward or return ticket</li>
                   <li>Accommodation details</li>
-                  <li>Proof of funds if requested (At least 10,000 THB)</li>
+                  <li>Proof of funds if requested (typically 10,000 THB per person)</li>
                   <li>
                     Complete the{" "}
                     <Link
@@ -99,21 +106,21 @@ export default function ThailandEntryOptionsPage() {
                     >
                       Thailand Digital Arrival Card (TDAC)
                     </Link>{" "}
-                    before departure
+                    before arrival
                   </li>
                 </ul>
               </section>
 
               <section>
                 <h2 className="text-xl font-extrabold text-slate-900">
-                  Visa on Arrival (VOA) - Additional Requirements
+                  Visa on Arrival - Additional Requirements
                 </h2>
                 <ul className="mt-3 list-disc space-y-2 pl-6 text-slate-700">
                   <li>Completed VOA application form</li>
-                  <li>Passport photo, taken within 6 months (4x6 cm)</li>
-                  <li>Visa fee (cash recommended)</li>
-                  <li>Proof of funds if requested (At least 10,000 THB)</li>
+                  <li>One passport photo (4 x 6 cm, taken within 6 months)</li>
+                  <li>Visa fee (2,000 THB, cash recommended)</li>
                   <li>Confirmed onward ticket within permitted stay</li>
+                  <li>Proof of funds if requested</li>
                 </ul>
               </section>
 
@@ -226,15 +233,6 @@ export default function ThailandEntryOptionsPage() {
                 </div>
               </section>
 
-              <section className="rounded-lg border-l-4 border-amber-500 bg-amber-50 p-5">
-                <div className="font-bold text-amber-900">Common mistakes</div>
-                <div className="mt-2 space-y-1 text-sm text-amber-900">
-                  <p>• Applying for VOA when eligible for Visa Exemption</p>
-                  <p>• Arriving without an onward ticket</p>
-                  <p>• Not bringing a photo or cash (VOA)</p>
-                  <p>• Not completing TDAC before arrival</p>
-                </div>
-              </section>
             </div>
           </CardContent>
         </Card>
