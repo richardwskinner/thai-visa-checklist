@@ -81,7 +81,7 @@ export default function MarriageStagesPage() {
                 Non-Immigrant &quot;O&quot; based on Marriage to Thai National
               </p>
               <p className="mt-2 text-sm text-slate-600">
-                Read our full guide{" "}
+                Marriage visa step by step guide{" "}
                 <Link
                   href={{
                     pathname: "/guides/marriage-visa-thailand",
