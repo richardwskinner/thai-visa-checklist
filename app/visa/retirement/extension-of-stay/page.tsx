@@ -100,7 +100,7 @@ function Section({
   return (
     <div className="mt-6 print:mt-2">
       <div className={`${classes.sectionTitle} font-extrabold text-slate-900`}>{title}</div>
-      <div className="mt-2 h-[3px] w-full rounded-full bg-emerald-600 print:mt-1" />
+      <div className="mt-2 h-[3px] w-full rounded-full bg-blue-800 print:mt-1" />
 
       <div className="mt-3 grid gap-2 print:mt-1 print:gap-1">
         {items.map((item, idx) => {
@@ -203,7 +203,6 @@ export default function RetirementVisaPage() {
     []
   );
   const totalWithForms = total + 1;
-
   const done = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
   const pct = totalWithForms ? Math.round((done / totalWithForms) * 100) : 0;
   const { href: backHref, label: backLabel } = useContextualBackLink(
@@ -240,7 +239,7 @@ export default function RetirementVisaPage() {
                     }}
                     className={`rounded-lg px-3 py-1 text-sm font-medium transition capitalize ${
                       fontSize === size
-                        ? "bg-emerald-600 text-white"
+                        ? "bg-blue-800 text-white"
                         : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                     }`}
                   >
@@ -263,7 +262,7 @@ export default function RetirementVisaPage() {
                 analytics.trackPrint('retirement');
                 window.print();
               }}
-              className="h-12 rounded-2xl bg-emerald-600 px-5 text-base hover:bg-emerald-700"
+              className="h-12 rounded-2xl bg-blue-800 px-5 text-base hover:bg-blue-900"
             >
               <Printer className="mr-2 h-5 w-5" /> Print
             </Button>
@@ -303,7 +302,7 @@ export default function RetirementVisaPage() {
               <div className={`${fontSizeClasses[fontSize].sectionTitle} font-extrabold text-slate-900`}>
                 Application Forms
               </div>
-              <div className="mt-2 h-[3px] w-full rounded-full bg-emerald-600 print:mt-1" />
+              <div className="mt-2 h-[3px] w-full rounded-full bg-blue-800 print:mt-1" />
 
               <label className="mt-4 flex cursor-pointer items-start gap-3 print:gap-2">
                 <Checkbox

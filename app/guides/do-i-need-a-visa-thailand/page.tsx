@@ -23,19 +23,19 @@ export default function DoINeedAVisaThailandPage() {
         <Card className="mt-4 rounded-3xl border-0 bg-white shadow-sm sm:mt-6">
           <CardContent className="p-4 sm:p-10">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-orange-100">
-                <Globe2 className="h-6 w-6 text-orange-700" />
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-violet-100">
+                <Globe2 className="h-6 w-6 text-violet-700" />
               </div>
               <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
                 Do I Need a Visa for Thailand?
               </h1>
             </div>
 
-            <div className="mt-6 rounded-2xl border border-orange-200 bg-orange-50 p-5 sm:p-6">
-              <p className="text-base font-semibold text-orange-900 sm:text-lg">
+            <div className="mt-6 rounded-2xl border border-violet-200 bg-violet-50 p-5 sm:p-6">
+              <p className="text-base font-semibold text-violet-900 sm:text-lg">
                 Enter your travel dates and nationality to see if you&apos;re visa-exempt, or if you need a visa.
               </p>
-              <p className="mt-3 text-sm text-orange-900/80">
+              <p className="mt-3 text-sm text-violet-900/80">
                 This tool provides general guidance only. Visa rules, permitted stay lengths, and entry conditions are
                 set by Thai immigration authorities and may change at any time. It does not replace up-to-date
                 information from your local Thai embassy or consulate.
@@ -57,7 +57,7 @@ export default function DoINeedAVisaThailandPage() {
                       href={VISA_ELIGIBILITY_SOURCES.klEmbassyVisaHub}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-semibold text-orange-700 underline underline-offset-2"
+                      className="font-semibold text-violet-700 underline underline-offset-2"
                     >
                       Royal Thai Embassy
                     </a>

@@ -1,8 +1,8 @@
 import type { ChecklistData } from "./types";
 
 export const marriageStageOneChecklist: ChecklistData = {
-  title: "Marriage Visa - 90-Day Non-Immigrant O",
-  subtitle: "Non-Immigrant O - To stay with Thai family residing in Thailand (More than 60 days)",
+  title: "Marriage Visa: 90-Day Non-Immigrant O",
+  subtitle: "Non-Immigrant O: To stay with Thai family residing in Thailand (More than 60 days)",
   sections: [
     {
       title: "1) Key Rules Before Applying",

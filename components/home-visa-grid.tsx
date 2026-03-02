@@ -70,11 +70,17 @@ export default function HomeVisaGrid() {
       </Link>
 
       <Link
-        href="/guides/do-i-need-a-visa-thailand"
+        href={{
+          pathname: "/guides/do-i-need-a-visa-thailand",
+          query: {
+            returnTo: "/",
+            returnLabel: "Back to Home",
+          },
+        }}
         onClick={() =>
           analytics.trackHomepageSelect("do-i-need-a-visa", "/guides/do-i-need-a-visa-thailand")
         }
-        className={`${cardBaseClass} bg-gradient-to-br from-orange-500 to-amber-600`}
+        className={`${cardBaseClass} bg-gradient-to-br from-indigo-600 to-violet-600`}
       >
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-10 top-14 h-28 w-28 rounded-full bg-sky-300/35 blur-2xl" />

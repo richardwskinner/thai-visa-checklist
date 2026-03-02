@@ -1,15 +1,15 @@
 import type { ChecklistData } from "./types";
 
 export const marriageChecklist: ChecklistData = {
-  title: 'Non-Immigrant Type "O" (Marriage)',
-  subtitle: "Annual extension of stay based on Marriage to Thai National",
+  title: 'Non-Immigrant O (Extension)',
+  subtitle: "1 Year extension of stay based on Marriage to Thai National",
   lastUpdated: "11 Feb 2026",
   sections: [
     {
       title: "Personal Documents",
       items: [
         { text: "Passport (valid at least 6 months with 2+ blank pages)", required: true },
-        { text: "2x passport photos, taken within 6-months (4×6 cm)", required: true },
+        { text: "1x passport photos, taken within 6-months (4×6 cm)", required: true },
         {
           text: "TM.30 Receipt",
           required: true,
@@ -31,20 +31,20 @@ export const marriageChecklist: ChecklistData = {
     {
       title: "Relationship & Accommodation",
       items: [
-        { text: "Your spouse in person", required: true },
+        { text: "Your spouse must attend in person", required: true },
         { text: "Thai spouse National ID + copy", required: true },
-        { text: "Copy of spouse Blue Book (Tabien Baan)", required: true },
-        { text: "Renting a house or condo - Rental Contract, Copy of Landlord's ID & House Book", required: true },
+        { text: "Copy of Thai spouse Blue Book (Tabien Baan)", required: true },
+        { text: "Renting a house or condo - Rental Contract, Copy of Landlord's ID & Blue Book", required: true },
         {
-          text: "Thai Marriage Certificate Kor Ror 3 - original + copy",
+          text: "Thai Marriage Certificate Kor Ror 3: Original + copy",
           required: true,
         },
         {
-          text: "Kor Ror 2 (updated same year) - original + copy",
+          text: "Kor Ror 2 (updated): Original + copy",
           required: true,
         },
         {
-          text: "4 Family photos (2 inside home + 2 outside home) on one page",
+          text: "4 Family photos (2 inside home + 2 outside home showing number) on one page",
           required: true,
         },
         {
@@ -62,27 +62,31 @@ export const marriageChecklist: ChecklistData = {
       ],
     },
     {
-      title: "Proof of Income / Funds",
+      title: "Proof of Funds (choose one option)",
+      items: [
+        {
+          text: "Option A: 400,000 THB in a Thai bank account (2 months before first extension, 3 months before renewals)",
+          required: true,
+        },
+        {
+          text: "Option B: Monthly income of at least 40,000 THB (supported by appropriate documents)",
+          required: true,
+        },
+        {
+          text: "Option C: Combination of bank deposit + annual income totaling at least 400,000 THB (if accepted by your immigration office)",
+          required: false,
+        },
+      ],
+    },
+    {
+      title: "Financial Documents",
       items: [
         { text: "Bank book (original)", required: true },
-        { text: "Bank book updated on the day + copy", required: true },
-        {
-          text: "Copy of bank book personal information page",
-          required: true,
-        },
-        {
-          text: "Bank statement covering last 6 months (within 7 days of appointment)",
-          required: true,
-        },
-        {
-          text: "Official bank letter confirming account holder details (within 7 days of appointment)",
-          required: true,
-        },
-        {
-          text:
-            "400,000 THB in bank (at least 3 months prior) OR 40,000 THB monthly salary with supporting documents",
-          required: true,
-        },
+        { text: "Bank book updated on the day of application + copy", required: true },
+        { text: "Copy of bank book personal information page", required: true },
+        { text: "Official bank letter confirming account and balance (within 7 days of appointment)", required: true },
+        { text: "Bank statement for the past 3 months (renewals) or 2 months (first extension)", required: true },
+        { text: "Income evidence letter or supporting income documents (if using income method)", required: false },
       ],
     },
     {
@@ -92,7 +96,7 @@ export const marriageChecklist: ChecklistData = {
   ],
   tips: [
     "Download all forms and prepare in advance",
-    "Generally 1 Passport photo is enough, however, sometimes 2 is requested",
-    "Prepare two copies of your documents (not always required, but recommended)",
+    "Always verify with the immigration office you are attending what docuemnts are needed",
+    "1 set of documents is generally enough, however, some offices request 2 sets",
   ],
 };

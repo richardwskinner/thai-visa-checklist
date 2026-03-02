@@ -22,7 +22,7 @@ export const VISAS: VisaInfo[] = [
     emoji: "🏖️",
     title: "Retirement Visa",
     subtitle: 'Non-Immigrant Type "O" 50+',
-    bg: "bg-gradient-to-br from-emerald-400 to-green-600",
+    bg: "bg-gradient-to-br from-slate-700 to-blue-900",
     href: "/visa/retirement/stages",
   },
   {

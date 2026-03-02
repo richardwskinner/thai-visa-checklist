@@ -2,12 +2,12 @@ import type { ChecklistData } from "./types";
 
 export const retirementStageOneChecklist: ChecklistData = {
   title: "Apply outside Thailand (Recommended)",
-  subtitle: "Non-Immigrant O - Retirement for foreigners aged 50 years or older",
+  subtitle: "Non-Immigrant O: Retirement for foreigners aged 50 years or older",
   sections: [
     {
       title: "1) Key Rules Before Applying",
       items: [
-        { text: "Apply outside Thailand in your home country or a neighboring country (such as Laos or Vietnam)." },
+        { text: "Apply outside of Thailand (home country or a neighboring country like Laos or Vietnam)" },
         { text: "Have proof that you're physically in that country, such as an entry stamp or visa" },
         { text: "Be at least 50 years old at the time of application" },
         { text: "Passport valid at least 6 months (12 months recommended)" },

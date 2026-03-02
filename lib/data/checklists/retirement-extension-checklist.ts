@@ -2,8 +2,8 @@ import type { ChecklistData } from "./types";
 
 export const retirementChecklist: ChecklistData = {
   id: "retirement-extension",
-  title: 'Non-Immigrant "O" (Retirement Visa)',
-  subtitle: "Annual extension of stay based on retirement purposes",
+  title: 'Non-Immigrant O (Based on retirement in Thailand)',
+  subtitle: "1 Year extension of stay based on retirement purposes",
   lastUpdated: "13 Feb 2026",
   sections: [
     {

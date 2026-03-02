@@ -140,8 +140,8 @@ const guides = [
       "Check if you likely need a visa, qualify for visa exemption, or can use Visa on Arrival based on official Thai government source lists.",
     href: "/guides/do-i-need-a-visa-thailand",
     icon: Globe2,
-    color: "bg-blue-100",
-    iconColor: "text-blue-700",
+    color: "bg-violet-100",
+    iconColor: "text-violet-700",
   },
   {
     title: "Thailand Marriage Visa",
