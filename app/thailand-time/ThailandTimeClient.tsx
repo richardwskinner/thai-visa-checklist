@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Clock3 } from "lucide-react";
+import { Clock3, Plane } from "lucide-react";
 import Link from "next/link";
 
 const THAILAND_TIMEZONE = "Asia/Bangkok";
@@ -71,6 +71,62 @@ const WORLD_COMPARISON_CITIES = [
 ] as const;
 
 const DEFAULT_SOURCE = { label: "London", zone: "Europe/London" } as const;
+
+const LOCATION_FLAGS: Record<string, string> = {
+  "Abu Dhabi": "🇦🇪",
+  Amsterdam: "🇳🇱",
+  Athens: "🇬🇷",
+  Auckland: "🇳🇿",
+  Bangkok: "🇹🇭",
+  Beijing: "🇨🇳",
+  Berlin: "🇩🇪",
+  Brussels: "🇧🇪",
+  Budapest: "🇭🇺",
+  "Buenos Aires": "🇦🇷",
+  Cairo: "🇪🇬",
+  Chicago: "🇺🇸",
+  Copenhagen: "🇩🇰",
+  Delhi: "🇮🇳",
+  Dubai: "🇦🇪",
+  Dublin: "🇮🇪",
+  Frankfurt: "🇩🇪",
+  "Hong Kong": "🇭🇰",
+  Honolulu: "🇺🇸",
+  Istanbul: "🇹🇷",
+  Jakarta: "🇮🇩",
+  Johannesburg: "🇿🇦",
+  "Kuala Lumpur": "🇲🇾",
+  Lisbon: "🇵🇹",
+  London: "🇬🇧",
+  "Los Angeles": "🇺🇸",
+  Madrid: "🇪🇸",
+  Manila: "🇵🇭",
+  Melbourne: "🇦🇺",
+  "Mexico City": "🇲🇽",
+  Miami: "🇺🇸",
+  Moscow: "🇷🇺",
+  Mumbai: "🇮🇳",
+  "New York": "🇺🇸",
+  Osaka: "🇯🇵",
+  Paris: "🇫🇷",
+  Perth: "🇦🇺",
+  Prague: "🇨🇿",
+  Rome: "🇮🇹",
+  "San Francisco": "🇺🇸",
+  Seoul: "🇰🇷",
+  Shanghai: "🇨🇳",
+  Singapore: "🇸🇬",
+  Stockholm: "🇸🇪",
+  Sydney: "🇦🇺",
+  Taipei: "🇹🇼",
+  Tokyo: "🇯🇵",
+  Toronto: "🇨🇦",
+  Vancouver: "🇨🇦",
+  Vienna: "🇦🇹",
+  Warsaw: "🇵🇱",
+  Zurich: "🇨🇭",
+  "Detected Local Time Zone": "🌍",
+};
 
 function toSourceOptionValue(label: string, zone: string) {
   return `${label}__${zone}`;
@@ -198,6 +254,10 @@ function zonedDateTimeToUtcMs(
   return timestamp;
 }
 
+function getLocationFlag(label: string) {
+  return LOCATION_FLAGS[label] ?? "🌍";
+}
+
 export default function ThailandTimeClient() {
   const [now, setNow] = useState(() => Date.now());
   const localZone = useMemo(() => Intl.DateTimeFormat().resolvedOptions().timeZone || "Etc/UTC", []);
@@ -260,76 +320,141 @@ export default function ThailandTimeClient() {
   const hourPart = diffHours > 0 ? `${diffHours} ${diffHours === 1 ? "hour" : "hours"}` : "";
   const minutePart = diffMins > 0 ? `${diffMins} ${diffMins === 1 ? "minute" : "minutes"}` : "";
   const diffAmount = [hourPart, minutePart].filter(Boolean).join(" ");
-  const diffLabel =
-    diffMinutes === 0
-      ? `${sourceZoneLabel} and Thailand are the same time.`
-      : diffMinutes > 0
-        ? `Thailand is ${diffAmount} ahead of ${sourceZoneLabel}.`
-        : `${sourceZoneLabel} is ${diffAmount} ahead of Thailand.`;
+  const sourceFlag = getLocationFlag(sourceZoneLabel);
 
   return (
     <div className="space-y-6">
-      <div className="mx-auto max-w-md rounded-2xl border border-sky-200 bg-sky-50 p-3 sm:p-4">
-        <div className="text-center">
-          <div className="flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wide text-sky-800">
-            <span aria-hidden="true">🇹🇭</span>
-            <span>Thailand Time</span>
-            <span aria-hidden="true">🇹🇭</span>
-          </div>
-          <div className="mt-0.5 text-3xl font-extrabold text-slate-900 sm:text-4xl">{thailandTime} ICT</div>
-          <div className="mt-0.5 text-sm text-slate-600">{thailandDate}</div>
-        </div>
-      </div>
-
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
-        <h2 className="text-xl font-extrabold text-slate-900">Thailand Time Comparison</h2>
-        <p className="mt-2 text-sm text-slate-600">
-          Select a source location and any date/time (including future dates) to compare with Thailand.
-        </p>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          <select
-            value={selectedSourceValue}
-            onChange={(e) => setSelectedSourceValue(e.target.value)}
-            className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+      <div className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-red-50 via-white to-blue-50 p-3 sm:p-5">
+        <div className="pointer-events-none absolute inset-0">
+          <svg
+            viewBox="0 0 920 320"
+            aria-hidden="true"
+            className="absolute -left-6 top-0 h-full w-[88%] opacity-10"
           >
-            {sourceOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          <input
-            type="datetime-local"
-            value={selectedLocalDateTime}
-            onChange={(e) => setSelectedLocalDateTime(e.target.value)}
-            className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
-          />
+            <defs>
+              <linearGradient id="thaiRedBand" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#e65b5b" />
+                <stop offset="100%" stopColor="#f08a8a" />
+              </linearGradient>
+              <linearGradient id="thaiBlueBand" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#274aa8" />
+                <stop offset="100%" stopColor="#4b67bb" />
+              </linearGradient>
+              <filter id="softBlur" x="-10%" y="-20%" width="120%" height="140%">
+                <feGaussianBlur stdDeviation="14" />
+              </filter>
+            </defs>
+
+            <path
+              d="M-20 64 C88 28, 196 102, 304 72 C426 34, 538 114, 664 74 C748 46, 832 76, 934 58 L934 104 C842 122, 758 96, 676 122 C560 160, 446 102, 332 138 C220 172, 98 118, -20 150 Z"
+              fill="url(#thaiRedBand)"
+              filter="url(#softBlur)"
+            />
+            <path
+              d="M-20 116 C92 82, 210 154, 320 124 C440 90, 560 166, 682 124 C766 96, 850 128, 934 112 L934 160 C846 176, 760 152, 678 178 C562 214, 446 160, 332 196 C216 230, 94 176, -20 206 Z"
+              fill="#f8fafc"
+              opacity="0.92"
+              filter="url(#softBlur)"
+            />
+            <path
+              d="M-20 174 C88 140, 210 212, 322 182 C442 148, 566 224, 688 182 C770 154, 854 188, 934 170 L934 232 C848 248, 764 224, 682 250 C568 286, 448 234, 334 268 C218 300, 96 252, -20 280 Z"
+              fill="url(#thaiBlueBand)"
+              filter="url(#softBlur)"
+            />
+          </svg>
         </div>
-        <p className="mt-2 text-xs text-slate-500">
-          Time entered is interpreted in the selected location&apos;s time zone.
-        </p>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Selected Location Time</div>
-            <div className="mt-1 text-sm font-semibold text-slate-800">{sourceZoneLabel}</div>
-            <div className="mt-1 text-lg font-extrabold text-slate-900">
-              {sourceInstantMs != null
-                ? formatDateTimeForZone(new Date(sourceInstantMs), sourceZone)
-                : "Enter a valid date/time"}
+
+        <div className="relative mx-auto max-w-3xl rounded-[28px] bg-gradient-to-r from-[#e25959] via-[#f8fafc] to-[#3558b5] p-[2px] shadow-[0_14px_40px_rgba(15,23,42,0.16)]">
+          <div className="rounded-[26px] bg-white/90 px-4 py-4 backdrop-blur-sm sm:px-8 sm:py-5">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 text-base font-extrabold uppercase tracking-[0.09em] text-slate-900 sm:text-3xl">
+                <span>Thailand Current Time</span>
+              </div>
+              <div className="mt-1 text-5xl font-black tracking-tight text-slate-900 drop-shadow-[0_2px_0_rgba(30,41,59,0.14)] sm:text-7xl">
+                {thailandTime}
+                <span className="ml-2 text-3xl font-extrabold sm:text-5xl">ICT</span>
+              </div>
+              <div className="mt-1 text-lg font-medium text-slate-600 sm:text-2xl">{thailandDate}</div>
             </div>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Thailand (ICT, UTC+7)</div>
-            <div className="mt-1 text-sm font-semibold text-slate-800">Bangkok, Thailand</div>
-            <div className="mt-1 text-lg font-extrabold text-slate-900">
-              {sourceInstantMs != null
-                ? formatDateTimeForZone(new Date(sourceInstantMs), THAILAND_TIMEZONE)
-                : "Enter a valid date/time"}
+        </div>
+
+        <div className="relative mt-4 rounded-3xl border border-slate-200 bg-white/95 p-5 shadow-sm backdrop-blur-sm sm:p-6">
+          <h2 className="text-xl font-extrabold text-slate-900">Thailand Time Comparison</h2>
+          <p className="mt-2 text-sm text-slate-600">
+            Select a source location and any date/time (including future dates) to compare with Thailand.
+          </p>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <select
+              value={selectedSourceValue}
+              onChange={(e) => setSelectedSourceValue(e.target.value)}
+              className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            >
+              {sourceOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <input
+              type="datetime-local"
+              value={selectedLocalDateTime}
+              onChange={(e) => setSelectedLocalDateTime(e.target.value)}
+              className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            />
+          </div>
+          <p className="mt-2 text-xs text-slate-500">
+            Time entered is interpreted in the selected location&apos;s time zone.
+          </p>
+          <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-stretch">
+            <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
+              <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Selected Location Time</div>
+              <div className="mt-1 text-sm font-semibold text-slate-800">
+                <span className="mr-2" aria-hidden="true">{sourceFlag}</span>
+                {sourceZoneLabel}
+              </div>
+              <div className="mt-1 text-lg font-extrabold text-slate-900">
+                {sourceInstantMs != null
+                  ? formatDateTimeForZone(new Date(sourceInstantMs), sourceZone)
+                  : "Enter a valid date/time"}
+              </div>
+            </div>
+            <div className="hidden items-center justify-center sm:flex">
+              <div className="relative flex w-28 items-center justify-center">
+                <div className="w-full border-t-2 border-dotted border-sky-300" />
+                <Plane className="absolute h-5 w-5 text-sky-500" />
+              </div>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
+              <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Thailand (ICT, UTC+7)</div>
+              <div className="mt-1 text-sm font-semibold text-slate-800">
+                <span className="mr-2" aria-hidden="true">🇹🇭</span>
+                Bangkok, Thailand
+              </div>
+              <div className="mt-1 text-lg font-extrabold text-slate-900">
+                {sourceInstantMs != null
+                  ? formatDateTimeForZone(new Date(sourceInstantMs), THAILAND_TIMEZONE)
+                  : "Enter a valid date/time"}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50 p-3 text-sm font-semibold text-sky-900">
-          {diffLabel}
+          <div className="mt-3 rounded-2xl border border-sky-200 bg-gradient-to-r from-sky-50 via-white to-sky-50 p-3 text-sm text-sky-900">
+            <div className="font-semibold">
+              {diffMinutes === 0 ? (
+                <>
+                  {sourceZoneLabel} and Thailand are the same time.
+                </>
+              ) : diffMinutes > 0 ? (
+                <>
+                  <span aria-hidden="true">🇹🇭</span> Thailand is {diffAmount} ahead of {sourceZoneLabel}.
+                </>
+              ) : (
+                <>
+                  <span aria-hidden="true">{sourceFlag}</span> {sourceZoneLabel} is {diffAmount} ahead of Thailand.
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

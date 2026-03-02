@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Globe2 } from "lucide-react";
+import { ExternalLink, Globe2 } from "lucide-react";
 import ThailandVisaNeedChecker from "@/components/thailand-visa-need-checker";
 import { VISA_ELIGIBILITY_SOURCES } from "@/lib/data/thai-visa-eligibility";
 import GuideBackButton from "@/components/guide-back-button";
@@ -22,13 +22,26 @@ export default function DoINeedAVisaThailandPage() {
 
         <Card className="mt-4 rounded-3xl border-0 bg-white shadow-sm sm:mt-6">
           <CardContent className="p-4 sm:p-10">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-violet-100">
-                <Globe2 className="h-6 w-6 text-violet-700" />
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-violet-100">
+                  <Globe2 className="h-6 w-6 text-violet-700" />
+                </div>
+                <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+                  Do I Need a Visa for Thailand?
+                </h1>
               </div>
-              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
-                Do I Need a Visa for Thailand?
-              </h1>
+
+              <div className="md:shrink-0">
+                <a
+                  href="https://thaievisa.go.th/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-violet-600 px-6 py-3 text-base font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-violet-700 hover:shadow-lg"
+                >
+                  Official Thai e-Visa <ExternalLink className="h-4.5 w-4.5" />
+                </a>
+              </div>
             </div>
 
             <div className="mt-6 rounded-2xl border border-violet-200 bg-violet-50 p-5 sm:p-6">
