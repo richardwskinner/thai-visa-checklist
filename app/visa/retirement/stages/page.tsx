@@ -87,7 +87,7 @@ export default function RetirementStagesPage() {
             <div className="mt-5 text-center sm:mt-6">
               <div className="text-4xl">🏖️</div>
               <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">
-                Retirement Visa
+                Retirement Visa Checklists
               </h1>
               <p className="mt-2 text-lg text-slate-600">
                 Non-Immigrant &quot;O&quot; based on Retirement (50+)

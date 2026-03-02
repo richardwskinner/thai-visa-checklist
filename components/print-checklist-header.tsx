@@ -5,7 +5,7 @@ export default function PrintChecklistHeader() {
         <div className="flex items-center">
           <img
             src="/logo-full.svg"
-            alt="Thai Visa Checklist"
+            alt="Thai Visa Checklist Logo"
             width={220}
             height={30}
             loading="eager"

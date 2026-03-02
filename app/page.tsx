@@ -16,10 +16,10 @@ export default function HomePage() {
           <CardContent className="relative p-8 sm:p-10">
             <div className="text-center">
               <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
-                Which Thailand Visa Are You Applying For?
+                Which Thailand Visa Checklist do you need?
               </h1>
               <p className="mt-2 text-base text-slate-600">
-                Get Your Free, Step-by-Step Document Checklist.
+                Get Your Free, Step-by-Step Document Checklist
               </p>
             </div>
 

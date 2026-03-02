@@ -75,13 +75,13 @@ export default function MarriageStagesPage() {
             <div className="mt-5 text-center sm:mt-6">
               <div className="text-4xl">🥂</div>
               <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">
-                Marriage Visa
+                Marriage Visa Checklists
               </h1>
               <p className="mt-2 text-lg text-slate-600">
                 Non-Immigrant &quot;O&quot; based on Marriage to Thai National
               </p>
               <p className="mt-2 text-sm text-slate-600">
-                Marriage visa step by step guide{" "}
+                Step by step guide{" "}
                 <Link
                   href={{
                     pathname: "/guides/marriage-visa-thailand",

@@ -112,7 +112,7 @@ export default function SiteHeader() {
               <Link href="/" className="flex flex-col items-center">
                 <Image
                   src="/logo-full.svg"
-                  alt="Thai Visa Checklist"
+                  alt="Thai Visa Checklist Logo"
                   width={295}
                   height={40}
                   priority
