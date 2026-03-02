@@ -20,8 +20,8 @@ export default function AboutPage() {
 
           <div className="mt-6 flex justify-center">
   <Image
-    src="/images/immigration-cartoon.png"
-    alt="Cartoon of someone at Thai immigration with too many documents"
+    src="/images/immigration-photo.png"
+    alt="Photo at Thai immigration"
     width={500}
     height={500}
     className="rounded-2xl shadow-md"
@@ -34,11 +34,11 @@ export default function AboutPage() {
 </p>
 
 <p className="mt-4 text-slate-700 leading-relaxed">
-  I had already been through the process multiple times, and somehow there was always something missing. A form I didn&apos;t know I needed. A photocopy another office had never asked for. I learned quickly that different immigration offices, and even different officers, can ask for slightly different documents. That uncertainty is what makes the process stressful.
+  I had already been through the process multiple times, yet somehow there was always something missing. A form I didn&apos;t know I needed. A photocopy another office had never asked for. I learned quickly that different immigration offices, and even different officers, can ask for slightly different documents. That uncertainty is what makes the process stressful.
 </p>
 
 <p className="mt-4 text-slate-700 leading-relaxed">
-  After almost a decade navigating Thailand’s immigration system firsthand, marriage visa, reporting, re-entry permits and everything in-between, I stopped relying on memory and built my own master checklist. Not just the minimum requirements, but everything I had ever been asked for.
+  After almost a decade navigating Thailand’s immigration system firsthand, I stopped relying on memory and built my own master checklist. Not just the minimum requirements, but everything I had ever been asked for.
 </p>
 
 <p className="mt-4 text-slate-700 leading-relaxed">
@@ -50,7 +50,7 @@ I wanted one clear, structured list based on my successful applications and real
 </p>
 
 <p className="mt-4 text-slate-700 leading-relaxed">
-  Thai Visa Checklist was created in 2026 after years of navigating Thailand’s immigration system firsthand. It is completely free to use - no login, no hidden fees - just practical guidance based on real experience, designed to make complex visa processes clearer and easier to understand through simple, visual checklists.
+  Thai Visa Checklist was created in 2026 after navigating Thailand’s immigration system firsthand. It is completely free to use - no login, and no hidden fees, just practical guidance based on real experience, designed to make complex visa processes clearer through simple, visual checklists that enable you to complete the process without an agent.
 </p>
 
          <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-5">
