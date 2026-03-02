@@ -2,13 +2,13 @@ import type { ChecklistData } from "./types";
 
 export const marriageChecklist: ChecklistData = {
   title: 'Non-Immigrant O (Extension)',
-  subtitle: "1 Year extension of stay based on Marriage to Thai National",
+  subtitle: "1 Year extension of stay based on Marriage to a Thai National",
   lastUpdated: "11 Feb 2026",
   sections: [
     {
       title: "Personal Documents",
       items: [
-        { text: "Passport (valid at least 6 months with 2+ blank pages)", required: true },
+        { text: "Passport (valid at least 12 months with 2+ blank pages)", required: true },
         { text: "1x passport photos, taken within 6-months (4×6 cm)", required: true },
         {
           text: "TM.30 Receipt",
@@ -62,31 +62,93 @@ export const marriageChecklist: ChecklistData = {
       ],
     },
     {
-      title: "Proof of Funds (choose one option)",
+      title: "Proof of Funds",
       items: [
         {
-          text: "Option A: 400,000 THB in a Thai bank account (2 months before first extension, 3 months before renewals)",
+          text: "400,000 THB Bank Deposit: 2 months before first extension, 3 months before renewals",
           required: true,
+          financialMethods: ["bank"],
         },
         {
-          text: "Option B: Monthly income of at least 40,000 THB (supported by appropriate documents)",
+          text: "40,000 THB monthly Thai income (12 months)",
           required: true,
+          financialMethods: ["thai-income"],
         },
         {
-          text: "Option C: Combination of bank deposit + annual income totaling at least 400,000 THB (if accepted by your immigration office)",
-          required: false,
+          text: "40,000 THB foreign income, certified by your embassy",
+          required: true,
+          financialMethods: ["foreign-income"],
         },
       ],
     },
     {
       title: "Financial Documents",
       items: [
-        { text: "Bank book (original)", required: true },
-        { text: "Bank book updated on the day of application + copy", required: true },
-        { text: "Copy of bank book personal information page", required: true },
-        { text: "Official bank letter confirming account and balance (within 7 days of appointment)", required: true },
-        { text: "Bank statement for the past 3 months (renewals) or 2 months (first extension)", required: true },
-        { text: "Income evidence letter or supporting income documents (if using income method)", required: false },
+        {
+          text: "Bank book updated on the day of application with copy",
+          required: true,
+          financialMethods: ["bank"],
+        },
+        {
+          text: "Copy of bank book personal information page",
+          required: true,
+          financialMethods: ["bank"],
+        },
+        {
+          text: "Bank statement (2 months for first extension, 3 months for renewals)",
+          required: true,
+          financialMethods: ["bank"],
+        },
+        {
+          text: "Bank letter confirming account details and balance (issued within 7 days of appointment)",
+          required: true,
+          financialMethods: ["bank"],
+        },
+        {
+          text: "Bank book updated on the day of application with copy",
+          required: true,
+          financialMethods: ["thai-income"],
+        },
+        {
+          text: "Copy of bank book personal information page",
+          required: true,
+          financialMethods: ["thai-income"],
+        },
+        {
+          text: "Bank statements showing income deposits (last 12 months)",
+          required: true,
+          financialMethods: ["thai-income"],
+        },
+        {
+          text: "Bank letter confirming account details (issued within 7 days of appointment)",
+          required: true,
+          financialMethods: ["thai-income"],
+        },
+        {
+          text: "Tax slip (PND 1 / PND 91) and valid work permit with copy",
+          required: true,
+          financialMethods: ["thai-income"],
+        },
+        {
+          text: "Embassy income certification letter (foreign income method)",
+          required: true,
+          financialMethods: ["foreign-income"],
+        },
+        {
+          text: "Bank book updated on the day of application with copy",
+          required: true,
+          financialMethods: ["foreign-income"],
+        },
+        {
+          text: "Copy of bank book personal information page",
+          required: true,
+          financialMethods: ["foreign-income"],
+        },
+        {
+          text: "Bank letter confirming account details (issued within 7 days of appointment)",
+          required: true,
+          financialMethods: ["foreign-income"],
+        },
       ],
     },
     {

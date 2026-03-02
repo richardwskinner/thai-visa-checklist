@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "90-Day Reporting in Thailand - What It Is and How to Do It",
   description:
     "Everything you need to know about 90-day reporting in Thailand. Who needs to report, when to do it, how to report online, by mail, or in person, and what happens if you miss it.",
+  alternates: {
+    canonical: "/guides/90-day-reporting",
+  },
 };
 
 function isSafeInternalPath(path: string) {

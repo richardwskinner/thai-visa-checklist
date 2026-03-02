@@ -366,6 +366,24 @@ export default function RetirementVisaPage() {
                 office before you go.
               </p>
             </details>
+
+            <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-sm font-bold text-slate-900 sm:text-base">
+                <span className="min-w-0">
+                  What if my passport has less than one year remaining?
+                </span>
+                <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                Immigration will only grant your one-year Non-Immigrant O (Retirement) extension up to your
+                passport&apos;s expiry date. If your passport has less than 12 months remaining at the time of
+                application, your extension will be shortened to match the remaining validity. For this reason, it is
+                advisable to renew your passport before applying if it has less than one year remaining. Also note
+                that many countries require at least 6 months of passport validity for international travel.
+              </p>
+            </details>
           </div>
         </div>
       </div>

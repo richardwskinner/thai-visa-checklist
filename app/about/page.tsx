@@ -50,7 +50,7 @@ I wanted one clear, structured list based on my successful applications and real
 </p>
 
 <p className="mt-4 text-slate-700 leading-relaxed">
-  Thai Visa Checklist was created in 2026 after navigating Thailand’s immigration system firsthand. It is completely free to use - no login, and no hidden fees, just practical guidance based on real experience, designed to make complex visa processes clearer through simple, visual checklists that enable you to complete the process without an agent.
+  Thai Visa Checklist was created in 2026. It is completely free to use. No login, no hidden fees, just practical guidance based on real experiences, designed to make visa processes simpler through checklists that enable you to complete the process without an agent.
 </p>
 
          <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-5">

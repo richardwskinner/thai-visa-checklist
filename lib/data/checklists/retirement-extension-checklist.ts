@@ -2,16 +2,15 @@ import type { ChecklistData } from "./types";
 
 export const retirementChecklist: ChecklistData = {
   id: "retirement-extension",
-  title: 'Non-Immigrant O (Based on retirement in Thailand)',
+  title: 'Non-Immigrant O (Extension)',
   subtitle: "1 Year extension of stay based on retirement purposes",
   lastUpdated: "13 Feb 2026",
   sections: [
     {
       title: "Personal Documents",
       items: [
-        { text: "Passport (valid for at least 18 months)", required: true },
-        { text: "2x passport photos, taken within 6 months (4×6 cm)", required: true },
-        { text: "Passport Photocopies: Photo Page, Previous Visa Stamp & Latest Entry Stamp", required: true },
+        { text: "Passport (valid at least 12 months with 2+ blank pages)", required: true },
+        { text: "1x passport photos, taken within 6 months (4×6 cm)", required: true },
         {
           text: "TM.30 Receipt",
           required: true,
@@ -19,11 +18,12 @@ export const retirementChecklist: ChecklistData = {
           noteUrl: "/examples/TM.30-example.png",
         },
         {
-          text: "90-Day Report Receipt",
+          text: "90 Day Report Receipt",
           required: false,
           noteLink: "Example receipt",
           noteUrl: "/examples/90-day-report-example.pdf",
         },
+        { text: "Photocopy: Photo Page, Visa Stamp & Latest Entry Stamp", required: true },
       ],
     },
     {
@@ -59,14 +59,6 @@ export const retirementChecklist: ChecklistData = {
           noteUrl: "/examples/hand-drawn-map-example.jpg",
         },
         { text: "4 photos (2 inside home + 2 outside home) on one page", required: false },
-      ],
-    },
-    {
-      title: "Health Insurance (Non O-A visa holders only)",
-      items: [
-        { text: "Health insurance policy covering the full stay period", required: false },
-        { text: "Minimum 40,000 THB outpatient coverage", required: false },
-        { text: "Minimum 400,000 THB inpatient coverage", required: false },
       ],
     },
     {

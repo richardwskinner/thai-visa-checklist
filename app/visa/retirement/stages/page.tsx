@@ -30,7 +30,7 @@ const stages = [
     stage: 3,
     title: "1 Year Extension",
     description:
-      "Extend your Non-Immigrant O visa for one year based on retirement (age 50+). Full checklist included.",
+      "Extend your Non-Immigrant O visa for one year based on retirement (age 50+).",
     available: true,
     href: {
       pathname: "/visa/retirement/extension-of-stay",

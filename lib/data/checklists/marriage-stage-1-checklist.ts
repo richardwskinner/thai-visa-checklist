@@ -9,7 +9,7 @@ export const marriageStageOneChecklist: ChecklistData = {
       items: [
         { text: "Apply outside of Thailand (home country or a neighboring country like Laos or Vietnam)" },
         { text: "Have proof that you're physically in that country, such as an entry stamp or visa" },
-        { text: "Passport validity: 6+ months (single entry)" },
+        { text: "Passport (valid at least 6 months with 2+ blank pages)" },
       ],
     },
     {

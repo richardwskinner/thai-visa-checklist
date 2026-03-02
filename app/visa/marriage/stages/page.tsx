@@ -30,7 +30,7 @@ const stages = [
     stage: 3,
     title: "1 Year Extension",
     description:
-      "Extend your Non-Immigrant O visa for one year based on marriage to a Thai national - Full Checklist included.",
+      "Extend your Non-Immigrant O visa for one year based on marriage to a Thai national.",
     available: true,
     href: "/visa/marriage/extension-of-stay",
   },

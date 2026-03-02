@@ -2,7 +2,7 @@ import type { ChecklistData } from "./types";
 
 export const marriageStageTwoChecklist: ChecklistData = {
   title: "Marriage Visa: 90-Day Non-Immigrant O",
-  subtitle: "Convert Visa in Thailand to Non-Immigrant O (Based on marriage to a Thai National)",
+  subtitle: "Convert your current visa to a Non-Immigrant O based on marriage to a Thai national",
   sections: [
     {
       title: "Pre-check Eligibility",
@@ -18,8 +18,8 @@ export const marriageStageTwoChecklist: ChecklistData = {
     {
       title: "Personal Documents",
       items: [
-        { text: "Passport (Valid at least 6 months with 2+ blank pages)" },
-        { text: "2x passport photos, taken within 6-months (4×6 cm)" },
+        { text: "Passport (valid at least 6 months with 2+ blank pages)" },
+        { text: "1x passport photos, taken within 6-months (4×6 cm)" },
         { text: "Photocopy: Photo Page, Visa Stamp & Latest Entry Stamp" },
       ],
     },

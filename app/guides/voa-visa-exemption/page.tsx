@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Thailand Entry Options - Visa Exemption vs Visa on Arrival (VOA)",
   description:
     "Confused between Thailand visa exemption and visa on arrival? This guide explains the differences, who qualifies, typical stay length, fees, and what to check before you fly.",
+  alternates: {
+    canonical: "/guides/voa-visa-exemption",
+  },
 };
 
 export default function ThailandEntryOptionsPage() {

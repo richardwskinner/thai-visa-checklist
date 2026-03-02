@@ -1,8 +1,10 @@
 export interface ChecklistItem {
   text: string;
+  subItems?: string[];
   required?: boolean;
   noteLink?: string;
   noteUrl?: string;
+  financialMethods?: Array<"bank" | "thai-income" | "foreign-income" | "combination">;
 }
 
 export interface ChecklistSection {

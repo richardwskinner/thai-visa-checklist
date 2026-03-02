@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "Renewing Your Passport in Thailand and Transferring Visa Stamps",
   description:
     "How to renew your passport in Thailand and transfer your visa, extension, and re-entry stamps to a new passport before your next immigration filing.",
+  alternates: {
+    canonical: "/guides/passport-renewal-stamp-transfer",
+  },
 };
 
 const BANGKOK_TRANSFER_FORM_URL =

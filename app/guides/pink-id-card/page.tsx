@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "What Is a Thai Pink ID Card and How to Get One?",
   description:
     "A practical guide to Thailand's Pink ID card for foreigners: what it is, who can apply, required documents, process, and common issues.",
+  alternates: {
+    canonical: "/guides/pink-id-card",
+  },
 };
 
 export default function PinkIdCardPage() {

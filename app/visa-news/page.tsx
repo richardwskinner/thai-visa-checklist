@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Visa News",
   description:
     "Thailand visa news and updates on policies, forms, deadlines, and official immigration sources.",
+  alternates: {
+    canonical: "/visa-news",
+  },
 };
 
 const categoryStyles: Record<string, string> = {
