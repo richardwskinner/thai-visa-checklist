@@ -14,7 +14,7 @@ const stages = [
     stage: 1,
     title: "Apply outside of Thailand (Recommended)",
     description:
-      "Apply for a 90-day Non-Immigrant O visa at a Thai embassy or consulate in your home country, or neighboring country, such as Laos or Vietnam.",
+      "Apply for a 90-day Non-O visa at a Thai embassy or consulate in your home country, or neighboring country, like Laos or Vietnam.",
     available: true,
     href: "/visa/marriage/stages/apply-outside-thailand",
   },
@@ -22,7 +22,7 @@ const stages = [
     stage: 2,
     title: "Convert Visa in Thailand to Non-O",
     description:
-      "If you're in Thailand on a Tourist or Visa-Exempt, and want to convert to a Non-Immigrant O Visa (Marriage). You may be required to show your proof of funds in a Thai bank account and with at least 15 days remaining on your current permission to stay. ",
+      "Converting your visa to a Non-O Visa based on marriage in Thailand is possible. However, you will be required to show proof of funds in a Thai Bank account or income and have at least 15 days remaining on your current permission to stay.",
     available: true,
     href: "/visa/marriage/stages/convert-in-thailand",
   },
@@ -30,7 +30,7 @@ const stages = [
     stage: 3,
     title: "1 Year Extension",
     description:
-      "Extend your Non-Immigrant O visa for one year based on marriage to a Thai national.",
+      "Extend your Non-O visa for one year based on marriage to a Thai national.",
     available: true,
     href: "/visa/marriage/extension-of-stay",
   },

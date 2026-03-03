@@ -14,7 +14,7 @@ const stages = [
     stage: 1,
     title: "Apply outside Thailand (Recommended)",
     description:
-      "Apply for a 90-day Non-Immigrant O visa at a Thai embassy or consulate in your home country, or neighboring country, such as Laos or Vietnam.",
+      "Apply for a 90-day Non-O visa at a Thai embassy or consulate in your home country, or neighboring country, like Laos or Vietnam.",
     available: true,
     href: "/visa/retirement/stages/apply-outside-thailand",
   },
@@ -22,7 +22,7 @@ const stages = [
     stage: 2,
     title: "Convert Visa in Thailand to Non-O",
     description:
-      "If you entered on a tourist visa or visa exemption, convert to a Non-Immigrant O (retirement) at immigration.",
+      "Converting your visa to a Non-O Visa based on retirement in Thailand is possible. However, you will be required to show proof of funds in a Thai Bank account or income and have at least 15 days remaining on your current permission to stay.",
     available: true,
     href: "/visa/retirement/stages/convert-in-thailand",
   },
@@ -30,7 +30,7 @@ const stages = [
     stage: 3,
     title: "1 Year Extension",
     description:
-      "Extend your Non-Immigrant O visa for one year based on retirement (age 50+).",
+      "Extend your Non-O visa for one year based on retirement (age 50+).",
     available: true,
     href: {
       pathname: "/visa/retirement/extension-of-stay",

@@ -57,9 +57,8 @@ export const retirementStageOneChecklist: ChecklistData = {
     },
   ],
   tips: [
-    "Embassy and consulate requirements can vary by location and can change without notice",
-    "Always verify current requirements on the official Thai e-Visa portal website before submitting",
-    "Keep both digital and printed copies of all submissions and approval documents",
+    "Do not apply more than 3 months before intended arrival.",
+    "Embassy requirements can vary slightly by location, they may email requesting additional information.",
     "If you struggle scanning and uploading your documents, request help from a friend.",
     "It's important that your information, images and documents are uploaded correctly and clearly.",
   ],
