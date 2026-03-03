@@ -153,6 +153,15 @@ const guides = [
     iconColor: "text-pink-700",
   },
   {
+    title: "Thailand Retirement Visa",
+    description:
+      "Full retirement visa path in Thailand: 90-day Non-Immigrant O, financial options, one-year extension, and ongoing reporting requirements.",
+    href: "/guides/retirement-visa-thailand",
+    icon: BadgeCheck,
+    color: "bg-blue-100",
+    iconColor: "text-blue-700",
+  },
+  {
     title: "Foreigners Paying Tax in Thailand",
     description:
       "Simple guide to the Revenue Department's 2024 foreigner tax summary, including Thai-sourced income, remittances, and filing basics.",

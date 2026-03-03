@@ -50,6 +50,7 @@ const ROUTE_OVERRIDES: Record<
   "/guides/opening-bank-account-thailand": { changeFrequency: "monthly", priority: 0.8 },
   "/guides/do-i-need-a-visa-thailand": { changeFrequency: "weekly", priority: 0.9 },
   "/guides/marriage-visa-thailand": { changeFrequency: "weekly", priority: 0.9 },
+  "/guides/retirement-visa-thailand": { changeFrequency: "weekly", priority: 0.9 },
   "/guides/foreigners-paying-tax-thailand": { changeFrequency: "monthly", priority: 0.7 },
 };
 

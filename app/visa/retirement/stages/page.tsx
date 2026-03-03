@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const stages = [
   {
     stage: 1,
-    title: "Apply outside Thailand (Recommended)",
+    title: "Apply outside of Thailand (Recommended)",
     description:
       "Apply for a 90-day Non-O visa at a Thai embassy or consulate in your home country, or neighboring country, like Laos or Vietnam.",
     available: true,
@@ -91,6 +91,22 @@ export default function RetirementStagesPage() {
               </h1>
               <p className="mt-2 text-lg text-slate-600">
                 Non-Immigrant &quot;O&quot; based on Retirement (50+)
+              </p>
+              <p className="mt-2 text-sm text-slate-600">
+                Step by step guide{" "}
+                <Link
+                  href={{
+                    pathname: "/guides/retirement-visa-thailand",
+                    query: {
+                      returnTo: "/visa/retirement/stages",
+                      returnLabel: "Back to Retirement Stages",
+                    },
+                  }}
+                  className="font-semibold text-blue-700 underline underline-offset-2"
+                >
+                  here
+                </Link>
+                .
               </p>
             </div>
 
