@@ -18,6 +18,7 @@ import { useContextualBackLink } from "@/lib/use-contextual-back-link";
 /* ── Storage keys ── */
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:retirement:checked:v1";
 const STORAGE_KEY_FONTSIZE = "thai-visa-checklist:fontsize:v1";
+const STORAGE_KEY_FINANCIAL_METHOD = "thai-visa-checklist:retirement:financial-method:v1";
 
 /* ── Application form links (compact pills) ── */
 const APPLICATION_FORMS = [
@@ -80,6 +81,9 @@ const fontSizeClasses = {
 } as const;
 
 type FontSize = keyof typeof fontSizeClasses;
+type FinancialMethod = "bank" | "monthly-income" | "combination";
+type SectionItemWithKey = ChecklistItem & { itemKey: string };
+type ChecklistSectionWithKeys = { title: string; items: SectionItemWithKey[] };
 
 /* ── Section component ── */
 function Section({
@@ -88,23 +92,57 @@ function Section({
   checked,
   onToggle,
   fontSize,
+  financialMethod,
+  onFinancialMethodChange,
 }: {
   title: string;
-  items: ChecklistItem[];
+  items: SectionItemWithKey[];
   checked: Record<string, boolean>;
   onToggle: (key: string) => void;
   fontSize: FontSize;
+  financialMethod?: FinancialMethod;
+  onFinancialMethodChange?: (method: FinancialMethod) => void;
 }) {
   const classes = fontSizeClasses[fontSize];
+  const isFinancialSection = title.startsWith("Proof of Funds");
 
   return (
     <div className="mt-6 print:mt-2">
-      <div className={`${classes.sectionTitle} font-extrabold text-slate-900`}>{title}</div>
+      <div className={`${classes.sectionTitle} font-extrabold text-slate-900`}>
+        {title}
+        {isFinancialSection && !title.includes("(Select one)") && (
+          <span className="ml-2 print:hidden">(Select one)</span>
+        )}
+      </div>
       <div className="mt-2 h-[3px] w-full rounded-full bg-blue-800 print:mt-1" />
+      {isFinancialSection && financialMethod && onFinancialMethodChange && (
+        <div className="mt-4 rounded-2xl border border-blue-200 bg-blue-50 p-4 print:hidden">
+          <div className="flex flex-wrap gap-2">
+            {([
+              ["bank", "A: 800,000 THB Bank Deposit"],
+              ["monthly-income", "B: 65,000 THB Monthly Income/Pension"],
+              ["combination", "C: Combination Method"],
+            ] as const).map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => onFinancialMethodChange(value)}
+                className={`rounded-full border px-3 py-1.5 text-sm font-medium transition ${
+                  financialMethod === value
+                    ? "border-blue-800 bg-blue-800 text-white"
+                    : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="mt-3 grid gap-2 print:mt-1 print:gap-1">
-        {items.map((item, idx) => {
-          const key = `${title}:${idx}`;
+        {items.map((item) => {
+          const key = item.itemKey;
           return (
             <label key={key} className="flex cursor-pointer items-center gap-3 print:gap-2">
               <Checkbox
@@ -127,6 +165,13 @@ function Section({
                     className="ml-2 align-middle"
                     onClick={(e) => e.stopPropagation()}
                   />
+                )}
+                {item.subItems && item.subItems.length > 0 && (
+                  <ul className={`mt-2 list-disc space-y-1 pl-5 ${classes.itemText} text-slate-700`}>
+                    {item.subItems.map((subItem) => (
+                      <li key={`${key}:${subItem}`}>{subItem}</li>
+                    ))}
+                  </ul>
                 )}
               </div>
             </label>
@@ -160,6 +205,12 @@ export default function RetirementVisaPage() {
     }
     return "small";
   });
+  const [financialMethod, setFinancialMethod] = useState<FinancialMethod>(() => {
+    if (typeof window === "undefined") return "bank";
+    const saved = localStorage.getItem(STORAGE_KEY_FINANCIAL_METHOD);
+    if (saved === "bank" || saved === "monthly-income" || saved === "combination") return saved;
+    return "bank";
+  });
 
   const classes = fontSizeClasses[fontSize];
 
@@ -180,6 +231,13 @@ export default function RetirementVisaPage() {
       // ignore
     }
   }, [fontSize]);
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY_FINANCIAL_METHOD, financialMethod);
+    } catch {
+      // ignore
+    }
+  }, [financialMethod]);
 
   const handleToggle = (key: string) => {
     setChecked((prev) => {
@@ -197,13 +255,38 @@ export default function RetirementVisaPage() {
     }
   };
 
-  // Total checklist items (data) + 1 extra for forms checkbox
+  const filteredSections = useMemo<ChecklistSectionWithKeys[]>(
+    () =>
+      retirementChecklist.sections.map((section, sectionIndex) => ({
+        title: section.title,
+        items: section.items
+          .filter((item) => !item.financialMethods || item.financialMethods.includes(financialMethod))
+          .map((item, itemIndex) => ({
+            ...item,
+            itemKey: `${sectionIndex}:${itemIndex}:${item.text}`,
+          })),
+      })),
+    [financialMethod]
+  );
+
+  // Total visible checklist items + 1 extra for forms checkbox
   const total = useMemo(
-    () => retirementChecklist.sections.reduce((sum, s) => sum + s.items.length, 0),
-    []
+    () => filteredSections.reduce((sum, s) => sum + s.items.length, 0),
+    [filteredSections]
   );
   const totalWithForms = total + 1;
-  const done = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
+  const visibleKeys = useMemo(
+    () =>
+      new Set([
+        "__forms__",
+        ...filteredSections.flatMap((section) => section.items.map((item) => item.itemKey)),
+      ]),
+    [filteredSections]
+  );
+  const done = useMemo(
+    () => Object.entries(checked).filter(([key, value]) => Boolean(value) && visibleKeys.has(key)).length,
+    [checked, visibleKeys]
+  );
   const pct = totalWithForms ? Math.round((done / totalWithForms) * 100) : 0;
   const { href: backHref, label: backLabel } = useContextualBackLink(
     "/visa/retirement/stages",
@@ -324,7 +407,7 @@ export default function RetirementVisaPage() {
             </div>
 
             {/* Sections */}
-            {retirementChecklist.sections.map((section) => (
+            {filteredSections.map((section) => (
               <Section
                 key={section.title}
                 title={section.title}
@@ -332,6 +415,8 @@ export default function RetirementVisaPage() {
                 checked={checked}
                 onToggle={handleToggle}
                 fontSize={fontSize}
+                financialMethod={financialMethod}
+                onFinancialMethodChange={setFinancialMethod}
               />
             ))}
 

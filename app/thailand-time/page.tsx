@@ -88,6 +88,7 @@ export default function ThailandTimePage() {
         <Card className="rounded-3xl border-0 bg-white shadow-sm">
           <CardContent className="p-4 sm:p-10">
             <div>
+              <h1 className="sr-only">Thailand Time (ICT) - Thailand Time Now</h1>
               <ThailandTimeClient />
             </div>
 

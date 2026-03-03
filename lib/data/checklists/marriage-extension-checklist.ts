@@ -9,7 +9,7 @@ export const marriageChecklist: ChecklistData = {
       title: "Personal Documents",
       items: [
         { text: "Passport (valid at least 12 months with 2+ blank pages)", required: true },
-        { text: "1x passport photos, taken within 6-months (4×6 cm)", required: true },
+        { text: "Passport photo, taken within 6 months (4×6 cm)", required: true },
         {
           text: "TM.30 Receipt",
           required: true,
@@ -65,17 +65,17 @@ export const marriageChecklist: ChecklistData = {
       title: "Proof of Funds",
       items: [
         {
-          text: "400,000 THB Bank Deposit: 2 months before first extension, 3 months before renewals",
+          text: "400,000 THB Bank Deposit (2 months before first extension, 3 months before renewals)",
           required: true,
           financialMethods: ["bank"],
         },
         {
-          text: "40,000 THB monthly Thai income (12 months)",
+          text: "40,000 THB Monthly Thai Income (12 months)",
           required: true,
           financialMethods: ["thai-income"],
         },
         {
-          text: "40,000 THB foreign income, certified by your embassy",
+          text: "40,000 THB Monthly Foreign Income (certified by your embassy)",
           required: true,
           financialMethods: ["foreign-income"],
         },
@@ -115,7 +115,7 @@ export const marriageChecklist: ChecklistData = {
           financialMethods: ["thai-income"],
         },
         {
-          text: "Bank statements showing income deposits (last 12 months)",
+          text: "Bank statement showing income deposits (last 12 months)",
           required: true,
           financialMethods: ["thai-income"],
         },
@@ -130,7 +130,7 @@ export const marriageChecklist: ChecklistData = {
           financialMethods: ["thai-income"],
         },
         {
-          text: "Embassy income certification letter (foreign income method)",
+          text: "Embassy income certification letter",
           required: true,
           financialMethods: ["foreign-income"],
         },
@@ -141,6 +141,11 @@ export const marriageChecklist: ChecklistData = {
         },
         {
           text: "Copy of bank book personal information page",
+          required: true,
+          financialMethods: ["foreign-income"],
+        },
+        {
+          text: "Bank statement showing income deposits (last 12 months)",
           required: true,
           financialMethods: ["foreign-income"],
         },

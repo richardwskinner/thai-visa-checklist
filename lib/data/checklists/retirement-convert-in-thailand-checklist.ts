@@ -16,7 +16,7 @@ export const retirementStageTwoChecklist: ChecklistData = {
       title: "Core Forms",
       items: [
         { text: "TM.86 or TM.87 (use the form appropriate to your current status)" },
-        { text: "Passport photo (4x6 cm)" },
+        { text: "Passport photo, taken within 6 months (4x6 cm)" },
         { text: "STM.2 acknowledgement form" },
         { text: "STM.9 overstay acknowledgement form" },
         { text: "STM.11 penalties acknowledgement form" },

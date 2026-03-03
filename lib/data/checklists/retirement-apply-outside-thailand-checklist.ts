@@ -18,7 +18,7 @@ export const retirementStageOneChecklist: ChecklistData = {
       title: "2) Required Documents (upload to eVisa)",
       items: [
         { text: "Passport bio page" },
-        { text: "Passport photo, taken within 6-months (4×6 cm)" },
+        { text: "Passport photo, taken within 6 months (4×6 cm)" },
         { text: "Document indicating current location (entry stamp, visa, or proof of residence)" },
         { text: "One of the following: monthly income 65,000 THB+, or bank balance 800,000 THB+, or a combination" },
         { text: "Bank statements covering the last 3 months" },
@@ -39,19 +39,20 @@ export const retirementStageOneChecklist: ChecklistData = {
     {
       title: "4) After Submission",
       items: [
-        { text: "You will receive a QR code or visa approval document via the eVisa system" },
+
         { text: "Pay the visa fee: some offices accept online payment, others require in person" },
         { text: "Processing is typically 3-5 working days (varies by location)" },
-        { text: "Remain in the country where you applied until approval is issued" },
+        { text: "Remain in that country until you recieve feedback and approval" },
+        { text: "Once approved you will receive an email/visa approval document" },
       ],
     },
     {
       title: "5) After Approval",
       items: [
         { text: "Print and save your visa approval document" },
-        { text: "Carry a full copy of your uploaded documents when travelling" },
-        { text: "On arrival, check your entry stamp carefully to confirm your 90-day permitted stay" },
-        { text: "TM.30 must be filed at your address within 24 hours of arrival (by your accommodation provider)" },
+        { text: "Ensure TM.30 is filed within 24 hours of arrival (by property owner / hotel)" },
+        { text: "Apply for a 1-year extension of stay during the last 30 days of your visa, if staying long term" },
+        { text: "Apply for a Re-Entry Permit before leaving Thailand, if you plan to travel" },
       ],
     },
   ],

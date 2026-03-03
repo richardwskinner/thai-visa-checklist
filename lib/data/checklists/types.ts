@@ -4,7 +4,7 @@ export interface ChecklistItem {
   required?: boolean;
   noteLink?: string;
   noteUrl?: string;
-  financialMethods?: Array<"bank" | "thai-income" | "foreign-income" | "combination">;
+  financialMethods?: Array<"bank" | "thai-income" | "foreign-income" | "monthly-income" | "combination">;
 }
 
 export interface ChecklistSection {
