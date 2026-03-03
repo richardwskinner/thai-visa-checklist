@@ -116,7 +116,7 @@ function Section({
       <div className="mt-2 h-[3px] w-full rounded-full bg-pink-600 print:mt-1" />
       {isFinancialSection && financialMethod && onFinancialMethodChange && (
         <div className="mt-4 rounded-2xl border border-pink-200 bg-pink-50 p-4 print:hidden">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
             {([
               ["bank", "A: 400,000 THB Bank Deposit"],
               ["thai-income", "B: 40,000 THB Thai Monthly Income"],
@@ -126,7 +126,7 @@ function Section({
                 key={value}
                 type="button"
                 onClick={() => onFinancialMethodChange(value)}
-                className={`rounded-full border px-3 py-1.5 text-sm font-medium transition ${
+                className={`rounded-full border px-3 py-1.5 text-center text-sm font-medium transition ${
                   financialMethod === value
                     ? "border-pink-600 bg-pink-600 text-white"
                     : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
