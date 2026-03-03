@@ -7,7 +7,118 @@ import {
   nationalityOptions,
   VISA_ELIGIBILITY_SOURCES,
 } from "@/lib/data/thai-visa-eligibility";
-import { ChevronDown, ExternalLink } from "lucide-react";
+import { Calendar, Check, ChevronDown, ExternalLink } from "lucide-react";
+
+const NATIONALITY_TO_ISO: Record<string, string> = {
+  Albania: "AL",
+  Andorra: "AD",
+  Argentina: "AR",
+  Armenia: "AM",
+  Australia: "AU",
+  Austria: "AT",
+  Bahrain: "BH",
+  Belarus: "BY",
+  Belgium: "BE",
+  Bhutan: "BT",
+  Bolivia: "BO",
+  Brazil: "BR",
+  Brunei: "BN",
+  Bulgaria: "BG",
+  Cambodia: "KH",
+  Canada: "CA",
+  China: "CN",
+  Colombia: "CO",
+  "Costa Rica": "CR",
+  Croatia: "HR",
+  Cuba: "CU",
+  Cyprus: "CY",
+  Czechia: "CZ",
+  Denmark: "DK",
+  Dominica: "DM",
+  "Dominican Republic": "DO",
+  Ecuador: "EC",
+  Estonia: "EE",
+  Fiji: "FJ",
+  Finland: "FI",
+  France: "FR",
+  Georgia: "GE",
+  Germany: "DE",
+  Greece: "GR",
+  Guatemala: "GT",
+  "Hong Kong": "HK",
+  Hungary: "HU",
+  Iceland: "IS",
+  India: "IN",
+  Indonesia: "ID",
+  Ireland: "IE",
+  Israel: "IL",
+  Italy: "IT",
+  Jamaica: "JM",
+  Japan: "JP",
+  Jordan: "JO",
+  Kazakhstan: "KZ",
+  Kuwait: "KW",
+  Kyrgyzstan: "KG",
+  Laos: "LA",
+  Latvia: "LV",
+  Liechtenstein: "LI",
+  Lithuania: "LT",
+  Luxembourg: "LU",
+  Macao: "MO",
+  Malaysia: "MY",
+  Maldives: "MV",
+  Malta: "MT",
+  Mauritius: "MU",
+  Mexico: "MX",
+  Monaco: "MC",
+  Mongolia: "MN",
+  Morocco: "MA",
+  Netherlands: "NL",
+  "New Zealand": "NZ",
+  Norway: "NO",
+  Oman: "OM",
+  Panama: "PA",
+  Peru: "PE",
+  Philippines: "PH",
+  Poland: "PL",
+  Portugal: "PT",
+  Qatar: "QA",
+  Romania: "RO",
+  "San Marino": "SM",
+  "Saudi Arabia": "SA",
+  Singapore: "SG",
+  Slovakia: "SK",
+  Slovenia: "SI",
+  "South Africa": "ZA",
+  "South Korea": "KR",
+  Spain: "ES",
+  "Sri Lanka": "LK",
+  Sweden: "SE",
+  Switzerland: "CH",
+  Taiwan: "TW",
+  Tonga: "TO",
+  "Trinidad and Tobago": "TT",
+  Turkey: "TR",
+  Ukraine: "UA",
+  "United Arab Emirates": "AE",
+  "United Kingdom": "GB",
+  USA: "US",
+  Uruguay: "UY",
+  Uzbekistan: "UZ",
+  Venezuela: "VE",
+  Vietnam: "VN",
+};
+
+function isoToFlag(isoCode: string) {
+  return String.fromCodePoint(
+    ...isoCode.toUpperCase().split("").map((char) => 127397 + char.charCodeAt(0))
+  );
+}
+
+function getNationalityFlag(nationality: string) {
+  const isoCode = NATIONALITY_TO_ISO[nationality];
+  return isoCode ? isoToFlag(isoCode) : "🌐";
+}
 
 function toIsoDate(date: Date) {
   const y = date.getFullYear();
@@ -99,82 +210,91 @@ export default function ThailandVisaNeedChecker() {
         : "border-rose-200 bg-rose-50 text-rose-900";
 
   return (
-    <section className="max-w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/60 p-4 sm:p-6">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-        <h2 className="text-xl font-extrabold text-slate-900">Thailand Visa Eligibility</h2>
-        <div className="text-xs text-slate-500 sm:text-right">
-          Official-source dataset • Checked {DATASET_LAST_CHECKED}
-        </div>
-      </div>
-
-      <div className="mt-4 grid gap-4">
-        <label className="block min-w-0">
-          <span className="text-sm font-semibold text-slate-700">Passport nationality</span>
-          <div className="relative mt-1 min-w-0">
-            <select
-              value={nationality}
-              onChange={(e) => setNationality(e.target.value)}
-              className="block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 pr-10 text-sm text-slate-900"
-            >
-              {nationalityOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+    <section className="max-w-full overflow-hidden rounded-3xl border border-blue-200/90 bg-gradient-to-b from-[#cfe5ff] via-[#deebfb] to-[#d7e7fb] p-3 shadow-[0_14px_34px_rgba(30,58,138,0.12)] sm:p-5">
+      <div className="rounded-3xl border border-white/70 bg-white/75 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur sm:p-6">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Thailand Visa Eligibility</h2>
+          <div className="inline-flex items-center gap-2 text-sm text-slate-600 sm:text-right">
+            <Check className="h-4 w-4 text-blue-600" />
+            Official data • Checked {DATASET_LAST_CHECKED}
           </div>
-          <p className="mt-2 text-xs leading-relaxed text-slate-600">
-            If your country is not listed here, you will likely need a visa before travelling and should
-            check with your local Thai embassy.
-          </p>
-        </label>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className="block min-w-0">
-            <span className="text-sm font-semibold text-slate-700">Planned entry date</span>
-            <input
-              type="date"
-              lang="en-GB"
-              value={entryDate}
-              onChange={(e) => setEntryDate(e.target.value)}
-              className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
-            />
-          </label>
-
-          <label className="block min-w-0">
-            <span className="text-sm font-semibold text-slate-700">Planned departure date</span>
-            <input
-              type="date"
-              lang="en-GB"
-              value={departureDate}
-              onChange={(e) => setDepartureDate(e.target.value)}
-              className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
-            />
-          </label>
         </div>
-      </div>
 
-      <div className="mt-3 text-sm text-slate-600">
-        {hasValidDates ? (
-          <>
-            Calculated stay length: <span className="font-semibold text-slate-900">{plannedStayDays}</span> day
-            {plannedStayDays === 1 ? "" : "s"} (inclusive of entry and departure dates)
-          </>
-        ) : (
-          <span className="text-rose-700">Please enter a valid departure date on or after the entry date.</span>
-        )}
-      </div>
+        <div className="mt-4 grid gap-4">
+          <label className="block min-w-0">
+            <span className="text-sm font-semibold text-slate-700">Passport nationality</span>
+            <div className="relative mt-1 min-w-0">
+              <select
+                value={nationality}
+                onChange={(e) => setNationality(e.target.value)}
+                className="block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-blue-200 bg-white px-3 py-2 pr-10 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+              >
+                {nationalityOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {getNationalityFlag(option)} {option}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-blue-500" />
+            </div>
+            <p className="mt-2 text-xs leading-relaxed text-slate-600">
+              If your country is not listed here, you will likely need a visa before travelling and should
+              check with your local Thai embassy.
+            </p>
+          </label>
 
-      <div className="mt-5">
-        <button
-          type="button"
-          onClick={() => hasValidDates && setCheckedSignature(currentSignature)}
-          disabled={!hasValidDates}
-          className="inline-flex items-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          Check Here
-        </button>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="block min-w-0">
+              <span className="text-sm font-semibold text-slate-700">Planned entry date</span>
+              <div className="relative">
+                <input
+                  type="date"
+                  lang="en-GB"
+                  value={entryDate}
+                  onChange={(e) => setEntryDate(e.target.value)}
+                  className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-blue-200 bg-white px-3 py-2 pr-10 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                />
+                <Calendar className="pointer-events-none absolute right-3 top-1/2 mt-0.5 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              </div>
+            </label>
+
+            <label className="block min-w-0">
+              <span className="text-sm font-semibold text-slate-700">Planned departure date</span>
+              <div className="relative">
+                <input
+                  type="date"
+                  lang="en-GB"
+                  value={departureDate}
+                  onChange={(e) => setDepartureDate(e.target.value)}
+                  className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-blue-200 bg-white px-3 py-2 pr-10 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                />
+                <Calendar className="pointer-events-none absolute right-3 top-1/2 mt-0.5 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div className="mt-3 text-sm text-slate-600">
+          {hasValidDates ? (
+            <>
+              Calculated stay length: <span className="font-semibold text-slate-900">{plannedStayDays}</span> day
+              {plannedStayDays === 1 ? "" : "s"} (inclusive of entry and departure dates)
+            </>
+          ) : (
+            <span className="text-rose-700">Please enter a valid departure date on or after the entry date.</span>
+          )}
+        </div>
+
+        <div className="mt-5">
+          <button
+            type="button"
+            onClick={() => hasValidDates && setCheckedSignature(currentSignature)}
+            disabled={!hasValidDates}
+            className="inline-flex items-center rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_10px_20px_rgba(5,150,105,0.25)] transition hover:-translate-y-0.5 hover:from-emerald-600 hover:to-teal-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Check Eligibility
+          </button>
+        </div>
       </div>
 
       {hasChecked && (

@@ -6,6 +6,7 @@ import { Calculator, Clock3, ShieldAlert, ExternalLink } from "lucide-react";
 import ThailandVisaNeedChecker from "@/components/thailand-visa-need-checker";
 import ThailandOverstayChecker from "@/components/thailand-overstay-checker";
 import NinetyDayCalculator from "@/app/guides/90-day-reporting/NinetyDayCalculator";
+import ThailandTimeClient from "@/app/thailand-time/ThailandTimeClient";
 
 export const metadata: Metadata = {
   title: "Thai Visa Calculators",
@@ -47,6 +48,17 @@ const toolSections = [
     iconColor: "text-red-700",
     tool: <ThailandOverstayChecker />,
   },
+  {
+    title: "Thailand Time (ICT)",
+    description:
+      "Check Thailand time now and compare it with your city.",
+    href: "/thailand-time",
+    hrefLabel: "Open Thailand time page",
+    icon: Clock3,
+    color: "bg-indigo-100",
+    iconColor: "text-indigo-700",
+    tool: <ThailandTimeClient compact />,
+  },
 ] as const;
 
 export default function ToolsPage() {
@@ -57,13 +69,6 @@ export default function ToolsPage() {
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">Thai Visa Calculators</h1>
           <p className="mt-3 text-lg text-slate-600">
             Use these visa calculators directly here, or open the full guides for more details.
-          </p>
-          <p className="mt-2 text-sm text-slate-600">
-            Need timezone help?{" "}
-            <Link href="/thailand-time" className="font-semibold text-blue-700 underline underline-offset-2">
-              Check current Thailand time (ICT)
-            </Link>
-            .
           </p>
         </div>
 

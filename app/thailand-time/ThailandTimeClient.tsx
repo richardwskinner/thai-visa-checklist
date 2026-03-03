@@ -258,7 +258,7 @@ function getLocationFlag(label: string) {
   return LOCATION_FLAGS[label] ?? "🌍";
 }
 
-export default function ThailandTimeClient() {
+export default function ThailandTimeClient({ compact = false }: { compact?: boolean }) {
   const [now, setNow] = useState(() => Date.now());
   const localZone = useMemo(() => Intl.DateTimeFormat().resolvedOptions().timeZone || "Etc/UTC", []);
   const sourceOptions = useMemo(
@@ -458,81 +458,85 @@ export default function ThailandTimeClient() {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
-        <h2 className="text-xl font-extrabold text-slate-900">World Time Comparison</h2>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {WORLD_COMPARISON_CITIES.map((city) => (
-            <div key={city.label} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-              <div className="text-sm font-semibold text-slate-800">{city.label}</div>
-              <div className="mt-0.5 text-xs font-medium text-slate-500">{formatUtcOffset(now, city.zone)}</div>
-              <div className="mt-1 text-xl font-extrabold text-slate-900">{formatTimeForZone(now, city.zone)}</div>
+      {!compact && (
+        <>
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
+            <h2 className="text-xl font-extrabold text-slate-900">World Time Comparison</h2>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {WORLD_COMPARISON_CITIES.map((city) => (
+                <div key={city.label} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                  <div className="text-sm font-semibold text-slate-800">{city.label}</div>
+                  <div className="mt-0.5 text-xs font-medium text-slate-500">{formatUtcOffset(now, city.zone)}</div>
+                  <div className="mt-1 text-xl font-extrabold text-slate-900">{formatTimeForZone(now, city.zone)}</div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
-        <h2 className="text-xl font-extrabold text-slate-900">Related Tools</h2>
-        <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-          <Link
-            href={{
-              pathname: "/guides/do-i-need-a-visa-thailand",
-              query: {
-                returnTo: "/thailand-time",
-                returnLabel: "Back to Thailand Time",
-              },
-            }}
-            className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-center text-xs font-semibold text-white hover:bg-blue-700 sm:px-4 sm:text-sm"
-          >
-            Thailand Visa Eligibility
-          </Link>
-          <Link
-            href={{
-              pathname: "/guides/90-day-reporting",
-              query: {
-                returnTo: "/thailand-time",
-                returnLabel: "Back to Thailand Time",
-              },
-            }}
-            className="inline-flex items-center justify-center rounded-xl bg-violet-600 px-3 py-2 text-center text-xs font-semibold text-white hover:bg-violet-700 sm:px-4 sm:text-sm"
-          >
-            90-Day Reporting
-          </Link>
-          <Link
-            href={{
-              pathname: "/guides/overstay-thailand",
-              query: {
-                returnTo: "/thailand-time",
-                returnLabel: "Back to Thailand Time",
-              },
-            }}
-            className="inline-flex items-center justify-center rounded-xl bg-red-600 px-3 py-2 text-center text-xs font-semibold text-white hover:bg-red-700 sm:px-4 sm:text-sm"
-          >
-            Overstay Checker
-          </Link>
-          <Link
-            href={{
-              pathname: "/tdac",
-              query: {
-                returnTo: "/thailand-time",
-                returnLabel: "Back to Thailand Time",
-              },
-            }}
-            className="rounded-xl bg-sky-600 px-3 py-2 text-center text-xs font-semibold text-white hover:bg-sky-700 sm:px-4 sm:text-sm"
-          >
-            Thailand Digital Arrival Card TDAC
-          </Link>
-        </div>
-      </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
+            <h2 className="text-xl font-extrabold text-slate-900">Related Tools</h2>
+            <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+              <Link
+                href={{
+                  pathname: "/guides/do-i-need-a-visa-thailand",
+                  query: {
+                    returnTo: "/thailand-time",
+                    returnLabel: "Back to Thailand Time",
+                  },
+                }}
+                className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-center text-xs font-semibold text-white hover:bg-blue-700 sm:px-4 sm:text-sm"
+              >
+                Thailand Visa Eligibility
+              </Link>
+              <Link
+                href={{
+                  pathname: "/guides/90-day-reporting",
+                  query: {
+                    returnTo: "/thailand-time",
+                    returnLabel: "Back to Thailand Time",
+                  },
+                }}
+                className="inline-flex items-center justify-center rounded-xl bg-violet-600 px-3 py-2 text-center text-xs font-semibold text-white hover:bg-violet-700 sm:px-4 sm:text-sm"
+              >
+                90-Day Reporting
+              </Link>
+              <Link
+                href={{
+                  pathname: "/guides/overstay-thailand",
+                  query: {
+                    returnTo: "/thailand-time",
+                    returnLabel: "Back to Thailand Time",
+                  },
+                }}
+                className="inline-flex items-center justify-center rounded-xl bg-red-600 px-3 py-2 text-center text-xs font-semibold text-white hover:bg-red-700 sm:px-4 sm:text-sm"
+              >
+                Overstay Checker
+              </Link>
+              <Link
+                href={{
+                  pathname: "/tdac",
+                  query: {
+                    returnTo: "/thailand-time",
+                    returnLabel: "Back to Thailand Time",
+                  },
+                }}
+                className="rounded-xl bg-sky-600 px-3 py-2 text-center text-xs font-semibold text-white hover:bg-sky-700 sm:px-4 sm:text-sm"
+              >
+                Thailand Digital Arrival Card TDAC
+              </Link>
+            </div>
+          </div>
 
-      <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-        Thailand uses one time zone nationwide: ICT (UTC+7), with no daylight saving time.
-      </div>
+          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+            Thailand uses one time zone nationwide: ICT (UTC+7), with no daylight saving time.
+          </div>
 
-      <div className="flex items-center gap-2 text-sm text-slate-500">
-        <Clock3 className="h-4 w-4" />
-        Last refreshed: {formatTimeForZone(now, THAILAND_TIMEZONE)} ICT
-      </div>
+          <div className="flex items-center gap-2 text-sm text-slate-500">
+            <Clock3 className="h-4 w-4" />
+            Last refreshed: {formatTimeForZone(now, THAILAND_TIMEZONE)} ICT
+          </div>
+        </>
+      )}
     </div>
   );
 }

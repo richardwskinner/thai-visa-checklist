@@ -90,44 +90,44 @@ export default function ThailandOverstayChecker() {
   }, [entryDate, plannedDepartureDate, stayGrantedDays]);
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-red-200 bg-red-50/70 p-4 sm:p-6">
-      <h2 className="text-xl font-extrabold text-slate-900">Leave Date / Overstay Checker</h2>
-      <p className="mt-2 text-sm text-slate-700">
-Enter your dates and permitted stay to estimate any overstay days, fines, and potential blacklist risk.
+    <section className="overflow-hidden rounded-3xl border border-rose-200/80 bg-gradient-to-b from-rose-50 via-white to-rose-50/60 p-4 shadow-[0_16px_34px_rgba(190,24,93,0.08)] sm:p-6">
+      <h2 className="text-2xl font-extrabold tracking-tight text-rose-950">Leave Date / Overstay Checker</h2>
+      <p className="mt-2 text-base text-slate-700">
+        Enter your dates and permitted stay to estimate any overstay days, fines, and potential blacklist risk.
       </p>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-3">
         <label className="block min-w-0">
-          <span className="text-sm font-semibold text-slate-700">Entry date</span>
+          <span className="text-sm font-semibold text-slate-800">Entry date</span>
           <input
             type="date"
             lang="en-GB"
             value={entryDate}
             onChange={(e) => setEntryDate(e.target.value)}
-            className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-rose-200 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
           />
         </label>
 
         <label className="block min-w-0">
-          <span className="text-sm font-semibold text-slate-700">Stay granted (days)</span>
+          <span className="text-sm font-semibold text-slate-800">Stay granted (days)</span>
           <input
             type="number"
             min={1}
             inputMode="numeric"
             value={stayGrantedDays}
             onChange={(e) => setStayGrantedDays(e.target.value)}
-            className="mt-1 block w-full min-w-0 max-w-full box-border rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="mt-1 block w-full min-w-0 max-w-full box-border rounded-2xl border border-rose-200 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
           />
         </label>
 
         <label className="block min-w-0">
-          <span className="text-sm font-semibold text-slate-700">Planned departure date</span>
+          <span className="text-sm font-semibold text-slate-800">Planned departure date</span>
           <input
             type="date"
             lang="en-GB"
             value={plannedDepartureDate}
             onChange={(e) => setPlannedDepartureDate(e.target.value)}
-            className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-rose-200 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
           />
         </label>
       </div>
@@ -138,39 +138,56 @@ Enter your dates and permitted stay to estimate any overstay days, fines, and po
         </div>
       ) : (
         <div className={`mt-4 grid gap-4 ${result.overstayDays > 0 ? "lg:grid-cols-2" : ""}`}>
-          <div className="rounded-xl border border-slate-200 bg-white p-4">
-            <div className="grid gap-2 text-sm">
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-slate-500">Entry date</span>
-                <span className="font-semibold text-slate-900">{formatDate(result.entry)}</span>
+          <div className="overflow-hidden rounded-2xl border border-rose-100 bg-white">
+            <div className="p-4">
+              <div className="grid gap-2 text-sm">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-slate-500">Entry date</span>
+                  <span className="font-semibold text-slate-900">{formatDate(result.entry)}</span>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-slate-500">Permitted stay expires</span>
+                  <span className="font-semibold text-slate-900">{formatDate(result.expiryDate)}</span>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-slate-500">Planned departure</span>
+                  <span className="font-semibold text-slate-900">{formatDate(result.departure)}</span>
+                </div>
+                <div className="mt-1 h-px bg-slate-200" />
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-slate-500">Overstay days</span>
+                  <span className={`font-bold ${result.overstayDays > 0 ? "text-red-700" : "text-emerald-700"}`}>
+                    {result.overstayDays}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-slate-500">Estimated overstay fine</span>
+                  <span className={`font-bold ${result.overstayDays > 0 ? "text-red-700" : "text-slate-900"}`}>
+                    {result.fine.toLocaleString()} THB
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-slate-500">Permitted stay expires</span>
-                <span className="font-semibold text-slate-900">{formatDate(result.expiryDate)}</span>
-              </div>
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-slate-500">Planned departure</span>
-                <span className="font-semibold text-slate-900">{formatDate(result.departure)}</span>
-              </div>
-              <div className="mt-1 h-px bg-slate-200" />
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-slate-500">Overstay days</span>
-                <span className={`font-bold ${result.overstayDays > 0 ? "text-red-700" : "text-emerald-700"}`}>
-                  {result.overstayDays}
-                </span>
-              </div>
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-slate-500">Estimated overstay fine</span>
-                <span className={`font-bold ${result.overstayDays > 0 ? "text-red-700" : "text-slate-900"}`}>
-                  {result.fine.toLocaleString()} THB
-                </span>
-              </div>
+            </div>
+
+            <div className="flex items-center justify-between gap-3 border-t border-rose-100 bg-slate-50/70 px-4 py-3">
+              <span
+                className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold ${
+                  result.overstayDays > 0
+                    ? "bg-red-100 text-red-800"
+                    : "bg-emerald-100 text-emerald-800"
+                }`}
+              >
+                {result.overstayDays > 0 ? "Overstay detected" : "All Clear"}
+              </span>
+              <span className={`text-4xl font-extrabold tracking-tight ${result.overstayDays > 0 ? "text-red-700" : "text-slate-900"}`}>
+                {result.fine.toLocaleString()} THB
+              </span>
             </div>
           </div>
 
           {result.overstayDays > 0 && (
-            <div className="rounded-xl border border-slate-200 bg-white p-4 text-sm">
-              <div className="font-bold text-slate-900">Blacklist potential (estimate)</div>
+            <div className="rounded-2xl border border-rose-100 bg-white p-4 text-sm">
+              <div className="font-bold text-rose-950">Blacklist potential (estimate)</div>
               <p className="mt-2 text-slate-700">{result.voluntaryBlacklist}</p>
               <p className="mt-2 text-slate-700">{result.arrestedBlacklist}</p>
               <p className="mt-3 text-xs text-slate-500">
