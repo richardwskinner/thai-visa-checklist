@@ -4,6 +4,13 @@ import Link from "next/link";
 import { VISAS } from "@/lib/data/visas";
 import { analytics } from "@/lib/analytics";
 
+const homeCardBackgrounds: Record<string, string> = {
+  marriage: "bg-gradient-to-br from-pink-400 via-fuchsia-500 to-pink-600",
+  retirement: "bg-gradient-to-br from-blue-700 via-blue-800 to-blue-950",
+  business: "bg-gradient-to-br from-indigo-500 to-indigo-600",
+  education: "bg-gradient-to-br from-emerald-500 to-green-600",
+};
+
 export default function HomeVisaGrid() {
   const hiddenVisaSlugs = new Set(["business", "education"]);
   const cardBaseClass =
@@ -15,7 +22,7 @@ export default function HomeVisaGrid() {
         v.disabled ? (
           <div
             key={v.slug}
-            className={`${cardBaseClass} ${v.bg} opacity-90`}
+            className={`${cardBaseClass} ${homeCardBackgrounds[v.slug] ?? "bg-slate-700"} opacity-90`}
           >
             <div className="pointer-events-none absolute inset-0">
               <div className="absolute -left-10 top-14 h-28 w-28 rounded-full bg-sky-300/35 blur-2xl" />
@@ -36,7 +43,7 @@ export default function HomeVisaGrid() {
             key={v.slug}
             href={v.href}
             onClick={() => analytics.trackHomepageSelect(v.slug, v.href)}
-            className={`${cardBaseClass} ${v.bg}`}
+            className={`${cardBaseClass} ${homeCardBackgrounds[v.slug] ?? "bg-slate-700"}`}
           >
             <div className="pointer-events-none absolute inset-0">
               <div className="absolute -left-10 top-14 h-28 w-28 rounded-full bg-sky-300/35 blur-2xl" />
