@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink, Plane } from "lucide-react";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import GuideBackButton from "@/components/guide-back-button";
 import { ShareInline } from "@/components/share-bar";
 
@@ -69,7 +70,9 @@ export default function TDACPage() {
         <div className="pt-8 md:flex md:items-center md:justify-between md:gap-3">
           <GuideBackButton fallbackHref="/" fallbackLabel="Back to Home" />
           <div className="mt-3 md:mt-0">
-            <ShareInline />
+            <Suspense fallback={null}>
+              <ShareInline />
+            </Suspense>
           </div>
         </div>
 
