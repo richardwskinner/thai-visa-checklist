@@ -152,6 +152,7 @@ export function ShareInline() {
 export function ShareInFrame({ scopeId }: { scopeId: string }) {
   const pathname = usePathname();
   const isGuidesIndex = pathname === "/guides" || pathname === "/guides/";
+  const isGuidesScope = scopeId === "guides-share-scope";
 
   useEffect(() => {
     if (isGuidesIndex) return;
@@ -159,25 +160,53 @@ export function ShareInFrame({ scopeId }: { scopeId: string }) {
     const scope = document.getElementById(scopeId);
     if (!scope) return;
 
-    const card = scope.querySelector(".rounded-3xl") as HTMLElement | null;
-    if (!card) return;
-
-    if (window.getComputedStyle(card).position === "static") {
-      card.style.position = "relative";
-    }
-
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
     const mount = document.createElement("div");
-    mount.className = "absolute right-4 top-4 z-20 print:hidden";
-    card.appendChild(mount);
+
+    if (isGuidesScope) {
+      const backButton = scope.querySelector(
+        '[data-guide-back-button="true"]'
+      ) as HTMLElement | null;
+      const topActions = backButton?.parentElement as HTMLElement | null;
+      if (!topActions) return;
+
+      if (isDesktop) {
+        topActions.classList.add("flex", "items-center", "justify-between", "gap-3");
+        mount.className = "print:hidden";
+      } else {
+        topActions.classList.add("flex", "flex-col", "items-start", "gap-3");
+        mount.className = "print:hidden";
+      }
+
+      topActions.appendChild(mount);
+    } else {
+      const card = scope.querySelector(".rounded-3xl") as HTMLElement | null;
+      if (!card) return;
+
+      if (isDesktop && window.getComputedStyle(card).position === "static") {
+        card.style.position = "relative";
+      }
+
+      if (isDesktop) {
+        mount.className = "absolute right-4 top-4 z-20 print:hidden";
+        card.appendChild(mount);
+      } else {
+        mount.className = "mb-3 print:hidden";
+        card.prepend(mount);
+      }
+    }
 
     const root = createRoot(mount);
     root.render(<ShareInline />);
 
     return () => {
-      root.unmount();
-      mount.remove();
+      // Avoid unmounting synchronously during an active React render cycle.
+      queueMicrotask(() => {
+        root.unmount();
+        mount.remove();
+      });
     };
-  }, [scopeId, pathname, isGuidesIndex]);
+  }, [scopeId, pathname, isGuidesIndex, isGuidesScope]);
 
   return null;
 }

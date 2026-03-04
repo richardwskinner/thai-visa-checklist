@@ -57,7 +57,13 @@ const guides = [
     title: "Thailand Digital Arrival Card (TDAC)",
     description:
       "What is the Thailand Digital Arrival Card (TDAC), who needs it, and how to submit it before arrival.",
-    href: "/tdac",
+    href: {
+      pathname: "/tdac",
+      query: {
+        returnTo: "/guides",
+        returnLabel: "Back to Guides",
+      },
+    },
     icon: Globe,
     color: "bg-blue-100",
     iconColor: "text-blue-600",
@@ -191,7 +197,7 @@ export default function GuidesPage() {
         {/* Guide cards */}
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {guides.map((guide) => (
-            <Link key={guide.href} href={guide.href}>
+            <Link key={guide.title} href={guide.href}>
               <Card className="h-full rounded-3xl border-0 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
                 <CardContent className="p-7">
                   <div className="flex items-center gap-3">

@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { ExternalLink, Plane } from "lucide-react";
 import type { Metadata } from "next";
 import GuideBackButton from "@/components/guide-back-button";
+import { ShareInline } from "@/components/share-bar";
 
 export const metadata: Metadata = {
   title: "Thailand Digital Arrival Card (TDAC) - What You Need to Know",
@@ -64,9 +65,12 @@ export default function TDACPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="mx-auto w-full max-w-5xl px-5">
-        {/* Back button */}
-        <div className="pt-8">
+        {/* Top actions */}
+        <div className="pt-8 md:flex md:items-center md:justify-between md:gap-3">
           <GuideBackButton fallbackHref="/" fallbackLabel="Back to Home" />
+          <div className="mt-3 md:mt-0">
+            <ShareInline />
+          </div>
         </div>
 
         {/* Main content */}

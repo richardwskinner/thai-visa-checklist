@@ -62,7 +62,7 @@ export default function MarriageStagesPage() {
     <div className="min-h-screen bg-[#eef3fb]">
       <div className="mx-auto w-full max-w-5xl px-4 pt-6 sm:px-5 sm:pt-8">
         <Card className="rounded-3xl border-0 bg-white shadow-sm">
-          <CardContent className="p-6 sm:p-10">
+          <CardContent className="p-6 sm:px-10 sm:pb-10 sm:pt-4">
             <div>
               <Link
                 href="/"

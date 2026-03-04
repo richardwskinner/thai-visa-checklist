@@ -13,7 +13,6 @@ import ExampleLink from "@/components/example-link";
 import PrintChecklistHeader from "@/components/print-checklist-header";
 import { retirementStageTwoChecklist as stageTwoChecklist } from "@/lib/data/checklists/retirement-convert-in-thailand-checklist";
 import type { ChecklistItem } from "@/lib/data/checklists/types";
-import { useContextualBackLink } from "@/lib/use-contextual-back-link";
 import { allowPrintWithEmailGate } from "@/lib/print-email-gate";
 
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:retirement:stage2:checked:v1";
@@ -196,18 +195,13 @@ export default function RetirementStageTwoPage() {
   const totalWithForms = total + 1;
   const done = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
   const pct = totalWithForms ? Math.round((done / totalWithForms) * 100) : 0;
-  const { href: backHref, label: backLabel } = useContextualBackLink(
-    "/visa/retirement/stages",
-    "Back to Retirement Stages"
-  );
-
   return (
     <div className="min-h-screen bg-[#eef3fb] print:min-h-0 print:bg-white">
       <div className="mx-auto w-full max-w-5xl px-5 print:px-0">
         <div className="flex flex-col gap-3 pt-8 print:hidden sm:flex-row sm:items-center sm:justify-between">
           <Button asChild className="h-12 justify-start rounded-2xl bg-slate-600 px-5 text-base hover:bg-slate-700">
-            <Link href={backHref}>
-              <ArrowLeft className="mr-2 h-5 w-5" /> {backLabel}
+            <Link href="/visa/retirement/stages">
+              <ArrowLeft className="mr-2 h-5 w-5" /> Back to Retirement Stages
             </Link>
           </Button>
 
