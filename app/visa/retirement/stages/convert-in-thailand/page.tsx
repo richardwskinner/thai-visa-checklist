@@ -14,6 +14,7 @@ import PrintChecklistHeader from "@/components/print-checklist-header";
 import { retirementStageTwoChecklist as stageTwoChecklist } from "@/lib/data/checklists/retirement-convert-in-thailand-checklist";
 import type { ChecklistItem } from "@/lib/data/checklists/types";
 import { useContextualBackLink } from "@/lib/use-contextual-back-link";
+import { allowPrintWithEmailGate } from "@/lib/print-email-gate";
 
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:retirement:stage2:checked:v1";
 const STORAGE_KEY_FONTSIZE = "thai-visa-checklist:fontsize:v1";
@@ -246,9 +247,12 @@ export default function RetirementStageTwoPage() {
             </Button>
 
             <Button
-              onClick={() => {
-                analytics.trackPrint("retirement-stage-2");
-                window.print();
+              onClick={async () => {
+                const allowed = await allowPrintWithEmailGate("retirement-stage-2", () => {
+                  analytics.trackPrint("retirement-stage-2");
+                  window.print();
+                });
+                if (!allowed) return;
               }}
               className="h-12 rounded-2xl bg-blue-800 px-5 text-base hover:bg-blue-900"
             >

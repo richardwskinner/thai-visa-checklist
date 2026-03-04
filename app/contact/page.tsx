@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 export default function ContactPage() {
@@ -31,12 +32,9 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-[#eef3fb]">
-
-      {/* Center Content */}
       <div className="flex justify-center px-6 py-12">
-        <div className="w-full max-w-lg">
-
-          <div className="text-center mb-10">
+        <div className="w-full max-w-2xl">
+          <div className="mb-10 text-center">
             <h1 className="text-4xl font-extrabold text-slate-900">
               Contact
             </h1>
@@ -47,61 +45,77 @@ export default function ContactPage() {
 
           <form
             onSubmit={handleSubmit}
-            className="space-y-6 rounded-3xl bg-white p-8 shadow-lg border border-slate-200"
+            className="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg"
           >
-            <div>
-              <label className="block text-sm font-semibold text-slate-700">
-                Name
-              </label>
-              <input
-                name="name"
-                type="text"
-                autoComplete="name"
-                required
-                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-slate-400"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-slate-700">
-                Email
-              </label>
-              <input
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-slate-400"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-slate-700">
-                Message
-              </label>
-              <textarea
-                name="message"
-                rows={4}
-                required
-                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-slate-400"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 py-3 font-semibold text-white shadow-md transition hover:from-sky-600 hover:to-blue-700 hover:shadow-lg disabled:opacity-50"
-            >
-              {loading ? "Sending..." : "Send Message"}
-            </button>
-
-            {sent && (
-              <div className="rounded-xl bg-green-50 border border-green-200 p-4 text-green-700 text-sm text-center">
-                Message sent successfully - We&apos;ll reply soon.
+            <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-start">
+              <div className="order-2 space-y-6 md:order-1">
+              <div>
+                <label className="block text-sm font-semibold text-slate-700">
+                  Name
+                </label>
+                <input
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                />
               </div>
-            )}
-          </form>
 
+              <div>
+                <label className="block text-sm font-semibold text-slate-700">
+                  Email
+                </label>
+                <input
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-700">
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  rows={4}
+                  required
+                  className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                />
+              </div>
+              </div>
+
+              <div className="order-1 flex justify-center md:order-2 md:justify-end md:pt-7">
+                <Image
+                  src="/images/mail-box.png"
+                  alt="Traditional red Thai post box"
+                  width={170}
+                  height={285}
+                  className="h-auto w-[160px] md:h-[360px] md:w-auto"
+                  priority
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 py-3 font-semibold text-white shadow-md transition hover:from-sky-600 hover:to-blue-700 hover:shadow-lg disabled:opacity-50"
+              >
+                {loading ? "Sending..." : "Send Message"}
+              </button>
+
+              {sent && (
+                <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-center text-sm text-green-700">
+                  Message sent successfully - We&apos;ll reply soon.
+                </div>
+              )}
+            </div>
+          </form>
         </div>
       </div>
     </div>

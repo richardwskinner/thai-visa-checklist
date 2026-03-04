@@ -112,12 +112,6 @@ function Footer() {
                     Thailand Visa Calculators
                   </Link>
                   <Link
-                    href="/thailand-time"
-                    className="block text-sm font-medium text-slate-700 hover:text-slate-900"
-                  >
-                    Thailand Time ICT
-                  </Link>
-                  <Link
                     href="/guides/90-day-reporting"
                     className="block text-sm font-medium text-slate-700 hover:text-slate-900"
                   >
@@ -134,6 +128,12 @@ function Footer() {
                     className="block text-sm font-medium text-slate-700 hover:text-slate-900"
                   >
                     Overstay Checker Thailand
+                  </Link>
+                  <Link
+                    href="/thailand-time"
+                    className="block text-sm font-medium text-slate-700 hover:text-slate-900"
+                  >
+                    Thailand Time ICT
                   </Link>
                 </div>
               </div>

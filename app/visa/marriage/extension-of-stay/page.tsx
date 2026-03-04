@@ -14,6 +14,7 @@ import ChecklistNotice from "@/components/checklist-notice";
 import ExampleLink from "@/components/example-link";
 import PrintChecklistHeader from "@/components/print-checklist-header";
 import { useContextualBackLink } from "@/lib/use-contextual-back-link";
+import { allowPrintWithEmailGate } from "@/lib/print-email-gate";
 
 /* ── Storage keys ── */
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:checked:v1";
@@ -339,9 +340,12 @@ export default function MarriageVisaPage() {
             </Button>
 
             <Button
-              onClick={() => {
-                analytics.trackPrint('marriage');
-                window.print();
+              onClick={async () => {
+                const allowed = await allowPrintWithEmailGate("marriage-extension", () => {
+                  analytics.trackPrint('marriage');
+                  window.print();
+                });
+                if (!allowed) return;
               }}
               className="h-12 rounded-2xl bg-pink-600 px-5 text-base hover:bg-pink-700"
             >

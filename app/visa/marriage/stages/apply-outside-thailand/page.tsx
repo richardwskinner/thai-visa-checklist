@@ -13,6 +13,7 @@ import PrintChecklistHeader from "@/components/print-checklist-header";
 import { marriageStageOneChecklist as stageOneChecklist } from "@/lib/data/checklists/marriage-stage-1-checklist";
 import type { ChecklistItem } from "@/lib/data/checklists/types";
 import { useContextualBackLink } from "@/lib/use-contextual-back-link";
+import { allowPrintWithEmailGate } from "@/lib/print-email-gate";
 
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:stage1:checked:v1";
 const STORAGE_KEY_FONTSIZE = "thai-visa-checklist:fontsize:v1";
@@ -221,9 +222,12 @@ export default function MarriageStageOnePage() {
             </Button>
 
             <Button
-              onClick={() => {
-                analytics.trackPrint("marriage-stage-1");
-                window.print();
+              onClick={async () => {
+                const allowed = await allowPrintWithEmailGate("marriage-stage-1", () => {
+                  analytics.trackPrint("marriage-stage-1");
+                  window.print();
+                });
+                if (!allowed) return;
               }}
               className="h-12 rounded-2xl bg-pink-600 px-5 text-base hover:bg-pink-700"
             >
