@@ -88,7 +88,7 @@ export default function ContactPage() {
               </div>
               </div>
 
-              <div className="order-1 flex justify-center md:order-2 md:justify-end md:pt-7">
+              <div className="order-1 flex justify-center md:order-2 md:justify-end md:pt-2">
                 <Image
                   src="/images/mail-box.png"
                   alt="Traditional red Thai post box"

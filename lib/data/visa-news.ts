@@ -19,6 +19,17 @@ export type VisaNewsItem = {
 
 export const visaNews: VisaNewsItem[] = [
   {
+    slug: "immigration-middle-east-airspace-measures-feb-2026",
+    title: "Immigration Measures for Middle East Airspace Disruptions (from Feb 28, 2026)",
+    summary:
+      "Thai Immigration announced temporary relief for foreigners unable to depart due to Middle East airspace closures. Overstay fines are waived for affected departures; temporary stay extensions may be considered (up to 30 days per permission) with supporting documents including TM.7, passport copy, and related forms.",
+    category: "Official",
+    publishedAt: "2026-03-04",
+    isPinned: true,
+    sourceLabel: "Thai Immigration Bureau",
+    sourceUrl: "https://www.facebook.com/share/p/14ShbTjxpFi/",
+  },
+  {
     slug: "mfa-th-cam-situation-press-release-250226",
     title: "MFA Press Release on the Thailand-Cambodia Situation (25 Feb 2026)",
     summary:

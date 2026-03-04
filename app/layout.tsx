@@ -50,6 +50,26 @@ export const metadata: Metadata = {
       "Free Thailand visa checklists and practical tools, including current Thailand time (ICT).",
     images: ["/thai-visa-checklist-logo-social.png"],
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/icons/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/favicon.ico", "/icons/favicon-32.png"],
+  },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Thai Visa Checklist",
+  },
+  other: {
+    "msapplication-TileColor": "#2563eb",
+    "msapplication-config": "/browserconfig.xml",
+  },
 };
 
 function Footer() {
