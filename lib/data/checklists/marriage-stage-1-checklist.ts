@@ -2,7 +2,7 @@ import type { ChecklistData } from "./types";
 
 export const marriageStageOneChecklist: ChecklistData = {
   title: "Marriage Visa: 90-Day Non-Immigrant O",
-  subtitle: "Non-Immigrant O: To stay with Thai family residing in Thailand (More than 60 days)",
+  subtitle: "Non-Immigrant O: To stay with Thai family residing in Thailand",
   sections: [
     {
       title: "1) Key Rules Before Applying",
@@ -22,7 +22,7 @@ export const marriageStageOneChecklist: ChecklistData = {
         { text: "Bank statement covering the last 3 months" },
         { text: "Marriage certificate (Kor Ror 2 and Kor Ror 3 if married in Thailand)" },
         { text: "Thai spouse ID card" },
-        { text: "Thai spouse house registration (Tabien Baan)" },
+        { text: "Thai spouse Blue Book/Tabien Baan" },
         { text: "Invitation/supporting letter from your spouse (sponsor letter)" },
       ],
     },

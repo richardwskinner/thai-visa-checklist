@@ -33,7 +33,7 @@ export const marriageChecklist: ChecklistData = {
       items: [
         { text: "Your spouse must attend in person", required: true },
         { text: "Thai spouse National ID + copy", required: true },
-        { text: "Copy of Thai spouse Blue Book (Tabien Baan)", required: true },
+        { text: "Copy of Thai spouse Blue Book/Tabien Baan", required: true },
         { text: "Renting a house or condo - Rental Contract, Copy of Landlord's ID & Blue Book", required: true },
         {
           text: "Thai Marriage Certificate Kor Ror 3: Original + copy",
@@ -55,10 +55,7 @@ export const marriageChecklist: ChecklistData = {
         },
         { text: "Child's birth certificate (if applicable)", required: false },
         { text: "Spouse name change document (if applicable)", required: false },
-        {
-          text: "Signed letter from spouse confirming ongoing marriage",
-          required: true,
-        },
+
       ],
     },
     {
@@ -163,7 +160,7 @@ export const marriageChecklist: ChecklistData = {
   ],
   tips: [
     "Download all forms and prepare in advance",
-    "Always verify with the immigration office you are attending what docuemnts are needed",
+    "Always verify with the immigration office you are attending what documents are required",
     "1 set of documents is generally enough, however, some offices request 2 sets",
   ],
 };

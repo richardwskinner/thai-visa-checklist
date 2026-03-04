@@ -192,7 +192,7 @@ export default function NinetyDayCalculator() {
             rel="noopener noreferrer"
             className={`inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold text-white shadow-md transition ${
               result
-                ? "bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-600 hover:-translate-y-0.5"
+                ? "bg-gradient-to-r from-[#4285F4] via-[#EA4335] via-50% to-[#FBBC05] hover:-translate-y-0.5 hover:from-[#3367D6] hover:via-[#D93025] hover:to-[#F9AB00]"
                 : "cursor-not-allowed bg-slate-300"
             }`}
             onClick={(e) => {
@@ -213,11 +213,11 @@ export default function NinetyDayCalculator() {
             disabled={!result}
             className={`inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold shadow-sm transition ${
               result
-                ? "border border-violet-200 bg-white/90 text-violet-900 hover:bg-white"
+                ? "border border-[#0078D4]/30 bg-gradient-to-r from-[#0078D4] to-[#106EBE] text-white hover:from-[#106EBE] hover:to-[#005A9E]"
                 : "cursor-not-allowed border border-slate-200 bg-slate-100 text-slate-400"
             }`}
           >
-            <CalendarDays className="h-4 w-4 text-violet-700" />
+            <CalendarDays className="h-4 w-4 text-white" />
             Download .ICS (Apple/Outlook)
           </button>
         </div>

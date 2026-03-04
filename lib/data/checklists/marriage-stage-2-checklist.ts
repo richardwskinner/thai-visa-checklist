@@ -28,7 +28,7 @@ export const marriageStageTwoChecklist: ChecklistData = {
       items: [
         { text: "Your spouse in person" },
         { text: "Thai spouse National ID + copy" },
-        { text: "Copy of spouse Blue Book (Tabien Baan)" },
+        { text: "Copy of spouse Blue Book/Tabien Baan" },
         { text: "Rental Contract, Copy of Landlord's ID & House Book (if renting)" },
         { text: "Thai Marriage Certificate Kor Ror 3 - original + copy" },
         { text: "Kor Ror 2 (updated same year) - original + copy" },

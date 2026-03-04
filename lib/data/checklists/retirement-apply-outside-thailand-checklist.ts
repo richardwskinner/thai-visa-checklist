@@ -1,7 +1,7 @@
 import type { ChecklistData } from "./types";
 
 export const retirementStageOneChecklist: ChecklistData = {
-  title: "Apply outside Thailand (Recommended)",
+  title: "Retirement Visa: 90-Day Non-Immigrant O",
   subtitle: "Non-Immigrant O: Retirement for foreigners aged 50 years or older",
   sections: [
     {

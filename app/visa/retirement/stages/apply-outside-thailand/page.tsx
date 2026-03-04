@@ -96,13 +96,20 @@ function Section({
               <Checkbox
                 checked={!!checked[key]}
                 onCheckedChange={() => onToggle(key)}
-                className="h-5 w-5 rounded-md print:h-4 print:w-4 data-[state=checked]:bg-[#249C0F] data-[state=checked]:border-[#249C0F]"
+                className="h-5 w-5 rounded-md border-slate-600 print:border-black print:h-4 print:w-4 data-[state=checked]:bg-[#249C0F] data-[state=checked]:border-[#249C0F]"
               />
               <div className={`${classes.itemText} text-slate-900 leading-snug`}>{item.text}</div>
             </label>
           );
         })}
       </div>
+
+      <style>{`
+        @media print {
+          header { display: none !important; }
+          footer { display: none !important; }
+        }
+      `}</style>
     </div>
   );
 }
