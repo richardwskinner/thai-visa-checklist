@@ -173,8 +173,7 @@ export default function ThailandEntryOptionsPage() {
                   <li>Completed VOA application form</li>
                   <li>One passport photo (4 x 6 cm, taken within 6 months)</li>
                   <li>Visa fee (2,000 THB, cash recommended)</li>
-                  <li>Confirmed onward ticket within permitted stay</li>
-                  <li>Proof of funds if requested</li>
+                  
                 </ul>
               </section>
 

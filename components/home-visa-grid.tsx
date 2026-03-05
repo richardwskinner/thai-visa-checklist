@@ -5,10 +5,10 @@ import { VISAS } from "@/lib/data/visas";
 import { analytics } from "@/lib/analytics";
 
 const homeCardBackgrounds: Record<string, string> = {
-  marriage: "bg-gradient-to-r from-pink-400 via-pink-500 to-fuchsia-500",
-  retirement: "bg-gradient-to-r from-slate-600 via-blue-700 to-blue-800",
-  business: "bg-gradient-to-br from-indigo-500 to-indigo-600",
-  education: "bg-gradient-to-br from-emerald-500 to-green-600",
+  marriage: "bg-gradient-to-r from-pink-500 via-pink-600 to-fuchsia-700",
+  retirement: "bg-gradient-to-r from-slate-700 via-blue-800 to-blue-900",
+  business: "bg-gradient-to-br from-indigo-600 to-indigo-700",
+  education: "bg-gradient-to-br from-emerald-600 to-green-700",
 };
 
 export default function HomeVisaGrid() {
@@ -62,7 +62,7 @@ export default function HomeVisaGrid() {
       <Link
         href="/tdac"
         onClick={() => analytics.trackHomepageSelect("tdac", "/tdac")}
-        className={`${cardBaseClass} bg-gradient-to-r from-sky-500 via-blue-500 to-blue-500`}
+        className={`${cardBaseClass} bg-gradient-to-r from-sky-600 via-blue-700 to-blue-800`}
       >
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-10 top-14 h-28 w-28 rounded-full bg-sky-300/35 blur-2xl" />
@@ -87,7 +87,7 @@ export default function HomeVisaGrid() {
         onClick={() =>
           analytics.trackHomepageSelect("do-i-need-a-visa", "/guides/do-i-need-a-visa-thailand")
         }
-        className={`${cardBaseClass} bg-gradient-to-r from-indigo-600 via-violet-600 to-violet-500`}
+        className={`${cardBaseClass} bg-gradient-to-r from-indigo-700 via-violet-700 to-violet-600`}
       >
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-10 top-14 h-28 w-28 rounded-full bg-sky-300/35 blur-2xl" />
