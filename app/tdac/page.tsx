@@ -67,9 +67,11 @@ export default function TDACPage() {
       />
       <div className="mx-auto w-full max-w-5xl px-5">
         {/* Top actions */}
-        <div className="pt-8 md:flex md:items-center md:justify-between md:gap-3">
-          <GuideBackButton fallbackHref="/" fallbackLabel="Back to Home" />
-          <div className="mt-3 md:mt-0">
+        <div className="flex items-center gap-2 pt-8 md:justify-between md:gap-3">
+          <div className="flex-1 md:flex-none">
+            <GuideBackButton fallbackHref="/" fallbackLabel="Back to Home" />
+          </div>
+          <div className="shrink-0">
             <Suspense fallback={null}>
               <ShareInline />
             </Suspense>

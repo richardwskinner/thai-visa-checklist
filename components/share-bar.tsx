@@ -149,7 +149,7 @@ export function ShareInline() {
   };
 
   return (
-    <div className="print:hidden rounded-2xl border border-slate-200/80 bg-white/95 p-2 shadow-sm backdrop-blur">
+    <div className="print:hidden">
       <div className="hidden flex-wrap items-center justify-end gap-2 sm:flex">
         <button
           type="button"
