@@ -20,9 +20,44 @@ export const metadata: Metadata = {
   },
 };
 
+const FAQS = [
+  {
+    question: "Can I get a Pink ID on a tourist visa?",
+    answer:
+      "Generally no. Most district offices require a long-term visa or valid extension of stay.",
+  },
+  {
+    question: "Is the Thai Pink ID card useful for foreigners?",
+    answer:
+      "Yes. It can be useful for everyday identification and address verification in Thailand, and it may sometimes help with Thai pricing at national parks at the discretion of the relevant staff or organization.",
+  },
+  {
+    question: "How much does it cost?",
+    answer:
+      "There is usually no significant official fee, but minor administrative fees may apply depending on the district office.",
+  },
+] as const;
+
 export default function PinkIdCardPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-[#eef3fb]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="mx-auto w-full max-w-5xl px-5">
         <div className="pt-8">
           <GuideBackButton />

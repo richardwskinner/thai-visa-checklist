@@ -20,9 +20,54 @@ export const metadata: Metadata = {
   },
 };
 
+const FAQS = [
+  {
+    question: "Which is better - Visa Exemption or VOA?",
+    answer:
+      "Visa Exemption is generally better because it is free and often allows a longer stay. Visa on Arrival is mainly for nationalities that are not eligible for visa exemption.",
+  },
+  {
+    question: "How long can I stay under Visa on Arrival?",
+    answer:
+      "Visa on Arrival typically allows a shorter stay, commonly around 15 days. Extension options are limited and not guaranteed.",
+  },
+  {
+    question: "Can I work under Visa Exemption or VOA?",
+    answer:
+      "No. Neither Visa Exemption nor Visa on Arrival allows you to work in Thailand.",
+  },
+  {
+    question: "Can I enter Thailand multiple times on Visa Exemption?",
+    answer:
+      "Yes, if your nationality is eligible. However, immigration officers can refuse entry if they believe visa exemption is being used for long-term stay rather than genuine tourism. There is no officially published annual entry limit, and frequent back-to-back entries may lead to extra questions, including proof of funds, onward ticket, and accommodation details.",
+  },
+  {
+    question: "If my passport stamp says 7 August, when do I need to leave Thailand?",
+    answer:
+      "If your permitted stay stamp shows 7 August, you should depart before 11:59 PM on 7 August and not stay past midnight into 8 August. To reduce risk, leave earlier in the day in case of delays or checkpoint issues.",
+  },
+] as const;
+
 export default function ThailandEntryOptionsPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-[#eef3fb]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="mx-auto w-full max-w-5xl px-5">
         <div className="pt-8">
           <GuideBackButton />

@@ -18,9 +18,59 @@ export const metadata: Metadata = {
     "A practical guide to Thailand's Yellow House Book (Tabien Baan): what it is, who can apply, required documents, process, and common issues.",
 };
 
+const FAQS = [
+  {
+    question: "Do I need to own property to apply?",
+    answer:
+      "No. You can be registered at a rented property if the owner cooperates and attends the district office.",
+  },
+  {
+    question: "Does the Yellow Book replace TM.30?",
+    answer:
+      "No. TM.30 is an immigration requirement for reporting a foreigner's address, while the Yellow Book is a civil registration document. They are separate systems.",
+  },
+  {
+    question: "Does it replace 90-day reporting?",
+    answer:
+      "No. You must still complete 90-day reporting if required by your visa type.",
+  },
+  {
+    question: "What happens if I move to a new address?",
+    answer:
+      "You must update your registration at the new district office. You can only be registered at one address at a time.",
+  },
+  {
+    question: "How much does it cost?",
+    answer:
+      "There is usually no significant official fee, but minor administrative fees may apply depending on the district office.",
+  },
+  {
+    question: "Does the Yellow Book give me permanent residency?",
+    answer:
+      "No. It does not grant permanent residency, citizenship, or any immigration status. It only records your address in the Thai house registration system.",
+  },
+] as const;
+
 export default function YellowBookPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-[#eef3fb]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="mx-auto w-full max-w-5xl px-5">
         <div className="pt-8">
           <GuideBackButton />

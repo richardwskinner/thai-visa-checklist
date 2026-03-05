@@ -37,6 +37,20 @@ const APPLICATION_FORMS = [
   { code: "STM.11", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-11-FORM-2025.pdf" },
 ] as const;
 
+const FAQS = [
+  {
+    question:
+      "How far in advance can I apply for a retirement extension at Chaeng Wattana?",
+    answer:
+      "At Chaeng Wattana (Immigration Division 1), a common rule is that you can apply when you have 45 days or less remaining on your current stamp. Office practice can change, so confirm with the office before you go.",
+  },
+  {
+    question: "What if my passport has less than one year remaining?",
+    answer:
+      "Immigration will only grant your one-year Non-Immigrant O (Retirement) extension up to your passport expiry date. If your passport has less than 12 months remaining, your extension is shortened to match the remaining validity. Renewing your passport before applying is usually advisable. Many countries also require at least 6 months passport validity for international travel.",
+  },
+] as const;
+
 function FormChips() {
   return (
     <div className="flex flex-wrap gap-2">
@@ -190,6 +204,19 @@ function Section({
 
 /* ── Main page ── */
 export default function RetirementVisaPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   const [checked, setChecked] = useState<Record<string, boolean>>(() => {
     if (typeof window === "undefined") return {};
     try {
@@ -296,6 +323,10 @@ export default function RetirementVisaPage() {
   const pct = totalWithForms ? Math.round((done / totalWithForms) * 100) : 0;
   return (
     <div className="min-h-screen bg-[#eef3fb] print:min-h-0 print:bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="mx-auto w-full max-w-5xl px-5 print:px-0">
         {/* Top actions */}
         <div className="flex flex-col gap-3 pt-8 print:hidden sm:flex-row sm:items-center sm:justify-between">

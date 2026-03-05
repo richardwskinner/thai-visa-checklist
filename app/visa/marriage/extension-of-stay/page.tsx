@@ -38,6 +38,26 @@ const APPLICATION_FORMS = [
   { code: "STM.11", url: "https://bangkok.immigration.go.th/wp-content/uploads/STM-11-FORM-2025.pdf" },
 ] as const;
 
+const FAQS = [
+  {
+    question:
+      'Do I need to keep the 400,000 THB in my account during the "under consideration" period for a marriage extension in Bangkok?',
+    answer:
+      "There is no published rule requiring the 400,000 THB to remain after submission. Bangkok usually issues a short under consideration stamp of around 21 days. Officers previously asked to see an updated bank book on collection day, but this is not common now. Confirm with your officer and avoid moving funds until final approval.",
+  },
+  {
+    question:
+      'Can I leave Thailand during the marriage extension "under consideration" period?',
+    answer:
+      "In many cases, yes, if you obtain a re-entry permit and return before the under consideration stamp expires. Confirm this with your immigration office when you apply, because some offices may schedule a home visit during this period.",
+  },
+  {
+    question: "What if my passport has less than one year remaining?",
+    answer:
+      "Immigration will only grant your one-year Non-Immigrant O (Marriage) extension up to your passport expiry date. If your passport has less than 12 months remaining, your extension is shortened to match the remaining validity. Renewing your passport before applying is usually advisable. Many countries also require at least 6 months passport validity for international travel.",
+  },
+] as const;
+
 function FormChips() {
   return (
     <div className="flex flex-wrap gap-2">
@@ -183,6 +203,19 @@ function Section({
 
 /* ── Main page ── */
 export default function MarriageVisaPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   const [checked, setChecked] = useState<Record<string, boolean>>(() => {
     if (typeof window === "undefined") return {};
     try {
@@ -294,6 +327,10 @@ export default function MarriageVisaPage() {
   const pct = totalWithForms ? Math.round((done / totalWithForms) * 100) : 0;
   return (
     <div className="min-h-screen bg-[#eef3fb] print:min-h-0 print:bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="mx-auto w-full max-w-5xl px-5 print:px-0">
         {/* Top actions */}
         <div className="flex flex-col gap-3 pt-8 print:hidden sm:flex-row sm:items-center sm:justify-between">
