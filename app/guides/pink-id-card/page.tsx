@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { IdCard } from "lucide-react";
 import type { Metadata } from "next";
 import GuideBackButton from "@/components/guide-back-button";
@@ -134,44 +140,38 @@ export default function PinkIdCardPage() {
               </section>
 
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">FAQ</h2>
-                <div className="mt-4 space-y-3">
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                <h2 className="text-xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+                <Accordion type="single" collapsible className="mt-4 space-y-3">
+                  <AccordionItem value="faq-1" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">Can I get a Pink ID on a tourist visa?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
                       Generally no. Most district offices require a long-term visa or valid extension of stay.
-                    </p>
-                  </details>
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                  <AccordionItem value="faq-2" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">Is the Thai Pink ID card useful for foreigners?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                      Yes, it can be useful for everyday identification and address verification in Thailand. It may even open the doors to Thai pricing at national parks; however, this is at the discretion of the individual staff member or organisation.
-                    </p>
-                  </details>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                      Yes, it can be useful for everyday identification and address verification in Thailand. It may
+                      even open the doors to Thai pricing at national parks; however, this is at the discretion of the
+                      individual staff member or organisation.
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                  <AccordionItem value="faq-3" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">How much does it cost?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                      There is usually no significant official fee, but minor administrative fees may apply depending on the district office.
-                    </p>
-                  </details>
-                </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                      There is usually no significant official fee, but minor administrative fees may apply depending
+                      on the district office.
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </section>
             </div>
 

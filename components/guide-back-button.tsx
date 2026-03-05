@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 function isSafeInternalPath(path: string) {
   return path.startsWith("/") && !path.startsWith("//");
@@ -11,13 +12,14 @@ function isSafeInternalPath(path: string) {
 
 function BackButtonLink({ href, label }: { href: string; label: string }) {
   return (
-    <Link
-      href={href}
-      data-guide-back-button="true"
-      className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
+    <Button
+      asChild
+      className="h-12 rounded-2xl bg-slate-600 px-5 text-base font-medium text-white hover:bg-slate-700"
     >
-      <ArrowLeft className="h-5 w-5" /> {label}
-    </Link>
+      <Link href={href} data-guide-back-button="true">
+        <ArrowLeft className="h-5 w-5" /> {label}
+      </Link>
+    </Button>
   );
 }
 

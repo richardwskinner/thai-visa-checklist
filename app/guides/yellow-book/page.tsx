@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Home } from "lucide-react";
 import type { Metadata } from "next";
 import ExampleLink from "@/components/example-link";
@@ -166,84 +172,67 @@ export default function YellowBookPage() {
               </section>
 
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">FAQ</h2>
-                <div className="mt-4 space-y-3">
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                <h2 className="text-xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+                <Accordion type="single" collapsible className="mt-4 space-y-3">
+                  <AccordionItem value="faq-1" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">Do I need to own property to apply?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                      No. You can be registered at a rented property if the owner cooperates and attends the district office.
-                    </p>
-                  </details>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                      No. You can be registered at a rented property if the owner cooperates and attends the district
+                      office.
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                  <AccordionItem value="faq-2" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">Does the Yellow Book replace TM.30?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                      No. TM.30 is an immigration requirement for reporting a foreigner&apos;s address. The Yellow Book is a civil registration document. They are separate systems.
-                    </p>
-                  </details>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                      No. TM.30 is an immigration requirement for reporting a foreigner&apos;s address. The Yellow
+                      Book is a civil registration document. They are separate systems.
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                  <AccordionItem value="faq-3" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">Does it replace 90-day reporting?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
                       No. You must still complete 90-day reporting if required by your visa type.
-                    </p>
-                  </details>
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                  <AccordionItem value="faq-4" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">What happens if I move to a new address?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                      You must update your registration at the new district office. You can only be registered at one address at a time.
-                    </p>
-                  </details>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                      You must update your registration at the new district office. You can only be registered at one
+                      address at a time.
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                  <AccordionItem value="faq-5" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">How much does it cost?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                      There is usually no significant official fee, but minor administrative fees may apply depending on the district office.
-                    </p>
-                  </details>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                      There is usually no significant official fee, but minor administrative fees may apply depending
+                      on the district office.
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
-                      <span className="min-w-0">
-                        Does the Yellow Book give me permanent residency?
-                      </span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
-                      <p>No. It does not grant permanent residency, citizenship, or any immigration
-                        status. It only records your address in the Thai house registration system.
-                      </p>
-                    </div>
-                  </details>
-                </div>
+                  <AccordionItem value="faq-6" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
+                      <span className="min-w-0">Does the Yellow Book give me permanent residency?</span>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                      No. It does not grant permanent residency, citizenship, or any immigration status. It only
+                      records your address in the Thai house registration system.
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </section>
             </div>
 

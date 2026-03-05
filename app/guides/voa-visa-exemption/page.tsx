@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Globe } from "lucide-react";
 import type { Metadata } from "next";
 import GuideBackButton from "@/components/guide-back-button";
@@ -153,87 +159,75 @@ export default function ThailandEntryOptionsPage() {
               </section>
 
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">FAQ</h2>
-                <div className="mt-4 space-y-3">
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                <h2 className="text-xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+                <Accordion type="single" collapsible className="mt-4 space-y-3">
+                  <AccordionItem value="faq-1" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">Which is better - Visa Exemption or VOA?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
-                      <p>Visa Exemption is better because, it is free and often allows a longer stay. VOA is for nationalities that are not eligible for visa exemption.</p>
-                    </div>
-                  </details>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                      Visa Exemption is better because, it is free and often allows a longer stay. VOA is for
+                      nationalities that are not eligible for visa exemption.
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                  <AccordionItem value="faq-2" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">How long can I stay under Visa on Arrival?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
                       Visa on Arrival typically allows a shorter stay (commonly around 15 days). Extension options are
                       limited and not guaranteed.
-                    </p>
-                  </details>
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                  <AccordionItem value="faq-3" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">Can I work under Visa Exemption or VOA?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
                       No. Neither Visa Exemption nor Visa on Arrival allows you to work in Thailand.
-                    </p>
-                  </details>
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                  <AccordionItem value="faq-4" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">Can I enter Thailand multiple times on Visa Exemption?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
-                      <p>
-                        Yes, you can enter Thailand multiple times under Visa Exemption, as long as your nationality
-                        is eligible.
-                      </p>
-                      <p>
-                        However, immigration officers have discretion to refuse entry if they believe you are using
-                        visa exemption to live in Thailand long-term rather than for genuine tourism. There is no
-                        officially published annual limit on entries.
-                      </p>
-                      <ul className="list-disc space-y-1 pl-5">
-                        <li>Frequent back-to-back entries may raise questions.</li>
-                        <li>You may be asked to show proof of funds.</li>
-                        <li>You may be asked to show an onward ticket.</li>
-                        <li>You may be asked to show accommodation details.</li>
-                      </ul>
-                    </div>
-                  </details>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                      <div className="space-y-2">
+                        <p>
+                          Yes, you can enter Thailand multiple times under Visa Exemption, as long as your nationality
+                          is eligible.
+                        </p>
+                        <p>
+                          However, immigration officers have discretion to refuse entry if they believe you are using
+                          visa exemption to live in Thailand long-term rather than for genuine tourism. There is no
+                          officially published annual limit on entries.
+                        </p>
+                        <ul className="list-disc space-y-1 pl-5">
+                          <li>Frequent back-to-back entries may raise questions.</li>
+                          <li>You may be asked to show proof of funds.</li>
+                          <li>You may be asked to show an onward ticket.</li>
+                          <li>You may be asked to show accommodation details.</li>
+                        </ul>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
+                  <AccordionItem value="faq-5" className="rounded-2xl border border-slate-200 bg-white px-4">
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
                       <span className="min-w-0">
                         If my passport stamp says 7 August, when do I need to leave Thailand?
                       </span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                      If your permitted stay stamp shows 7 August, you should depart Thailand before 11:59 PM on 7 August.
-                      Do not stay past midnight into 8 August. To reduce risk, leave earlier in the day in case of delays or
-                      checkpoint issues.
-                    </p>
-                  </details>
-                </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                      If your permitted stay stamp shows 7 August, you should depart Thailand before 11:59 PM on 7
+                      August. Do not stay past midnight into 8 August. To reduce risk, leave earlier in the day in
+                      case of delays or checkpoint issues.
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </section>
 
             </div>

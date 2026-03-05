@@ -6,6 +6,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { ArrowLeft, Printer } from "lucide-react";
 import { retirementChecklist } from "@/lib/data/checklists/retirement-extension-checklist";
 import type { ChecklistItem } from "@/lib/data/checklists/types";
@@ -436,42 +442,34 @@ export default function RetirementVisaPage() {
         </Card>
 
         <div className="mt-6 print:hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="text-lg font-extrabold text-slate-900">FAQ</div>
-          <div className="mt-3 space-y-3">
-            <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-              <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-sm font-bold text-slate-900 sm:text-base">
+          <div className="text-lg font-extrabold text-slate-900">Frequently Asked Questions</div>
+          <Accordion type="single" collapsible className="mt-3 space-y-3">
+            <AccordionItem value="faq-1" className="rounded-2xl border border-slate-200 bg-white px-4">
+              <AccordionTrigger className="text-left text-sm font-bold text-slate-900 hover:no-underline sm:text-base">
                 <span className="min-w-0">
                   How far in advance can I apply for a retirement extension at Chaeng Wattana?
                 </span>
-                <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                  +
-                </span>
-              </summary>
-              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+              </AccordionTrigger>
+              <AccordionContent className="text-sm leading-relaxed text-slate-700">
                 At Chaeng Wattana (Immigration Division 1), a common rule is that you can apply when you have 45
-                days or less remaining on your current stamp. Office practice can change, so confirm with the
-                office before you go.
-              </p>
-            </details>
+                days or less remaining on your current stamp. Office practice can change, so confirm with the office
+                before you go.
+              </AccordionContent>
+            </AccordionItem>
 
-            <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-              <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-sm font-bold text-slate-900 sm:text-base">
-                <span className="min-w-0">
-                  What if my passport has less than one year remaining?
-                </span>
-                <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                  +
-                </span>
-              </summary>
-              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+            <AccordionItem value="faq-2" className="rounded-2xl border border-slate-200 bg-white px-4">
+              <AccordionTrigger className="text-left text-sm font-bold text-slate-900 hover:no-underline sm:text-base">
+                <span className="min-w-0">What if my passport has less than one year remaining?</span>
+              </AccordionTrigger>
+              <AccordionContent className="text-sm leading-relaxed text-slate-700">
                 Immigration will only grant your one-year Non-Immigrant O (Retirement) extension up to your
                 passport&apos;s expiry date. If your passport has less than 12 months remaining at the time of
                 application, your extension will be shortened to match the remaining validity. For this reason, it is
                 advisable to renew your passport before applying if it has less than one year remaining. Also note
                 that many countries require at least 6 months of passport validity for international travel.
-              </p>
-            </details>
-          </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
 

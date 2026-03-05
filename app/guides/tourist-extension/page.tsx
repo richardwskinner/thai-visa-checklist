@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { ExternalLink, PlusCircle } from "lucide-react";
 import type { Metadata } from "next";
 import ExampleLink from "@/components/example-link";
@@ -15,9 +21,53 @@ export const metadata: Metadata = {
 const TM7_FORM =
   "https://www.immigration.go.th/wp-content/uploads/2022/10/4.คำขออนุญาตเพื่ออยู่ในราชอาณาจักรเป็นการชั่วคราวต่อไป-ตม.7.pdf";
 
+const FAQS = [
+  {
+    question: "Does the extension start from the approval date?",
+    answer:
+      "No. The 30-day extension begins from your original expiry date, not from the date you apply.",
+  },
+  {
+    question: "When should I apply?",
+    answer:
+      "You must apply before your current permitted stay expires. It is common to apply in the final week before expiry.",
+  },
+  {
+    question: "Can I extend more than once?",
+    answer:
+      "No. You can normally only receive one 30-day extension per entry. If you want to stay longer, you will need to leave Thailand and re-enter or apply for a different visa.",
+  },
+  {
+    question: "How much does a tourist visa extension cost?",
+    answer: "The fee is 1,900 THB, payable at the immigration office (cash).",
+  },
+  {
+    question: "If my passport stamp says 7 August, when do I need to leave Thailand?",
+    answer:
+      "If your permitted stay stamp shows 7 August, you should depart Thailand before 11:59 PM on 7 August. Do not stay past midnight into 8 August. To reduce risk, leave earlier in the day in case of delays or checkpoint issues.",
+  },
+] as const;
+
 export default function TouristExtensionPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-[#eef3fb]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="mx-auto w-full max-w-5xl px-5">
 
         <div className="pt-8">
@@ -156,74 +206,23 @@ export default function TouristExtensionPage() {
               </section>
 
               <section>
-                <h2 className="text-xl font-extrabold text-slate-900">FAQ</h2>
-                <div className="mt-4 space-y-3">
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
-                      <span className="min-w-0">Does the extension start from the approval date?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
-                      <p>No. The 30-day extension begins from your original expiry date, not from the date you apply.
-                      </p>
-                    </div>
-                  </details>
-
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
-                      <span className="min-w-0">When should I apply?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
-                      <p>You must apply before your current permitted stay expires. It is common to apply in the final week before expiry.</p>
-                    </div>
-                  </details>
-
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
-                      <span className="min-w-0">Can I extend more than once?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
-                      <p>No. You can normally only receive one 30-day extension per entry. If you want to stay longer, you will need to leave Thailand and re-enter or apply for a different visa.
-                      </p>
-                    </div>
-                  </details>
-
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
-                      <span className="min-w-0">How much does a tourist visa extension cost?</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                      The fee is 1,900 THB, payable at the immigration office (cash).
-                    </p>
-                  </details>
-
-                  <details className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
-                      <span className="min-w-0">
-                        If my passport stamp says 7 August, when do I need to leave Thailand?
-                      </span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                      If your permitted stay stamp shows 7 August, you should depart Thailand before 11:59 PM on 7 August.
-                      Do not stay past midnight into 8 August. To reduce risk, leave earlier in the day in case of delays or
-                      checkpoint issues.
-                    </p>
-                  </details>
-                </div>
+                <h2 className="text-xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+                <Accordion type="single" collapsible className="mt-4 space-y-3">
+                  {FAQS.map((faq, idx) => (
+                    <AccordionItem
+                      key={faq.question}
+                      value={`faq-${idx + 1}`}
+                      className="rounded-2xl border border-slate-200 bg-white px-4"
+                    >
+                      <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
+                        <span className="min-w-0">{faq.question}</span>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                        {faq.answer}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </section>
 
               {/* Good to know */}
