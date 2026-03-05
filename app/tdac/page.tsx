@@ -65,9 +65,9 @@ export default function TDACPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="mx-auto w-full max-w-5xl px-5">
+      <div className="mx-auto w-full max-w-5xl overflow-hidden px-4 sm:px-5">
         {/* Top actions */}
-        <div className="flex items-center gap-2 pt-8 md:justify-between md:gap-3">
+        <div className="flex items-center gap-2 pt-6 sm:pt-8 md:justify-between md:gap-3">
           <div className="flex-1 md:flex-none">
             <GuideBackButton fallbackHref="/" fallbackLabel="Back to Home" />
           </div>
@@ -79,7 +79,7 @@ export default function TDACPage() {
         </div>
 
         {/* Main content */}
-        <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm">
+        <Card className="mt-4 rounded-3xl border-0 bg-white shadow-sm sm:mt-6">
           <CardContent className="p-10">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div className="flex items-center gap-3">

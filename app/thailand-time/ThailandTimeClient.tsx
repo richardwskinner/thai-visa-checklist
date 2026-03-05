@@ -61,15 +61,6 @@ const CITY_TIMEZONES = [
   { label: "Zurich", zone: "Europe/Zurich" },
 ] as const;
 
-const WORLD_COMPARISON_CITIES = [
-  { label: "Bangkok", zone: "Asia/Bangkok" },
-  { label: "London", zone: "Europe/London" },
-  { label: "Dubai", zone: "Asia/Dubai" },
-  { label: "Tokyo", zone: "Asia/Tokyo" },
-  { label: "New York", zone: "America/New_York" },
-  { label: "Sydney", zone: "Australia/Sydney" },
-] as const;
-
 const DEFAULT_SOURCE = { label: "London", zone: "Europe/London" } as const;
 
 const LOCATION_FLAGS: Record<string, string> = {
@@ -220,17 +211,6 @@ function getTimeZoneOffsetMs(timestamp: number, timeZone: string) {
   );
 
   return asUtc - timestamp;
-}
-
-function formatUtcOffset(timestamp: number, zone: string) {
-  const totalMinutes = Math.round(getTimeZoneOffsetMs(timestamp, zone) / 60000);
-  const sign = totalMinutes >= 0 ? "+" : "-";
-  const abs = Math.abs(totalMinutes);
-  const hours = Math.floor(abs / 60);
-  const minutes = abs % 60;
-  return minutes === 0
-    ? `UTC${sign}${hours}`
-    : `UTC${sign}${hours}:${String(minutes).padStart(2, "0")}`;
 }
 
 function zonedDateTimeToUtcMs(
@@ -460,19 +440,6 @@ export default function ThailandTimeClient({ compact = false }: { compact?: bool
 
       {!compact && (
         <>
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
-            <h2 className="text-xl font-extrabold text-slate-900">World Time Comparison</h2>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {WORLD_COMPARISON_CITIES.map((city) => (
-                <div key={city.label} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                  <div className="text-sm font-semibold text-slate-800">{city.label}</div>
-                  <div className="mt-0.5 text-xs font-medium text-slate-500">{formatUtcOffset(now, city.zone)}</div>
-                  <div className="mt-1 text-xl font-extrabold text-slate-900">{formatTimeForZone(now, city.zone)}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
           <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
             <h2 className="text-xl font-extrabold text-slate-900">Related Tools</h2>
             <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">

@@ -29,27 +29,27 @@ export default function AboutPage() {
   />
 </div>
 
-          <p className="mt-6 text-slate-700 leading-relaxed">
+          <p className="mt-6 text-justify text-slate-700 leading-relaxed">
   Thai Visa Checklist started one morning in a crowded immigration office, holding a numbered ticket, wondering whether one missing document was about to ruin my day.
 </p>
 
-<p className="mt-4 text-slate-700 leading-relaxed">
+<p className="mt-4 text-justify text-slate-700 leading-relaxed">
   I had already been through the process multiple times, yet somehow there was always something missing. A form I didn&apos;t know I needed. A photocopy another office had never asked for. I learned quickly that different immigration offices, and even different officers, can ask for slightly different documents. That uncertainty is what makes the process stressful.
 </p>
 
-<p className="mt-4 text-slate-700 leading-relaxed">
+<p className="mt-4 text-justify text-slate-700 leading-relaxed">
   After almost a decade navigating Thailand’s immigration system firsthand, I stopped relying on memory and built my own master checklist. Not just the minimum requirements, but everything I had ever been asked for.
 </p>
 
-<p className="mt-4 text-slate-700 leading-relaxed">
+<p className="mt-4 text-justify text-slate-700 leading-relaxed">
 I wanted one clear, structured list based on my successful applications and real conversations with immigration officers. Something I could print, place on top of my documents, and tick off one by one so I knew I had everything covered.
 </p>
 
-<p className="mt-6 text-slate-700 leading-relaxed">
+<p className="mt-6 text-justify text-slate-700 leading-relaxed">
   Each checklist is designed so you can print it, and walk into immigration feeling prepared. No scrolling through long blog posts at the counter. No guessing what might be requested. Just a clean, practical checklist that helps reduce the chance of extra trips.
 </p>
 
-<p className="mt-4 text-slate-700 leading-relaxed">
+<p className="mt-4 text-justify text-slate-700 leading-relaxed">
   Thai Visa Checklist was created in 2026. It is completely free to use. No login, no hidden fees, just practical guidance based on real experiences, designed to make visa processes simpler through checklists that enable you to complete the process without an agent.
 </p>
 
