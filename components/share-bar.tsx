@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Link2, Share2 } from "lucide-react";
 import { createRoot } from "react-dom/client";
@@ -115,18 +115,50 @@ export default function ShareBar() {
 
 export function ShareInline() {
   const { copied, links, copyLink, nativeShare } = useShareData();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const canNativeShare =
+    typeof navigator !== "undefined" && typeof navigator.share === "function";
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (!menuRef.current) return;
+      if (!menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") setMenuOpen(false);
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
+  const handlePrimaryShare = async () => {
+    if (canNativeShare) {
+      await nativeShare();
+      return;
+    }
+    setMenuOpen((prev) => !prev);
+  };
 
   return (
     <div className="print:hidden rounded-2xl border border-slate-200/80 bg-white/95 p-2 shadow-sm backdrop-blur">
-      <div className="flex flex-wrap items-center justify-end gap-2">
+      <div className="hidden flex-wrap items-center justify-end gap-2 sm:flex">
         <button
           type="button"
-          onClick={nativeShare}
+          onClick={handlePrimaryShare}
           className="inline-flex items-center gap-1.5 rounded-full bg-slate-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-700"
         >
           <Share2 className="h-3.5 w-3.5" /> Share
         </button>
-        {links.map((item) => (
+        {links.filter((item) => item.shortLabel !== "WA").map((item) => (
           <a
             key={item.label}
             href={item.href}
@@ -144,6 +176,64 @@ export function ShareInline() {
         >
           <Link2 className="h-3.5 w-3.5" /> {copied ? "Copied" : "Copy"}
         </button>
+      </div>
+
+      <div ref={menuRef} className="relative sm:hidden">
+        <button
+          type="button"
+          onClick={handlePrimaryShare}
+          className="inline-flex h-12 items-center gap-2 rounded-2xl bg-slate-600 px-4 text-base font-medium text-white transition hover:bg-slate-700"
+          aria-haspopup="menu"
+          aria-expanded={menuOpen}
+        >
+          <Share2 className="h-5 w-5" /> Share
+        </button>
+
+        {!canNativeShare && menuOpen && (
+          <div
+            className="absolute right-0 top-[calc(100%+0.5rem)] z-50 w-48 rounded-xl border border-slate-200 bg-white p-1.5 shadow-lg"
+            role="menu"
+          >
+            <a
+              href={links[0].href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+              role="menuitem"
+            >
+              WhatsApp
+            </a>
+            <a
+              href={links[1].href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+              role="menuitem"
+            >
+              Facebook
+            </a>
+            <a
+              href={links[2].href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+              role="menuitem"
+            >
+              X
+            </a>
+            <button
+              type="button"
+              onClick={async () => {
+                await copyLink();
+                setMenuOpen(false);
+              }}
+              className="block w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-slate-700 hover:bg-slate-100"
+              role="menuitem"
+            >
+              Copy Link
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -168,14 +258,16 @@ export function ShareInFrame({ scopeId }: { scopeId: string }) {
         '[data-guide-back-button="true"]'
       ) as HTMLElement | null;
       const topActions = backButton?.parentElement as HTMLElement | null;
-      if (!topActions) return;
+      if (!backButton || !topActions) return;
 
+      topActions.classList.remove("flex-col", "items-start", "justify-between");
       if (isDesktop) {
         topActions.classList.add("flex", "items-center", "justify-between", "gap-3");
         mount.className = "print:hidden";
       } else {
-        topActions.classList.add("flex", "flex-col", "items-start", "gap-3");
-        mount.className = "print:hidden";
+        topActions.classList.add("flex", "items-center", "gap-2");
+        backButton.classList.add("flex-1", "justify-center");
+        mount.className = "shrink-0 print:hidden";
       }
 
       topActions.appendChild(mount);

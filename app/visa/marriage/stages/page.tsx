@@ -63,7 +63,7 @@ export default function MarriageStagesPage() {
       <div className="mx-auto w-full max-w-5xl px-4 pt-6 sm:px-5 sm:pt-8">
         <Card className="rounded-3xl border-0 bg-white shadow-sm">
           <CardContent className="p-6 sm:px-10 sm:pb-10 sm:pt-4">
-            <div>
+            <div className="flex justify-center sm:justify-start">
               <Link
                 href="/"
                 className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"

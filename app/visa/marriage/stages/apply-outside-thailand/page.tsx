@@ -180,12 +180,16 @@ export default function MarriageStageOnePage() {
             </Link>
           </Button>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <Button asChild variant="outline" className="h-12 rounded-2xl bg-white px-5 text-base hover:bg-slate-50">
+          <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:gap-3">
+            <Button
+              asChild
+              variant="outline"
+              className="h-11 flex-1 basis-0 rounded-2xl bg-white px-3 text-sm hover:bg-slate-50 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
+            >
               <Link href="/contact">Send feedback</Link>
             </Button>
 
-            <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm">
+            <div className="order-2 basis-full flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm sm:order-none sm:basis-auto">
               <span className="text-sm font-medium text-slate-700">Text Size:</span>
               <div className="flex gap-1">
                 {(["small", "medium", "large"] as const).map((size) => (
@@ -210,7 +214,7 @@ export default function MarriageStageOnePage() {
             <Button
               variant="outline"
               onClick={handleReset}
-              className="h-12 rounded-2xl bg-white px-5 text-base hover:bg-slate-50"
+              className="h-11 flex-1 basis-0 rounded-2xl bg-white px-3 text-sm hover:bg-slate-50 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
             >
               Reset
             </Button>
@@ -223,9 +227,9 @@ export default function MarriageStageOnePage() {
                 });
                 if (!allowed) return;
               }}
-              className="h-12 rounded-2xl bg-pink-600 px-5 text-base hover:bg-pink-700"
+              className="h-11 flex-1 basis-0 rounded-2xl bg-pink-600 px-3 text-sm hover:bg-pink-700 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
             >
-              <Printer className="mr-2 h-5 w-5" /> Print
+              <Printer className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Print
             </Button>
           </div>
         </div>
