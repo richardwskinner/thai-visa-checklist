@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import ThailandTimeClient from "./ThailandTimeClient";
 
 const THAILAND_TIME_URL = "https://thaivisachecklist.com/thailand-time";
@@ -94,19 +100,22 @@ export default function ThailandTimePage() {
 
             <section className="mt-8">
               <h2 className="text-xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <Accordion type="multiple" className="mt-4 grid gap-3 sm:grid-cols-2">
                 {FAQS.map((faq) => (
-                  <details key={faq.question} className="group rounded-2xl border border-slate-200 bg-white px-4 py-3">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-base font-bold text-slate-900">
-                      <span className="min-w-0">{faq.question}</span>
-                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-slate-500 transition group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">{faq.answer}</p>
-                  </details>
+                  <AccordionItem
+                    key={faq.question}
+                    value={faq.question}
+                    className="rounded-2xl border border-slate-200 bg-white px-4"
+                  >
+                    <AccordionTrigger className="text-base font-bold text-slate-900 hover:no-underline">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed text-slate-700">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
                 ))}
-              </div>
+              </Accordion>
             </section>
           </CardContent>
         </Card>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Input } from "@/components/ui/input";
 
 function toIsoDate(date: Date) {
   const y = date.getFullYear();
@@ -99,7 +100,7 @@ export default function ThailandOverstayChecker() {
       <div className="mt-4 grid gap-4 sm:grid-cols-3">
         <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-800">Entry date</span>
-          <input
+          <Input
             type="date"
             lang="en-GB"
             value={entryDate}
@@ -110,7 +111,7 @@ export default function ThailandOverstayChecker() {
 
         <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-800">Stay granted (days)</span>
-          <input
+          <Input
             type="number"
             min={1}
             inputMode="numeric"
@@ -122,7 +123,7 @@ export default function ThailandOverstayChecker() {
 
         <label className="block min-w-0">
           <span className="text-sm font-semibold text-slate-800">Planned departure date</span>
-          <input
+          <Input
             type="date"
             lang="en-GB"
             value={plannedDepartureDate}

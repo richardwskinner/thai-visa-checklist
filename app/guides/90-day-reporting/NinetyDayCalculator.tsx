@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { CalendarDays, CalendarPlus } from "lucide-react";
 import { analytics } from "@/lib/analytics";
+import { Input } from "@/components/ui/input";
 
 function toISODateUTC(d: Date) {
   const yyyy = d.getUTCFullYear();
@@ -153,7 +154,7 @@ export default function NinetyDayCalculator() {
         <div className="mt-4 space-y-4">
           <div className="min-w-0">
             <div className="relative">
-              <input
+              <Input
                 type="date"
                 value={baseDate}
                 onChange={(e) => {

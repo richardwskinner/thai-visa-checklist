@@ -14,7 +14,7 @@ function BackButtonLink({ href, label }: { href: string; label: string }) {
   return (
     <Button
       asChild
-      className="h-12 rounded-2xl bg-slate-600 px-5 text-base font-medium text-white hover:bg-slate-700"
+      className="h-12 rounded-2xl border border-slate-300 bg-white px-5 text-base font-medium text-slate-900 hover:bg-slate-50"
     >
       <Link href={href} data-guide-back-button="true">
         <ArrowLeft className="h-5 w-5" /> {label}

@@ -3,6 +3,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { Clock3, Plane } from "lucide-react";
 import Link from "next/link";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const THAILAND_TIMEZONE = "Asia/Bangkok";
 
@@ -304,45 +312,13 @@ export default function ThailandTimeClient({ compact = false }: { compact?: bool
 
   return (
     <div className="space-y-6">
-      <div className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-red-50 via-white to-blue-50 p-3 sm:p-5">
-        <div className="pointer-events-none absolute inset-0">
-          <svg
-            viewBox="0 0 920 320"
-            aria-hidden="true"
-            className="absolute -left-6 top-0 h-full w-[88%] opacity-10"
-          >
-            <defs>
-              <linearGradient id="thaiRedBand" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#e65b5b" />
-                <stop offset="100%" stopColor="#f08a8a" />
-              </linearGradient>
-              <linearGradient id="thaiBlueBand" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#274aa8" />
-                <stop offset="100%" stopColor="#4b67bb" />
-              </linearGradient>
-              <filter id="softBlur" x="-10%" y="-20%" width="120%" height="140%">
-                <feGaussianBlur stdDeviation="14" />
-              </filter>
-            </defs>
-
-            <path
-              d="M-20 64 C88 28, 196 102, 304 72 C426 34, 538 114, 664 74 C748 46, 832 76, 934 58 L934 104 C842 122, 758 96, 676 122 C560 160, 446 102, 332 138 C220 172, 98 118, -20 150 Z"
-              fill="url(#thaiRedBand)"
-              filter="url(#softBlur)"
-            />
-            <path
-              d="M-20 116 C92 82, 210 154, 320 124 C440 90, 560 166, 682 124 C766 96, 850 128, 934 112 L934 160 C846 176, 760 152, 678 178 C562 214, 446 160, 332 196 C216 230, 94 176, -20 206 Z"
-              fill="#f8fafc"
-              opacity="0.92"
-              filter="url(#softBlur)"
-            />
-            <path
-              d="M-20 174 C88 140, 210 212, 322 182 C442 148, 566 224, 688 182 C770 154, 854 188, 934 170 L934 232 C848 248, 764 224, 682 250 C568 286, 448 234, 334 268 C218 300, 96 252, -20 280 Z"
-              fill="url(#thaiBlueBand)"
-              filter="url(#softBlur)"
-            />
-          </svg>
-        </div>
+      <div
+        className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-cover bg-center bg-no-repeat p-3 sm:p-5"
+        style={{
+          backgroundImage:
+            "linear-gradient(180deg, rgba(248,250,252,0.38), rgba(241,245,249,0.42)), url('/images/thailand-time-bg.png')",
+        }}
+      >
 
         <div className="relative mx-auto max-w-3xl rounded-[28px] bg-gradient-to-r from-[#e25959] via-[#f8fafc] to-[#3558b5] p-[2px] shadow-[0_14px_40px_rgba(15,23,42,0.16)]">
           <div className="rounded-[26px] bg-white/90 px-4 py-4 backdrop-blur-sm sm:px-8 sm:py-5">
@@ -365,18 +341,19 @@ export default function ThailandTimeClient({ compact = false }: { compact?: bool
             Select a source location and any date/time (including future dates) to compare with Thailand.
           </p>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <select
-              value={selectedSourceValue}
-              onChange={(e) => setSelectedSourceValue(e.target.value)}
-              className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
-            >
-              {sourceOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-            <input
+            <Select value={selectedSourceValue} onValueChange={setSelectedSourceValue}>
+              <SelectTrigger className="h-10 w-full rounded-xl border-slate-300 bg-white text-sm text-slate-900">
+                <SelectValue placeholder="Select location" />
+              </SelectTrigger>
+              <SelectContent className="max-h-80">
+                {sourceOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Input
               type="datetime-local"
               value={selectedLocalDateTime}
               onChange={(e) => setSelectedLocalDateTime(e.target.value)}

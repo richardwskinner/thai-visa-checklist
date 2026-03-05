@@ -152,7 +152,7 @@ export default function FormsPage() {
         <div className="pt-6 sm:pt-8">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
+            className="inline-flex items-center gap-2 rounded-2xl border border-slate-300 bg-white px-5 py-3 text-base font-medium text-slate-900 transition hover:bg-slate-50"
           >
             <ArrowLeft className="h-5 w-5" /> Back to Checklists
           </Link>

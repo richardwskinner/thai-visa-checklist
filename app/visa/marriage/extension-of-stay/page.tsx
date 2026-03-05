@@ -334,7 +334,7 @@ export default function MarriageVisaPage() {
       <div className="mx-auto w-full max-w-5xl px-5 print:px-0">
         {/* Top actions */}
         <div className="flex flex-col gap-3 pt-8 print:hidden sm:flex-row sm:items-center sm:justify-between">
-          <Button asChild className="h-12 justify-start rounded-2xl bg-slate-600 px-5 text-base hover:bg-slate-700">
+          <Button asChild className="h-12 justify-start rounded-2xl border border-slate-300 bg-white px-5 text-base text-slate-900 hover:bg-slate-50">
             <Link href="/visa/marriage/stages">
               <ArrowLeft className="mr-2 h-5 w-5" /> Back to Marriage Stages
             </Link>

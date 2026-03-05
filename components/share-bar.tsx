@@ -1,11 +1,22 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import { Link2, Share2 } from "lucide-react";
 import { createRoot } from "react-dom/client";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const SITE_URL = "https://thaivisachecklist.com";
+const SHARE_BUTTON_CLASS =
+  "border border-slate-300 bg-white text-slate-900 hover:bg-slate-50";
 
 function toAbsoluteUrl(pathname: string) {
   return `${SITE_URL}${pathname.startsWith("/") ? pathname : `/${pathname}`}`;
@@ -37,13 +48,13 @@ function useShareData() {
       label: "Facebook",
       shortLabel: "FB",
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-      className: "bg-blue-700 hover:bg-blue-800",
+      className: "border border-slate-300 bg-white text-slate-800 hover:bg-slate-50",
     },
     {
       label: "X",
       shortLabel: "X",
       href: `https://x.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
-      className: "bg-slate-800 hover:bg-slate-900",
+      className: "border border-slate-300 bg-white text-slate-800 hover:bg-slate-50",
     },
   ] as const;
 
@@ -69,8 +80,70 @@ function useShareData() {
   return { copied, links, copyLink, nativeShare };
 }
 
+function ShareNetworkDesktopIcon({ label }: { label: string }) {
+  if (label === "Facebook") {
+    return (
+      <Image
+        src="/resource-logos/facebook-logo.svg"
+        alt="Facebook"
+        width={14}
+        height={14}
+        className="h-3.5 w-3.5"
+      />
+    );
+  }
+  if (label === "X") {
+    return (
+      <Image src="/resource-logos/X-logo.svg" alt="X" width={14} height={14} className="h-3.5 w-3.5" />
+    );
+  }
+  return <>{label}</>;
+}
+
+function FallbackShareMenu({
+  links,
+  copied,
+  copyLink,
+}: {
+  links: ReadonlyArray<{
+    label: string;
+    shortLabel: string;
+    href: string;
+    className: string;
+  }>;
+  copied: boolean;
+  copyLink: () => Promise<void>;
+}) {
+  return (
+    <DropdownMenuContent align="end" className="w-48">
+      {links.map((item) => (
+        <DropdownMenuItem
+          key={item.label}
+          onSelect={(event) => {
+            event.preventDefault();
+            window.open(item.href, "_blank", "noopener,noreferrer");
+          }}
+        >
+          {item.label}
+        </DropdownMenuItem>
+      ))}
+      <DropdownMenuSeparator />
+      <DropdownMenuItem
+        onSelect={(event) => {
+          event.preventDefault();
+          void copyLink();
+        }}
+      >
+        {copied ? "Copied" : "Copy Link"}
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  );
+}
+
 export default function ShareBar() {
   const { copied, links, copyLink, nativeShare } = useShareData();
+  const canNativeShare =
+    typeof navigator !== "undefined" && typeof navigator.share === "function";
 
   return (
     <div className="print:hidden">
@@ -80,31 +153,53 @@ export default function ShareBar() {
             <p className="text-sm font-semibold text-slate-700">Share</p>
 
             <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={nativeShare}
-                className="inline-flex items-center gap-1.5 rounded-full bg-slate-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-700"
-              >
-                <Share2 className="h-3.5 w-3.5" /> Share
-              </button>
-              {links.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold text-white transition ${item.className}`}
+              {canNativeShare ? (
+                <Button
+                  type="button"
+                  onClick={() => void nativeShare()}
+                  className={`h-8 rounded-full px-3 text-xs font-semibold ${SHARE_BUTTON_CLASS}`}
                 >
-                  {item.label}
-                </a>
+                  <Share2 className="h-3.5 w-3.5" /> Share
+                </Button>
+              ) : (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      type="button"
+                      className={`h-8 rounded-full px-3 text-xs font-semibold ${SHARE_BUTTON_CLASS}`}
+                    >
+                      <Share2 className="h-3.5 w-3.5" /> Share
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <FallbackShareMenu
+                    links={links}
+                    copied={copied}
+                    copyLink={copyLink}
+                  />
+                </DropdownMenu>
+              )}
+              {links.map((item) => (
+                <Button
+                  key={item.label}
+                  asChild
+                  className={`h-8 rounded-full px-3 text-xs font-semibold text-white transition ${item.className}`}
+                >
+                  <a href={item.href} target="_blank" rel="noopener noreferrer">
+                    <span className="sm:hidden">{item.label}</span>
+                    <span className="hidden sm:inline-flex sm:items-center sm:justify-center">
+                      <ShareNetworkDesktopIcon label={item.label} />
+                    </span>
+                  </a>
+                </Button>
               ))}
-              <button
+              <Button
                 type="button"
-                onClick={copyLink}
-                className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+                variant="outline"
+                onClick={() => void copyLink()}
+                className="h-8 rounded-full border-slate-300 bg-white px-3 text-xs font-semibold text-slate-700 hover:bg-slate-50"
               >
                 <Link2 className="h-3.5 w-3.5" /> {copied ? "Copied" : "Copy link"}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -115,126 +210,77 @@ export default function ShareBar() {
 
 export function ShareInline() {
   const { copied, links, copyLink, nativeShare } = useShareData();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement | null>(null);
   const canNativeShare =
     typeof navigator !== "undefined" && typeof navigator.share === "function";
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (!menuRef.current) return;
-      if (!menuRef.current.contains(event.target as Node)) {
-        setMenuOpen(false);
-      }
-    }
-
-    function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") setMenuOpen(false);
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleEscape);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, []);
-
-  const handlePrimaryShare = async () => {
-    if (canNativeShare) {
-      await nativeShare();
-      return;
-    }
-    setMenuOpen((prev) => !prev);
-  };
 
   return (
     <div className="print:hidden">
       <div className="hidden flex-wrap items-center justify-end gap-2 sm:flex">
-        <button
-          type="button"
-          onClick={handlePrimaryShare}
-          className="inline-flex items-center gap-1.5 rounded-full bg-slate-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-700"
-        >
-          <Share2 className="h-3.5 w-3.5" /> Share
-        </button>
-        {links.filter((item) => item.shortLabel !== "WA").map((item) => (
-          <a
-            key={item.label}
-            href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold text-white transition ${item.className}`}
+        {canNativeShare ? (
+          <Button
+            type="button"
+            onClick={() => void nativeShare()}
+            className={`h-8 rounded-full px-3 text-xs font-semibold ${SHARE_BUTTON_CLASS}`}
           >
-            {item.shortLabel}
-          </a>
+            <Share2 className="h-3.5 w-3.5" /> Share
+          </Button>
+        ) : (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                type="button"
+                className={`h-8 rounded-full px-3 text-xs font-semibold ${SHARE_BUTTON_CLASS}`}
+              >
+                <Share2 className="h-3.5 w-3.5" /> Share
+              </Button>
+            </DropdownMenuTrigger>
+            <FallbackShareMenu links={links} copied={copied} copyLink={copyLink} />
+          </DropdownMenu>
+        )}
+        {links.filter((item) => item.shortLabel !== "WA").map((item) => (
+          <Button
+            key={item.label}
+            asChild
+            className={`h-8 rounded-full px-3 text-xs font-semibold text-white transition ${item.className}`}
+          >
+            <a href={item.href} target="_blank" rel="noopener noreferrer">
+              <span className="inline-flex items-center justify-center">
+                <ShareNetworkDesktopIcon label={item.label} />
+              </span>
+            </a>
+          </Button>
         ))}
-        <button
+        <Button
           type="button"
-          onClick={copyLink}
-          className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+          variant="outline"
+          onClick={() => void copyLink()}
+          className="h-8 rounded-full border-slate-300 bg-white px-3 text-xs font-semibold text-slate-700 hover:bg-slate-50"
         >
           <Link2 className="h-3.5 w-3.5" /> {copied ? "Copied" : "Copy"}
-        </button>
+        </Button>
       </div>
 
-      <div ref={menuRef} className="relative sm:hidden">
-        <button
+      {canNativeShare ? (
+        <Button
           type="button"
-          onClick={handlePrimaryShare}
-          className="inline-flex h-12 items-center gap-2 rounded-2xl bg-slate-600 px-4 text-base font-medium text-white transition hover:bg-slate-700"
-          aria-haspopup="menu"
-          aria-expanded={menuOpen}
+          onClick={() => void nativeShare()}
+          className={`h-12 rounded-2xl px-4 text-base font-medium ${SHARE_BUTTON_CLASS} sm:hidden`}
         >
           <Share2 className="h-5 w-5" /> Share
-        </button>
-
-        {!canNativeShare && menuOpen && (
-          <div
-            className="absolute right-0 top-[calc(100%+0.5rem)] z-50 w-48 rounded-xl border border-slate-200 bg-white p-1.5 shadow-lg"
-            role="menu"
-          >
-            <a
-              href={links[0].href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-              role="menuitem"
-            >
-              WhatsApp
-            </a>
-            <a
-              href={links[1].href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-              role="menuitem"
-            >
-              Facebook
-            </a>
-            <a
-              href={links[2].href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-              role="menuitem"
-            >
-              X
-            </a>
-            <button
+        </Button>
+      ) : (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
               type="button"
-              onClick={async () => {
-                await copyLink();
-                setMenuOpen(false);
-              }}
-              className="block w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-slate-700 hover:bg-slate-100"
-              role="menuitem"
+              className={`h-12 rounded-2xl px-4 text-base font-medium ${SHARE_BUTTON_CLASS} sm:hidden`}
             >
-              Copy Link
-            </button>
-          </div>
-        )}
-      </div>
+              <Share2 className="h-5 w-5" /> Share
+            </Button>
+          </DropdownMenuTrigger>
+          <FallbackShareMenu links={links} copied={copied} copyLink={copyLink} />
+        </DropdownMenu>
+      )}
     </div>
   );
 }

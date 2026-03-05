@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { Input } from "@/components/ui/input";
 
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
@@ -53,7 +54,7 @@ export default function ContactPage() {
                 <label className="block text-sm font-semibold text-slate-700">
                   Name
                 </label>
-                <input
+                <Input
                   name="name"
                   type="text"
                   autoComplete="name"
@@ -66,7 +67,7 @@ export default function ContactPage() {
                 <label className="block text-sm font-semibold text-slate-700">
                   Email
                 </label>
-                <input
+                <Input
                   name="email"
                   type="email"
                   autoComplete="email"

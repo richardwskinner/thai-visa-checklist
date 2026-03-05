@@ -53,7 +53,13 @@ const postExtensionStages = [
     stage: 5,
     title: "Re-Entry Permit",
     description: "Get a re-entry permit before leaving Thailand to keep your visa valid.",
-    href: "/guides/re-entry-permit",
+    href: {
+      pathname: "/guides/re-entry-permit",
+      query: {
+        returnTo: "/visa/marriage/stages",
+        returnLabel: "Back to Marriage Visa Stages",
+      },
+    },
   },
 ];
 
@@ -66,7 +72,7 @@ export default function MarriageStagesPage() {
             <div className="flex justify-center sm:justify-start">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 rounded-2xl bg-slate-600 px-5 py-3 text-base font-medium text-white transition hover:bg-slate-700"
+                className="inline-flex items-center gap-2 rounded-2xl border border-slate-300 bg-white px-5 py-3 text-base font-medium text-slate-900 transition hover:bg-slate-50"
               >
                 <ArrowLeft className="h-5 w-5" /> Back to Visa Selection
               </Link>

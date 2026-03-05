@@ -7,7 +7,15 @@ import {
   nationalityOptions,
   VISA_ELIGIBILITY_SOURCES,
 } from "@/lib/data/thai-visa-eligibility";
-import { Calendar, Check, ChevronDown, ExternalLink } from "lucide-react";
+import { Check, ExternalLink } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const NATIONALITY_TO_ISO: Record<string, string> = {
   Albania: "AL",
@@ -27,6 +35,7 @@ const NATIONALITY_TO_ISO: Record<string, string> = {
   Cambodia: "KH",
   Canada: "CA",
   China: "CN",
+  Chile: "CL",
   Colombia: "CO",
   "Costa Rica": "CR",
   Croatia: "HR",
@@ -36,8 +45,10 @@ const NATIONALITY_TO_ISO: Record<string, string> = {
   Denmark: "DK",
   Dominica: "DM",
   "Dominican Republic": "DO",
+  "El Salvador": "SV",
   Ecuador: "EC",
   Estonia: "EE",
+  Ethiopia: "ET",
   Fiji: "FJ",
   Finland: "FI",
   France: "FR",
@@ -57,6 +68,8 @@ const NATIONALITY_TO_ISO: Record<string, string> = {
   Japan: "JP",
   Jordan: "JO",
   Kazakhstan: "KZ",
+  "Korea (ROK)": "KR",
+  Kosovo: "XK",
   Kuwait: "KW",
   Kyrgyzstan: "KG",
   Laos: "LA",
@@ -73,19 +86,27 @@ const NATIONALITY_TO_ISO: Record<string, string> = {
   Monaco: "MC",
   Mongolia: "MN",
   Morocco: "MA",
+  Myanmar: "MM",
+  Namibia: "NA",
+  Nauru: "NR",
   Netherlands: "NL",
   "New Zealand": "NZ",
   Norway: "NO",
   Oman: "OM",
   Panama: "PA",
+  Paraguay: "PY",
+  "Papua New Guinea": "PG",
   Peru: "PE",
   Philippines: "PH",
   Poland: "PL",
   Portugal: "PT",
   Qatar: "QA",
   Romania: "RO",
+  Russia: "RU",
   "San Marino": "SM",
   "Saudi Arabia": "SA",
+  Serbia: "RS",
+  Seychelles: "SC",
   Singapore: "SG",
   Slovakia: "SK",
   Slovenia: "SI",
@@ -96,15 +117,20 @@ const NATIONALITY_TO_ISO: Record<string, string> = {
   Sweden: "SE",
   Switzerland: "CH",
   Taiwan: "TW",
+  "Timor-Leste": "TL",
+  Tunisia: "TN",
   Tonga: "TO",
   "Trinidad and Tobago": "TT",
   Turkey: "TR",
+  "Türkiye": "TR",
+  UAE: "AE",
   Ukraine: "UA",
   "United Arab Emirates": "AE",
   "United Kingdom": "GB",
   USA: "US",
   Uruguay: "UY",
   Uzbekistan: "UZ",
+  Vanuatu: "VU",
   Venezuela: "VE",
   Vietnam: "VN",
 };
@@ -210,8 +236,16 @@ export default function ThailandVisaNeedChecker() {
         : "border-rose-200 bg-rose-50 text-rose-900";
 
   return (
-    <section className="max-w-full overflow-hidden rounded-3xl border border-blue-200/90 bg-gradient-to-b from-[#cfe5ff] via-[#deebfb] to-[#d7e7fb] p-3 shadow-[0_14px_34px_rgba(30,58,138,0.12)] sm:p-5">
-      <div className="rounded-3xl border border-white/70 bg-white/75 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur sm:p-6">
+    <section
+      className="relative max-w-full overflow-hidden rounded-[34px] border border-blue-200/90 bg-no-repeat p-3 shadow-[0_16px_36px_rgba(30,58,138,0.14)] sm:p-5"
+      style={{
+        backgroundImage:
+          "linear-gradient(180deg, rgba(207,229,255,0.78), rgba(222,235,251,0.82), rgba(215,231,251,0.86)), url('/thailand-visa-bg.png')",
+        backgroundPosition: "center",
+        backgroundSize: "100% 100%",
+      }}
+    >
+      <div className="relative rounded-3xl border border-blue-100/80 bg-white/82 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur sm:p-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Thailand Visa Eligibility</h2>
           <div className="inline-flex items-center gap-2 text-sm text-slate-600 sm:text-right">
@@ -223,20 +257,18 @@ export default function ThailandVisaNeedChecker() {
         <div className="mt-4 grid gap-4">
           <label className="block min-w-0">
             <span className="text-sm font-semibold text-slate-700">Passport nationality</span>
-            <div className="relative mt-1 min-w-0">
-              <select
-                value={nationality}
-                onChange={(e) => setNationality(e.target.value)}
-                className="block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-blue-200 bg-white px-3 py-2 pr-10 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
-              >
+            <Select value={nationality} onValueChange={setNationality}>
+              <SelectTrigger className="mt-1 h-10 w-full rounded-2xl border-blue-200 bg-white text-sm text-slate-900 shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100">
+                <SelectValue placeholder="Select nationality" />
+              </SelectTrigger>
+              <SelectContent className="max-h-80">
                 {nationalityOptions.map((option) => (
-                  <option key={option} value={option}>
+                  <SelectItem key={option} value={option}>
                     {getNationalityFlag(option)} {option}
-                  </option>
+                  </SelectItem>
                 ))}
-              </select>
-              <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-blue-500" />
-            </div>
+              </SelectContent>
+            </Select>
             <p className="mt-2 text-xs leading-relaxed text-slate-600">
               If your country is not listed here, you will likely need a visa before travelling and should
               check with your local Thai embassy.
@@ -246,30 +278,24 @@ export default function ThailandVisaNeedChecker() {
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block min-w-0">
               <span className="text-sm font-semibold text-slate-700">Planned entry date</span>
-              <div className="relative">
-                <input
-                  type="date"
-                  lang="en-GB"
-                  value={entryDate}
-                  onChange={(e) => setEntryDate(e.target.value)}
-                  className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-blue-200 bg-white px-3 py-2 pr-10 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
-                />
-                <Calendar className="pointer-events-none absolute right-3 top-1/2 mt-0.5 h-4 w-4 -translate-y-1/2 text-slate-400" />
-              </div>
+              <Input
+                type="date"
+                lang="en-GB"
+                value={entryDate}
+                onChange={(e) => setEntryDate(e.target.value)}
+                className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-blue-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+              />
             </label>
 
             <label className="block min-w-0">
               <span className="text-sm font-semibold text-slate-700">Planned departure date</span>
-              <div className="relative">
-                <input
-                  type="date"
-                  lang="en-GB"
-                  value={departureDate}
-                  onChange={(e) => setDepartureDate(e.target.value)}
-                  className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-blue-200 bg-white px-3 py-2 pr-10 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
-                />
-                <Calendar className="pointer-events-none absolute right-3 top-1/2 mt-0.5 h-4 w-4 -translate-y-1/2 text-slate-400" />
-              </div>
+              <Input
+                type="date"
+                lang="en-GB"
+                value={departureDate}
+                onChange={(e) => setDepartureDate(e.target.value)}
+                className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-blue-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+              />
             </label>
           </div>
         </div>
