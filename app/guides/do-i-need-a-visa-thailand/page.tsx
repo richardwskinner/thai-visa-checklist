@@ -24,8 +24,8 @@ export default function DoINeedAVisaThailandPage() {
           <CardContent className="p-4 sm:p-10">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-violet-100">
-                  <Globe2 className="h-6 w-6 text-violet-700" />
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100">
+                  <Globe2 className="h-6 w-6 text-emerald-700" />
                 </div>
                 <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
                   Do I Need a Visa for Thailand?
@@ -37,18 +37,18 @@ export default function DoINeedAVisaThailandPage() {
                   href="https://thaievisa.go.th/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-violet-600 px-6 py-3 text-base font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-violet-700 hover:shadow-lg"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3 text-base font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-lg"
                 >
                   Official Thai e-Visa <ExternalLink className="h-4.5 w-4.5" />
                 </a>
               </div>
             </div>
 
-            <div className="mt-6 rounded-2xl border border-violet-200 bg-violet-50 p-5 sm:p-6">
-              <p className="text-base font-semibold text-violet-900 sm:text-lg">
+            <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-5 sm:p-6">
+              <p className="text-base font-semibold text-emerald-900 sm:text-lg">
                 Enter your travel dates and nationality to see if you&apos;re visa-exempt, or if you need a visa.
               </p>
-              <p className="mt-3 text-sm text-violet-900/80">
+              <p className="mt-3 text-sm text-emerald-900/80">
                 This tool provides general guidance only. Visa rules, permitted stay lengths, and entry conditions are
                 set by Thai immigration authorities and may change at any time. It does not replace up-to-date
                 information from your local Thai embassy or consulate.
@@ -70,7 +70,7 @@ export default function DoINeedAVisaThailandPage() {
                       href={VISA_ELIGIBILITY_SOURCES.klEmbassyVisaHub}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-semibold text-violet-700 underline underline-offset-2"
+                      className="font-semibold text-emerald-700 underline underline-offset-2"
                     >
                       source
                     </a>

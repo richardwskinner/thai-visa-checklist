@@ -62,7 +62,7 @@ export default function HomeVisaGrid() {
       <Link
         href="/tdac"
         onClick={() => analytics.trackHomepageSelect("tdac", "/tdac")}
-        className={`${cardBaseClass} bg-gradient-to-r from-[#1A73E8] via-[#2B7DE9] to-[#3AA0FF]`}
+        className={`${cardBaseClass} bg-gradient-to-r from-[#F59E0B] via-[#FBBF24] to-[#FCD34D]`}
       >
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-10 top-14 h-28 w-28 rounded-full bg-sky-300/35 blur-2xl" />
@@ -87,7 +87,7 @@ export default function HomeVisaGrid() {
         onClick={() =>
           analytics.trackHomepageSelect("do-i-need-a-visa", "/guides/do-i-need-a-visa-thailand")
         }
-        className={`${cardBaseClass} bg-[#7C3AED]`}
+        className={`${cardBaseClass} bg-[#0F9D58]`}
       >
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-10 top-14 h-28 w-28 rounded-full bg-sky-300/35 blur-2xl" />

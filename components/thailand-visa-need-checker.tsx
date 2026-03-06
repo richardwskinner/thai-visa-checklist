@@ -237,19 +237,19 @@ export default function ThailandVisaNeedChecker() {
 
   return (
     <section
-      className="relative max-w-full overflow-hidden rounded-[34px] border border-violet-200/90 bg-no-repeat p-3 shadow-[0_16px_36px_rgba(124,58,237,0.14)] sm:p-5"
+      className="relative max-w-full overflow-hidden rounded-[34px] border border-emerald-200/90 bg-no-repeat p-3 shadow-[0_16px_36px_rgba(5,150,105,0.14)] sm:p-5"
       style={{
         backgroundImage:
-          "linear-gradient(180deg, rgba(237,233,254,0.8), rgba(243,232,255,0.85), rgba(245,240,255,0.9)), url('/thailand-visa-bg.png')",
+          "linear-gradient(180deg, rgba(220,252,231,0.8), rgba(236,253,245,0.85), rgba(240,253,250,0.9)), url('/thailand-visa-bg.png')",
         backgroundPosition: "center",
         backgroundSize: "100% 100%",
       }}
     >
-      <div className="relative rounded-3xl border border-violet-100/80 bg-white/82 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur sm:p-6">
+      <div className="relative rounded-3xl border border-emerald-100/80 bg-white/82 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur sm:p-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Thailand Visa Eligibility</h2>
           <div className="inline-flex items-center gap-2 text-sm text-slate-600 sm:text-right">
-            <Check className="h-4 w-4 text-violet-600" />
+            <Check className="h-4 w-4 text-emerald-600" />
             Official data • Checked {DATASET_LAST_CHECKED}
           </div>
         </div>
@@ -258,7 +258,7 @@ export default function ThailandVisaNeedChecker() {
           <label className="block min-w-0">
             <span className="text-sm font-semibold text-slate-700">Passport nationality</span>
             <Select value={nationality} onValueChange={setNationality}>
-              <SelectTrigger className="mt-1 h-10 w-full rounded-2xl border-violet-200 bg-white text-sm text-slate-900 shadow-sm focus:border-violet-400 focus:ring-2 focus:ring-violet-100">
+              <SelectTrigger className="mt-1 h-10 w-full rounded-2xl border-emerald-200 bg-white text-sm text-slate-900 shadow-sm focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100">
                 <SelectValue placeholder="Select nationality" />
               </SelectTrigger>
               <SelectContent className="max-h-80">
@@ -283,7 +283,7 @@ export default function ThailandVisaNeedChecker() {
                 lang="en-GB"
                 value={entryDate}
                 onChange={(e) => setEntryDate(e.target.value)}
-                className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-violet-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
+                className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-emerald-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
               />
             </label>
 
@@ -294,7 +294,7 @@ export default function ThailandVisaNeedChecker() {
                 lang="en-GB"
                 value={departureDate}
                 onChange={(e) => setDepartureDate(e.target.value)}
-                className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-violet-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
+                className="mt-1 block w-full min-w-0 max-w-full box-border appearance-none rounded-2xl border border-emerald-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
               />
             </label>
           </div>
@@ -316,7 +316,7 @@ export default function ThailandVisaNeedChecker() {
             type="button"
             onClick={() => hasValidDates && setCheckedSignature(currentSignature)}
             disabled={!hasValidDates}
-            className="inline-flex items-center rounded-full bg-violet-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_10px_20px_rgba(124,58,237,0.28)] transition hover:-translate-y-0.5 hover:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex items-center rounded-full bg-emerald-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_10px_20px_rgba(5,150,105,0.25)] transition hover:-translate-y-0.5 hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Check Eligibility
           </button>
@@ -386,13 +386,13 @@ export default function ThailandVisaNeedChecker() {
             </p>
           </div>
 
-          <div className="mt-3 rounded-xl border border-blue-200 bg-blue-50 p-3 text-sm text-blue-900">
+          <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
             <p>
               <span className="font-semibold">Thailand Digital Arrival Card (TDAC)</span> must be completed before
               arrival.{" "}
               <Link
                 href="/tdac"
-                className="inline-flex items-center rounded-full border border-blue-300 bg-white px-2.5 py-0.5 text-xs font-semibold text-blue-800 hover:border-blue-400 hover:bg-blue-100 hover:text-blue-950"
+                className="inline-flex items-center rounded-full border border-amber-300 bg-white px-2.5 py-0.5 text-xs font-semibold text-amber-800 hover:border-amber-400 hover:bg-amber-100 hover:text-amber-950"
               >
                 Learn more
               </Link>

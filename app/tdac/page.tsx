@@ -89,8 +89,8 @@ export default function TDACPage() {
           <CardContent className="p-10">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100">
-                  <Plane className="h-6 w-6 text-sky-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100">
+                  <Plane className="h-6 w-6 text-amber-700" />
                 </div>
                 <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
                   Thailand Digital Arrival Card (TDAC)
@@ -102,15 +102,15 @@ export default function TDACPage() {
                   href="https://tdac.immigration.go.th"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-sky-600 px-6 py-3 text-base font-bold text-white shadow-md transition hover:bg-sky-700 hover:-translate-y-0.5 hover:shadow-lg"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-amber-500 px-6 py-3 text-base font-bold text-white shadow-md transition hover:bg-amber-600 hover:-translate-y-0.5 hover:shadow-lg"
                 >
                   Submit your TDAC <ExternalLink className="h-4.5 w-4.5" />
                 </a>
               </div>
             </div>
 
-            <div className="mt-6 rounded-2xl bg-sky-50 border border-sky-200 p-6">
-              <p className="text-lg font-semibold text-sky-900">
+            <div className="mt-6 rounded-2xl bg-amber-50 border border-amber-200 p-6">
+              <p className="text-lg font-semibold text-amber-900">
                 Since 1 May 2025, all non-Thai nationals must complete the TDAC online for free before entering Thailand by air, land, or sea. No more paper arrival cards (TM.6).
               </p>
             </div>
@@ -142,7 +142,7 @@ export default function TDACPage() {
                     "Health declaration - List all the countries/territories you have stayed within 2 weeks before arrival",
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-3 text-slate-700">
-                      <div className="h-2 w-2 rounded-full bg-sky-500 shrink-0" />
+                      <div className="h-2 w-2 rounded-full bg-amber-500 shrink-0" />
                       {item}
                     </div>
                   ))}
@@ -203,7 +203,7 @@ export default function TDACPage() {
                   href="https://tdac.immigration.go.th"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-sky-700 underline underline-offset-2 hover:text-sky-800"
+                  className="font-medium text-amber-700 underline underline-offset-2 hover:text-amber-800"
                 >
                   tdac.immigration.go.th
                 </a>
