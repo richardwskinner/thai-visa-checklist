@@ -28,7 +28,7 @@ const stages = [
   },
   {
     stage: 3,
-    title: "1 Year Extension",
+    title: "1 Year Non-Immigrant O Extension",
     description:
       "Extend your Non-O visa for one year based on retirement (age 50+).",
     available: true,
