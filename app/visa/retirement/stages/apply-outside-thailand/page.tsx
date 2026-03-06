@@ -101,7 +101,7 @@ function Section({
   return (
     <div className="mt-6 print:mt-2">
       <div className={`${classes.sectionTitle} font-extrabold text-slate-900`}>{title}</div>
-      <div className="mt-2 h-[3px] w-full rounded-full bg-blue-800 print:mt-1" />
+      <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700 print:mt-1" />
 
       <div className="mt-3 grid gap-2 print:mt-1 print:gap-1">
         {items.map((item) => {
@@ -328,7 +328,7 @@ export default function RetirementStageOnePage() {
                     }}
                     className={`rounded-lg px-3 py-1 text-sm font-medium transition capitalize ${
                       fontSize === size
-                        ? "bg-blue-800 text-white"
+                        ? "bg-blue-700 text-white"
                         : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                     }`}
                   >
@@ -363,7 +363,7 @@ export default function RetirementStageOnePage() {
                 });
                 if (!allowed) return;
               }}
-              className="h-11 flex-1 basis-0 rounded-2xl bg-blue-800 px-3 text-sm hover:bg-blue-900 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
+              className="h-11 flex-1 basis-0 rounded-2xl bg-blue-700 px-3 text-sm hover:bg-blue-800 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
             >
               <Printer className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Print
             </Button>

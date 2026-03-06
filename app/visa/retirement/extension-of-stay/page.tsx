@@ -147,7 +147,7 @@ function Section({
           <span className="ml-2 print:hidden">(Select one)</span>
         )}
       </div>
-      <div className="mt-2 h-[3px] w-full rounded-full bg-blue-800 print:mt-1" />
+      <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700 print:mt-1" />
       {isFinancialSection && financialMethod && onFinancialMethodChange && (
         <div className="mt-4 rounded-2xl border border-blue-200 bg-blue-50 p-4 print:hidden">
           <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
@@ -162,7 +162,7 @@ function Section({
                 onClick={() => onFinancialMethodChange(value)}
                 className={`rounded-full border px-3 py-1.5 text-center text-sm font-medium transition ${
                   financialMethod === value
-                    ? "border-blue-800 bg-blue-800 text-white"
+                    ? "border-blue-700 bg-blue-700 text-white"
                     : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
                 }`}
               >
@@ -458,7 +458,7 @@ export default function RetirementVisaPage() {
                     }}
                     className={`rounded-lg px-3 py-1 text-sm font-medium transition capitalize ${
                       fontSize === size
-                        ? "bg-blue-800 text-white"
+                        ? "bg-blue-700 text-white"
                         : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                     }`}
                   >
@@ -493,7 +493,7 @@ export default function RetirementVisaPage() {
                 });
                 if (!allowed) return;
               }}
-              className="h-11 flex-1 basis-0 rounded-2xl bg-blue-800 px-3 text-sm hover:bg-blue-900 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
+              className="h-11 flex-1 basis-0 rounded-2xl bg-blue-700 px-3 text-sm hover:bg-blue-800 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
             >
               <Printer className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Print
             </Button>
@@ -538,7 +538,7 @@ export default function RetirementVisaPage() {
               <div className={`${fontSizeClasses[fontSize].sectionTitle} font-extrabold text-slate-900`}>
                 Application Forms
               </div>
-              <div className="mt-2 h-[3px] w-full rounded-full bg-blue-800 print:mt-1" />
+              <div className="mt-2 h-[3px] w-full rounded-full bg-blue-700 print:mt-1" />
 
               <label className="mt-4 flex cursor-pointer items-start gap-3 print:gap-2">
                 <Checkbox

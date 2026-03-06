@@ -122,7 +122,7 @@ export default function RetirementStagesPage() {
                     href={s.href!}
                     className="group flex items-center gap-5 rounded-2xl border-2 border-blue-200 bg-blue-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-blue-300"
                   >
-                    <div className="flex h-12 w-3 shrink-0 rounded-full bg-blue-800" />
+                    <div className="flex h-12 w-3 shrink-0 rounded-full bg-blue-700" />
                     <div className="flex-1 min-w-0">
                       <div className="text-lg font-extrabold text-slate-900">
                         {s.title}
@@ -169,7 +169,7 @@ export default function RetirementStagesPage() {
                   href={s.href!}
                   className="group flex items-center gap-5 rounded-2xl border-2 border-blue-200 bg-blue-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-blue-300"
                 >
-                  <div className="flex h-12 w-3 shrink-0 rounded-full bg-blue-800" />
+                  <div className="flex h-12 w-3 shrink-0 rounded-full bg-blue-700" />
                   <div className="flex-1 min-w-0">
                     <div className="text-lg font-extrabold text-slate-900">{s.title}</div>
                     <p className="mt-1 text-sm text-slate-600">{s.description}</p>
@@ -186,7 +186,7 @@ export default function RetirementStagesPage() {
                   href={s.href}
                   className="group flex items-center gap-5 rounded-2xl border-2 border-blue-200 bg-blue-50 p-5 sm:p-6 transition hover:-translate-y-1 hover:shadow-md hover:border-blue-300"
                 >
-                  <div className="flex h-12 w-3 shrink-0 rounded-full bg-blue-800" />
+                  <div className="flex h-12 w-3 shrink-0 rounded-full bg-blue-700" />
                   <div className="flex-1 min-w-0">
                     <div className="text-lg font-extrabold text-slate-900">
                       {s.title}

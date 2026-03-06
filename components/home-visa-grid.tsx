@@ -5,16 +5,16 @@ import { VISAS } from "@/lib/data/visas";
 import { analytics } from "@/lib/analytics";
 
 const homeCardBackgrounds: Record<string, string> = {
-  marriage: "bg-gradient-to-r from-pink-500 via-pink-600 to-fuchsia-700",
-  retirement: "bg-gradient-to-r from-slate-700 via-blue-800 to-blue-900",
-  business: "bg-gradient-to-br from-indigo-600 to-indigo-700",
-  education: "bg-gradient-to-br from-emerald-600 to-green-700",
+  marriage: "bg-gradient-to-br from-[#ec4899] via-[#db2777] to-[#be185d]",
+  retirement: "bg-[#1A73E8]",
+  business: "bg-gradient-to-br from-[#5E35B1] via-[#3949AB] to-[#1E88E5]",
+  education: "bg-gradient-to-br from-[#0F9D58] via-[#1DBF73] to-[#26A69A]",
 };
 
 export default function HomeVisaGrid() {
   const hiddenVisaSlugs = new Set(["business", "education"]);
   const cardBaseClass =
-    "group relative overflow-hidden rounded-[2rem] border border-white/35 px-7 py-7 text-left text-white shadow-[0_20px_50px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.25)] transition hover:-translate-y-0.5 hover:shadow-[0_24px_58px_rgba(15,23,42,0.24),inset_0_1px_0_rgba(255,255,255,0.3)]";
+    "group relative overflow-hidden rounded-[2rem] border border-white/40 px-7 py-7 text-left text-white shadow-[0_18px_44px_rgba(15,23,42,0.16),inset_0_1px_0_rgba(255,255,255,0.28)] transition hover:-translate-y-0.5 hover:shadow-[0_24px_54px_rgba(15,23,42,0.22),inset_0_1px_0_rgba(255,255,255,0.34)]";
 
   return (
     <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -62,7 +62,7 @@ export default function HomeVisaGrid() {
       <Link
         href="/tdac"
         onClick={() => analytics.trackHomepageSelect("tdac", "/tdac")}
-        className={`${cardBaseClass} bg-gradient-to-r from-sky-600 via-blue-700 to-blue-800`}
+        className={`${cardBaseClass} bg-gradient-to-r from-[#1A73E8] via-[#2B7DE9] to-[#3AA0FF]`}
       >
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-10 top-14 h-28 w-28 rounded-full bg-sky-300/35 blur-2xl" />
@@ -87,7 +87,7 @@ export default function HomeVisaGrid() {
         onClick={() =>
           analytics.trackHomepageSelect("do-i-need-a-visa", "/guides/do-i-need-a-visa-thailand")
         }
-        className={`${cardBaseClass} bg-gradient-to-r from-indigo-700 via-violet-700 to-violet-600`}
+        className={`${cardBaseClass} bg-[#7C3AED]`}
       >
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-10 top-14 h-28 w-28 rounded-full bg-sky-300/35 blur-2xl" />
