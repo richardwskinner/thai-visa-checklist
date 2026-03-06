@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 
@@ -48,8 +47,7 @@ export default function ContactPage() {
             onSubmit={handleSubmit}
             className="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg"
           >
-            <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-start">
-              <div className="order-2 space-y-6 md:order-1">
+            <div className="space-y-6">
               <div>
                 <label className="block text-sm font-semibold text-slate-700">
                   Name
@@ -85,18 +83,6 @@ export default function ContactPage() {
                   rows={4}
                   required
                   className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-slate-400"
-                />
-              </div>
-              </div>
-
-              <div className="order-1 flex justify-center md:order-2 md:justify-end md:pt-2">
-                <Image
-                  src="/images/mail-box.png"
-                  alt="Traditional red Thai post box"
-                  width={170}
-                  height={285}
-                  className="h-auto w-[160px] md:h-[360px] md:w-auto"
-                  priority
                 />
               </div>
             </div>

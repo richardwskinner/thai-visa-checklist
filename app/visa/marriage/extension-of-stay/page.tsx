@@ -18,6 +18,7 @@ import type { ChecklistItem } from "@/lib/data/checklists/types";
 import { analytics } from "@/lib/analytics";
 import ChecklistRequirementsDisclaimer from "@/components/checklist-requirements-disclaimer";
 import ChecklistCustomizedBadge from "@/components/checklist-customized-badge";
+import ResetChecklistDialog from "@/components/reset-checklist-dialog";
 import ExampleLink from "@/components/example-link";
 import PrintChecklistHeader from "@/components/print-checklist-header";
 import { allowPrintWithEmailGate } from "@/lib/print-email-gate";
@@ -293,6 +294,7 @@ export default function MarriageVisaPage() {
     if (saved === "income") return "thai-income";
     return "bank";
   });
+  const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
 
   const classes = fontSizeClasses[fontSize];
   const {
@@ -348,11 +350,9 @@ export default function MarriageVisaPage() {
   };
 
   const handleReset = () => {
-    if (window.confirm("Reset checklist progress and customisations? This cannot be undone.")) {
-      setChecked({});
-      resetCustomizations();
-      analytics.trackReset('marriage');
-    }
+    setChecked({});
+    resetCustomizations();
+    analytics.trackReset('marriage');
   };
 
   const filteredSections = useMemo<ChecklistSectionWithKeys[]>(
@@ -484,7 +484,7 @@ export default function MarriageVisaPage() {
 
             <Button
               variant="outline"
-              onClick={handleReset}
+              onClick={() => setIsResetDialogOpen(true)}
               className="h-11 flex-1 basis-0 rounded-2xl bg-white px-3 text-sm hover:bg-slate-50 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
             >
               Reset
@@ -504,6 +504,12 @@ export default function MarriageVisaPage() {
             </Button>
           </div>
         </div>
+        <ResetChecklistDialog
+          open={isResetDialogOpen}
+          onOpenChange={setIsResetDialogOpen}
+          onConfirm={handleReset}
+          tone="pink"
+        />
 
         <div className="mt-6 print:hidden">
           {isCustomizeMode && (

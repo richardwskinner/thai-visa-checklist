@@ -10,6 +10,7 @@ import { ArrowLeft, Printer } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 import ChecklistCustomizedBadge from "@/components/checklist-customized-badge";
 import ChecklistRequirementsDisclaimer from "@/components/checklist-requirements-disclaimer";
+import ResetChecklistDialog from "@/components/reset-checklist-dialog";
 import PrintChecklistHeader from "@/components/print-checklist-header";
 import { marriageStageOneChecklist as stageOneChecklist } from "@/lib/data/checklists/marriage-stage-1-checklist";
 import type { ChecklistItem } from "@/lib/data/checklists/types";
@@ -181,6 +182,7 @@ export default function MarriageStageOnePage() {
     }
     return "small";
   });
+  const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
 
   const classes = fontSizeClasses[fontSize];
   const {
@@ -226,11 +228,9 @@ export default function MarriageStageOnePage() {
   };
 
   const handleReset = () => {
-    if (window.confirm("Reset checklist progress and customisations? This cannot be undone.")) {
-      setChecked({});
-      resetCustomizations();
-      analytics.trackReset("marriage-stage-1");
-    }
+    setChecked({});
+    resetCustomizations();
+    analytics.trackReset("marriage-stage-1");
   };
 
   const baseSections = useMemo<ChecklistSectionWithKeys[]>(
@@ -341,7 +341,7 @@ export default function MarriageStageOnePage() {
 
             <Button
               variant="outline"
-              onClick={handleReset}
+              onClick={() => setIsResetDialogOpen(true)}
               className="h-11 flex-1 basis-0 rounded-2xl bg-white px-3 text-sm hover:bg-slate-50 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
             >
               Reset
@@ -361,6 +361,12 @@ export default function MarriageStageOnePage() {
             </Button>
           </div>
         </div>
+        <ResetChecklistDialog
+          open={isResetDialogOpen}
+          onOpenChange={setIsResetDialogOpen}
+          onConfirm={handleReset}
+          tone="pink"
+        />
 
         <div className="mt-6 print:hidden">
           {isCustomizeMode && (

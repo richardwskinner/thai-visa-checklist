@@ -10,6 +10,7 @@ import { ArrowLeft, Printer } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 import ChecklistCustomizedBadge from "@/components/checklist-customized-badge";
 import ChecklistRequirementsDisclaimer from "@/components/checklist-requirements-disclaimer";
+import ResetChecklistDialog from "@/components/reset-checklist-dialog";
 import PrintChecklistHeader from "@/components/print-checklist-header";
 import { retirementStageOneChecklist as stageOneChecklist } from "@/lib/data/checklists/retirement-apply-outside-thailand-checklist";
 import type { ChecklistItem } from "@/lib/data/checklists/types";
@@ -188,6 +189,7 @@ export default function RetirementStageOnePage() {
     }
     return "small";
   });
+  const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
 
   const classes = fontSizeClasses[fontSize];
   const {
@@ -233,11 +235,9 @@ export default function RetirementStageOnePage() {
   };
 
   const handleReset = () => {
-    if (window.confirm("Reset checklist progress and customisations? This cannot be undone.")) {
-      setChecked({});
-      resetCustomizations();
-      analytics.trackReset("retirement-stage-1");
-    }
+    setChecked({});
+    resetCustomizations();
+    analytics.trackReset("retirement-stage-1");
   };
 
   const baseSections = useMemo<ChecklistSectionWithKeys[]>(
@@ -349,7 +349,7 @@ export default function RetirementStageOnePage() {
 
             <Button
               variant="outline"
-              onClick={handleReset}
+              onClick={() => setIsResetDialogOpen(true)}
               className="h-11 flex-1 basis-0 rounded-2xl bg-white px-3 text-sm hover:bg-slate-50 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
             >
               Reset
@@ -369,6 +369,12 @@ export default function RetirementStageOnePage() {
             </Button>
           </div>
         </div>
+        <ResetChecklistDialog
+          open={isResetDialogOpen}
+          onOpenChange={setIsResetDialogOpen}
+          onConfirm={handleReset}
+          tone="blue"
+        />
 
         <div className="mt-6 print:hidden">
           {isCustomizeMode && (
