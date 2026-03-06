@@ -45,7 +45,7 @@ const postExtensionStages = [
       pathname: "/guides/90-day-reporting",
       query: {
         returnTo: "/visa/marriage/stages",
-        returnLabel: "Back to Marriage Visa Stages",
+        returnLabel: "Back to Stages",
       },
     },
   },
@@ -57,7 +57,7 @@ const postExtensionStages = [
       pathname: "/guides/re-entry-permit",
       query: {
         returnTo: "/visa/marriage/stages",
-        returnLabel: "Back to Marriage Visa Stages",
+        returnLabel: "Back to Stages",
       },
     },
   },
@@ -93,7 +93,7 @@ export default function MarriageStagesPage() {
                     pathname: "/guides/marriage-visa-thailand",
                     query: {
                       returnTo: "/visa/marriage/stages",
-                      returnLabel: "Back to Marriage Visa Stages",
+                      returnLabel: "Back to Stages",
                     },
                   }}
                   className="font-semibold text-pink-700 underline underline-offset-2"

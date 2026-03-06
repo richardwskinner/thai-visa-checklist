@@ -36,7 +36,7 @@ const stages = [
       pathname: "/visa/retirement/extension-of-stay",
       query: {
         returnTo: "/visa/retirement/stages",
-        returnLabel: "Back to Retirement Stages",
+        returnLabel: "Back to Stages",
       },
     },
   },
@@ -51,7 +51,7 @@ const postExtensionStages = [
       pathname: "/guides/90-day-reporting",
       query: {
         returnTo: "/visa/retirement/stages",
-        returnLabel: "Back to Retirement Stages",
+        returnLabel: "Back to Stages",
       },
     },
   },
@@ -63,7 +63,7 @@ const postExtensionStages = [
       pathname: "/guides/re-entry-permit",
       query: {
         returnTo: "/visa/retirement/stages",
-        returnLabel: "Back to Retirement Stages",
+        returnLabel: "Back to Stages",
       },
     },
   },
@@ -99,7 +99,7 @@ export default function RetirementStagesPage() {
                     pathname: "/guides/retirement-visa-thailand",
                     query: {
                       returnTo: "/visa/retirement/stages",
-                      returnLabel: "Back to Retirement Stages",
+                      returnLabel: "Back to Stages",
                     },
                   }}
                   className="font-semibold text-blue-700 underline underline-offset-2"

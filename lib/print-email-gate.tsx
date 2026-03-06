@@ -50,7 +50,7 @@ function PrintLeadModal({
 
   return (
     <Dialog open onOpenChange={(open) => !open && onCancel()}>
-      <DialogContent className="z-[100000] w-[calc(100%-2rem)] max-w-md rounded-2xl p-5 sm:p-6">
+      <DialogContent className="z-[100000] w-[calc(100%-2rem)] max-w-md rounded-2xl p-5 print:hidden sm:p-6">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-slate-900">Before you print</DialogTitle>
           <DialogDescription className="text-sm leading-relaxed text-slate-600">

@@ -8,15 +8,18 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, Printer } from "lucide-react";
 import { analytics } from "@/lib/analytics";
-import ChecklistNotice from "@/components/checklist-notice";
+import ChecklistCustomizedBadge from "@/components/checklist-customized-badge";
+import ChecklistRequirementsDisclaimer from "@/components/checklist-requirements-disclaimer";
 import ExampleLink from "@/components/example-link";
 import PrintChecklistHeader from "@/components/print-checklist-header";
 import { retirementStageTwoChecklist as stageTwoChecklist } from "@/lib/data/checklists/retirement-convert-in-thailand-checklist";
 import type { ChecklistItem } from "@/lib/data/checklists/types";
 import { allowPrintWithEmailGate } from "@/lib/print-email-gate";
+import { useChecklistCustomization } from "@/lib/use-checklist-customization";
 
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:retirement:stage2:checked:v1";
 const STORAGE_KEY_FONTSIZE = "thai-visa-checklist:fontsize:v1";
+const STORAGE_KEY_CUSTOMIZATIONS = "thai-visa-checklist:retirement:stage2:customizations:v1";
 
 const APPLICATION_FORMS = [
   { code: "TM.86", url: "https://bangkok.immigration.go.th/en/downloads_en/" },
@@ -54,6 +57,8 @@ const fontSizeClasses = {
 } as const;
 
 type FontSize = keyof typeof fontSizeClasses;
+type SectionItemWithKey = ChecklistItem & { itemKey: string; isCustom?: boolean; customId?: string };
+type ChecklistSectionWithKeys = { title: string; items: SectionItemWithKey[] };
 
 function FormChips() {
   return (
@@ -64,7 +69,7 @@ function FormChips() {
           href={form.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100 print:bg-white print:text-slate-900 print:border-slate-300"
+          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-sm font-medium text-slate-700 hover:bg-slate-100 print:bg-white print:text-slate-900 print:border-slate-300"
           onClick={(e) => e.stopPropagation()}
         >
           {form.code}
@@ -81,12 +86,22 @@ function Section({
   checked,
   onToggle,
   fontSize,
+  isCustomizeMode,
+  draftValue,
+  onDraftChange,
+  onAddCustomItem,
+  onRemoveItem,
 }: {
   title: string;
-  items: ChecklistItem[];
+  items: SectionItemWithKey[];
   checked: Record<string, boolean>;
   onToggle: (key: string) => void;
   fontSize: FontSize;
+  isCustomizeMode: boolean;
+  draftValue: string;
+  onDraftChange: (value: string) => void;
+  onAddCustomItem: () => void;
+  onRemoveItem: (item: SectionItemWithKey) => void;
 }) {
   const classes = fontSizeClasses[fontSize];
 
@@ -96,30 +111,66 @@ function Section({
       <div className="mt-2 h-[3px] w-full rounded-full bg-blue-800 print:mt-1" />
 
       <div className="mt-3 grid gap-2 print:mt-1 print:gap-1">
-        {items.map((item, idx) => {
-          const key = `${title}:${idx}`;
+        {items.map((item) => {
+          const key = item.itemKey;
           return (
-            <label key={key} className="flex cursor-pointer items-center gap-3 print:gap-2">
-              <Checkbox
-                checked={!!checked[key]}
-                onCheckedChange={() => onToggle(key)}
-                className="h-5 w-5 rounded-md border-slate-600 print:border-black print:h-4 print:w-4 data-[state=checked]:bg-[#249C0F] data-[state=checked]:border-[#249C0F]"
-              />
-              <div className={`${classes.itemText} text-slate-900 leading-snug`}>
-                {item.text}
-                {item.noteLink && item.noteUrl && (
-                  <ExampleLink
-                    href={item.noteUrl}
-                    label={item.noteLink}
-                    className="ml-2 align-middle"
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                )}
-              </div>
-            </label>
+            <div key={key} className="flex items-start gap-2">
+              <label className="flex flex-1 cursor-pointer items-center gap-3 print:gap-2">
+                <Checkbox
+                  checked={!!checked[key]}
+                  onCheckedChange={() => onToggle(key)}
+                  className="h-5 w-5 rounded-md border-slate-600 print:border-black print:h-4 print:w-4 data-[state=checked]:bg-[#249C0F] data-[state=checked]:border-[#249C0F]"
+                />
+                <div className={`${classes.itemText} text-slate-900 leading-snug`}>
+                  {item.text}
+                  {item.noteLink && item.noteUrl && (
+                    <ExampleLink
+                      href={item.noteUrl}
+                      label={item.noteLink}
+                      className="ml-2 align-middle"
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  )}
+                </div>
+              </label>
+              {isCustomizeMode && (
+                <button
+                  type="button"
+                  onClick={() => onRemoveItem(item)}
+                  className="rounded-lg border border-slate-300 bg-white px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 print:hidden"
+                >
+                  {item.isCustom ? "Delete" : "Remove"}
+                </button>
+              )}
+            </div>
           );
         })}
       </div>
+
+      {isCustomizeMode && (
+        <div className="mt-3 flex items-center gap-2 print:hidden">
+          <input
+            type="text"
+            value={draftValue}
+            onChange={(e) => onDraftChange(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                onAddCustomItem();
+              }
+            }}
+            placeholder="Add custom item for this section"
+            className="h-9 flex-1 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+          />
+          <button
+            type="button"
+            onClick={onAddCustomItem}
+            className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Add
+          </button>
+        </div>
+      )}
 
       <style>{`
         @media print {
@@ -156,6 +207,23 @@ export default function RetirementStageTwoPage() {
   });
 
   const classes = fontSizeClasses[fontSize];
+  const {
+    isCustomizeMode,
+    setIsCustomizeMode,
+    hiddenItemKeys,
+    customItemsBySection,
+    draftBySection,
+    setDraftForSection,
+    hideBaseItem,
+    addCustomItem,
+    removeCustomItem,
+    resetCustomizations,
+  } = useChecklistCustomization(STORAGE_KEY_CUSTOMIZATIONS);
+  const hiddenItemKeySet = useMemo(() => new Set(hiddenItemKeys), [hiddenItemKeys]);
+  const hasCustomizations = useMemo(
+    () => hiddenItemKeys.length > 0 || Object.values(customItemsBySection).some((items) => items.length > 0),
+    [hiddenItemKeys, customItemsBySection]
+  );
 
   useEffect(() => {
     try {
@@ -182,30 +250,81 @@ export default function RetirementStageTwoPage() {
   };
 
   const handleReset = () => {
-    if (window.confirm("Reset all checkboxes? This cannot be undone.")) {
+    if (window.confirm("Reset checklist progress and customisations? This cannot be undone.")) {
       setChecked({});
+      resetCustomizations();
       analytics.trackReset("retirement-stage-2");
     }
   };
 
-  const total = useMemo(
-    () => stageTwoChecklist.sections.reduce((sum, section) => sum + section.items.length, 0),
+  const baseSections = useMemo<ChecklistSectionWithKeys[]>(
+    () =>
+      stageTwoChecklist.sections.map((section) => ({
+        title: section.title,
+        items: section.items.map((item, idx) => ({
+          ...item,
+          itemKey: `${section.title}:${idx}`,
+        })),
+      })),
     []
   );
+  const customizedSections = useMemo<ChecklistSectionWithKeys[]>(
+    () =>
+      baseSections.map((section) => {
+        const visibleBaseItems = section.items.filter((item) => !hiddenItemKeySet.has(item.itemKey));
+        const customItems = (customItemsBySection[section.title] ?? []).map((item) => ({
+          text: item.text,
+          itemKey: `custom:${section.title}:${item.id}`,
+          isCustom: true,
+          customId: item.id,
+        }));
+        return {
+          ...section,
+          items: [...visibleBaseItems, ...customItems],
+        };
+      }),
+    [baseSections, hiddenItemKeySet, customItemsBySection]
+  );
+  const total = useMemo(
+    () => customizedSections.reduce((sum, section) => sum + section.items.length, 0),
+    [customizedSections]
+  );
   const totalWithForms = total + 1;
-  const done = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
+  const visibleKeys = useMemo(
+    () => new Set(["__forms__", ...customizedSections.flatMap((section) => section.items.map((item) => item.itemKey))]),
+    [customizedSections]
+  );
+  const done = useMemo(
+    () => Object.entries(checked).filter(([key, value]) => Boolean(value) && visibleKeys.has(key)).length,
+    [checked, visibleKeys]
+  );
   const pct = totalWithForms ? Math.round((done / totalWithForms) * 100) : 0;
+
+  const removeItemFromChecklist = (sectionTitle: string, item: SectionItemWithKey) => {
+    if (item.isCustom && item.customId) {
+      removeCustomItem(sectionTitle, item.customId);
+    } else {
+      hideBaseItem(item.itemKey);
+    }
+    setChecked((prev) => {
+      if (!(item.itemKey in prev)) return prev;
+      const next = { ...prev };
+      delete next[item.itemKey];
+      return next;
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#eef3fb] print:min-h-0 print:bg-white">
       <div className="mx-auto w-full max-w-5xl px-5 print:px-0">
         <div className="flex flex-col gap-3 pt-8 print:hidden sm:flex-row sm:items-center sm:justify-between">
-          <Button asChild className="h-12 justify-start rounded-2xl border border-slate-300 bg-white px-5 text-base text-slate-900 hover:bg-slate-50">
+          <Button asChild className="h-11 justify-start rounded-2xl border border-slate-300 bg-white px-4 text-sm text-slate-900 hover:bg-slate-50 sm:h-10">
             <Link href="/visa/retirement/stages">
-              <ArrowLeft className="mr-2 h-5 w-5" /> Back to Retirement Stages
+              <ArrowLeft className="mr-2 h-5 w-5" /> Back to Stages
             </Link>
           </Button>
 
-          <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:gap-3">
+          <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:flex-nowrap sm:gap-2">
             <Button
               asChild
               variant="outline"
@@ -237,6 +356,15 @@ export default function RetirementStageTwoPage() {
             </div>
 
             <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsCustomizeMode((prev) => !prev)}
+              className="h-11 flex-1 basis-0 rounded-2xl bg-white px-3 text-sm hover:bg-slate-50 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
+            >
+              {isCustomizeMode ? "Done customising" : "Customise"}
+            </Button>
+
+            <Button
               variant="outline"
               onClick={handleReset}
               className="h-11 flex-1 basis-0 rounded-2xl bg-white px-3 text-sm hover:bg-slate-50 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
@@ -260,11 +388,16 @@ export default function RetirementStageTwoPage() {
         </div>
 
         <div className="mt-6 print:hidden">
-          <ChecklistNotice />
+          {isCustomizeMode && (
+            <div className="rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-900">
+              Customise mode: remove items or add your own items by section. Printing will use your customised list.
+            </div>
+          )}
         </div>
 
         <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm print:mt-0 print:rounded-none print:shadow-none print:scale-95">
-          <CardContent className="p-6 sm:p-10 print:px-4 print:pt-0 print:pb-0">
+          <CardContent className="relative p-6 sm:p-10 print:px-4 print:pt-0 print:pb-0">
+            <ChecklistCustomizedBadge isCustomized={hasCustomizations} />
             <PrintChecklistHeader />
             <h1 className={`${classes.title} text-center font-extrabold tracking-tight text-slate-900`}>
               {stageTwoChecklist.title}
@@ -310,7 +443,7 @@ export default function RetirementStageTwoPage() {
               </label>
             </div>
 
-            {stageTwoChecklist.sections.map((section) => (
+            {customizedSections.map((section) => (
               <Section
                 key={section.title}
                 title={section.title}
@@ -318,6 +451,11 @@ export default function RetirementStageTwoPage() {
                 checked={checked}
                 onToggle={handleToggle}
                 fontSize={fontSize}
+                isCustomizeMode={isCustomizeMode}
+                draftValue={draftBySection[section.title] ?? ""}
+                onDraftChange={(value) => setDraftForSection(section.title, value)}
+                onAddCustomItem={() => addCustomItem(section.title)}
+                onRemoveItem={(item) => removeItemFromChecklist(section.title, item)}
               />
             ))}
 
@@ -329,6 +467,7 @@ export default function RetirementStageTwoPage() {
                 ))}
               </ul>
             </div>
+            <ChecklistRequirementsDisclaimer />
           </CardContent>
         </Card>
       </div>

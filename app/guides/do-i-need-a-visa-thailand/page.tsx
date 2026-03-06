@@ -64,20 +64,21 @@ export default function DoINeedAVisaThailandPage() {
                 <h2 className="text-xl font-extrabold text-slate-900">How this tool works</h2>
                 <div className="mt-3 space-y-3 text-slate-700">
                   <p>
-                    The checker compares your nationality against official-source visa exemption and Visa on Arrival
-                    lists (
+                    The checker compares your nationality against the official visa exemption and visa on arrival list
+                    from the Royal Thai Embassy, Kuala Lumpur (
                     <a
                       href={VISA_ELIGIBILITY_SOURCES.klEmbassyVisaHub}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="font-semibold text-blue-700 underline underline-offset-2"
                     >
-                      Royal Thai Embassy
+                      source
                     </a>
                     ), then checks whether your planned stay fits the allowed period.
                   </p>
                   <p>
-                    It does not replace embassy advice or immigration officer discretion at entry.
+                    This list was used as it was the most up to date offical list available online. It does not
+                    replace embassy advice or immigration officer discretion at entry.
                   </p>
                 </div>
               </section>
