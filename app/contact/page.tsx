@@ -31,10 +31,10 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#eef3fb]">
-      <div className="flex justify-center px-6 py-12">
-        <div className="w-full max-w-2xl">
-          <div className="mb-10 text-center">
+    <div className="bg-[#eef3fb]">
+      <div className="flex justify-center px-6 pb-3 pt-10 sm:pb-4 sm:pt-12">
+        <div className="w-full max-w-xl">
+          <div className="mb-8 text-center">
             <h1 className="text-4xl font-extrabold text-slate-900">
               Contact
             </h1>
@@ -45,7 +45,7 @@ export default function ContactPage() {
 
           <form
             onSubmit={handleSubmit}
-            className="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg"
+            className="rounded-3xl border border-slate-200 bg-white p-7 shadow-lg sm:p-8"
           >
             <div className="space-y-6">
               <div>
