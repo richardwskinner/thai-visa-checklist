@@ -356,12 +356,14 @@ export default function ThailandTimeClient({ compact = false }: { compact?: bool
               </Select>
             </div>
             <div className="min-w-0">
-              <Input
-                type="datetime-local"
-                value={selectedLocalDateTime}
-                onChange={(e) => setSelectedLocalDateTime(e.target.value)}
-                className="h-10 w-full min-w-0 max-w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
-              />
+              <div className="overflow-hidden rounded-xl border border-slate-300 bg-white">
+                <Input
+                  type="datetime-local"
+                  value={selectedLocalDateTime}
+                  onChange={(e) => setSelectedLocalDateTime(e.target.value)}
+                  className="h-10 w-full min-w-0 max-w-full rounded-none border-0 bg-transparent px-3 py-2 text-base text-slate-900 shadow-none focus-visible:border-0 focus-visible:ring-0 sm:text-sm"
+                />
+              </div>
             </div>
           </div>
           <p className="mt-2 text-xs text-slate-500">
