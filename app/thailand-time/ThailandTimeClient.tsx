@@ -341,24 +341,28 @@ export default function ThailandTimeClient({ compact = false }: { compact?: bool
             Select a source location and any date/time (including future dates) to compare with Thailand.
           </p>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <Select value={selectedSourceValue} onValueChange={setSelectedSourceValue}>
-              <SelectTrigger className="h-10 w-full rounded-xl border-slate-300 bg-white text-sm text-slate-900">
-                <SelectValue placeholder="Select location" />
-              </SelectTrigger>
-              <SelectContent className="max-h-80">
-                {sourceOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Input
-              type="datetime-local"
-              value={selectedLocalDateTime}
-              onChange={(e) => setSelectedLocalDateTime(e.target.value)}
-              className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
-            />
+            <div className="min-w-0">
+              <Select value={selectedSourceValue} onValueChange={setSelectedSourceValue}>
+                <SelectTrigger className="h-10 w-full min-w-0 rounded-xl border-slate-300 bg-white text-sm text-slate-900">
+                  <SelectValue placeholder="Select location" />
+                </SelectTrigger>
+                <SelectContent className="max-h-80">
+                  {sourceOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="min-w-0">
+              <Input
+                type="datetime-local"
+                value={selectedLocalDateTime}
+                onChange={(e) => setSelectedLocalDateTime(e.target.value)}
+                className="h-10 w-full min-w-0 max-w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+              />
+            </div>
           </div>
           <p className="mt-2 text-xs text-slate-500">
             Time entered is interpreted in the selected location&apos;s time zone.

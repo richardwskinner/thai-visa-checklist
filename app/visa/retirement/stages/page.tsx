@@ -28,6 +28,20 @@ const stages = [
   },
   {
     stage: 3,
+    title: "TM.30",
+    description:
+      "Ensure your residence address is correctly reported to immigration before ongoing visa steps.",
+    available: true,
+    href: {
+      pathname: "/guides/tm30",
+      query: {
+        returnTo: "/visa/retirement/stages",
+        returnLabel: "Back to Stages",
+      },
+    },
+  },
+  {
+    stage: 4,
     title: "1 Year Non-Immigrant O Extension",
     description:
       "Extend your Non-O visa for one year based on retirement (age 50+).",
@@ -44,7 +58,7 @@ const stages = [
 
 const postExtensionStages = [
   {
-    stage: 4,
+    stage: 5,
     title: "90-Day Reporting",
     description: "Report your address to immigration every 90 days while on a long-stay visa.",
     href: {
@@ -56,7 +70,7 @@ const postExtensionStages = [
     },
   },
   {
-    stage: 5,
+    stage: 6,
     title: "Re-Entry Permit",
     description: "Get a re-entry permit before leaving Thailand to keep your visa valid.",
     href: {
@@ -115,7 +129,7 @@ export default function RetirementStagesPage() {
                 Choose Your Starting Point
               </div>
               <div className="mt-3 grid gap-4">
-                {stages.slice(0, 2).map((s) =>
+                {stages.slice(0, 3).map((s) =>
                 s.available ? (
                   <Link
                     key={s.stage}
@@ -163,7 +177,7 @@ export default function RetirementStagesPage() {
             </div>
 
             <div className="mt-3 grid gap-4">
-              {stages.slice(2).map((s) => (
+              {stages.slice(3).map((s) => (
                 <Link
                   key={s.stage}
                   href={s.href!}

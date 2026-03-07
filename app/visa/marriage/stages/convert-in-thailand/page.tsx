@@ -6,8 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, Printer } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { analytics } from "@/lib/analytics";
+import ChecklistPrintMenu from "@/components/checklist-print-menu";
 import ChecklistCustomizedBadge from "@/components/checklist-customized-badge";
 import ChecklistRequirementsDisclaimer from "@/components/checklist-requirements-disclaimer";
 import ResetChecklistDialog from "@/components/reset-checklist-dialog";
@@ -15,7 +16,12 @@ import ExampleLink from "@/components/example-link";
 import PrintChecklistHeader from "@/components/print-checklist-header";
 import { marriageStageTwoChecklist as stageTwoChecklist } from "@/lib/data/checklists/marriage-stage-2-checklist";
 import type { ChecklistItem } from "@/lib/data/checklists/types";
-import { allowPrintWithEmailGate } from "@/lib/print-email-gate";
+import {
+  checklistActionButtonClass,
+  checklistBackButtonClass,
+  checklistTextSizeButtonClass,
+  checklistTextSizeGroupClass,
+} from "@/lib/checklist-toolbar-styles";
 import { useChecklistCustomization } from "@/lib/use-checklist-customization";
 
 const STORAGE_KEY_CHECKED = "thai-visa-checklist:marriage:stage2:checked:v1";
@@ -312,7 +318,7 @@ export default function MarriageStageTwoPage() {
     <div className="min-h-screen bg-[#eef3fb] print:min-h-0 print:bg-white">
       <div className="mx-auto w-full max-w-5xl px-5 print:px-0">
         <div className="flex flex-col gap-3 pt-8 print:hidden sm:flex-row sm:items-center sm:justify-between">
-          <Button asChild className="h-11 justify-start rounded-2xl border border-slate-300 bg-white px-4 text-sm text-slate-900 hover:bg-slate-50 sm:h-10">
+          <Button asChild className={checklistBackButtonClass}>
             <Link href="/visa/marriage/stages">
               <ArrowLeft className="mr-2 h-5 w-5" /> Back to Stages
             </Link>
@@ -322,12 +328,12 @@ export default function MarriageStageTwoPage() {
             <Button
               asChild
               variant="outline"
-              className="h-11 flex-1 basis-0 rounded-2xl bg-white px-3 text-sm hover:bg-slate-50 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
+              className={checklistActionButtonClass}
             >
               <Link href="/contact">Send feedback</Link>
             </Button>
 
-            <div className="order-2 basis-full flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm sm:order-none sm:basis-auto">
+            <div className={checklistTextSizeGroupClass}>
               <span className="text-sm font-medium text-slate-700">Text Size:</span>
               <div className="flex gap-1">
                 {(["small", "medium", "large"] as const).map((size) => (
@@ -337,11 +343,7 @@ export default function MarriageStageTwoPage() {
                       setFontSize(size);
                       analytics.trackFontSizeChange(size, "marriage-stage-2");
                     }}
-                    className={`rounded-lg px-3 py-1 text-sm font-medium transition capitalize ${
-                      fontSize === size
-                        ? "bg-pink-600 text-white"
-                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                    }`}
+                    className={checklistTextSizeButtonClass(fontSize === size, "pink")}
                   >
                     {size}
                   </button>
@@ -353,7 +355,7 @@ export default function MarriageStageTwoPage() {
               type="button"
               variant="outline"
               onClick={() => setIsCustomizeMode((prev) => !prev)}
-              className="h-11 flex-1 basis-0 rounded-2xl bg-white px-3 text-sm hover:bg-slate-50 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
+              className={checklistActionButtonClass}
             >
               {isCustomizeMode ? "Done customising" : "Customise"}
             </Button>
@@ -361,23 +363,12 @@ export default function MarriageStageTwoPage() {
             <Button
               variant="outline"
               onClick={() => setIsResetDialogOpen(true)}
-              className="h-11 flex-1 basis-0 rounded-2xl bg-white px-3 text-sm hover:bg-slate-50 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
+              className={checklistActionButtonClass}
             >
               Reset
             </Button>
 
-            <Button
-              onClick={async () => {
-                const allowed = await allowPrintWithEmailGate("marriage-stage-2", () => {
-                  analytics.trackPrint("marriage-stage-2");
-                  window.print();
-                });
-                if (!allowed) return;
-              }}
-              className="h-11 flex-1 basis-0 rounded-2xl bg-pink-600 px-3 text-sm hover:bg-pink-700 sm:h-12 sm:flex-none sm:basis-auto sm:px-5 sm:text-base"
-            >
-              <Printer className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Print
-            </Button>
+            <ChecklistPrintMenu source="marriage-stage-2" tone="pink" onPrint={() => analytics.trackPrint("marriage-stage-2")} />
           </div>
         </div>
         <ResetChecklistDialog
@@ -390,12 +381,15 @@ export default function MarriageStageTwoPage() {
         <div className="mt-6 print:hidden">
           {isCustomizeMode && (
             <div className="rounded-2xl border border-pink-200 bg-pink-50 px-4 py-3 text-sm text-pink-900">
-              Customise mode: remove items or add your own items by section. Printing will use your customised list.
+              Customise mode: Remove items or add your own - Printing will use your customised list.
             </div>
           )}
         </div>
 
-        <Card className="mt-6 rounded-3xl border-0 bg-white shadow-sm print:mt-0 print:rounded-none print:shadow-none print:scale-95">
+        <Card
+          data-checklist-print-root="true"
+          className="mt-6 rounded-3xl border-0 bg-white shadow-sm print:mt-0 print:rounded-none print:shadow-none print:scale-95"
+        >
           <CardContent className="relative p-6 sm:p-10 print:px-4 print:pt-0 print:pb-0">
             <ChecklistCustomizedBadge isCustomized={hasCustomizations} />
             <PrintChecklistHeader />
