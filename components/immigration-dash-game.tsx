@@ -32,11 +32,13 @@ const SKY_ZOOM = 1.12;
 const CITY_ZOOM = 1.08;
 const SKY_ANCHOR_BOTTOM = CANVAS_HEIGHT + 78;
 const CITY_ANCHOR_BOTTOM = CANVAS_HEIGHT + 168;
+const FIXED_TIMESTEP = 1 / 60;
+const MAX_SIM_STEPS_PER_FRAME = 6;
 const GOLDEN_STAMP_SIZE = 54;
 const THAI_BLOCK_BONUS_STAMP_SIZE = 48;
 const REJECTED_STAMP_SIZE = 52;
-const CLOSED_SIGN_WIDTH = 88;
-const CLOSED_SIGN_HEIGHT = 80;
+const CLOSED_SIGN_WIDTH = 92;
+const CLOSED_SIGN_HEIGHT = 84;
 const POTHOLE_COLLISION_INSET = 2;
 const POTHOLE_MIN_WIDTH = 96;
 const POTHOLE_MAX_WIDTH = 138;
@@ -420,8 +422,8 @@ function drawPlayer(ctx: CanvasRenderingContext2D, assets: LoadedAssets, model: 
   const scale = Math.min(PLAYER_DRAW_WIDTH / frame.w, PLAYER_DRAW_HEIGHT / frame.h);
   const drawW = frame.w * scale;
   const drawH = frame.h * scale;
-  const dx = PLAYER_X + model.playerOffsetX + (PLAYER_DRAW_WIDTH - drawW) / 2;
-  const dy = model.playerY + (PLAYER_DRAW_HEIGHT - drawH);
+  const dx = Math.round(PLAYER_X + model.playerOffsetX + (PLAYER_DRAW_WIDTH - drawW) / 2);
+  const dy = Math.round(model.playerY + (PLAYER_DRAW_HEIGHT - drawH));
 
   ctx.save();
   if (alphaBlink) ctx.globalAlpha = 0.45;
@@ -449,7 +451,17 @@ function drawObstacle(ctx: CanvasRenderingContext2D, assets: LoadedAssets, obsta
         ? assets.thaiBlock
         : assets.missingPhotocopy;
   const source = sprite.bounds;
-  ctx.drawImage(sprite.image, source.x, source.y, source.w, source.h, obstacle.x, obstacle.y, obstacle.w, obstacle.h);
+  ctx.drawImage(
+    sprite.image,
+    source.x,
+    source.y,
+    source.w,
+    source.h,
+    Math.round(obstacle.x),
+    Math.round(obstacle.y),
+    Math.round(obstacle.w),
+    Math.round(obstacle.h)
+  );
 }
 
 function drawCollectible(ctx: CanvasRenderingContext2D, assets: LoadedAssets, collectible: CollectibleEntity) {
@@ -501,10 +513,10 @@ function drawCollectible(ctx: CanvasRenderingContext2D, assets: LoadedAssets, co
     source.y,
     source.w,
     source.h,
-    collectible.x,
-    collectible.y,
-    collectible.size,
-    collectible.size
+    Math.round(collectible.x),
+    Math.round(collectible.y),
+    Math.round(collectible.size),
+    Math.round(collectible.size)
   );
 }
 
@@ -547,6 +559,7 @@ export default function ImmigrationDashGame() {
   const collectAudioRef = useRef<HTMLAudioElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const lastTimeRef = useRef(0);
+  const accumulatorRef = useRef(0);
   const lastHudSyncRef = useRef(0);
 
   const [status, setStatus] = useState<GameStatus>("idle");
@@ -669,6 +682,7 @@ export default function ImmigrationDashGame() {
       rafRef.current = null;
     }
     lastTimeRef.current = 0;
+    accumulatorRef.current = 0;
     lastHudSyncRef.current = 0;
   }, []);
 
@@ -1221,10 +1235,20 @@ export default function ImmigrationDashGame() {
 
     const tick = (ts: number) => {
       if (lastTimeRef.current === 0) lastTimeRef.current = ts;
-      const delta = Math.min(0.033, (ts - lastTimeRef.current) / 1000);
+      const delta = Math.min(0.05, (ts - lastTimeRef.current) / 1000);
       lastTimeRef.current = ts;
+      accumulatorRef.current += delta;
 
-      updateGame(delta);
+      let steps = 0;
+      while (accumulatorRef.current >= FIXED_TIMESTEP && steps < MAX_SIM_STEPS_PER_FRAME) {
+        updateGame(FIXED_TIMESTEP);
+        accumulatorRef.current -= FIXED_TIMESTEP;
+        steps += 1;
+      }
+      if (steps >= MAX_SIM_STEPS_PER_FRAME) {
+        // Prevent long-frame catch-up spikes from causing visible hitching.
+        accumulatorRef.current = 0;
+      }
       drawFrame();
 
       if (ts - lastHudSyncRef.current > 90) {
@@ -1386,25 +1410,23 @@ export default function ImmigrationDashGame() {
           </div>
         </div>
 
-        <div className="mt-4 min-h-[40px]">
-          {hud.milestoneReached && (
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
-              Visa approved. See you again in 90 days.
-            </div>
-          )}
-        </div>
+        {hud.milestoneReached && (
+          <div className="mt-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
+            Visa approved. See you again in 90 days.
+          </div>
+        )}
 
         <p className="mt-1 text-xs font-semibold text-sky-700 sm:hidden">
           Mobile tip: turn your phone sideways (landscape) to play.
         </p>
 
-        <div ref={gameShellRef} className="relative mt-4 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
+        <div ref={gameShellRef} className="relative mt-2 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
           <canvas
             ref={canvasRef}
             width={CANVAS_WIDTH}
             height={CANVAS_HEIGHT}
             onPointerDown={jump}
-            className="block h-auto w-[145%] max-w-none -translate-x-[15.5%] touch-manipulation select-none sm:w-full sm:translate-x-0"
+            className="block h-auto w-[150%] max-w-none -translate-x-[17%] touch-manipulation select-none sm:w-[108%] sm:-translate-x-[4%] lg:w-[104%] lg:-translate-x-[2%]"
             aria-label="Immigration Dash game"
           />
 
@@ -1437,7 +1459,7 @@ export default function ImmigrationDashGame() {
           )}
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center gap-3">
+        <div className="mt-2 flex flex-wrap items-center gap-3">
           {status === "running" && (
             <button
               type="button"
@@ -1460,7 +1482,7 @@ export default function ImmigrationDashGame() {
             Controls: Space or Up arrow on desktop. Tap on mobile.
           </p>
         </div>
-        <div className="mt-2 min-h-[32px]">
+        <div className="mt-1 min-h-[24px]">
           <p
             className={`rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800 transition-opacity sm:text-sm ${
               hud.blocked ? "opacity-100" : "opacity-0"
@@ -1470,9 +1492,8 @@ export default function ImmigrationDashGame() {
           </p>
         </div>
 
-        <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
-          <h3 className="text-sm font-bold text-slate-900 sm:text-base">What the stamps mean</h3>
-          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+        <div className="mt-2 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
+          <div className="grid gap-2 sm:grid-cols-2">
             <div className="flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2">
               <NextImage
                 src="/golden-stamp.png"

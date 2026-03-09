@@ -85,7 +85,7 @@ function Footer() {
                   />
                 </Link>
                 <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-slate-600 md:mx-0">
-                  Visa information, tools and practical guides for Thailand.
+                  Visa information and practical guides for Thailand.
                 </p>
                 <div className="mt-5 hidden flex-wrap items-center justify-center gap-4 md:flex md:justify-start">
                   <a
@@ -163,22 +163,16 @@ function Footer() {
                     Thai Visa News
                   </Link>
                   <Link
-                    href="/games/immigration-dash"
+                    href="/thailand-public-holidays-2026"
                     className="block text-sm font-medium text-slate-700 hover:text-slate-900"
                   >
-                    Immigration Dash
+                    Thai Public Holidays
                   </Link>
                   <Link
                     href="/offical-goverment-links"
                     className="block text-sm font-medium text-slate-700 hover:text-slate-900"
                   >
                     Offical Goverment Links
-                  </Link>
-                  <Link
-                    href="/thailand-public-holidays-2026"
-                    className="block text-sm font-medium text-slate-700 hover:text-slate-900"
-                  >
-                    Thai Public Holidays
                   </Link>
                 </div>
               </div>
@@ -244,6 +238,22 @@ function Footer() {
               <p className="mt-2 text-xs text-slate-500">
                 Not affiliated with Thai Immigration or any government agency.
               </p>
+              <div className="mt-3 flex justify-end">
+                <Link
+                  href="/games/immigration-dash"
+                  aria-label="Secret link to Immigration Dash"
+                  className="inline-flex opacity-45 transition-opacity hover:opacity-100 focus:opacity-100"
+                >
+                  <Image
+                    src="/golden-stamp.png"
+                    alt=""
+                    width={56}
+                    height={56}
+                    className="h-9 w-9 rounded-full object-cover object-center sm:h-10 sm:w-10"
+                  />
+                  <span className="sr-only">Play Immigration Dash</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
