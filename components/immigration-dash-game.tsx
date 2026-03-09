@@ -32,7 +32,9 @@ const SKY_ZOOM = 1.12;
 const CITY_ZOOM = 1.08;
 const SKY_ANCHOR_BOTTOM = CANVAS_HEIGHT + 78;
 const CITY_ANCHOR_BOTTOM = CANVAS_HEIGHT + 168;
-const THAI_BLOCK_BONUS_STAMP_SIZE = 40;
+const GOLDEN_STAMP_SIZE = 54;
+const THAI_BLOCK_BONUS_STAMP_SIZE = 48;
+const REJECTED_STAMP_SIZE = 52;
 const CLOSED_SIGN_WIDTH = 88;
 const CLOSED_SIGN_HEIGHT = 80;
 const POTHOLE_COLLISION_INSET = 2;
@@ -538,8 +540,11 @@ function drawCanvasHud(ctx: CanvasRenderingContext2D, model: GameModel) {
 
 export default function ImmigrationDashGame() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const gameShellRef = useRef<HTMLDivElement | null>(null);
   const modelRef = useRef<GameModel>(createInitialModel());
   const assetsRef = useRef<LoadedAssets | null>(null);
+  const ambienceAudioRef = useRef<HTMLAudioElement | null>(null);
+  const collectAudioRef = useRef<HTMLAudioElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const lastTimeRef = useRef(0);
   const lastHudSyncRef = useRef(0);
@@ -550,6 +555,8 @@ export default function ImmigrationDashGame() {
   const [gameOverMessage, setGameOverMessage] = useState("");
   const [copyState, setCopyState] = useState<"idle" | "copied" | "error">("idle");
   const [shareState, setShareState] = useState<"idle" | "shared" | "error">("idle");
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [fullScreenEnabled, setFullScreenEnabled] = useState(false);
   const [hud, setHud] = useState({
     score: 0,
     lives: 3,
@@ -567,6 +574,70 @@ export default function ImmigrationDashGame() {
       blocked: model.blockedTimer > 0,
       milestoneReached: model.milestoneReached,
     });
+  }, []);
+
+  const playCollectSound = useCallback(() => {
+    const sound = collectAudioRef.current;
+    if (!sound) return;
+    try {
+      sound.currentTime = 0;
+      const p = sound.play();
+      if (p) {
+        void p.catch(() => {
+          // Ignore autoplay/interaction errors quietly.
+        });
+      }
+    } catch {
+      // Ignore sound failures; gameplay should continue.
+    }
+  }, []);
+
+  const playAmbience = useCallback(() => {
+    const ambience = ambienceAudioRef.current;
+    if (!ambience) return;
+    try {
+      ambience.muted = false;
+      const p = ambience.play();
+      if (p) {
+        void p.catch(() => {
+          // Browser may block until explicit user interaction.
+        });
+      }
+    } catch {
+      // Ignore audio failures; game remains playable.
+    }
+  }, []);
+
+  const toggleFullScreen = useCallback(async () => {
+    const shell = gameShellRef.current;
+    if (!shell) return;
+
+    const doc = document as Document & {
+      webkitFullscreenElement?: Element | null;
+      webkitExitFullscreen?: () => Promise<void> | void;
+    };
+    const shellWithWebkit = shell as HTMLElement & {
+      webkitRequestFullscreen?: () => Promise<void> | void;
+    };
+
+    const activeElement = document.fullscreenElement ?? doc.webkitFullscreenElement ?? null;
+    const inFullScreen = activeElement === shell;
+
+    try {
+      if (inFullScreen) {
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if (doc.webkitExitFullscreen) {
+          await doc.webkitExitFullscreen();
+        }
+      } else if (shell.requestFullscreen) {
+        await shell.requestFullscreen();
+      } else if (shellWithWebkit.webkitRequestFullscreen) {
+        await shellWithWebkit.webkitRequestFullscreen();
+      }
+    } catch {
+      // Ignore fullscreen errors from unsupported/blocked contexts.
+    }
   }, []);
 
   const drawFrame = useCallback(() => {
@@ -685,7 +756,7 @@ export default function ImmigrationDashGame() {
                 h: 22,
                 y: GROUND_SURFACE_Y - 10,
               }
-            : { w: 44, h: 44, y: GROUND_SURFACE_Y - 44 };
+            : { w: REJECTED_STAMP_SIZE, h: REJECTED_STAMP_SIZE, y: GROUND_SURFACE_Y - REJECTED_STAMP_SIZE };
 
     const earlySpawn = model.elapsed < 2.5;
     const spawnX =
@@ -713,7 +784,7 @@ export default function ImmigrationDashGame() {
   const spawnCollectible = useCallback(() => {
     const model = modelRef.current;
     const d = getDifficulty(model.elapsed);
-    const size = 46;
+    const size = GOLDEN_STAMP_SIZE;
     const lanes = [0, 28, 52, 82, 112];
     let laneIndex = Math.floor(Math.random() * lanes.length);
     if (laneIndex === model.lastCollectibleLane && Math.random() < 0.75) {
@@ -873,6 +944,7 @@ export default function ImmigrationDashGame() {
         if (intersects(playerRect, rect)) {
           model.documents += 1;
           item.collectedTimer = 0.18;
+          playCollectSound();
           return true;
         }
         return true;
@@ -981,10 +1053,11 @@ export default function ImmigrationDashGame() {
         endGame();
       }
     },
-    [endGame, spawnCollectible, spawnObstacle]
+    [endGame, playCollectSound, spawnCollectible, spawnObstacle]
   );
 
   const startGame = useCallback(() => {
+    playAmbience();
     modelRef.current = createInitialModel();
     setStatus("running");
     setCopyState("idle");
@@ -998,14 +1071,80 @@ export default function ImmigrationDashGame() {
       milestoneReached: false,
     });
     drawFrame();
-  }, [drawFrame]);
+  }, [drawFrame, playAmbience]);
 
   const jump = useCallback(() => {
+    playAmbience();
     if (status !== "running") return;
     const model = modelRef.current;
     if (!model.onGround) return;
     model.playerVy = JUMP_VELOCITY;
     model.onGround = false;
+  }, [playAmbience, status]);
+
+  useEffect(() => {
+    const ambience = new Audio("/street-ambience-chinatown.m4a");
+    ambience.loop = true;
+    ambience.volume = 0.45;
+    ambience.preload = "auto";
+    ambienceAudioRef.current = ambience;
+
+    const collect = new Audio("/collect sound.wav");
+    collect.volume = 0.45;
+    collect.preload = "auto";
+    collectAudioRef.current = collect;
+
+    return () => {
+      if (ambienceAudioRef.current) {
+        ambienceAudioRef.current.pause();
+        ambienceAudioRef.current = null;
+      }
+      collectAudioRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const doc = document as Document & {
+      webkitFullscreenElement?: Element | null;
+    };
+    const shell = gameShellRef.current;
+    if (!shell) return;
+
+    const shellWithWebkit = shell as HTMLElement & {
+      webkitRequestFullscreen?: () => Promise<void> | void;
+    };
+    setFullScreenEnabled(Boolean(shell.requestFullscreen || shellWithWebkit.webkitRequestFullscreen));
+
+    const syncFullscreenState = () => {
+      const activeElement = document.fullscreenElement ?? doc.webkitFullscreenElement ?? null;
+      setIsFullScreen(activeElement === shell);
+    };
+
+    syncFullscreenState();
+    document.addEventListener("fullscreenchange", syncFullscreenState);
+    document.addEventListener("webkitfullscreenchange", syncFullscreenState as EventListener);
+    return () => {
+      document.removeEventListener("fullscreenchange", syncFullscreenState);
+      document.removeEventListener("webkitfullscreenchange", syncFullscreenState as EventListener);
+    };
+  }, []);
+
+  useEffect(() => {
+    const ambience = ambienceAudioRef.current;
+    if (!ambience) return;
+
+    if (status === "running") {
+      const p = ambience.play();
+      if (p) {
+        void p.catch(() => {
+          // Mobile/browser autoplay policies may block until interaction.
+        });
+      }
+      return;
+    }
+
+    ambience.pause();
+    ambience.currentTime = 0;
   }, [status]);
 
   useEffect(() => {
@@ -1126,16 +1265,15 @@ export default function ImmigrationDashGame() {
     };
   }, [jump]);
 
+  const shareSeconds = Math.floor(hud.time);
   const resultText = useMemo(() => {
-    const seconds = Math.floor(hud.time);
-    return `🇹🇭 I survived ${seconds} seconds at Thai Immigration!\nScore: ${hud.score}\n\nPlay here:\n${SHARE_URL_TEXT}`;
-  }, [hud.score, hud.time]);
+    return `🇹🇭 I survived ${shareSeconds} seconds on Immigration Dash!\n\nScore: ${hud.score}\n\nCan you beat it?\n${SHARE_URL_TEXT}`;
+  }, [hud.score, shareSeconds]);
 
   const canNativeShare = typeof navigator !== "undefined" && "share" in navigator;
   const socialShareText = useMemo(() => {
-    const seconds = Math.floor(hud.time);
-    return `🇹🇭 I survived ${seconds} seconds at Thai Immigration!\nScore: ${hud.score}`;
-  }, [hud.score, hud.time]);
+    return `🇹🇭 I survived ${shareSeconds} seconds on Immigration Dash!\n\nScore: ${hud.score}\n\nCan you beat it?`;
+  }, [hud.score, shareSeconds]);
   const xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(socialShareText)}&url=${encodeURIComponent(GAME_URL)}`;
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(GAME_URL)}&quote=${encodeURIComponent(socialShareText)}`;
 
@@ -1170,14 +1308,24 @@ export default function ImmigrationDashGame() {
             <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">Immigration Dash</h2>
           </div>
 
-          <div className="mt-3 rounded-2xl border border-sky-200 bg-gradient-to-r from-sky-50 via-white to-indigo-50 p-3">
-            <h3 className="text-sm font-bold text-slate-900">Share your result</h3>
-            <p className="mt-1 whitespace-pre-line text-sm text-slate-700">{resultText}</p>
-            <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-3 rounded-2xl border border-sky-300/80 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-2.5 shadow-[0_10px_30px_-24px_rgba(14,116,144,0.65)] sm:p-3">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="text-sm font-bold text-slate-900">Share your result</h3>
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold">
+                <span className="rounded-full border border-sky-200 bg-white px-2 py-0.5 text-sky-800">{shareSeconds}s</span>
+                <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-amber-900">Score {hud.score}</span>
+              </div>
+            </div>
+
+            <p className="mt-2 whitespace-pre-line rounded-xl border border-slate-200/80 bg-white/80 px-2.5 py-2 text-xs leading-relaxed text-slate-700 sm:text-sm">
+              {resultText}
+            </p>
+
+            <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <button
                 type="button"
                 onClick={onCopy}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-amber-300 bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-900 hover:bg-amber-200 sm:w-auto sm:text-sm"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-amber-300 bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-900 hover:bg-amber-200 sm:text-sm"
               >
                 <Copy className="h-4 w-4" /> Copy share message
               </button>
@@ -1185,7 +1333,7 @@ export default function ImmigrationDashGame() {
                 type="button"
                 onClick={onNativeShare}
                 disabled={!canNativeShare}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-violet-300 bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-200 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:text-sm"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-violet-300 bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-200 disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm"
               >
                 <Share2 className="h-4 w-4" /> Share
               </button>
@@ -1193,7 +1341,7 @@ export default function ImmigrationDashGame() {
                 href={xShareUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black sm:w-auto sm:text-sm"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black sm:text-sm"
               >
                 <NextImage
                   src="/resource-logos/X-logo.svg"
@@ -1208,7 +1356,7 @@ export default function ImmigrationDashGame() {
                 href={facebookShareUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#1664d9] bg-[#1877f2] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1664d9] sm:w-auto sm:text-sm"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#1664d9] bg-[#1877f2] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1664d9] sm:text-sm"
               >
                 <NextImage
                   src="/resource-logos/facebook-logo.svg"
@@ -1239,7 +1387,7 @@ export default function ImmigrationDashGame() {
           )}
         </div>
 
-        <div className="relative mt-4 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
+        <div ref={gameShellRef} className="relative mt-4 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
           <canvas
             ref={canvasRef}
             width={CANVAS_WIDTH}
@@ -1288,8 +1436,20 @@ export default function ImmigrationDashGame() {
               Restart Game
             </button>
           )}
+          {fullScreenEnabled && (
+            <button
+              type="button"
+              onClick={toggleFullScreen}
+              className="inline-flex items-center justify-center rounded-xl border border-sky-300 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-800 hover:bg-sky-100 sm:hidden"
+            >
+              {isFullScreen ? "Exit Full Screen" : "Full Screen"}
+            </button>
+          )}
           <p className="text-xs text-slate-500 sm:text-sm">
             Controls: Space or Up arrow on desktop. Tap on mobile.
+          </p>
+          <p className="text-xs font-semibold text-sky-700 sm:hidden">
+            Mobile tip: turn your phone sideways (landscape) to play.
           </p>
         </div>
         <div className="mt-2 min-h-[32px]">
@@ -1300,6 +1460,36 @@ export default function ImmigrationDashGame() {
           >
               Blocked by closed sign. Keep moving or the fail-zone will catch you.
           </p>
+        </div>
+
+        <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
+          <h3 className="text-sm font-bold text-slate-900 sm:text-base">What the stamps mean</h3>
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            <div className="flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2">
+              <NextImage
+                src="/golden-stamp.png"
+                alt="Golden approved stamp"
+                width={128}
+                height={128}
+                className="h-[88px] w-[88px] shrink-0 rounded-full object-cover object-center"
+              />
+              <p className="text-xs text-emerald-900 sm:text-sm">
+                <span className="font-semibold">Golden approved stamp:</span> collect it to increase score and progress.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2">
+              <NextImage
+                src={RED_STAMP_SRC}
+                alt="Red rejected stamp"
+                width={112}
+                height={112}
+                className="h-[80px] w-[80px] shrink-0 rounded-full object-cover object-center"
+              />
+              <p className="text-xs text-rose-900 sm:text-sm">
+                <span className="font-semibold">Red rejected stamp:</span> hitting it costs one life.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
