@@ -24,12 +24,16 @@ const GOLDEN_STAMP_SRC = "/golden-stamp.png";
 const RED_STAMP_SRC = "/red-stamp.png";
 const GOLDEN_STAMP_ASSET_SRC = "/golden-stamp.png?v=3";
 const RED_STAMP_ASSET_SRC = "/red-stamp.png?v=2";
-const BG_SKY_SRC = "/background-sky.png";
-const BG_CITY_SRC = "/background-city.png";
+const BG_SKY_SRC = "/background-sky.jpg?v=2";
+const BG_CITY_SRC = "/background-city.jpg?v=2";
 const GROUND_SRC = "/ground-nogaps.png?v=2";
 const THAI_BLOCK_SRC = "/thai-block.png?v=2";
 const PLAYER_RUN_SRC = "/player-run.png?v=2";
 const CLOSED_SIGN_SRC = "/obstacle-closed-sign.png?v=2";
+const COLLECT_SOUND_SRC = "/collect sound.wav";
+const COLLECT_SOUND_POOL_SIZE = 4;
+const FAIL_ZONE_ADVANCE_SPEED_BLOCKED = 160;
+const FAIL_ZONE_RETREAT_SPEED = 120;
 const SKY_SCROLL_FACTOR = 0.02;
 const CITY_SCROLL_FACTOR = 0.04;
 const SKY_ZOOM = 1.12;
@@ -42,10 +46,10 @@ const HUD_SYNC_INTERVAL_MS = 180;
 const GOLDEN_STAMP_SIZE = 54;
 const THAI_BLOCK_BONUS_STAMP_SIZE = 48;
 const REJECTED_STAMP_SIZE = 52;
-const STAMP_GROUND_OFFSET_Y = 3;
+const STAMP_GROUND_OFFSET_Y = 4;
 const REDUCE_COLLECTIBLE_EFFECTS_THRESHOLD = 8;
-const CLOSED_SIGN_WIDTH = 92;
-const CLOSED_SIGN_HEIGHT = 84;
+const CLOSED_SIGN_WIDTH = 100;
+const CLOSED_SIGN_HEIGHT = 92;
 const POTHOLE_COLLISION_INSET = 2;
 const POTHOLE_MIN_WIDTH = 96;
 const POTHOLE_MAX_WIDTH = 138;
@@ -154,6 +158,7 @@ function intersects(a: { x: number; y: number; w: number; h: number }, b: { x: n
 function createImage(src: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new window.Image();
+    img.decoding = "async";
     img.onload = () => resolve(img);
     img.onerror = () => reject(new Error(`Failed to load ${src}`));
     img.src = src;
@@ -575,7 +580,8 @@ export default function ImmigrationDashGame() {
   const modelRef = useRef<GameModel>(createInitialModel());
   const assetsRef = useRef<LoadedAssets | null>(null);
   const ambienceAudioRef = useRef<HTMLAudioElement | null>(null);
-  const collectAudioRef = useRef<HTMLAudioElement | null>(null);
+  const collectAudioPoolRef = useRef<HTMLAudioElement[]>([]);
+  const collectAudioIndexRef = useRef(0);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const rafRef = useRef<number | null>(null);
   const lastTimeRef = useRef(0);
@@ -608,8 +614,10 @@ export default function ImmigrationDashGame() {
   }, []);
 
   const playCollectSound = useCallback(() => {
-    const sound = collectAudioRef.current;
-    if (!sound) return;
+    const pool = collectAudioPoolRef.current;
+    if (pool.length === 0) return;
+    const sound = pool[collectAudioIndexRef.current % pool.length];
+    collectAudioIndexRef.current = (collectAudioIndexRef.current + 1) % pool.length;
     try {
       sound.currentTime = 0;
       const p = sound.play();
@@ -627,6 +635,10 @@ export default function ImmigrationDashGame() {
     const ambience = ambienceAudioRef.current;
     if (!ambience) return;
     try {
+      if (ambience.preload === "none") {
+        ambience.preload = "auto";
+        ambience.load();
+      }
       ambience.muted = false;
       const p = ambience.play();
       if (p) {
@@ -911,9 +923,9 @@ export default function ImmigrationDashGame() {
       model.playerY += model.playerVy * delta;
 
       if (blocked) {
-        model.failZoneX = Math.min(CANVAS_WIDTH, model.failZoneX + 96 * delta);
+        model.failZoneX = Math.min(CANVAS_WIDTH, model.failZoneX + FAIL_ZONE_ADVANCE_SPEED_BLOCKED * delta);
       } else {
-        model.failZoneX = Math.max(-FAIL_ZONE_WIDTH, model.failZoneX - 120 * delta);
+        model.failZoneX = Math.max(-FAIL_ZONE_WIDTH, model.failZoneX - FAIL_ZONE_RETREAT_SPEED * delta);
       }
 
       model.obstacles.forEach((o) => {
@@ -1057,7 +1069,7 @@ export default function ImmigrationDashGame() {
             }
 
             pushedBySolidObstacle = true;
-            model.blockedTimer = 0.2;
+            model.blockedTimer = 0.28;
 
             const stuckX = obstacle.x - PLAYER_HITBOX.w - PLAYER_HITBOX.x - 6;
             const targetOffset = Math.max(-PLAYER_X + 12, stuckX - PLAYER_X);
@@ -1138,20 +1150,26 @@ export default function ImmigrationDashGame() {
     const ambience = new Audio("/street-ambience-chinatown.m4a");
     ambience.loop = true;
     ambience.volume = 0.45;
-    ambience.preload = "auto";
+    ambience.preload = "none";
     ambienceAudioRef.current = ambience;
 
-    const collect = new Audio("/collect sound.wav");
-    collect.volume = 0.45;
-    collect.preload = "auto";
-    collectAudioRef.current = collect;
+    collectAudioPoolRef.current = Array.from({ length: COLLECT_SOUND_POOL_SIZE }, () => {
+      const sound = new Audio(COLLECT_SOUND_SRC);
+      sound.volume = 0.45;
+      sound.preload = "auto";
+      return sound;
+    });
 
     return () => {
       if (ambienceAudioRef.current) {
         ambienceAudioRef.current.pause();
         ambienceAudioRef.current = null;
       }
-      collectAudioRef.current = null;
+      collectAudioPoolRef.current.forEach((sound) => {
+        sound.pause();
+      });
+      collectAudioPoolRef.current = [];
+      collectAudioIndexRef.current = 0;
       ctxRef.current = null;
     };
   }, []);
@@ -1360,7 +1378,7 @@ export default function ImmigrationDashGame() {
       <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <div>
           <div>
-            <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">Immigration Dash</h2>
+            <h2 className="text-center text-2xl font-extrabold tracking-tight text-slate-900">Immigration Dash</h2>
           </div>
 
           <div className="mt-3 rounded-2xl border border-sky-300/80 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-2.5 shadow-[0_10px_30px_-24px_rgba(14,116,144,0.65)] sm:p-3">
@@ -1490,38 +1508,36 @@ export default function ImmigrationDashGame() {
               {isFullScreen ? "Exit Full Screen" : "Full Screen"}
             </button>
           )}
-          <p className="text-xs text-slate-500 sm:text-sm">
+          <p className="w-full text-center text-xs text-slate-500 sm:w-auto sm:text-left sm:text-sm">
             Controls: Use space or up arrow on desktop. Tap game on mobile to jump.
           </p>
         </div>
         <div className="mt-2 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
-          <div className="grid gap-2 sm:grid-cols-2">
-            <div className="flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="flex flex-col items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
               <NextImage
                 src={GOLDEN_STAMP_SRC}
                 alt="Golden approved stamp"
                 width={148}
                 height={148}
-                className="h-[102px] w-[102px] shrink-0 rounded-full object-cover object-center"
+                className="h-[84px] w-[84px] shrink-0 rounded-full object-cover object-center md:h-[96px] md:w-[96px]"
               />
-              <p className="text-xs text-emerald-900 sm:text-sm">
-                <span className="font-semibold">Golden Approved Stamp</span>
-                <br />
-                Approved! Your paperwork is perfect. Collect a stamp to increase your score.
+              <p className="w-full max-w-[34ch] text-sm leading-snug text-emerald-900 md:max-w-none">
+                <span className="block font-semibold">Golden Approved Stamp</span>
+                <span className="mt-0.5 block">Approved! Your paperwork is perfect. Collect a stamp to increase your score.</span>
               </p>
             </div>
-            <div className="flex items-center gap-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2">
+            <div className="flex flex-col items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
               <NextImage
                 src={RED_STAMP_SRC}
                 alt="Red rejected stamp"
                 width={112}
                 height={112}
-                className="h-[80px] w-[80px] shrink-0 rounded-full object-cover object-center"
+                className="h-[84px] w-[84px] shrink-0 rounded-full object-cover object-center md:h-[92px] md:w-[92px]"
               />
-              <p className="text-xs text-rose-900 sm:text-sm">
-                <span className="font-semibold">Red Rejected Stamp</span>
-                <br />
-                Rejected! You missed a photocopy. Collect a stamp and reduce your will to live.
+              <p className="w-full max-w-[34ch] text-sm leading-snug text-rose-900 md:max-w-none">
+                <span className="block font-semibold">Red Rejected Stamp</span>
+                <span className="mt-0.5 block">Rejected! You missed a photocopy. Collect a stamp and reduce your will to live.</span>
               </p>
             </div>
           </div>
