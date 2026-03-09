@@ -1173,11 +1173,11 @@ export default function ImmigrationDashGame() {
           <div className="mt-3 rounded-2xl border border-sky-200 bg-gradient-to-r from-sky-50 via-white to-indigo-50 p-3">
             <h3 className="text-sm font-bold text-slate-900">Share your result</h3>
             <p className="mt-1 whitespace-pre-line text-sm text-slate-700">{resultText}</p>
-            <div className="mt-3 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            <div className="mt-3 flex flex-wrap gap-2">
               <button
                 type="button"
                 onClick={onCopy}
-                className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-amber-300 bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-900 hover:bg-amber-200 sm:text-sm"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-amber-300 bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-900 hover:bg-amber-200 sm:w-auto sm:text-sm"
               >
                 <Copy className="h-4 w-4" /> Copy share message
               </button>
@@ -1185,7 +1185,7 @@ export default function ImmigrationDashGame() {
                 type="button"
                 onClick={onNativeShare}
                 disabled={!canNativeShare}
-                className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-violet-300 bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-200 disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-violet-300 bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-200 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:text-sm"
               >
                 <Share2 className="h-4 w-4" /> Share
               </button>
@@ -1193,7 +1193,7 @@ export default function ImmigrationDashGame() {
                 href={xShareUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black sm:text-sm"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black sm:w-auto sm:text-sm"
               >
                 <NextImage
                   src="/resource-logos/X-logo.svg"
@@ -1208,7 +1208,7 @@ export default function ImmigrationDashGame() {
                 href={facebookShareUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-[#1664d9] bg-[#1877f2] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1664d9] sm:text-sm"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#1664d9] bg-[#1877f2] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1664d9] sm:w-auto sm:text-sm"
               >
                 <NextImage
                   src="/resource-logos/facebook-logo.svg"
@@ -1245,7 +1245,7 @@ export default function ImmigrationDashGame() {
             width={CANVAS_WIDTH}
             height={CANVAS_HEIGHT}
             onPointerDown={jump}
-            className="block h-auto w-full touch-manipulation select-none"
+            className="block h-auto w-[145%] max-w-none -translate-x-[15.5%] touch-manipulation select-none sm:w-full sm:translate-x-0"
             aria-label="Immigration Dash game"
           />
 
