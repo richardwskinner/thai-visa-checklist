@@ -4,8 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import NextImage from "next/image";
 import { Copy, Share2 } from "lucide-react";
 
-const GAME_URL = "https://thaivisachecklist.com/immigration-dash";
-const SHARE_URL_TEXT = "thaivisachecklist.com/immigration-dash";
+const GAME_URL = "https://thaivisachecklist.com/games/immigration-dash";
+const SHARE_URL_TEXT = "thaivisachecklist.com/games/immigration-dash";
 const CANVAS_WIDTH = 960;
 const CANVAS_HEIGHT = 420;
 const GROUND_DRAW_TOP = 338;
@@ -1267,12 +1267,12 @@ export default function ImmigrationDashGame() {
 
   const shareSeconds = Math.floor(hud.time);
   const resultText = useMemo(() => {
-    return `🇹🇭 I survived ${shareSeconds} seconds on Immigration Dash!\n\nScore: ${hud.score}\n\nCan you beat it?\n${SHARE_URL_TEXT}`;
+    return `🇹🇭 I survived ${shareSeconds} seconds on Immigration Dash! Score: ${hud.score}\nCan you beat it? ${SHARE_URL_TEXT}`;
   }, [hud.score, shareSeconds]);
 
   const canNativeShare = typeof navigator !== "undefined" && "share" in navigator;
   const socialShareText = useMemo(() => {
-    return `🇹🇭 I survived ${shareSeconds} seconds on Immigration Dash!\n\nScore: ${hud.score}\n\nCan you beat it?`;
+    return `🇹🇭 I survived ${shareSeconds} seconds on Immigration Dash! Score: ${hud.score}\nCan you beat it?`;
   }, [hud.score, shareSeconds]);
   const xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(socialShareText)}&url=${encodeURIComponent(GAME_URL)}`;
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(GAME_URL)}&quote=${encodeURIComponent(socialShareText)}`;
@@ -1317,9 +1317,16 @@ export default function ImmigrationDashGame() {
               </div>
             </div>
 
-            <p className="mt-2 whitespace-pre-line rounded-xl border border-slate-200/80 bg-white/80 px-2.5 py-2 text-xs leading-relaxed text-slate-700 sm:text-sm">
-              {resultText}
-            </p>
+            <div className="mt-2 rounded-xl border border-slate-200/80 bg-white/80 px-2.5 py-2 text-xs leading-relaxed text-slate-700 sm:text-sm">
+              <p>
+                🇹🇭 I survived <span className="font-extrabold text-slate-900">{shareSeconds}</span> seconds on Immigration Dash!{" "}
+                <span className="font-bold text-slate-900">Score: {hud.score}</span>
+              </p>
+              <p className="mt-1">
+                <span className="font-bold text-slate-900">Can you beat it?</span>{" "}
+                <span className="font-semibold text-slate-800">{SHARE_URL_TEXT}</span>
+              </p>
+            </div>
 
             <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <button
@@ -1387,6 +1394,10 @@ export default function ImmigrationDashGame() {
           )}
         </div>
 
+        <p className="mt-1 text-xs font-semibold text-sky-700 sm:hidden">
+          Mobile tip: turn your phone sideways (landscape) to play.
+        </p>
+
         <div ref={gameShellRef} className="relative mt-4 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
           <canvas
             ref={canvasRef}
@@ -1448,9 +1459,6 @@ export default function ImmigrationDashGame() {
           <p className="text-xs text-slate-500 sm:text-sm">
             Controls: Space or Up arrow on desktop. Tap on mobile.
           </p>
-          <p className="text-xs font-semibold text-sky-700 sm:hidden">
-            Mobile tip: turn your phone sideways (landscape) to play.
-          </p>
         </div>
         <div className="mt-2 min-h-[32px]">
           <p
@@ -1469,12 +1477,14 @@ export default function ImmigrationDashGame() {
               <NextImage
                 src="/golden-stamp.png"
                 alt="Golden approved stamp"
-                width={128}
-                height={128}
-                className="h-[88px] w-[88px] shrink-0 rounded-full object-cover object-center"
+                width={148}
+                height={148}
+                className="h-[102px] w-[102px] shrink-0 rounded-full object-cover object-center"
               />
               <p className="text-xs text-emerald-900 sm:text-sm">
-                <span className="font-semibold">Golden approved stamp:</span> collect it to increase score and progress.
+                <span className="font-semibold">Golden Approved Stamp</span>
+                <br />
+                Approved! Your paperwork is perfect. Collect a stamp to increase your score.
               </p>
             </div>
             <div className="flex items-center gap-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2">
@@ -1486,7 +1496,9 @@ export default function ImmigrationDashGame() {
                 className="h-[80px] w-[80px] shrink-0 rounded-full object-cover object-center"
               />
               <p className="text-xs text-rose-900 sm:text-sm">
-                <span className="font-semibold">Red rejected stamp:</span> hitting it costs one life.
+                <span className="font-semibold">Red Rejected Stamp</span>
+                <br />
+                Rejected! You missed a photocopy. Collect a stamp and reduce your will to live.
               </p>
             </div>
           </div>
