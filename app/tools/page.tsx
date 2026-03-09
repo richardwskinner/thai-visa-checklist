@@ -72,30 +72,6 @@ export default function ToolsPage() {
           </p>
         </div>
 
-        <Card className="mt-8 rounded-3xl border-0 bg-white shadow-sm">
-          <CardContent className="p-4 sm:p-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="min-w-0">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-fuchsia-100">
-                    <Gamepad2 className="h-5 w-5 text-fuchsia-700" />
-                  </div>
-                  <h2 className="text-xl font-extrabold text-slate-900">Play Immigration Dash</h2>
-                </div>
-                <p className="mt-3 text-sm text-slate-600">
-                  A fast arcade runner where you collect approval stamps and dodge immigration hazards.
-                </p>
-              </div>
-              <Link
-                href="/games/immigration-dash"
-                className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-fuchsia-600 to-pink-600 px-4 py-2 text-sm font-semibold text-white shadow hover:from-fuchsia-700 hover:to-pink-700"
-              >
-                Open game <ExternalLink className="h-4 w-4" />
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-
         <div className="mt-10 space-y-6">
           {toolSections.map((section) => (
             <Card key={section.href} className="rounded-3xl border-0 bg-white shadow-sm">
@@ -125,6 +101,30 @@ export default function ToolsPage() {
               </CardContent>
             </Card>
           ))}
+
+          <Card className="rounded-3xl border-0 bg-white shadow-sm">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-fuchsia-100">
+                      <Gamepad2 className="h-5 w-5 text-fuchsia-700" />
+                    </div>
+                    <h2 className="text-xl font-extrabold text-slate-900">Play Immigration Dash</h2>
+                  </div>
+                  <p className="mt-3 text-sm text-slate-600">
+                    A fast arcade runner where you collect approval stamps and dodge immigration hazards.
+                  </p>
+                </div>
+                <Link
+                  href="/games/immigration-dash"
+                  className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-fuchsia-600 to-pink-600 px-4 py-2 text-sm font-semibold text-white shadow hover:from-fuchsia-700 hover:to-pink-700"
+                >
+                  Open game <ExternalLink className="h-4 w-4" />
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="py-10 text-xs text-slate-500">

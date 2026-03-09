@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import NextImage from "next/image";
-import { Copy, Share2 } from "lucide-react";
+import { Share2 } from "lucide-react";
 
 const GAME_URL = "https://thaivisachecklist.com/games/immigration-dash";
 const SHARE_URL_TEXT = "thaivisachecklist.com/games/immigration-dash";
@@ -20,12 +20,16 @@ const FAIL_ZONE_WIDTH = 110;
 const GRAVITY = 1800;
 const JUMP_VELOCITY = -760;
 const FALL_DEATH_Y = CANVAS_HEIGHT + 120;
-const GOLDEN_STAMP_SRC = "/golden-stamp.png?v=2";
+const GOLDEN_STAMP_SRC = "/golden-stamp.png";
 const RED_STAMP_SRC = "/red-stamp.png";
+const GOLDEN_STAMP_ASSET_SRC = "/golden-stamp.png?v=3";
+const RED_STAMP_ASSET_SRC = "/red-stamp.png?v=2";
 const BG_SKY_SRC = "/background-sky.png";
 const BG_CITY_SRC = "/background-city.png";
 const GROUND_SRC = "/ground-nogaps.png?v=2";
-const THAI_BLOCK_SRC = "/thai-block.png";
+const THAI_BLOCK_SRC = "/thai-block.png?v=2";
+const PLAYER_RUN_SRC = "/player-run.png?v=2";
+const CLOSED_SIGN_SRC = "/obstacle-closed-sign.png?v=2";
 const SKY_SCROLL_FACTOR = 0.02;
 const CITY_SCROLL_FACTOR = 0.04;
 const SKY_ZOOM = 1.12;
@@ -34,16 +38,19 @@ const SKY_ANCHOR_BOTTOM = CANVAS_HEIGHT + 78;
 const CITY_ANCHOR_BOTTOM = CANVAS_HEIGHT + 168;
 const FIXED_TIMESTEP = 1 / 60;
 const MAX_SIM_STEPS_PER_FRAME = 6;
+const HUD_SYNC_INTERVAL_MS = 180;
 const GOLDEN_STAMP_SIZE = 54;
 const THAI_BLOCK_BONUS_STAMP_SIZE = 48;
 const REJECTED_STAMP_SIZE = 52;
+const STAMP_GROUND_OFFSET_Y = 3;
+const REDUCE_COLLECTIBLE_EFFECTS_THRESHOLD = 8;
 const CLOSED_SIGN_WIDTH = 92;
 const CLOSED_SIGN_HEIGHT = 84;
 const POTHOLE_COLLISION_INSET = 2;
 const POTHOLE_MIN_WIDTH = 96;
 const POTHOLE_MAX_WIDTH = 138;
 
-type GameStatus = "idle" | "running" | "gameover";
+type GameStatus = "idle" | "running" | "paused" | "gameover";
 type ObstacleKind = "closed-sign" | "missing-photocopy" | "thai-block" | "pothole";
 
 type FrameRect = { x: number; y: number; w: number; h: number };
@@ -82,6 +89,12 @@ type CollectibleEntity = {
   collectedTimer?: number;
 };
 
+type HudState = {
+  score: number;
+  lives: number;
+  time: number;
+};
+
 type GameModel = {
   elapsed: number;
   lives: number;
@@ -109,17 +122,17 @@ type GameModel = {
   fallingInPothole: boolean;
 };
 
+const CLOSED_SIGN_GAME_OVER_MESSAGE = "Immigration closed for lunch.";
 const GAME_OVER_MESSAGES = [
   "Missing photocopy. Please come back tomorrow.",
-  "Need TM30.",
-  "Immigration closed for lunch.",
+  "You're TM.30 is not up to date.",
+  CLOSED_SIGN_GAME_OVER_MESSAGE,
   "Missed your queue. Please take a new number.",
   "Wrong form. Please apply again.",
 ];
 const POTHOLE_GAME_OVER_MESSAGES = [
   "Watch your step. Fell into a pothole.",
-  "Bangkok footpath got you.",
-  "You fell into a pothole.",
+  "Bangkok footpath has you now."
 ];
 
 function randomRange(min: number, max: number) {
@@ -464,7 +477,12 @@ function drawObstacle(ctx: CanvasRenderingContext2D, assets: LoadedAssets, obsta
   );
 }
 
-function drawCollectible(ctx: CanvasRenderingContext2D, assets: LoadedAssets, collectible: CollectibleEntity) {
+function drawCollectible(
+  ctx: CanvasRenderingContext2D,
+  assets: LoadedAssets,
+  collectible: CollectibleEntity,
+  reduceEffects: boolean
+) {
   if ((collectible.collectedTimer ?? 0) > 0) {
     const t = collectible.collectedTimer ?? 0;
     const pulse = Math.max(0, Math.min(1, t / 0.18));
@@ -485,27 +503,28 @@ function drawCollectible(ctx: CanvasRenderingContext2D, assets: LoadedAssets, co
   }
 
   const source = assets.greenStamp.bounds;
-
-  const glow = ctx.createRadialGradient(
-    collectible.x + collectible.size / 2,
-    collectible.y + collectible.size / 2,
-    3,
-    collectible.x + collectible.size / 2,
-    collectible.y + collectible.size / 2,
-    collectible.size * 0.8
-  );
-  glow.addColorStop(0, "rgba(34, 197, 94, 0.45)");
-  glow.addColorStop(1, "rgba(34, 197, 94, 0)");
-  ctx.fillStyle = glow;
-  ctx.beginPath();
-  ctx.arc(
-    collectible.x + collectible.size / 2,
-    collectible.y + collectible.size / 2,
-    collectible.size * 0.7,
-    0,
-    Math.PI * 2
-  );
-  ctx.fill();
+  if (!reduceEffects) {
+    const glow = ctx.createRadialGradient(
+      collectible.x + collectible.size / 2,
+      collectible.y + collectible.size / 2,
+      3,
+      collectible.x + collectible.size / 2,
+      collectible.y + collectible.size / 2,
+      collectible.size * 0.8
+    );
+    glow.addColorStop(0, "rgba(34, 197, 94, 0.45)");
+    glow.addColorStop(1, "rgba(34, 197, 94, 0)");
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(
+      collectible.x + collectible.size / 2,
+      collectible.y + collectible.size / 2,
+      collectible.size * 0.7,
+      0,
+      Math.PI * 2
+    );
+    ctx.fill();
+  }
 
   ctx.drawImage(
     assets.greenStamp.image,
@@ -557,6 +576,7 @@ export default function ImmigrationDashGame() {
   const assetsRef = useRef<LoadedAssets | null>(null);
   const ambienceAudioRef = useRef<HTMLAudioElement | null>(null);
   const collectAudioRef = useRef<HTMLAudioElement | null>(null);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const rafRef = useRef<number | null>(null);
   const lastTimeRef = useRef(0);
   const accumulatorRef = useRef(0);
@@ -566,27 +586,25 @@ export default function ImmigrationDashGame() {
   const [assetsReady, setAssetsReady] = useState(false);
   const [assetError, setAssetError] = useState<string | null>(null);
   const [gameOverMessage, setGameOverMessage] = useState("");
-  const [copyState, setCopyState] = useState<"idle" | "copied" | "error">("idle");
   const [shareState, setShareState] = useState<"idle" | "shared" | "error">("idle");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [fullScreenEnabled, setFullScreenEnabled] = useState(false);
-  const [hud, setHud] = useState({
+  const [hud, setHud] = useState<HudState>({
     score: 0,
     lives: 3,
     time: 0,
-    blocked: false,
-    milestoneReached: false,
   });
 
   const pushHud = useCallback(() => {
     const model = modelRef.current;
-    setHud({
+    const nextHud: HudState = {
       score: Math.max(0, Math.floor(model.elapsed * 15 + model.documents * 150)),
       lives: model.lives,
-      time: model.elapsed,
-      blocked: model.blockedTimer > 0,
-      milestoneReached: model.milestoneReached,
-    });
+      time: Math.floor(model.elapsed),
+    };
+    setHud((prev) =>
+      prev.score === nextHud.score && prev.lives === nextHud.lives && prev.time === nextHud.time ? prev : nextHud
+    );
   }, []);
 
   const playCollectSound = useCallback(() => {
@@ -657,10 +675,17 @@ export default function ImmigrationDashGame() {
     const canvas = canvasRef.current;
     const assets = assetsRef.current;
     if (!canvas || !assets) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    let ctx = ctxRef.current;
+    if (!ctx || ctx.canvas !== canvas) {
+      ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
+      if (!ctx) return;
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "medium";
+      ctxRef.current = ctx;
+    }
 
     const model = modelRef.current;
+    const reduceCollectibleEffects = model.collectibles.length >= REDUCE_COLLECTIBLE_EFFECTS_THRESHOLD;
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     drawParallaxLayer(ctx, assets.sky, model.worldScroll, SKY_SCROLL_FACTOR, SKY_ZOOM, SKY_ANCHOR_BOTTOM);
     drawParallaxLayer(ctx, assets.city, model.worldScroll, CITY_SCROLL_FACTOR, CITY_ZOOM, CITY_ANCHOR_BOTTOM);
@@ -670,7 +695,7 @@ export default function ImmigrationDashGame() {
       model.worldScroll,
       model.obstacles.filter((obstacle) => obstacle.kind === "pothole")
     );
-    model.collectibles.forEach((item) => drawCollectible(ctx, assets, item));
+    model.collectibles.forEach((item) => drawCollectible(ctx, assets, item, reduceCollectibleEffects));
     model.obstacles.forEach((obstacle) => drawObstacle(ctx, assets, obstacle));
     drawPlayer(ctx, assets, model);
     drawCanvasHud(ctx, model);
@@ -688,7 +713,6 @@ export default function ImmigrationDashGame() {
 
   const endGame = useCallback((message?: string) => {
     setStatus("gameover");
-    setCopyState("idle");
     setShareState("idle");
     setGameOverMessage(message ?? pickRandom(GAME_OVER_MESSAGES));
     pushHud();
@@ -770,7 +794,11 @@ export default function ImmigrationDashGame() {
                 h: 22,
                 y: GROUND_SURFACE_Y - 10,
               }
-            : { w: REJECTED_STAMP_SIZE, h: REJECTED_STAMP_SIZE, y: GROUND_SURFACE_Y - REJECTED_STAMP_SIZE };
+            : {
+                w: REJECTED_STAMP_SIZE,
+                h: REJECTED_STAMP_SIZE,
+                y: GROUND_SURFACE_Y - REJECTED_STAMP_SIZE + STAMP_GROUND_OFFSET_Y,
+              };
 
     const earlySpawn = model.elapsed < 2.5;
     const spawnX =
@@ -799,6 +827,7 @@ export default function ImmigrationDashGame() {
     const model = modelRef.current;
     const d = getDifficulty(model.elapsed);
     const size = GOLDEN_STAMP_SIZE;
+    const groundStampY = GROUND_SURFACE_Y - size + STAMP_GROUND_OFFSET_Y;
     const lanes = [0, 28, 52, 82, 112];
     let laneIndex = Math.floor(Math.random() * lanes.length);
     if (laneIndex === model.lastCollectibleLane && Math.random() < 0.75) {
@@ -806,7 +835,8 @@ export default function ImmigrationDashGame() {
     }
     model.lastCollectibleLane = laneIndex;
 
-    const baseY = Math.max(42, GROUND_SURFACE_Y - size - (lanes[laneIndex] + randomRange(-10, 10)));
+    const laneLift = Math.max(0, lanes[laneIndex] + randomRange(-7, 7));
+    const baseY = Math.max(42, groundStampY - laneLift);
     const earlySpawn = model.elapsed < 2.5;
     const spawnX = earlySpawn
       ? pickSpawnX(model, -70, 120, 160)
@@ -821,7 +851,7 @@ export default function ImmigrationDashGame() {
 
     for (let i = 0; i < burstCount; i += 1) {
       const x = spawnX + i * randomRange(42, 68) + randomRange(-6, 8);
-      const y = Math.max(36, baseY - i * randomRange(4, 14) + randomRange(-6, 6));
+      const y = Math.min(groundStampY, Math.max(36, baseY - i * randomRange(4, 14) + randomRange(-4, 4)));
       const crowded = model.collectibles.some((item) => Math.abs(item.x - x) < 48 && Math.abs(item.y - y) < 40);
       if (crowded) continue;
 
@@ -1064,7 +1094,7 @@ export default function ImmigrationDashGame() {
       }
 
       if (model.failZoneX + FAIL_ZONE_WIDTH >= PLAYER_X + model.playerOffsetX + 8) {
-        endGame();
+        endGame(CLOSED_SIGN_GAME_OVER_MESSAGE);
       }
     },
     [endGame, playCollectSound, spawnCollectible, spawnObstacle]
@@ -1074,18 +1104,26 @@ export default function ImmigrationDashGame() {
     playAmbience();
     modelRef.current = createInitialModel();
     setStatus("running");
-    setCopyState("idle");
     setShareState("idle");
     setGameOverMessage("");
     setHud({
       score: 0,
       lives: 3,
       time: 0,
-      blocked: false,
-      milestoneReached: false,
     });
     drawFrame();
   }, [drawFrame, playAmbience]);
+
+  const togglePause = useCallback(() => {
+    setStatus((current) => {
+      if (current === "running") return "paused";
+      if (current === "paused") {
+        playAmbience();
+        return "running";
+      }
+      return current;
+    });
+  }, [playAmbience]);
 
   const jump = useCallback(() => {
     playAmbience();
@@ -1114,6 +1152,7 @@ export default function ImmigrationDashGame() {
         ambienceAudioRef.current = null;
       }
       collectAudioRef.current = null;
+      ctxRef.current = null;
     };
   }, []);
 
@@ -1158,7 +1197,9 @@ export default function ImmigrationDashGame() {
     }
 
     ambience.pause();
-    ambience.currentTime = 0;
+    if (status === "idle" || status === "gameover") {
+      ambience.currentTime = 0;
+    }
   }, [status]);
 
   useEffect(() => {
@@ -1171,11 +1212,11 @@ export default function ImmigrationDashGame() {
             createImage(BG_SKY_SRC),
             createImage(BG_CITY_SRC),
             createImage(GROUND_SRC),
-            createImage("/player-run.png"),
-            createImage("/immigration-dash/obstacle-closed-sign.png"),
+            createImage(PLAYER_RUN_SRC),
+            createImage(CLOSED_SIGN_SRC),
             createImage(THAI_BLOCK_SRC),
-            createImage(RED_STAMP_SRC),
-            createImage(GOLDEN_STAMP_SRC),
+            createImage(RED_STAMP_ASSET_SRC),
+            createImage(GOLDEN_STAMP_ASSET_SRC),
           ]);
 
         if (isCancelled) return;
@@ -1251,7 +1292,7 @@ export default function ImmigrationDashGame() {
       }
       drawFrame();
 
-      if (ts - lastHudSyncRef.current > 90) {
+      if (ts - lastHudSyncRef.current > HUD_SYNC_INTERVAL_MS) {
         pushHud();
         lastHudSyncRef.current = ts;
       }
@@ -1298,17 +1339,7 @@ export default function ImmigrationDashGame() {
   const socialShareText = useMemo(() => {
     return `🇹🇭 I survived ${shareSeconds} seconds on Immigration Dash! Score: ${hud.score}\nCan you beat it?`;
   }, [hud.score, shareSeconds]);
-  const xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(socialShareText)}&url=${encodeURIComponent(GAME_URL)}`;
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(GAME_URL)}&quote=${encodeURIComponent(socialShareText)}`;
-
-  const onCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(resultText);
-      setCopyState("copied");
-    } catch {
-      setCopyState("error");
-    }
-  }, [resultText]);
 
   const onNativeShare = useCallback(async () => {
     if (!canNativeShare) return;
@@ -1355,34 +1386,12 @@ export default function ImmigrationDashGame() {
             <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <button
                 type="button"
-                onClick={onCopy}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-amber-300 bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-900 hover:bg-amber-200 sm:text-sm"
-              >
-                <Copy className="h-4 w-4" /> Copy share message
-              </button>
-              <button
-                type="button"
                 onClick={onNativeShare}
                 disabled={!canNativeShare}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-violet-300 bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-200 disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm"
               >
                 <Share2 className="h-4 w-4" /> Share
               </button>
-              <a
-                href={xShareUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black sm:text-sm"
-              >
-                <NextImage
-                  src="/resource-logos/X-logo.svg"
-                  alt="X"
-                  width={14}
-                  height={14}
-                  className="h-3.5 w-3.5"
-                />
-                Share on X
-              </a>
               <a
                 href={facebookShareUrl}
                 target="_blank"
@@ -1399,22 +1408,14 @@ export default function ImmigrationDashGame() {
                 Share on Facebook
               </a>
             </div>
-            {(copyState !== "idle" || shareState !== "idle") && (
+            {shareState !== "idle" && (
               <p className="mt-2 text-xs text-slate-500">
-                {copyState === "copied" && "Share message copied to clipboard."}
-                {copyState === "error" && "Could not copy automatically. Please copy manually."}
                 {shareState === "shared" && "Thanks for sharing."}
                 {shareState === "error" && "Sharing was cancelled or unavailable."}
               </p>
             )}
           </div>
         </div>
-
-        {hud.milestoneReached && (
-          <div className="mt-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
-            Visa approved. See you again in 90 days.
-          </div>
-        )}
 
         <p className="mt-1 text-xs font-semibold text-sky-700 sm:hidden">
           Mobile tip: turn your phone sideways (landscape) to play.
@@ -1426,7 +1427,7 @@ export default function ImmigrationDashGame() {
             width={CANVAS_WIDTH}
             height={CANVAS_HEIGHT}
             onPointerDown={jump}
-            className="block h-auto w-[150%] max-w-none -translate-x-[17%] touch-manipulation select-none sm:w-[108%] sm:-translate-x-[4%] lg:w-[104%] lg:-translate-x-[2%]"
+            className="block h-auto w-[150%] max-w-none -translate-x-[17%] touch-manipulation select-none sm:w-[108%] sm:-translate-x-[4%] lg:w-full lg:translate-x-0"
             aria-label="Immigration Dash game"
           />
 
@@ -1440,19 +1441,21 @@ export default function ImmigrationDashGame() {
             <div className="absolute inset-0 flex items-center justify-center bg-slate-900/25 backdrop-blur-[1px]">
               <div className="mx-4 max-w-md rounded-2xl border border-white/70 bg-white/95 p-4 text-center shadow-lg sm:p-5">
                 <h3 className="text-lg font-bold text-slate-900">
-                  {status === "idle" ? "Ready to run to immigration?" : "Game over"}
+                  {status === "idle" ? "Ready to run to immigration?" : status === "paused" ? "Paused" : "Game over"}
                 </h3>
                 <p className="mt-2 text-sm text-slate-600">
                   {status === "idle"
                     ? "Space, Up arrow, or tap to jump."
-                    : gameOverMessage}
+                    : status === "paused"
+                      ? "Game is paused. Tap Resume to continue."
+                      : gameOverMessage}
                 </p>
                 <button
                   type="button"
-                  onClick={startGame}
+                  onClick={status === "paused" ? togglePause : startGame}
                   className="mt-4 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-fuchsia-600 to-pink-600 px-5 py-2.5 text-sm font-semibold text-white shadow hover:from-fuchsia-700 hover:to-pink-700"
                 >
-                  {status === "idle" ? "Start Game" : "Restart Game"}
+                  {status === "idle" ? "Start Game" : status === "paused" ? "Resume Game" : "Restart Game"}
                 </button>
               </div>
             </div>
@@ -1460,13 +1463,22 @@ export default function ImmigrationDashGame() {
         </div>
 
         <div className="mt-2 flex flex-wrap items-center gap-3">
-          {status === "running" && (
+          {(status === "running" || status === "paused") && (
             <button
               type="button"
               onClick={startGame}
               className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
             >
               Restart Game
+            </button>
+          )}
+          {(status === "running" || status === "paused") && (
+            <button
+              type="button"
+              onClick={togglePause}
+              className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+            >
+              {status === "running" ? "Pause Game" : "Resume Game"}
             </button>
           )}
           {fullScreenEnabled && (
@@ -1479,24 +1491,14 @@ export default function ImmigrationDashGame() {
             </button>
           )}
           <p className="text-xs text-slate-500 sm:text-sm">
-            Controls: Space or Up arrow on desktop. Tap on mobile.
+            Controls: Use space or up arrow on desktop. Tap game on mobile to jump.
           </p>
         </div>
-        <div className="mt-1 min-h-[24px]">
-          <p
-            className={`rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800 transition-opacity sm:text-sm ${
-              hud.blocked ? "opacity-100" : "opacity-0"
-            }`}
-          >
-              Blocked by closed sign. Keep moving or the fail-zone will catch you.
-          </p>
-        </div>
-
         <div className="mt-2 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
           <div className="grid gap-2 sm:grid-cols-2">
             <div className="flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2">
               <NextImage
-                src="/golden-stamp.png"
+                src={GOLDEN_STAMP_SRC}
                 alt="Golden approved stamp"
                 width={148}
                 height={148}
