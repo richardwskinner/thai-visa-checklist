@@ -4,7 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import NextImage from "next/image";
 import { Copy, Share2 } from "lucide-react";
 
-const GAME_URL = "https://thaivisachecklist.com/games/immigration-dash";
+const GAME_URL = "https://thaivisachecklist.com/immigration-dash";
+const SHARE_URL_TEXT = "thaivisachecklist.com/immigration-dash";
 const CANVAS_WIDTH = 960;
 const CANVAS_HEIGHT = 420;
 const GROUND_DRAW_TOP = 338;
@@ -18,7 +19,9 @@ const FORCE_SINGLE_FRAME_PLAYER = true;
 const FAIL_ZONE_WIDTH = 110;
 const GRAVITY = 1800;
 const JUMP_VELOCITY = -760;
+const FALL_DEATH_Y = CANVAS_HEIGHT + 120;
 const GOLDEN_STAMP_SRC = "/golden-stamp.png?v=2";
+const RED_STAMP_SRC = "/red-stamp.png";
 const BG_SKY_SRC = "/background-sky.png";
 const BG_CITY_SRC = "/background-city.png";
 const GROUND_SRC = "/ground-nogaps.png?v=2";
@@ -32,9 +35,12 @@ const CITY_ANCHOR_BOTTOM = CANVAS_HEIGHT + 168;
 const THAI_BLOCK_BONUS_STAMP_SIZE = 40;
 const CLOSED_SIGN_WIDTH = 88;
 const CLOSED_SIGN_HEIGHT = 80;
+const POTHOLE_COLLISION_INSET = 2;
+const POTHOLE_MIN_WIDTH = 96;
+const POTHOLE_MAX_WIDTH = 138;
 
 type GameStatus = "idle" | "running" | "gameover";
-type ObstacleKind = "closed-sign" | "missing-photocopy" | "thai-block";
+type ObstacleKind = "closed-sign" | "missing-photocopy" | "thai-block" | "pothole";
 
 type FrameRect = { x: number; y: number; w: number; h: number };
 type SpriteAsset = {
@@ -92,6 +98,11 @@ type GameModel = {
   nextCollectibleIn: number;
   nextObstacleId: number;
   nextCollectibleId: number;
+  lastObstacleKind: ObstacleKind | null;
+  lastObstacleStreak: number;
+  lastCollectibleLane: number;
+  obstaclesSincePothole: number;
+  fallingInPothole: boolean;
 };
 
 const GAME_OVER_MESSAGES = [
@@ -101,9 +112,18 @@ const GAME_OVER_MESSAGES = [
   "Missed your queue. Please take a new number.",
   "Wrong form. Please apply again.",
 ];
+const POTHOLE_GAME_OVER_MESSAGES = [
+  "Watch your step. Fell into a pothole.",
+  "Bangkok footpath got you.",
+  "You fell into a pothole.",
+];
 
 function randomRange(min: number, max: number) {
   return min + Math.random() * (max - min);
+}
+
+function lerp(min: number, max: number, t: number) {
+  return min + (max - min) * t;
 }
 
 function pickRandom<T>(items: readonly T[]) {
@@ -254,58 +274,21 @@ function getMaxFrameSize(frames: FrameRect[]) {
 }
 
 function getDifficulty(timeSeconds: number) {
-  if (timeSeconds < 10) {
-    return {
-      speed: 220,
-      obstacleMin: 1.85,
-      obstacleMax: 2.55,
-      collectibleMin: 2.2,
-      collectibleMax: 3.0,
-      closedChance: 0.08,
-      blockChance: 0.56,
-    };
-  }
-  if (timeSeconds < 20) {
-    return {
-      speed: 255,
-      obstacleMin: 1.35,
-      obstacleMax: 1.95,
-      collectibleMin: 1.65,
-      collectibleMax: 2.4,
-      closedChance: 0.08,
-      blockChance: 0.56,
-    };
-  }
-  if (timeSeconds < 40) {
-    return {
-      speed: 300,
-      obstacleMin: 1.0,
-      obstacleMax: 1.55,
-      collectibleMin: 1.25,
-      collectibleMax: 2.0,
-      closedChance: 0.09,
-      blockChance: 0.57,
-    };
-  }
-  if (timeSeconds < 60) {
-    return {
-      speed: 340,
-      obstacleMin: 0.82,
-      obstacleMax: 1.24,
-      collectibleMin: 1.05,
-      collectibleMax: 1.7,
-      closedChance: 0.1,
-      blockChance: 0.58,
-    };
-  }
+  const t = Math.min(1, Math.max(0, timeSeconds / 90));
+  const ramp = 1 - (1 - t) ** 1.25;
+
   return {
-    speed: 380,
-    obstacleMin: 0.68,
-    obstacleMax: 1.06,
-    collectibleMin: 0.88,
-    collectibleMax: 1.48,
-    closedChance: 0.12,
-    blockChance: 0.58,
+    speed: lerp(300, 560, ramp),
+    obstacleMin: lerp(1.1, 0.34, ramp),
+    obstacleMax: lerp(1.6, 0.62, ramp),
+    collectibleMin: lerp(1.9, 0.62, ramp),
+    collectibleMax: lerp(2.6, 1.08, ramp),
+    closedChance: lerp(0.12, 0.21, ramp),
+    blockChance: lerp(0.52, 0.36, ramp),
+    potholeChance: lerp(0.11, 0.22, ramp),
+    collectibleBurstChance: lerp(0.32, 0.74, ramp),
+    collectibleAlongsideObstacleChance: lerp(0.1, 0.55, ramp),
+    nonPotholeMinGap: lerp(175, 112, ramp),
   };
 }
 
@@ -326,10 +309,15 @@ function createInitialModel(): GameModel {
     milestoneReached: false,
     obstacles: [],
     collectibles: [],
-    nextObstacleIn: 0.75,
-    nextCollectibleIn: 0.15,
+    nextObstacleIn: 0.45,
+    nextCollectibleIn: 0.1,
     nextObstacleId: 1,
     nextCollectibleId: 1,
+    lastObstacleKind: null,
+    lastObstacleStreak: 0,
+    lastCollectibleLane: -1,
+    obstaclesSincePothole: 0,
+    fallingInPothole: false,
   };
 }
 
@@ -383,14 +371,28 @@ function drawParallaxLayer(
   }
 }
 
-function drawGroundLayer(ctx: CanvasRenderingContext2D, assets: LoadedAssets, scroll: number) {
+function drawGroundLayer(ctx: CanvasRenderingContext2D, assets: LoadedAssets, scroll: number, potholes: ObstacleEntity[]) {
   const src = assets.ground.bounds;
   const drawY = GROUND_DRAW_TOP;
   const drawH = GROUND_TILE_HEIGHT;
   const tileW = (src.w / src.h) * drawH;
   const offset = -((scroll % tileW) + tileW) % tileW;
+  const visiblePotholes = potholes
+    .map((pothole) => ({
+      x: Math.floor(pothole.x),
+      w: Math.max(18, Math.floor(pothole.w)),
+    }))
+    .filter((p) => p.x + p.w > -2 && p.x < CANVAS_WIDTH + 2);
 
   ctx.save();
+  // Clip ground rendering to the ground band minus pothole gaps.
+  ctx.beginPath();
+  ctx.rect(0, drawY, CANVAS_WIDTH, drawH);
+  for (const gap of visiblePotholes) {
+    ctx.rect(gap.x, drawY - 1, gap.w, drawH + 2);
+  }
+  ctx.clip("evenodd");
+
   for (let x = offset - tileW; x < CANVAS_WIDTH + tileW; x += tileW) {
     // Snap each tile edge independently so adjacent tiles always meet/overlap by <= 1px.
     const left = Math.floor(x);
@@ -437,6 +439,7 @@ function drawPlayer(ctx: CanvasRenderingContext2D, assets: LoadedAssets, model: 
 }
 
 function drawObstacle(ctx: CanvasRenderingContext2D, assets: LoadedAssets, obstacle: ObstacleEntity) {
+  if (obstacle.kind === "pothole") return;
   const sprite =
     obstacle.kind === "closed-sign"
       ? assets.closedSign
@@ -577,7 +580,12 @@ export default function ImmigrationDashGame() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     drawParallaxLayer(ctx, assets.sky, model.worldScroll, SKY_SCROLL_FACTOR, SKY_ZOOM, SKY_ANCHOR_BOTTOM);
     drawParallaxLayer(ctx, assets.city, model.worldScroll, CITY_SCROLL_FACTOR, CITY_ZOOM, CITY_ANCHOR_BOTTOM);
-    drawGroundLayer(ctx, assets, model.worldScroll);
+    drawGroundLayer(
+      ctx,
+      assets,
+      model.worldScroll,
+      model.obstacles.filter((obstacle) => obstacle.kind === "pothole")
+    );
     model.collectibles.forEach((item) => drawCollectible(ctx, assets, item));
     model.obstacles.forEach((obstacle) => drawObstacle(ctx, assets, obstacle));
     drawPlayer(ctx, assets, model);
@@ -604,16 +612,20 @@ export default function ImmigrationDashGame() {
 
   const spawnThaiBlockJumpStamps = useCallback((blockX: number, blockY: number, blockW: number) => {
     const model = modelRef.current;
-    const positions = [
-      { x: blockX + blockW + 28, y: blockY - 56 },
-      { x: blockX + blockW + 86, y: blockY - 84 },
-    ];
+    const baseX = blockX + blockW + randomRange(20, 36);
+    const baseY = blockY - randomRange(44, 72);
+    const stepX = randomRange(42, 74);
+    const riseStep = randomRange(8, 26);
+    const roll = Math.random();
+    const count = roll < 0.45 ? 1 : roll < 0.82 ? 2 : 3;
 
-    for (let i = 0; i < positions.length; i += 1) {
-      if (i === 1 && Math.random() < 0.35) continue;
-      const target = positions[i];
+    for (let i = 0; i < count; i += 1) {
+      const target = {
+        x: baseX + i * stepX + randomRange(-10, 12),
+        y: Math.max(32, baseY - i * riseStep + randomRange(-10, 8)),
+      };
       const crowded = model.collectibles.some(
-        (item) => Math.abs(item.x - target.x) < 56 && Math.abs(item.y - target.y) < 48
+        (item) => Math.abs(item.x - target.x) < 52 && Math.abs(item.y - target.y) < 44
       );
       if (crowded) continue;
 
@@ -631,24 +643,57 @@ export default function ImmigrationDashGame() {
     const model = modelRef.current;
     const d = getDifficulty(model.elapsed);
     const roll = Math.random();
-    const kind: ObstacleKind =
-      roll < d.closedChance
+    const potholesAllowed = model.elapsed > 8;
+    const forcePothole = potholesAllowed && model.elapsed > 10 && model.obstaclesSincePothole >= 6;
+    let kind: ObstacleKind =
+      forcePothole || roll < d.potholeChance
+        ? "pothole"
+        : roll < d.potholeChance + d.closedChance
         ? "closed-sign"
-        : roll < d.closedChance + d.blockChance
+        : roll < d.potholeChance + d.closedChance + d.blockChance
           ? "thai-block"
           : "missing-photocopy";
+
+    if (!potholesAllowed && kind === "pothole") {
+      // Keep first seconds fair: no instant-death pits until player is moving.
+      kind = roll < 0.5 ? "thai-block" : "missing-photocopy";
+    }
+
+    if (kind === model.lastObstacleKind && model.lastObstacleStreak >= 2) {
+      const alternatives = (["closed-sign", "thai-block", "missing-photocopy", "pothole"] as ObstacleKind[]).filter(
+        (candidate) => candidate !== kind
+      );
+      kind = pickRandom(alternatives);
+    }
+
+    if (kind === model.lastObstacleKind) {
+      model.lastObstacleStreak += 1;
+    } else {
+      model.lastObstacleKind = kind;
+      model.lastObstacleStreak = 1;
+    }
+    model.obstaclesSincePothole = kind === "pothole" ? 0 : model.obstaclesSincePothole + 1;
 
     const obstacle =
       kind === "closed-sign"
         ? { w: CLOSED_SIGN_WIDTH, h: CLOSED_SIGN_HEIGHT, y: GROUND_SURFACE_Y - CLOSED_SIGN_HEIGHT }
         : kind === "thai-block"
           ? { w: 64, h: 64, y: GROUND_SURFACE_Y - 124 }
-          : { w: 44, h: 44, y: GROUND_SURFACE_Y - 44 };
+          : kind === "pothole"
+            ? {
+                w: randomRange(POTHOLE_MIN_WIDTH, POTHOLE_MAX_WIDTH),
+                h: 22,
+                y: GROUND_SURFACE_Y - 10,
+              }
+            : { w: 44, h: 44, y: GROUND_SURFACE_Y - 44 };
 
     const earlySpawn = model.elapsed < 2.5;
-    const spawnX = earlySpawn
-      ? pickSpawnX(model, -14, 96, 180)
-      : pickSpawnX(model, 16, 240, 170);
+    const spawnX =
+      kind === "pothole"
+        ? pickSpawnX(model, 240, 420, 240)
+        : earlySpawn
+          ? pickSpawnX(model, -14, 96, 180)
+          : pickSpawnX(model, 16, 260, d.nonPotholeMinGap);
 
     model.obstacles.push({
       id: model.nextObstacleId,
@@ -667,20 +712,42 @@ export default function ImmigrationDashGame() {
 
   const spawnCollectible = useCallback(() => {
     const model = modelRef.current;
+    const d = getDifficulty(model.elapsed);
     const size = 46;
-    const stampHeightOffsets = [0, 42, 78];
-    const y = GROUND_SURFACE_Y - size - pickRandom(stampHeightOffsets);
+    const lanes = [0, 28, 52, 82, 112];
+    let laneIndex = Math.floor(Math.random() * lanes.length);
+    if (laneIndex === model.lastCollectibleLane && Math.random() < 0.75) {
+      laneIndex = (laneIndex + 1 + Math.floor(Math.random() * (lanes.length - 1))) % lanes.length;
+    }
+    model.lastCollectibleLane = laneIndex;
+
+    const baseY = Math.max(42, GROUND_SURFACE_Y - size - (lanes[laneIndex] + randomRange(-10, 10)));
     const earlySpawn = model.elapsed < 2.5;
     const spawnX = earlySpawn
-      ? pickSpawnX(model, -52, 88, 170)
-      : pickSpawnX(model, 12, 280, 160);
-    model.collectibles.push({
-      id: model.nextCollectibleId,
-      x: spawnX,
-      y,
-      size,
-    });
-    model.nextCollectibleId += 1;
+      ? pickSpawnX(model, -70, 120, 160)
+      : pickSpawnX(model, -20, 340, 145);
+
+    const burstRoll = Math.random();
+    let burstCount = 1;
+    if (burstRoll < d.collectibleBurstChance) {
+      const megaChance = Math.min(0.24, model.elapsed / 220);
+      burstCount = Math.random() < megaChance ? 4 : Math.random() < 0.55 ? 2 : 3;
+    }
+
+    for (let i = 0; i < burstCount; i += 1) {
+      const x = spawnX + i * randomRange(42, 68) + randomRange(-6, 8);
+      const y = Math.max(36, baseY - i * randomRange(4, 14) + randomRange(-6, 6));
+      const crowded = model.collectibles.some((item) => Math.abs(item.x - x) < 48 && Math.abs(item.y - y) < 40);
+      if (crowded) continue;
+
+      model.collectibles.push({
+        id: model.nextCollectibleId,
+        x,
+        y,
+        size,
+      });
+      model.nextCollectibleId += 1;
+    }
   }, []);
 
   const updateGame = useCallback(
@@ -700,17 +767,19 @@ export default function ImmigrationDashGame() {
         spawnObstacle();
         spawnedObstacleThisTick = true;
         model.nextObstacleIn = randomRange(d.obstacleMin, d.obstacleMax);
-        if (model.nextCollectibleIn < 0.55) {
-          model.nextCollectibleIn = 0.55 + randomRange(0.08, 0.22);
+        if (model.nextCollectibleIn < 0.42) {
+          model.nextCollectibleIn = 0.42 + randomRange(0.06, 0.18);
         }
       }
 
       model.nextCollectibleIn -= delta;
-      if (model.nextCollectibleIn <= 0 && !spawnedObstacleThisTick) {
+      const canSpawnAlongsideObstacle =
+        spawnedObstacleThisTick && Math.random() < d.collectibleAlongsideObstacleChance;
+      if (model.nextCollectibleIn <= 0 && (!spawnedObstacleThisTick || canSpawnAlongsideObstacle)) {
         spawnCollectible();
         model.nextCollectibleIn = randomRange(d.collectibleMin, d.collectibleMax);
-        if (model.nextObstacleIn < 0.45) {
-          model.nextObstacleIn = 0.45 + randomRange(0.08, 0.2);
+        if (model.nextObstacleIn < 0.36) {
+          model.nextObstacleIn = 0.36 + randomRange(0.06, 0.16);
         }
       }
 
@@ -752,12 +821,38 @@ export default function ImmigrationDashGame() {
           return item.x + item.size > -140;
         });
 
-      if (model.playerY >= GROUND_SURFACE_Y - PLAYER_DRAW_HEIGHT) {
-        model.playerY = GROUND_SURFACE_Y - PLAYER_DRAW_HEIGHT;
-        model.playerVy = 0;
-        model.onGround = true;
+      const feetLeft = PLAYER_X + model.playerOffsetX + PLAYER_HITBOX.x + 6;
+      const feetRight = PLAYER_X + model.playerOffsetX + PLAYER_HITBOX.x + PLAYER_HITBOX.w - 6;
+      const overPothole = model.obstacles.some(
+        (obstacle) =>
+          obstacle.kind === "pothole" &&
+          feetRight > obstacle.x + POTHOLE_COLLISION_INSET &&
+          feetLeft < obstacle.x + obstacle.w - POTHOLE_COLLISION_INSET
+      );
+
+      if (model.fallingInPothole) {
+        // Once the player drops in, do not allow recovery onto ground/platforms.
+        model.onGround = false;
+        model.playerVy = Math.max(model.playerVy, 260);
+      } else if (model.playerY >= GROUND_SURFACE_Y - PLAYER_DRAW_HEIGHT) {
+        if (overPothole) {
+          // Enter pothole fall state.
+          model.fallingInPothole = true;
+          model.onGround = false;
+          model.playerVy = Math.max(model.playerVy, 260);
+        } else {
+          model.playerY = GROUND_SURFACE_Y - PLAYER_DRAW_HEIGHT;
+          model.playerVy = 0;
+          model.onGround = true;
+        }
       } else {
         model.onGround = false;
+      }
+
+      if (model.playerY > FALL_DEATH_Y) {
+        model.lives = 0;
+        endGame(pickRandom(POTHOLE_GAME_OVER_MESSAGES));
+        return;
       }
 
       let playerRect = {
@@ -784,93 +879,102 @@ export default function ImmigrationDashGame() {
       });
 
       let pushedBySolidObstacle = false;
-      for (const obstacle of model.obstacles) {
-        if (obstacle.kind === "thai-block") {
-          const topY = obstacle.y + 1;
-          const sideInset = 4;
-          const topLeft = obstacle.x + sideInset;
-          const topRight = obstacle.x + obstacle.w - sideInset;
-          const playerBottom = playerRect.y + playerRect.h;
-          const playerCenterX = playerRect.x + playerRect.w / 2;
-          const overTop = playerCenterX >= topLeft && playerCenterX <= topRight;
-          const comingDownOntoTop = model.playerVy >= 0 && prevPlayerBottom <= topY && playerBottom >= topY;
-          const standingOnTop = model.playerVy >= 0 && overTop && Math.abs(playerBottom - topY) <= 8;
+      if (!model.fallingInPothole) {
+        for (const obstacle of model.obstacles) {
+          if (obstacle.kind === "pothole") continue;
+          if (obstacle.kind === "thai-block") {
+            const topY = obstacle.y + 1;
+            const sideInset = 4;
+            const topLeft = obstacle.x + sideInset;
+            const topRight = obstacle.x + obstacle.w - sideInset;
+            const playerBottom = playerRect.y + playerRect.h;
+            const playerCenterX = playerRect.x + playerRect.w / 2;
+            const overTop = playerCenterX >= topLeft && playerCenterX <= topRight;
+            const comingDownOntoTop = model.playerVy >= 0 && prevPlayerBottom <= topY && playerBottom >= topY;
+            const standingOnTop = model.playerVy >= 0 && overTop && Math.abs(playerBottom - topY) <= 8;
 
-          if (overTop && (comingDownOntoTop || standingOnTop)) {
-            model.playerY = topY - PLAYER_HITBOX.h - PLAYER_HITBOX.y;
-            model.playerVy = 0;
-            model.onGround = true;
-            playerRect = {
-              ...playerRect,
-              y: model.playerY + PLAYER_HITBOX.y,
-            };
-          }
-          // Thai blocks are platform-only: no side pushback or trapping.
-          continue;
-        }
-
-        if (obstacle.kind === "closed-sign") {
-          const topY = obstacle.y + 2;
-          const sideInset = 8;
-          const topLeft = obstacle.x + sideInset;
-          const topRight = obstacle.x + obstacle.w - sideInset;
-          const playerBottom = playerRect.y + playerRect.h;
-          const playerCenterX = playerRect.x + playerRect.w / 2;
-          const overTop = playerCenterX >= topLeft && playerCenterX <= topRight;
-          const comingDownOntoTop = model.playerVy >= 0 && prevPlayerBottom <= topY && playerBottom >= topY;
-          const standingOnTop = model.playerVy >= 0 && overTop && Math.abs(playerBottom - topY) <= 8;
-
-          // Closed sign stays solid from above and blocks from the side.
-          if (overTop && (comingDownOntoTop || standingOnTop)) {
-            model.playerY = topY - PLAYER_HITBOX.h - PLAYER_HITBOX.y;
-            model.playerVy = 0;
-            model.onGround = true;
-            playerRect = {
-              ...playerRect,
-              y: model.playerY + PLAYER_HITBOX.y,
-            };
+            if (overTop && (comingDownOntoTop || standingOnTop)) {
+              model.playerY = topY - PLAYER_HITBOX.h - PLAYER_HITBOX.y;
+              model.playerVy = 0;
+              model.onGround = true;
+              playerRect = {
+                ...playerRect,
+                y: model.playerY + PLAYER_HITBOX.y,
+              };
+            }
+            // Thai blocks are platform-only: no side pushback or trapping.
             continue;
           }
 
-          const bodyRect =
-            {
-              x: obstacle.x + 10,
-              y: obstacle.y + 24,
-              w: obstacle.w - 20,
-              h: obstacle.h - 24,
-            };
-          if (!intersects(playerRect, bodyRect)) {
-            continue;
+          if (obstacle.kind === "closed-sign") {
+            const topY = obstacle.y + 2;
+            const sideInset = 8;
+            const topLeft = obstacle.x + sideInset;
+            const topRight = obstacle.x + obstacle.w - sideInset;
+            const playerBottom = playerRect.y + playerRect.h;
+            const playerCenterX = playerRect.x + playerRect.w / 2;
+            const overTop = playerCenterX >= topLeft && playerCenterX <= topRight;
+            const comingDownOntoTop = model.playerVy >= 0 && prevPlayerBottom <= topY && playerBottom >= topY;
+            const standingOnTop = model.playerVy >= 0 && overTop && Math.abs(playerBottom - topY) <= 8;
+
+            // Closed sign stays solid from above and blocks from the side.
+            if (overTop && (comingDownOntoTop || standingOnTop)) {
+              model.playerY = topY - PLAYER_HITBOX.h - PLAYER_HITBOX.y;
+              model.playerVy = 0;
+              model.onGround = true;
+              playerRect = {
+                ...playerRect,
+                y: model.playerY + PLAYER_HITBOX.y,
+              };
+              continue;
+            }
+
+            const bodyRect =
+              {
+                x: obstacle.x + 10,
+                y: obstacle.y + 24,
+                w: obstacle.w - 20,
+                h: obstacle.h - 24,
+              };
+            if (!intersects(playerRect, bodyRect)) {
+              continue;
+            }
+
+            pushedBySolidObstacle = true;
+            model.blockedTimer = 0.2;
+
+            const stuckX = obstacle.x - PLAYER_HITBOX.w - PLAYER_HITBOX.x - 6;
+            const targetOffset = Math.max(-PLAYER_X + 12, stuckX - PLAYER_X);
+            model.playerPushTargetX = targetOffset;
+            // Snap to the safe side immediately to avoid jittery side-collision easing.
+            model.playerOffsetX = Math.min(model.playerOffsetX, targetOffset);
+            break;
           }
+          const rect = { x: obstacle.x + 8, y: obstacle.y + 8, w: obstacle.w - 16, h: obstacle.h - 8 };
+          if (!intersects(playerRect, rect)) continue;
 
-          pushedBySolidObstacle = true;
-          model.blockedTimer = 0.2;
-
-          const stuckX = obstacle.x - PLAYER_HITBOX.w - PLAYER_HITBOX.x - 6;
-          const targetOffset = Math.max(-PLAYER_X + 12, stuckX - PLAYER_X);
-          model.playerPushTargetX = Math.min(model.playerPushTargetX, targetOffset);
-          break;
-        }
-        const rect = { x: obstacle.x + 8, y: obstacle.y + 8, w: obstacle.w - 16, h: obstacle.h - 8 };
-        if (!intersects(playerRect, rect)) continue;
-
-        if (obstacle.kind === "missing-photocopy" && model.invulnerability <= 0) {
-          model.lives -= 1;
-          model.invulnerability = 1.1;
-          model.obstacles = model.obstacles.filter((o) => o.id !== obstacle.id);
-          if (model.lives <= 0) {
-            endGame();
-            return;
+          if (obstacle.kind === "missing-photocopy" && model.invulnerability <= 0) {
+            model.lives -= 1;
+            model.invulnerability = 1.1;
+            model.obstacles = model.obstacles.filter((o) => o.id !== obstacle.id);
+            if (model.lives <= 0) {
+              endGame();
+              return;
+            }
+            break;
           }
-          break;
         }
       }
 
       if (pushedBySolidObstacle) {
-        model.playerOffsetX = easeToward(model.playerOffsetX, model.playerPushTargetX, 9.5, delta);
+        // Keep the player locked to a single pushed-back offset while colliding.
+        model.playerOffsetX = model.playerPushTargetX;
+      } else if (model.blockedTimer > 0 && model.playerPushTargetX < 0) {
+        // Prevent edge flicker from rapidly toggling between push and release.
+        model.playerOffsetX = model.playerPushTargetX;
       } else {
         model.playerPushTargetX = 0;
-        model.playerOffsetX = easeToward(model.playerOffsetX, 0, 6.8, delta);
+        model.playerOffsetX = easeToward(model.playerOffsetX, 0, 8.8, delta);
       }
 
       if (model.failZoneX + FAIL_ZONE_WIDTH >= PLAYER_X + model.playerOffsetX + 8) {
@@ -917,7 +1021,7 @@ export default function ImmigrationDashGame() {
             createImage("/player-run.png"),
             createImage("/immigration-dash/obstacle-closed-sign.png"),
             createImage(THAI_BLOCK_SRC),
-            createImage("/immigration-dash/obstacle-missing-photocopy.png"),
+            createImage(RED_STAMP_SRC),
             createImage(GOLDEN_STAMP_SRC),
           ]);
 
@@ -1024,12 +1128,16 @@ export default function ImmigrationDashGame() {
 
   const resultText = useMemo(() => {
     const seconds = Math.floor(hud.time);
-    return `I scored ${hud.score} points and survived ${seconds} seconds on Immigration Dash from Thai Visa Checklist.`;
+    return `🇹🇭 I survived ${seconds} seconds at Thai Immigration!\nScore: ${hud.score}\n\nPlay here:\n${SHARE_URL_TEXT}`;
   }, [hud.score, hud.time]);
 
   const canNativeShare = typeof navigator !== "undefined" && "share" in navigator;
-  const xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(resultText)}&url=${encodeURIComponent(GAME_URL)}`;
-  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(GAME_URL)}`;
+  const socialShareText = useMemo(() => {
+    const seconds = Math.floor(hud.time);
+    return `🇹🇭 I survived ${seconds} seconds at Thai Immigration!\nScore: ${hud.score}`;
+  }, [hud.score, hud.time]);
+  const xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(socialShareText)}&url=${encodeURIComponent(GAME_URL)}`;
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(GAME_URL)}&quote=${encodeURIComponent(socialShareText)}`;
 
   const onCopy = useCallback(async () => {
     try {
@@ -1064,14 +1172,14 @@ export default function ImmigrationDashGame() {
 
           <div className="mt-3 rounded-2xl border border-sky-200 bg-gradient-to-r from-sky-50 via-white to-indigo-50 p-3">
             <h3 className="text-sm font-bold text-slate-900">Share your result</h3>
-            <p className="mt-1 text-sm text-slate-700">{resultText}</p>
+            <p className="mt-1 whitespace-pre-line text-sm text-slate-700">{resultText}</p>
             <div className="mt-3 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               <button
                 type="button"
                 onClick={onCopy}
                 className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-amber-300 bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-900 hover:bg-amber-200 sm:text-sm"
               >
-                <Copy className="h-4 w-4" /> Copy result text
+                <Copy className="h-4 w-4" /> Copy share message
               </button>
               <button
                 type="button"
@@ -1114,7 +1222,7 @@ export default function ImmigrationDashGame() {
             </div>
             {(copyState !== "idle" || shareState !== "idle") && (
               <p className="mt-2 text-xs text-slate-500">
-                {copyState === "copied" && "Result copied to clipboard."}
+                {copyState === "copied" && "Share message copied to clipboard."}
                 {copyState === "error" && "Could not copy automatically. Please copy manually."}
                 {shareState === "shared" && "Thanks for sharing."}
                 {shareState === "error" && "Sharing was cancelled or unavailable."}
