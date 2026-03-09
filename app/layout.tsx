@@ -163,6 +163,12 @@ function Footer() {
                     Thai Visa News
                   </Link>
                   <Link
+                    href="/games/immigration-dash"
+                    className="block text-sm font-medium text-slate-700 hover:text-slate-900"
+                  >
+                    Immigration Dash
+                  </Link>
+                  <Link
                     href="/offical-goverment-links"
                     className="block text-sm font-medium text-slate-700 hover:text-slate-900"
                   >

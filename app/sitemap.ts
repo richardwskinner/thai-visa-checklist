@@ -23,6 +23,7 @@ const ROUTE_OVERRIDES: Record<
   "/terms-of-use": { changeFrequency: "monthly", priority: 0.4 },
   "/tdac": { changeFrequency: "weekly", priority: 0.8 },
   "/tools": { changeFrequency: "weekly", priority: 0.8 },
+  "/games/immigration-dash": { changeFrequency: "weekly", priority: 0.7 },
   "/thailand-time": { changeFrequency: "daily", priority: 0.9 },
   "/offical-goverment-links": { changeFrequency: "monthly", priority: 0.7 },
   "/thailand-public-holidays-2026": { changeFrequency: "monthly", priority: 0.7 },

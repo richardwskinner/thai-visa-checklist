@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Calculator, Clock3, ShieldAlert, ExternalLink } from "lucide-react";
+import { Calculator, Clock3, ShieldAlert, ExternalLink, Gamepad2 } from "lucide-react";
 import ThailandVisaNeedChecker from "@/components/thailand-visa-need-checker";
 import ThailandOverstayChecker from "@/components/thailand-overstay-checker";
 import NinetyDayCalculator from "@/app/guides/90-day-reporting/NinetyDayCalculator";
@@ -71,6 +71,30 @@ export default function ToolsPage() {
             Use these visa calculators directly here, or open the full guides for more details.
           </p>
         </div>
+
+        <Card className="mt-8 rounded-3xl border-0 bg-white shadow-sm">
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-fuchsia-100">
+                    <Gamepad2 className="h-5 w-5 text-fuchsia-700" />
+                  </div>
+                  <h2 className="text-xl font-extrabold text-slate-900">Play Immigration Dash</h2>
+                </div>
+                <p className="mt-3 text-sm text-slate-600">
+                  A fast arcade runner where you collect approval stamps and dodge immigration hazards.
+                </p>
+              </div>
+              <Link
+                href="/games/immigration-dash"
+                className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-fuchsia-600 to-pink-600 px-4 py-2 text-sm font-semibold text-white shadow hover:from-fuchsia-700 hover:to-pink-700"
+              >
+                Open game <ExternalLink className="h-4 w-4" />
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
 
         <div className="mt-10 space-y-6">
           {toolSections.map((section) => (

@@ -24,6 +24,7 @@ const TM8_URL =
   "https://www.immigration.go.th/wp-content/uploads/2022/10/5.%E0%B8%84%E0%B8%B3%E0%B8%82%E0%B8%AD%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%8D%E0%B8%B2%E0%B8%95%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%81%E0%B8%A5%E0%B8%B1%E0%B8%9A%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A1%E0%B8%B2%E0%B9%83%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%AD%E0%B8%B2%E0%B8%93%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%B5%E0%B8%81-%E0%B8%95%E0%B8%A1.8.pdf";
 const TM30_FORM_URL =
   "https://www.immigration.go.th/wp-content/uploads/2022/10/17.%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%81%E0%B8%88%E0%B9%89%E0%B8%87%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%9E%E0%B8%B1%E0%B8%81%E0%B8%AD%E0%B8%B2%E0%B8%A8%E0%B8%B1%E0%B8%A2.pdf";
+const FORMS_URL = "https://thaivisachecklist.com/forms";
 
 const formGroups: FormGroup[] = [
   {
@@ -143,6 +144,20 @@ export const metadata: Metadata = {
   title: "Most Used Thai Immigration Forms (Checklist Forms)",
   description:
     "Official download links for the Thai immigration forms used on our marriage and retirement visa checklists, with quick notes on what each form is for.",
+  alternates: {
+    canonical: FORMS_URL,
+  },
+  openGraph: {
+    url: FORMS_URL,
+    title: "Most Used Thai Immigration Forms (Checklist Forms)",
+    description:
+      "Official download links for the Thai immigration forms used on our marriage and retirement visa checklists, with quick notes on what each form is for.",
+  },
+  twitter: {
+    title: "Most Used Thai Immigration Forms (Checklist Forms)",
+    description:
+      "Official download links for the Thai immigration forms used on our marriage and retirement visa checklists, with quick notes on what each form is for.",
+  },
 };
 
 export default function FormsPage() {
