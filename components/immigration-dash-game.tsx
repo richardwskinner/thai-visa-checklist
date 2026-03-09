@@ -1436,7 +1436,7 @@ export default function ImmigrationDashGame() {
         </div>
 
         <p className="mt-1 text-xs font-semibold text-sky-700 sm:hidden">
-          Mobile tip: turn your phone sideways (landscape) to play.
+          Mobile tip: Turn your phone sideways to play.
         </p>
 
         <div ref={gameShellRef} className="relative mt-2 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
@@ -1520,7 +1520,7 @@ export default function ImmigrationDashGame() {
                 alt="Golden approved stamp"
                 width={148}
                 height={148}
-                className="h-[84px] w-[84px] shrink-0 rounded-full object-cover object-center md:h-[96px] md:w-[96px]"
+                className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
               />
               <p className="w-full max-w-[34ch] text-sm leading-snug text-emerald-900 md:max-w-none">
                 <span className="block font-semibold">Golden Approved Stamp</span>
