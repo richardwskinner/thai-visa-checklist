@@ -47,6 +47,7 @@ const FIXED_TIMESTEP = 1 / 60;
 const MAX_SIM_STEPS_PER_FRAME = 6;
 const HUD_SYNC_INTERVAL_MS = 180;
 const MOBILE_RENDER_INTERVAL_MS = 1000 / 30;
+const MOBILE_RENDER_SCALE = 0.72;
 const GOLDEN_STAMP_SIZE = 54;
 const THAI_BLOCK_BONUS_STAMP_SIZE = 48;
 const DURIAN_SIZE = 60;
@@ -677,6 +678,7 @@ export default function ImmigrationDashGame() {
   const [selectedCountryCode, setSelectedCountryCode] = useState("");
   const [customCountryName, setCustomCountryName] = useState("");
   const [savedLeaderboardEntryId, setSavedLeaderboardEntryId] = useState<string | null>(null);
+  const [canvasRenderScale, setCanvasRenderScale] = useState(1);
   const [hud, setHud] = useState<HudState>({
     score: 0,
     lives: 3,
@@ -796,6 +798,7 @@ export default function ImmigrationDashGame() {
     }
 
     const model = modelRef.current;
+    ctx.setTransform(canvasRenderScale, 0, 0, canvasRenderScale, 0, 0);
     ctx.imageSmoothingQuality = mobilePerformanceModeRef.current ? "low" : "medium";
     const reduceCollectibleEffects =
       mobilePerformanceModeRef.current || model.collectibles.length >= REDUCE_COLLECTIBLE_EFFECTS_THRESHOLD;
@@ -812,7 +815,7 @@ export default function ImmigrationDashGame() {
     model.obstacles.forEach((obstacle) => drawObstacle(ctx, assets, obstacle));
     drawPlayer(ctx, assets, model);
     drawCanvasHud(ctx, model);
-  }, []);
+  }, [canvasRenderScale]);
 
   const stopLoop = useCallback(() => {
     if (rafRef.current != null) {
@@ -831,6 +834,7 @@ export default function ImmigrationDashGame() {
     const mediaQuery = window.matchMedia("(pointer: coarse), (max-width: 768px)");
     const syncPerformanceMode = () => {
       mobilePerformanceModeRef.current = mediaQuery.matches;
+      setCanvasRenderScale(mediaQuery.matches ? MOBILE_RENDER_SCALE : 1);
     };
 
     syncPerformanceMode();
@@ -839,6 +843,11 @@ export default function ImmigrationDashGame() {
       mediaQuery.removeEventListener("change", syncPerformanceMode);
     };
   }, []);
+
+  useEffect(() => {
+    if (!assetsRef.current) return;
+    drawFrame();
+  }, [canvasRenderScale, drawFrame]);
 
   const endGame = useCallback((message?: string) => {
     setStatus("gameover");
@@ -1508,7 +1517,7 @@ export default function ImmigrationDashGame() {
 
     rafRef.current = requestAnimationFrame(tick);
     return () => stopLoop();
-  }, [drawFrame, pushHud, status, stopLoop, updateGame]);
+  }, [canvasRenderScale, drawFrame, pushHud, status, stopLoop, updateGame]);
 
   useEffect(() => {
     const prevent = (event: KeyboardEvent) => {
@@ -1629,8 +1638,8 @@ export default function ImmigrationDashGame() {
             <div ref={gameShellRef} className="relative mt-2 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
               <canvas
                 ref={canvasRef}
-                width={CANVAS_WIDTH}
-                height={CANVAS_HEIGHT}
+                width={Math.round(CANVAS_WIDTH * canvasRenderScale)}
+                height={Math.round(CANVAS_HEIGHT * canvasRenderScale)}
                 onPointerDown={jump}
                 className="block h-auto w-[150%] max-w-none -translate-x-[17%] touch-manipulation select-none sm:w-[108%] sm:-translate-x-[4%] lg:w-full lg:translate-x-0"
                 aria-label="Immigration Dash game"
@@ -1935,8 +1944,8 @@ export default function ImmigrationDashGame() {
                   className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
                 />
                 <p className="w-full max-w-[34ch] text-sm leading-snug text-amber-900 md:max-w-none">
-                  <span className="block font-semibold">Golden Approved Stamp</span>
-                  <span className="mt-0.5 block">Your paperwork is perfect. Collect a stamp to increase your score.</span>
+                  <span className="block font-semibold">Golden Stamp</span>
+                  <span className="mt-0.5 block">Your paperwork is perfect. Collect to increase your score.</span>
                 </p>
               </div>
               <div className="flex flex-col items-center gap-2 rounded-xl border border-lime-300 bg-lime-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left lg:px-4 lg:py-3">
@@ -1949,7 +1958,7 @@ export default function ImmigrationDashGame() {
                 />
                 <p className="w-full max-w-[34ch] text-sm leading-snug text-lime-950 md:max-w-none">
                   <span className="block font-semibold">Stinky Durian</span>
-                  <span className="mt-0.5 block">The smell hits hard. Stand on it and you lose a life.</span>
+                  <span className="mt-0.5 block">The smell hits hard. Stand on it and you lose a live.</span>
                 </p>
               </div>
             </div>
