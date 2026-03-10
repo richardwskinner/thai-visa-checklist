@@ -24,9 +24,8 @@ const GRAVITY = 1800;
 const JUMP_VELOCITY = -760;
 const FALL_DEATH_Y = CANVAS_HEIGHT + 120;
 const GOLDEN_STAMP_SRC = "/golden-stamp.png";
-const RED_STAMP_SRC = "/red-paper-stack.png";
 const GOLDEN_STAMP_ASSET_SRC = "/golden-stamp.png?v=3";
-const RED_STAMP_ASSET_SRC = "/red-paper-stack.png?v=1";
+const MISSING_PHOTOCOPY_ASSET_SRC = "/red-paper-stack.png?v=1";
 const BG_SKY_SRC = "/background-sky.jpg?v=2";
 const BG_CITY_SRC = "/background-city.jpg?v=2";
 const GROUND_SRC = "/ground-nogaps.png?v=2";
@@ -48,7 +47,7 @@ const MAX_SIM_STEPS_PER_FRAME = 6;
 const HUD_SYNC_INTERVAL_MS = 180;
 const GOLDEN_STAMP_SIZE = 54;
 const THAI_BLOCK_BONUS_STAMP_SIZE = 48;
-const REJECTED_STAMP_SIZE = 52;
+const MISSING_PHOTOCOPY_SIZE = 52;
 const THAI_BLOCK_RUN_MIN_LENGTH = 2;
 const THAI_BLOCK_RUN_MAX_LENGTH = 4;
 const THAI_BLOCK_RUN_MIN_ELAPSED = 7;
@@ -59,6 +58,42 @@ const CLOSED_SIGN_HEIGHT = 112;
 const POTHOLE_COLLISION_INSET = 2;
 const POTHOLE_MIN_WIDTH = 96;
 const POTHOLE_MAX_WIDTH = 138;
+const SCORE_FORMATTER = new Intl.NumberFormat("en-US");
+const COUNTRY_OPTIONS = [
+  { code: "GB", name: "UK" },
+  { code: "AU", name: "Australia" },
+  { code: "US", name: "USA" },
+  { code: "DE", name: "Germany" },
+  { code: "CA", name: "Canada" },
+  { code: "FR", name: "France" },
+  { code: "NL", name: "Netherlands" },
+  { code: "IE", name: "Ireland" },
+  { code: "NZ", name: "New Zealand" },
+  { code: "ZA", name: "South Africa" },
+  { code: "IN", name: "India" },
+  { code: "CN", name: "China" },
+  { code: "HK", name: "Hong Kong" },
+  { code: "SG", name: "Singapore" },
+  { code: "MY", name: "Malaysia" },
+  { code: "TH", name: "Thailand" },
+  { code: "JP", name: "Japan" },
+  { code: "KR", name: "South Korea" },
+  { code: "VN", name: "Vietnam" },
+  { code: "PH", name: "Philippines" },
+  { code: "ID", name: "Indonesia" },
+  { code: "AE", name: "UAE" },
+  { code: "CH", name: "Switzerland" },
+  { code: "SE", name: "Sweden" },
+  { code: "NO", name: "Norway" },
+  { code: "DK", name: "Denmark" },
+  { code: "IT", name: "Italy" },
+  { code: "ES", name: "Spain" },
+  { code: "BR", name: "Brazil" },
+  { code: "MX", name: "Mexico" },
+  { code: "PL", name: "Poland" },
+  { code: "AT", name: "Austria" },
+  { code: "OTHER", name: "Other" },
+] as const;
 
 type GameStatus = "idle" | "running" | "paused" | "gameover";
 type ObstacleKind = "closed-sign" | "missing-photocopy" | "thai-block" | "pothole";
@@ -106,6 +141,14 @@ type HudState = {
   time: number;
 };
 
+type LeaderboardEntry = {
+  id: string;
+  countryCode: string;
+  countryName: string;
+  score: number;
+  createdAt: string;
+};
+
 type GameModel = {
   elapsed: number;
   lives: number;
@@ -143,7 +186,7 @@ const GAME_OVER_MESSAGES = [
 ];
 const POTHOLE_GAME_OVER_MESSAGES = [
   "Watch your step. Fell into a pothole.",
-  "Bangkok footpath has you now."
+  "Bangkok has eaten you up."
 ];
 
 function randomRange(min: number, max: number) {
@@ -156,6 +199,16 @@ function lerp(min: number, max: number, t: number) {
 
 function pickRandom<T>(items: readonly T[]) {
   return items[Math.floor(Math.random() * items.length)];
+}
+
+function formatScore(score: number) {
+  return SCORE_FORMATTER.format(score);
+}
+
+function countryCodeToFlag(code: string) {
+  if (code === "OTHER") return "🏳️";
+  if (!/^[A-Z]{2}$/.test(code)) return "🏳️";
+  return String.fromCodePoint(...code.split("").map((char) => 127397 + char.charCodeAt(0)));
 }
 
 function intersects(a: { x: number; y: number; w: number; h: number }, b: { x: number; y: number; w: number; h: number }) {
@@ -610,6 +663,14 @@ export default function ImmigrationDashGame() {
   const [shareState, setShareState] = useState<"idle" | "shared" | "error">("idle");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [fullScreenEnabled, setFullScreenEnabled] = useState(false);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [leaderboardStatus, setLeaderboardStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [leaderboardMessage, setLeaderboardMessage] = useState("");
+  const [leaderboardSubmitState, setLeaderboardSubmitState] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [leaderboardOverlayState, setLeaderboardOverlayState] = useState<"ask" | "open" | "dismissed">("ask");
+  const [selectedCountryCode, setSelectedCountryCode] = useState("");
+  const [customCountryName, setCustomCountryName] = useState("");
+  const [savedLeaderboardEntryId, setSavedLeaderboardEntryId] = useState<string | null>(null);
   const [hud, setHud] = useState<HudState>({
     score: 0,
     lives: 3,
@@ -626,6 +687,24 @@ export default function ImmigrationDashGame() {
     setHud((prev) =>
       prev.score === nextHud.score && prev.lives === nextHud.lives && prev.time === nextHud.time ? prev : nextHud
     );
+  }, []);
+
+  const fetchLeaderboard = useCallback(async () => {
+    setLeaderboardStatus("loading");
+    try {
+      const response = await fetch("/api/games/immigration-dash/leaderboard", { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error("Failed to load leaderboard.");
+      }
+
+      const data = (await response.json()) as { entries?: LeaderboardEntry[] };
+      setLeaderboard(Array.isArray(data.entries) ? data.entries : []);
+      setLeaderboardStatus("ready");
+      setLeaderboardMessage("");
+    } catch {
+      setLeaderboardStatus("error");
+      setLeaderboardMessage("Leaderboard unavailable right now.");
+    }
   }, []);
 
   const playCollectSound = useCallback(() => {
@@ -866,9 +945,9 @@ export default function ImmigrationDashGame() {
                 y: GROUND_SURFACE_Y - 10,
               }
             : {
-                w: REJECTED_STAMP_SIZE,
-                h: REJECTED_STAMP_SIZE,
-                y: GROUND_SURFACE_Y - REJECTED_STAMP_SIZE + STAMP_GROUND_OFFSET_Y,
+                w: MISSING_PHOTOCOPY_SIZE,
+                h: MISSING_PHOTOCOPY_SIZE,
+                y: GROUND_SURFACE_Y - MISSING_PHOTOCOPY_SIZE + STAMP_GROUND_OFFSET_Y,
               };
 
     const earlySpawn = model.elapsed < 2.5;
@@ -1188,6 +1267,12 @@ export default function ImmigrationDashGame() {
     setStatus("running");
     setShareState("idle");
     setGameOverMessage("");
+    setLeaderboardSubmitState("idle");
+    setLeaderboardMessage("");
+    setLeaderboardOverlayState("ask");
+    setSavedLeaderboardEntryId(null);
+    setSelectedCountryCode("");
+    setCustomCountryName("");
     setHud({
       score: 0,
       lives: 3,
@@ -1243,6 +1328,10 @@ export default function ImmigrationDashGame() {
       ctxRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    void fetchLeaderboard();
+  }, [fetchLeaderboard]);
 
   useEffect(() => {
     const doc = document as Document & {
@@ -1303,7 +1392,7 @@ export default function ImmigrationDashGame() {
             createImage(PLAYER_RUN_SRC),
             createImage(CLOSED_SIGN_SRC),
             createImage(THAI_BLOCK_SRC),
-            createImage(RED_STAMP_ASSET_SRC),
+            createImage(MISSING_PHOTOCOPY_ASSET_SRC),
             createImage(GOLDEN_STAMP_ASSET_SRC),
           ]);
 
@@ -1419,15 +1508,22 @@ export default function ImmigrationDashGame() {
     };
   }, [jump]);
 
+  const score = hud.score;
   const shareSeconds = Math.floor(hud.time);
+  const selectedCountryName =
+    selectedCountryCode === "OTHER"
+      ? customCountryName.trim()
+      : COUNTRY_OPTIONS.find((option) => option.code === selectedCountryCode)?.name ?? "";
+  const leaderboardCutoffScore = leaderboard.length >= 10 ? leaderboard[leaderboard.length - 1]?.score ?? 0 : null;
+  const qualifiesForTop10 = leaderboard.length < 10 || (leaderboardCutoffScore !== null && score >= leaderboardCutoffScore);
   const resultText = useMemo(() => {
-    return `🇹🇭 I survived ${shareSeconds} seconds on Immigration Dash! Score: ${hud.score}\nCan you beat it? ${SHARE_URL_TEXT}`;
-  }, [hud.score, shareSeconds]);
+    return `🇹🇭 I survived ${shareSeconds} seconds on Immigration Dash! Score: ${score}\nCan you beat it? ${SHARE_URL_TEXT}`;
+  }, [score, shareSeconds]);
 
   const canNativeShare = typeof navigator !== "undefined" && "share" in navigator;
   const socialShareText = useMemo(() => {
-    return `🇹🇭 I survived ${shareSeconds} seconds on Immigration Dash! Score: ${hud.score}\nCan you beat it?`;
-  }, [hud.score, shareSeconds]);
+    return `🇹🇭 I survived ${shareSeconds} seconds on Immigration Dash! Score: ${score}\nCan you beat it?`;
+  }, [score, shareSeconds]);
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(GAME_URL)}&quote=${encodeURIComponent(socialShareText)}`;
 
   const onNativeShare = useCallback(async () => {
@@ -1443,6 +1539,57 @@ export default function ImmigrationDashGame() {
       setShareState("error");
     }
   }, [canNativeShare, resultText]);
+
+  const submitLeaderboardScore = useCallback(async () => {
+    if (status !== "gameover" || score <= 0) return;
+    if (!selectedCountryCode || !selectedCountryName) {
+      setLeaderboardSubmitState("error");
+      setLeaderboardMessage("Choose your nationality before saving your score.");
+      return;
+    }
+
+    setLeaderboardSubmitState("saving");
+    setLeaderboardMessage("");
+
+    try {
+      const response = await fetch("/api/games/immigration-dash/leaderboard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          countryCode: selectedCountryCode,
+          countryName: selectedCountryName,
+          score,
+        }),
+      });
+
+      const data = (await response.json()) as {
+        entry?: LeaderboardEntry;
+        entries?: LeaderboardEntry[];
+        madeTop10?: boolean;
+        error?: string;
+      };
+
+      if (!response.ok || !data.entry || !Array.isArray(data.entries)) {
+        throw new Error(data.error || "Failed to save leaderboard score.");
+      }
+
+      setLeaderboard(data.entries);
+      setLeaderboardStatus("ready");
+      setSavedLeaderboardEntryId(data.entry.id);
+      setLeaderboardSubmitState("saved");
+      setLeaderboardOverlayState("open");
+      setLeaderboardMessage(
+        data.madeTop10
+          ? `Leaderboard updated: ${countryCodeToFlag(data.entry.countryCode)} ${data.entry.countryName} - ${formatScore(data.entry.score)}`
+          : "Score saved, but it did not reach the current top 10."
+      );
+    } catch {
+      setLeaderboardSubmitState("error");
+      setLeaderboardMessage("Could not save your leaderboard score.");
+    }
+  }, [score, selectedCountryCode, selectedCountryName, status]);
 
   return (
     <div className="space-y-4">
@@ -1471,7 +1618,7 @@ export default function ImmigrationDashGame() {
 
                 {assetsReady && status !== "running" && (
                   <div className="absolute inset-0 flex items-center justify-center bg-slate-900/25 backdrop-blur-[1px]">
-                    <div className="mx-4 max-w-md rounded-2xl border border-white/70 bg-white/95 p-4 text-center shadow-lg sm:p-5">
+                    <div className="mx-4 w-full max-w-xl rounded-2xl border border-white/70 bg-white/95 p-4 text-center shadow-lg sm:p-5">
                       {status !== "idle" && (
                         <h3 className="text-lg font-bold text-slate-900">{status === "paused" ? "Paused" : "Game over"}</h3>
                       )}
@@ -1479,6 +1626,124 @@ export default function ImmigrationDashGame() {
                         <p className="mt-2 text-sm text-slate-600">
                           {status === "paused" ? "Game is paused. Tap Resume to continue." : gameOverMessage}
                         </p>
+                      )}
+                      {status === "gameover" && score > 0 && (
+                        <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50/80 p-3 text-left">
+                          {leaderboardOverlayState === "ask" && (
+                            <>
+                              <p className="text-sm font-medium text-slate-800">
+                                Post <span className="font-bold text-slate-900">{formatScore(score)}</span> to the leaderboard?
+                              </p>
+                              <div className="mt-3 flex gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => setLeaderboardOverlayState("open")}
+                                  className="inline-flex flex-1 items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+                                >
+                                  Yes, post it
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => setLeaderboardOverlayState("dismissed")}
+                                  className="inline-flex flex-1 items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                                >
+                                  No thanks
+                                </button>
+                              </div>
+                            </>
+                          )}
+
+                          {leaderboardOverlayState === "open" && (
+                            <>
+                              <p className="text-sm font-medium text-slate-800">
+                                Save your score with your nationality.
+                                {qualifiesForTop10 ? " This run is currently in top-10 range." : ""}
+                              </p>
+                              <div className="mt-3 grid gap-2">
+                                <select
+                                  value={selectedCountryCode}
+                                  onChange={(event) => {
+                                    setSelectedCountryCode(event.target.value);
+                                    setLeaderboardSubmitState("idle");
+                                    setLeaderboardMessage("");
+                                    if (event.target.value !== "OTHER") {
+                                      setCustomCountryName("");
+                                    }
+                                  }}
+                                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-0 transition focus:border-sky-500"
+                                >
+                                  <option value="">Choose nationality</option>
+                                  {COUNTRY_OPTIONS.map((option) => (
+                                    <option key={option.code} value={option.code}>
+                                      {countryCodeToFlag(option.code)} {option.name}
+                                    </option>
+                                  ))}
+                                </select>
+
+                                {selectedCountryCode === "OTHER" && (
+                                  <input
+                                    type="text"
+                                    value={customCountryName}
+                                    onChange={(event) => {
+                                      setCustomCountryName(event.target.value);
+                                      setLeaderboardSubmitState("idle");
+                                      setLeaderboardMessage("");
+                                    }}
+                                    placeholder="Enter your nationality"
+                                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-0 transition focus:border-sky-500"
+                                  />
+                                )}
+
+                                <div className="flex gap-2">
+                                  <button
+                                    type="button"
+                                    onClick={submitLeaderboardScore}
+                                    disabled={leaderboardSubmitState === "saving" || leaderboardSubmitState === "saved"}
+                                    className="inline-flex flex-1 items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+                                  >
+                                    {leaderboardSubmitState === "saving"
+                                      ? "Saving..."
+                                      : leaderboardSubmitState === "saved"
+                                        ? "Score Saved"
+                                        : "Save to leaderboard"}
+                                  </button>
+                                  {leaderboardSubmitState !== "saved" && (
+                                    <button
+                                      type="button"
+                                      onClick={() => setLeaderboardOverlayState("dismissed")}
+                                      className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                                    >
+                                      Skip
+                                    </button>
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          )}
+
+                          {leaderboardOverlayState === "dismissed" && leaderboardSubmitState !== "saved" && (
+                            <div className="flex items-center justify-between gap-3">
+                              <p className="text-sm text-slate-700">Skipped leaderboard for this run.</p>
+                              <button
+                                type="button"
+                                onClick={() => setLeaderboardOverlayState("open")}
+                                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                              >
+                                Post score
+                              </button>
+                            </div>
+                          )}
+
+                          {leaderboardMessage && leaderboardOverlayState !== "ask" && (
+                            <p
+                              className={`mt-2 text-xs ${
+                                leaderboardSubmitState === "error" ? "text-rose-700" : "text-slate-600"
+                              }`}
+                            >
+                              {leaderboardMessage}
+                            </p>
+                          )}
+                        </div>
                       )}
                       <button
                         type="button"
@@ -1573,16 +1838,64 @@ export default function ImmigrationDashGame() {
                   Share on Facebook
                 </a>
               </div>
-              {shareState !== "idle" && (
-                <p className="mt-2 text-xs text-slate-500">
-                  {shareState === "shared" && "Thanks for sharing."}
-                  {shareState === "error" && "Sharing was cancelled or unavailable."}
-                </p>
-              )}
-            </div>
-        </div>
-        <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
-          <div className="grid gap-3 sm:grid-cols-2">
+	              {shareState !== "idle" && (
+	                <p className="mt-2 text-xs text-slate-500">
+	                  {shareState === "shared" && "Thanks for sharing."}
+	                  {shareState === "error" && "Sharing was cancelled or unavailable."}
+	                </p>
+	              )}
+	            </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_10px_30px_-24px_rgba(15,23,42,0.28)] sm:p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900">Top 10 leaderboard</h3>
+                    <p className="text-xs text-slate-500">Saved by nationality and kept for future runs.</p>
+                  </div>
+                  {leaderboardCutoffScore !== null && (
+                    <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-semibold text-slate-700">
+                      Cutoff {formatScore(leaderboardCutoffScore)}
+                    </span>
+                  )}
+                </div>
+
+                <div className="mt-3">
+                  {leaderboardStatus === "loading" && leaderboard.length === 0 && (
+                    <p className="text-sm text-slate-500">Loading leaderboard...</p>
+                  )}
+                  {leaderboardStatus === "error" && leaderboard.length === 0 && (
+                    <p className="text-sm text-rose-700">{leaderboardMessage}</p>
+                  )}
+                  {leaderboardStatus !== "loading" && leaderboard.length === 0 && leaderboardStatus !== "error" && (
+                    <p className="text-sm text-slate-500">No scores yet. Set the first benchmark.</p>
+                  )}
+
+                  {leaderboard.length > 0 && (
+                    <ol className="space-y-2">
+                      {leaderboard.map((entry, index) => {
+                        const isSavedEntry = entry.id === savedLeaderboardEntryId;
+                        return (
+                          <li
+                            key={entry.id}
+                            className={`flex items-center justify-between rounded-xl border px-3 py-2 text-sm ${
+                              isSavedEntry
+                                ? "border-amber-300 bg-amber-50 text-amber-950"
+                                : "border-slate-200 bg-slate-50 text-slate-800"
+                            }`}
+                          >
+                            <span className="font-medium">
+                              {index + 1}. {countryCodeToFlag(entry.countryCode)} {entry.countryName} - {formatScore(entry.score)}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ol>
+                  )}
+                </div>
+              </div>
+	        </div>
+	        <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
+          <div className="grid gap-3">
             <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
               <NextImage
                 src={GOLDEN_STAMP_SRC}
@@ -1594,19 +1907,6 @@ export default function ImmigrationDashGame() {
               <p className="w-full max-w-[34ch] text-sm leading-snug text-amber-900 md:max-w-none">
                 <span className="block font-semibold">Golden Approved Stamp</span>
                 <span className="mt-0.5 block">Approved! Your paperwork is perfect. Collect a stamp to increase your score.</span>
-              </p>
-            </div>
-            <div className="flex flex-col items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
-              <NextImage
-                src={RED_STAMP_SRC}
-                alt="Red rejected stamp"
-                width={112}
-                height={112}
-                className="h-[84px] w-[84px] shrink-0 rounded-full object-cover object-center md:h-[92px] md:w-[92px]"
-              />
-              <p className="w-full max-w-[34ch] text-sm leading-snug text-rose-900 md:max-w-none">
-                <span className="block font-semibold">Paperwork</span>
-                <span className="mt-0.5 block">You missed a photocopy. Immigration is not impressed</span>
               </p>
             </div>
           </div>
