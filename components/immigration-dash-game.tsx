@@ -24,6 +24,7 @@ const GRAVITY = 1800;
 const JUMP_VELOCITY = -760;
 const FALL_DEATH_Y = CANVAS_HEIGHT + 120;
 const GOLDEN_STAMP_SRC = "/golden-stamp.png";
+const PAPER_STACK_SRC = "/red-paper-stack.png";
 const GOLDEN_STAMP_ASSET_SRC = "/golden-stamp.png?v=3";
 const MISSING_PHOTOCOPY_ASSET_SRC = "/red-paper-stack.png?v=1";
 const BG_SKY_SRC = "/background-sky.jpg?v=2";
@@ -1847,11 +1848,10 @@ export default function ImmigrationDashGame() {
 	            </div>
 
               <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_10px_30px_-24px_rgba(15,23,42,0.28)] sm:p-4">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <h3 className="text-sm font-bold text-slate-900">Top 10 leaderboard</h3>
-                    <p className="text-xs text-slate-500">Saved by nationality and kept for future runs.</p>
-                  </div>
+	                <div className="flex items-center justify-between gap-3">
+	                  <div>
+	                    <h3 className="text-sm font-bold text-slate-900">Top 10 leaderboard</h3>
+	                  </div>
                   {leaderboardCutoffScore !== null && (
                     <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-semibold text-slate-700">
                       Cutoff {formatScore(leaderboardCutoffScore)}
@@ -1894,23 +1894,36 @@ export default function ImmigrationDashGame() {
                 </div>
               </div>
 	        </div>
-	        <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
-          <div className="grid gap-3">
-            <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
-              <NextImage
-                src={GOLDEN_STAMP_SRC}
+		        <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
+	          <div className="grid gap-3 sm:grid-cols-2">
+	            <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
+	              <NextImage
+	                src={GOLDEN_STAMP_SRC}
                 alt="Golden approved stamp"
                 width={148}
                 height={148}
                 className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
               />
-              <p className="w-full max-w-[34ch] text-sm leading-snug text-amber-900 md:max-w-none">
-                <span className="block font-semibold">Golden Approved Stamp</span>
-                <span className="mt-0.5 block">Approved! Your paperwork is perfect. Collect a stamp to increase your score.</span>
+	              <p className="w-full max-w-[34ch] text-sm leading-snug text-amber-900 md:max-w-none">
+	                <span className="block font-semibold">Golden Approved Stamp</span>
+	                <span className="mt-0.5 block">Approved! Your paperwork is perfect. Collect a stamp to increase your score.</span>
+	              </p>
+	            </div>
+            <div className="flex flex-col items-center gap-2 rounded-xl border border-rose-300 bg-rose-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
+              <NextImage
+                src={PAPER_STACK_SRC}
+                alt="Missing photocopy paper stack"
+                width={148}
+                height={148}
+                className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
+              />
+              <p className="w-full max-w-[34ch] text-sm leading-snug text-rose-900 md:max-w-none">
+                <span className="block font-semibold">Missing Photocopy Stack</span>
+                <span className="mt-0.5 block">Missing a photocopy. Hit the paper stack and you lose a life, so jump it cleanly.</span>
               </p>
             </div>
-          </div>
-        </div>
+	          </div>
+	        </div>
       </div>
 
     </div>

@@ -27,13 +27,14 @@ function normalizeEntry(value: unknown): ImmigrationDashLeaderboardEntry | null 
   if (!value || typeof value !== "object") return null;
 
   const candidate = value as Partial<ImmigrationDashLeaderboardEntry>;
+  const rawCreatedAt: unknown = candidate.createdAt;
   const id = typeof candidate.id === "string" ? candidate.id.trim() : "";
   const countryCode = typeof candidate.countryCode === "string" ? candidate.countryCode.trim().toUpperCase() : "";
   const countryName = typeof candidate.countryName === "string" ? candidate.countryName.trim() : "";
   const score = Number(candidate.score);
   const createdAtValue =
-    typeof candidate.createdAt === "string" || candidate.createdAt instanceof Date
-      ? new Date(candidate.createdAt).toISOString()
+    typeof rawCreatedAt === "string" || rawCreatedAt instanceof Date
+      ? new Date(rawCreatedAt).toISOString()
       : "";
 
   if (!id || !countryCode || !countryName || !Number.isFinite(score) || score < 0 || !createdAtValue) {
