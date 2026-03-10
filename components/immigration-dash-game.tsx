@@ -1618,12 +1618,18 @@ export default function ImmigrationDashGame() {
               )}
 
               {assetsReady && status !== "running" && (
-                <div className="absolute inset-0 flex items-center justify-center bg-slate-900/25 backdrop-blur-[1px]">
+                <div
+                  className={`absolute inset-0 bg-slate-900/25 backdrop-blur-[1px] ${
+                    status === "idle"
+                      ? "flex items-center justify-center"
+                      : "flex items-start justify-center overflow-y-auto p-3 sm:items-center sm:p-4"
+                  }`}
+                >
                   <div
                     className={`mx-4 text-center ${
                       status === "idle"
                         ? "flex items-center justify-center"
-                        : "w-full max-w-xl rounded-2xl border border-white/70 bg-white/95 p-4 shadow-lg sm:p-5"
+                        : "my-auto w-full max-w-xl overflow-y-auto rounded-2xl border border-white/70 bg-white/95 p-4 shadow-lg sm:p-5"
                     }`}
                   >
                     {status !== "idle" && (
@@ -1701,24 +1707,24 @@ export default function ImmigrationDashGame() {
                                 />
                               )}
 
-                              <div className="flex gap-2">
+                              <div className="flex flex-col gap-2 sm:flex-row">
                                 <button
                                   type="button"
-                                  onClick={submitLeaderboardScore}
-                                  disabled={leaderboardSubmitState === "saving" || leaderboardSubmitState === "saved"}
+                                  onClick={leaderboardSubmitState === "saved" ? startGame : submitLeaderboardScore}
+                                  disabled={leaderboardSubmitState === "saving"}
                                   className="inline-flex flex-1 items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
                                 >
                                   {leaderboardSubmitState === "saving"
                                     ? "Saving..."
                                     : leaderboardSubmitState === "saved"
-                                      ? "Score Saved"
+                                      ? "Play again"
                                       : "Save to leaderboard"}
                                 </button>
                                 {leaderboardSubmitState !== "saved" && (
                                   <button
                                     type="button"
                                     onClick={() => setLeaderboardOverlayState("dismissed")}
-                                    className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                                    className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 sm:flex-1"
                                   >
                                     Skip
                                   </button>
@@ -1801,91 +1807,60 @@ export default function ImmigrationDashGame() {
           </div>
 
           <div className="grid items-start gap-3 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-            <div className="space-y-3">
-              <div className="rounded-2xl border border-sky-300/80 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-2.5 shadow-[0_10px_30px_-24px_rgba(14,116,144,0.65)] sm:p-3">
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className="text-sm font-bold text-slate-900">Share your result</h3>
-                  <div className="flex items-center gap-1.5 text-[11px] font-semibold">
-                    <span className="rounded-full border border-sky-200 bg-white px-2 py-0.5 text-sky-800">{shareSeconds}s</span>
-                    <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-amber-900">Score {hud.score}</span>
-                  </div>
-                </div>
-
-                <div className="mt-2 rounded-xl border border-slate-200/80 bg-white/80 px-2.5 py-2 text-xs leading-relaxed text-slate-700 sm:text-sm">
-                  <p>
-                    🇹🇭 I survived <span className="font-extrabold text-slate-900">{shareSeconds}</span> seconds on Immigration Dash!{" "}
-                    <span className="font-bold text-slate-900">Score: {hud.score}</span>
-                  </p>
-                  <p className="mt-1">
-                    <span className="font-bold text-slate-900">Can you beat it?</span>{" "}
-                    <span className="font-semibold text-slate-800">{SHARE_URL_TEXT}</span>
-                  </p>
-                </div>
-
-                <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                  <button
-                    type="button"
-                    onClick={onNativeShare}
-                    disabled={!canNativeShare}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-violet-300 bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-200 disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm"
-                  >
-                    <Share2 className="h-4 w-4" /> Share
-                  </button>
-                  <a
-                    href={facebookShareUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#1664d9] bg-[#1877f2] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1664d9] sm:text-sm"
-                  >
-                    <NextImage
-                      src="/resource-logos/facebook-logo.svg"
-                      alt="Facebook"
-                      width={14}
-                      height={14}
-                      className="h-3.5 w-3.5"
-                    />
-                    Share on Facebook
-                  </a>
-                </div>
-                {shareState !== "idle" && (
-                  <p className="mt-2 text-xs text-slate-500">
-                    {shareState === "shared" && "Thanks for sharing."}
-                    {shareState === "error" && "Sharing was cancelled or unavailable."}
-                  </p>
-                )}
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
-                  <NextImage
-                    src={GOLDEN_STAMP_SRC}
-                    alt="Golden approved stamp"
-                    width={148}
-                    height={148}
-                    className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
-                  />
-                  <p className="w-full max-w-[34ch] text-sm leading-snug text-amber-900 md:max-w-none">
-                    <span className="block font-semibold">Golden Approved Stamp</span>
-                    <span className="mt-0.5 block">Approved! Your paperwork is perfect. Collect a stamp to increase your score.</span>
-                  </p>
-                </div>
-                <div className="flex flex-col items-center gap-2 rounded-xl border border-rose-300 bg-rose-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
-                  <NextImage
-                    src={PAPER_STACK_SRC}
-                    alt="Missing photocopy paper stack"
-                    width={148}
-                    height={148}
-                    className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
-                  />
-                  <p className="w-full max-w-[34ch] text-sm leading-snug text-rose-900 md:max-w-none">
-                    <span className="block font-semibold">Paperwork Stack</span>
-                    <span className="mt-0.5 block">You missed a photocopy, immigration is not impressed.</span>
-                  </p>
+            <div className="rounded-2xl border border-sky-300/80 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-2.5 shadow-[0_10px_30px_-24px_rgba(14,116,144,0.65)] sm:p-3 lg:col-start-1 lg:row-start-1">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-sm font-bold text-slate-900">Share your result</h3>
+                <div className="flex items-center gap-1.5 text-[11px] font-semibold">
+                  <span className="rounded-full border border-sky-200 bg-white px-2 py-0.5 text-sky-800">{shareSeconds}s</span>
+                  <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-amber-900">Score {hud.score}</span>
                 </div>
               </div>
+
+              <div className="mt-2 rounded-xl border border-slate-200/80 bg-white/80 px-2.5 py-2 text-xs leading-relaxed text-slate-700 sm:text-sm">
+                <p>
+                  🇹🇭 I survived <span className="font-extrabold text-slate-900">{shareSeconds}</span> seconds on Immigration Dash!{" "}
+                  <span className="font-bold text-slate-900">Score: {hud.score}</span>
+                </p>
+                <p className="mt-1">
+                  <span className="font-bold text-slate-900">Can you beat it?</span>{" "}
+                  <span className="font-semibold text-slate-800">{SHARE_URL_TEXT}</span>
+                </p>
+              </div>
+
+              <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <button
+                  type="button"
+                  onClick={onNativeShare}
+                  disabled={!canNativeShare}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-violet-300 bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-200 disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm"
+                >
+                  <Share2 className="h-4 w-4" /> Share
+                </button>
+                <a
+                  href={facebookShareUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#1664d9] bg-[#1877f2] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1664d9] sm:text-sm"
+                >
+                  <NextImage
+                    src="/resource-logos/facebook-logo.svg"
+                    alt="Facebook"
+                    width={14}
+                    height={14}
+                    className="h-3.5 w-3.5"
+                  />
+                  Share on Facebook
+                </a>
+              </div>
+              {shareState !== "idle" && (
+                <p className="mt-2 text-xs text-slate-500">
+                  {shareState === "shared" && "Thanks for sharing."}
+                  {shareState === "error" && "Sharing was cancelled or unavailable."}
+                </p>
+              )}
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_10px_30px_-24px_rgba(15,23,42,0.28)] sm:p-4">
+            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_10px_30px_-24px_rgba(15,23,42,0.28)] sm:p-4 lg:col-start-2 lg:row-span-2 lg:row-start-1">
               <div>
                 <h3 className="text-sm font-bold text-slate-900">Top 10 leaderboard</h3>
               </div>
@@ -1922,6 +1897,35 @@ export default function ImmigrationDashGame() {
                     })}
                   </ol>
                 )}
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:grid-cols-1">
+              <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left lg:min-h-[220px] lg:px-4 lg:py-4">
+                <NextImage
+                  src={GOLDEN_STAMP_SRC}
+                  alt="Golden approved stamp"
+                  width={148}
+                  height={148}
+                  className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
+                />
+                <p className="w-full max-w-[34ch] text-sm leading-snug text-amber-900 md:max-w-none">
+                  <span className="block font-semibold">Golden Approved Stamp</span>
+                  <span className="mt-0.5 block">Approved! Your paperwork is perfect. Collect a stamp to increase your score.</span>
+                </p>
+              </div>
+              <div className="flex flex-col items-center gap-2 rounded-xl border border-rose-300 bg-rose-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left lg:min-h-[220px] lg:px-4 lg:py-4">
+                <NextImage
+                  src={PAPER_STACK_SRC}
+                  alt="Missing photocopy paper stack"
+                  width={148}
+                  height={148}
+                  className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
+                />
+                <p className="w-full max-w-[34ch] text-sm leading-snug text-rose-900 md:max-w-none">
+                  <span className="block font-semibold">Paperwork Stack</span>
+                  <span className="mt-0.5 block">You missed a photocopy, immigration is not impressed.</span>
+                </p>
               </div>
             </div>
           </div>
