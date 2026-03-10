@@ -1596,204 +1596,211 @@ export default function ImmigrationDashGame() {
     <div className="space-y-4">
       <div className="space-y-2">
         <div className="flex flex-col gap-3">
-            <div>
-              <p className="text-center text-xs font-semibold text-sky-700 sm:hidden">
-                Mobile tip: Turn your phone sideways to play.
-              </p>
+          <div>
+            <p className="text-center text-xs font-semibold text-sky-700 sm:hidden">
+              Mobile tip: Turn your phone sideways to play.
+            </p>
 
-              <div ref={gameShellRef} className="relative mt-2 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
-                <canvas
-                  ref={canvasRef}
-                  width={CANVAS_WIDTH}
-                  height={CANVAS_HEIGHT}
-                  onPointerDown={jump}
-                  className="block h-auto w-[150%] max-w-none -translate-x-[17%] touch-manipulation select-none sm:w-[108%] sm:-translate-x-[4%] lg:w-full lg:translate-x-0"
-                  aria-label="Immigration Dash game"
-                />
+            <div ref={gameShellRef} className="relative mt-2 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
+              <canvas
+                ref={canvasRef}
+                width={CANVAS_WIDTH}
+                height={CANVAS_HEIGHT}
+                onPointerDown={jump}
+                className="block h-auto w-[150%] max-w-none -translate-x-[17%] touch-manipulation select-none sm:w-[108%] sm:-translate-x-[4%] lg:w-full lg:translate-x-0"
+                aria-label="Immigration Dash game"
+              />
 
-                {!assetsReady && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-slate-900/35 px-4 text-center text-sm font-semibold text-white">
-                    {assetError ? `Asset error: ${assetError}` : "Loading game assets..."}
-                  </div>
-                )}
+              {!assetsReady && (
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-900/35 px-4 text-center text-sm font-semibold text-white">
+                  {assetError ? `Asset error: ${assetError}` : "Loading game assets..."}
+                </div>
+              )}
 
-                {assetsReady && status !== "running" && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-slate-900/25 backdrop-blur-[1px]">
-                    <div className="mx-4 w-full max-w-xl rounded-2xl border border-white/70 bg-white/95 p-4 text-center shadow-lg sm:p-5">
-                      {status !== "idle" && (
-                        <h3 className="text-lg font-bold text-slate-900">{status === "paused" ? "Paused" : "Game over"}</h3>
-                      )}
-                      {status !== "idle" && (
-                        <p className="mt-2 text-sm text-slate-600">
-                          {status === "paused" ? "Game is paused. Tap Resume to continue." : gameOverMessage}
-                        </p>
-                      )}
-                      {status === "gameover" && score > 0 && (
-                        <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50/80 p-3 text-left">
-                          {leaderboardOverlayState === "ask" && (
-                            <>
-                              <p className="text-sm font-medium text-slate-800">
-                                Post <span className="font-bold text-slate-900">{formatScore(score)}</span> to the leaderboard?
-                              </p>
-                              <div className="mt-3 flex gap-2">
-                                <button
-                                  type="button"
-                                  onClick={() => setLeaderboardOverlayState("open")}
-                                  className="inline-flex flex-1 items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
-                                >
-                                  Yes, post it
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => setLeaderboardOverlayState("dismissed")}
-                                  className="inline-flex flex-1 items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
-                                >
-                                  No thanks
-                                </button>
-                              </div>
-                            </>
-                          )}
-
-                          {leaderboardOverlayState === "open" && (
-                            <>
-                              <p className="text-sm font-medium text-slate-800">
-                                Save your score with your nationality.
-                                {qualifiesForTop10 ? " This run is currently in top-10 range." : ""}
-                              </p>
-                              <div className="mt-3 grid gap-2">
-                                <select
-                                  value={selectedCountryCode}
-                                  onChange={(event) => {
-                                    setSelectedCountryCode(event.target.value);
-                                    setLeaderboardSubmitState("idle");
-                                    setLeaderboardMessage("");
-                                    if (event.target.value !== "OTHER") {
-                                      setCustomCountryName("");
-                                    }
-                                  }}
-                                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-0 transition focus:border-sky-500"
-                                >
-                                  <option value="">Choose nationality</option>
-                                  {COUNTRY_OPTIONS.map((option) => (
-                                    <option key={option.code} value={option.code}>
-                                      {countryCodeToFlag(option.code)} {option.name}
-                                    </option>
-                                  ))}
-                                </select>
-
-                                {selectedCountryCode === "OTHER" && (
-                                  <input
-                                    type="text"
-                                    value={customCountryName}
-                                    onChange={(event) => {
-                                      setCustomCountryName(event.target.value);
-                                      setLeaderboardSubmitState("idle");
-                                      setLeaderboardMessage("");
-                                    }}
-                                    placeholder="Enter your nationality"
-                                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-0 transition focus:border-sky-500"
-                                  />
-                                )}
-
-                                <div className="flex gap-2">
-                                  <button
-                                    type="button"
-                                    onClick={submitLeaderboardScore}
-                                    disabled={leaderboardSubmitState === "saving" || leaderboardSubmitState === "saved"}
-                                    className="inline-flex flex-1 items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
-                                  >
-                                    {leaderboardSubmitState === "saving"
-                                      ? "Saving..."
-                                      : leaderboardSubmitState === "saved"
-                                        ? "Score Saved"
-                                        : "Save to leaderboard"}
-                                  </button>
-                                  {leaderboardSubmitState !== "saved" && (
-                                    <button
-                                      type="button"
-                                      onClick={() => setLeaderboardOverlayState("dismissed")}
-                                      className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
-                                    >
-                                      Skip
-                                    </button>
-                                  )}
-                                </div>
-                              </div>
-                            </>
-                          )}
-
-                          {leaderboardOverlayState === "dismissed" && leaderboardSubmitState !== "saved" && (
-                            <div className="flex items-center justify-between gap-3">
-                              <p className="text-sm text-slate-700">Skipped leaderboard for this run.</p>
+              {assetsReady && status !== "running" && (
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-900/25 backdrop-blur-[1px]">
+                  <div
+                    className={`mx-4 text-center ${
+                      status === "idle"
+                        ? "flex items-center justify-center"
+                        : "w-full max-w-xl rounded-2xl border border-white/70 bg-white/95 p-4 shadow-lg sm:p-5"
+                    }`}
+                  >
+                    {status !== "idle" && (
+                      <h3 className="text-lg font-bold text-slate-900">{status === "paused" ? "Paused" : "Game over"}</h3>
+                    )}
+                    {status !== "idle" && (
+                      <p className="mt-2 text-sm text-slate-600">
+                        {status === "paused" ? "Game is paused. Tap Resume to continue." : gameOverMessage}
+                      </p>
+                    )}
+                    {status === "gameover" && score > 0 && (
+                      <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50/80 p-3 text-left">
+                        {leaderboardOverlayState === "ask" && (
+                          <>
+                            <p className="text-sm font-medium text-slate-800">
+                              Post <span className="font-bold text-slate-900">{formatScore(score)}</span> to the leaderboard?
+                            </p>
+                            <div className="mt-3 flex gap-2">
                               <button
                                 type="button"
                                 onClick={() => setLeaderboardOverlayState("open")}
-                                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                                className="inline-flex flex-1 items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
                               >
-                                Post score
+                                Yes, post it
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setLeaderboardOverlayState("dismissed")}
+                                className="inline-flex flex-1 items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                              >
+                                No thanks
                               </button>
                             </div>
-                          )}
+                          </>
+                        )}
 
-                          {leaderboardMessage && leaderboardOverlayState !== "ask" && (
-                            <p
-                              className={`mt-2 text-xs ${
-                                leaderboardSubmitState === "error" ? "text-rose-700" : "text-slate-600"
-                              }`}
-                            >
-                              {leaderboardMessage}
+                        {leaderboardOverlayState === "open" && (
+                          <>
+                            <p className="text-sm font-medium text-slate-800">
+                              Save your score with your nationality.
+                              {qualifiesForTop10 ? " This run is currently in top-10 range." : ""}
                             </p>
-                          )}
-                        </div>
-                      )}
-                      <button
-                        type="button"
-                        onClick={status === "paused" ? togglePause : startGame}
-                        className={`inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-fuchsia-600 to-pink-600 px-5 py-2.5 text-sm font-semibold text-white shadow hover:from-fuchsia-700 hover:to-pink-700 ${
-                          status === "idle" ? "" : "mt-4"
-                        }`}
-                      >
-                        {status === "idle" ? "Start Game" : status === "paused" ? "Resume Game" : "Restart Game"}
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
+                            <div className="mt-3 grid gap-2">
+                              <select
+                                value={selectedCountryCode}
+                                onChange={(event) => {
+                                  setSelectedCountryCode(event.target.value);
+                                  setLeaderboardSubmitState("idle");
+                                  setLeaderboardMessage("");
+                                  if (event.target.value !== "OTHER") {
+                                    setCustomCountryName("");
+                                  }
+                                }}
+                                className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-0 transition focus:border-sky-500"
+                              >
+                                <option value="">Choose nationality</option>
+                                {COUNTRY_OPTIONS.map((option) => (
+                                  <option key={option.code} value={option.code}>
+                                    {countryCodeToFlag(option.code)} {option.name}
+                                  </option>
+                                ))}
+                              </select>
 
-              <div className="mt-2 flex flex-wrap items-center gap-3">
-                {(status === "running" || status === "paused") && (
-                  <button
-                    type="button"
-                    onClick={startGame}
-                    className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
-                  >
-                    Restart Game
-                  </button>
-                )}
-                {(status === "running" || status === "paused") && (
-                  <button
-                    type="button"
-                    onClick={togglePause}
-                    className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
-                  >
-                    {status === "running" ? "Pause Game" : "Resume Game"}
-                  </button>
-                )}
-                {fullScreenEnabled && (
-                  <button
-                    type="button"
-                    onClick={toggleFullScreen}
-                    className="inline-flex items-center justify-center rounded-xl border border-sky-300 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-800 hover:bg-sky-100 sm:hidden"
-                  >
-                    {isFullScreen ? "Exit Full Screen" : "Full Screen"}
-                  </button>
-                )}
-                <p className="w-full text-center text-xs text-slate-500 sm:w-auto sm:text-left sm:text-sm">
-                  Controls: Use space or up arrow on desktop. Tap game on mobile to jump.
-                </p>
-              </div>
+                              {selectedCountryCode === "OTHER" && (
+                                <input
+                                  type="text"
+                                  value={customCountryName}
+                                  onChange={(event) => {
+                                    setCustomCountryName(event.target.value);
+                                    setLeaderboardSubmitState("idle");
+                                    setLeaderboardMessage("");
+                                  }}
+                                  placeholder="Enter your nationality"
+                                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-0 transition focus:border-sky-500"
+                                />
+                              )}
+
+                              <div className="flex gap-2">
+                                <button
+                                  type="button"
+                                  onClick={submitLeaderboardScore}
+                                  disabled={leaderboardSubmitState === "saving" || leaderboardSubmitState === "saved"}
+                                  className="inline-flex flex-1 items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+                                >
+                                  {leaderboardSubmitState === "saving"
+                                    ? "Saving..."
+                                    : leaderboardSubmitState === "saved"
+                                      ? "Score Saved"
+                                      : "Save to leaderboard"}
+                                </button>
+                                {leaderboardSubmitState !== "saved" && (
+                                  <button
+                                    type="button"
+                                    onClick={() => setLeaderboardOverlayState("dismissed")}
+                                    className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                                  >
+                                    Skip
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          </>
+                        )}
+
+                        {leaderboardOverlayState === "dismissed" && leaderboardSubmitState !== "saved" && (
+                          <div className="flex items-center justify-between gap-3">
+                            <p className="text-sm text-slate-700">Skipped leaderboard for this run.</p>
+                            <button
+                              type="button"
+                              onClick={() => setLeaderboardOverlayState("open")}
+                              className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                            >
+                              Post score
+                            </button>
+                          </div>
+                        )}
+
+                        {leaderboardMessage && leaderboardOverlayState !== "ask" && (
+                          <p
+                            className={`mt-2 text-xs ${
+                              leaderboardSubmitState === "error" ? "text-rose-700" : "text-slate-600"
+                            }`}
+                          >
+                            {leaderboardMessage}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={status === "paused" ? togglePause : startGame}
+                      className={`inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-fuchsia-600 to-pink-600 px-5 py-2.5 text-sm font-semibold text-white shadow hover:from-fuchsia-700 hover:to-pink-700 ${
+                        status === "idle" ? "" : "mt-4"
+                      }`}
+                    >
+                      {status === "idle" ? "Start Game" : status === "paused" ? "Resume Game" : "Restart Game"}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
 
+            <div className="mt-2 flex flex-wrap items-center gap-3">
+              {(status === "running" || status === "paused") && (
+                <button
+                  type="button"
+                  onClick={startGame}
+                  className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                >
+                  Restart Game
+                </button>
+              )}
+              {(status === "running" || status === "paused") && (
+                <button
+                  type="button"
+                  onClick={togglePause}
+                  className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                >
+                  {status === "running" ? "Pause Game" : "Resume Game"}
+                </button>
+              )}
+              {fullScreenEnabled && (
+                <button
+                  type="button"
+                  onClick={toggleFullScreen}
+                  className="inline-flex items-center justify-center rounded-xl border border-sky-300 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-800 hover:bg-sky-100 sm:hidden"
+                >
+                  {isFullScreen ? "Exit Full Screen" : "Full Screen"}
+                </button>
+              )}
+              <p className="w-full text-center text-xs text-slate-500 sm:w-auto sm:text-left sm:text-sm">
+                Controls: Use space or up arrow on desktop. Tap game on mobile to jump.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid items-start gap-3 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
             <div className="rounded-2xl border border-sky-300/80 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-2.5 shadow-[0_10px_30px_-24px_rgba(14,116,144,0.65)] sm:p-3">
               <div className="flex items-center justify-between gap-2">
                 <h3 className="text-sm font-bold text-slate-900">Share your result</h3>
@@ -1839,93 +1846,94 @@ export default function ImmigrationDashGame() {
                   Share on Facebook
                 </a>
               </div>
-	              {shareState !== "idle" && (
-	                <p className="mt-2 text-xs text-slate-500">
-	                  {shareState === "shared" && "Thanks for sharing."}
-	                  {shareState === "error" && "Sharing was cancelled or unavailable."}
-	                </p>
-	              )}
-	            </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_10px_30px_-24px_rgba(15,23,42,0.28)] sm:p-4">
-	                <div className="flex items-center justify-between gap-3">
-	                  <div>
-	                    <h3 className="text-sm font-bold text-slate-900">Top 10 leaderboard</h3>
-	                  </div>
-                  {leaderboardCutoffScore !== null && (
-                    <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-semibold text-slate-700">
-                      Cutoff {formatScore(leaderboardCutoffScore)}
-                    </span>
-                  )}
-                </div>
-
-                <div className="mt-3">
-                  {leaderboardStatus === "loading" && leaderboard.length === 0 && (
-                    <p className="text-sm text-slate-500">Loading leaderboard...</p>
-                  )}
-                  {leaderboardStatus === "error" && leaderboard.length === 0 && (
-                    <p className="text-sm text-rose-700">{leaderboardMessage}</p>
-                  )}
-                  {leaderboardStatus !== "loading" && leaderboard.length === 0 && leaderboardStatus !== "error" && (
-                    <p className="text-sm text-slate-500">No scores yet. Set the first benchmark.</p>
-                  )}
-
-                  {leaderboard.length > 0 && (
-                    <ol className="space-y-2">
-                      {leaderboard.map((entry, index) => {
-                        const isSavedEntry = entry.id === savedLeaderboardEntryId;
-                        return (
-                          <li
-                            key={entry.id}
-                            className={`flex items-center justify-between rounded-xl border px-3 py-2 text-sm ${
-                              isSavedEntry
-                                ? "border-amber-300 bg-amber-50 text-amber-950"
-                                : "border-slate-200 bg-slate-50 text-slate-800"
-                            }`}
-                          >
-                            <span className="font-medium">
-                              {index + 1}. {countryCodeToFlag(entry.countryCode)} {entry.countryName} - {formatScore(entry.score)}
-                            </span>
-                          </li>
-                        );
-                      })}
-                    </ol>
-                  )}
-                </div>
-              </div>
-	        </div>
-		        <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
-	          <div className="grid gap-3 sm:grid-cols-2">
-	            <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
-	              <NextImage
-	                src={GOLDEN_STAMP_SRC}
-                alt="Golden approved stamp"
-                width={148}
-                height={148}
-                className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
-              />
-	              <p className="w-full max-w-[34ch] text-sm leading-snug text-amber-900 md:max-w-none">
-	                <span className="block font-semibold">Golden Approved Stamp</span>
-	                <span className="mt-0.5 block">Approved! Your paperwork is perfect. Collect a stamp to increase your score.</span>
-	              </p>
-	            </div>
-            <div className="flex flex-col items-center gap-2 rounded-xl border border-rose-300 bg-rose-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
-              <NextImage
-                src={PAPER_STACK_SRC}
-                alt="Missing photocopy paper stack"
-                width={148}
-                height={148}
-                className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
-              />
-              <p className="w-full max-w-[34ch] text-sm leading-snug text-rose-900 md:max-w-none">
-                <span className="block font-semibold">Missing Photocopy Stack</span>
-                <span className="mt-0.5 block">Missing a photocopy. Hit the paper stack and you lose a life, so jump it cleanly.</span>
-              </p>
+              {shareState !== "idle" && (
+                <p className="mt-2 text-xs text-slate-500">
+                  {shareState === "shared" && "Thanks for sharing."}
+                  {shareState === "error" && "Sharing was cancelled or unavailable."}
+                </p>
+              )}
             </div>
-	          </div>
-	        </div>
-      </div>
 
+            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_10px_30px_-24px_rgba(15,23,42,0.28)] sm:p-4">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900">Top 10 leaderboard</h3>
+                </div>
+                {leaderboardCutoffScore !== null && (
+                  <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-semibold text-slate-700">
+                    Cutoff {formatScore(leaderboardCutoffScore)}
+                  </span>
+                )}
+              </div>
+
+              <div className="mt-3">
+                {leaderboardStatus === "loading" && leaderboard.length === 0 && (
+                  <p className="text-sm text-slate-500">Loading leaderboard...</p>
+                )}
+                {leaderboardStatus === "error" && leaderboard.length === 0 && (
+                  <p className="text-sm text-rose-700">{leaderboardMessage}</p>
+                )}
+                {leaderboardStatus !== "loading" && leaderboard.length === 0 && leaderboardStatus !== "error" && (
+                  <p className="text-sm text-slate-500">No scores yet. Set the first benchmark.</p>
+                )}
+
+                {leaderboard.length > 0 && (
+                  <ol className="space-y-2">
+                    {leaderboard.map((entry, index) => {
+                      const isSavedEntry = entry.id === savedLeaderboardEntryId;
+                      return (
+                        <li
+                          key={entry.id}
+                          className={`flex items-center justify-between rounded-xl border px-3 py-2 text-sm ${
+                            isSavedEntry
+                              ? "border-amber-300 bg-amber-50 text-amber-950"
+                              : "border-slate-200 bg-slate-50 text-slate-800"
+                          }`}
+                        >
+                          <span className="font-medium">
+                            {index + 1}. {countryCodeToFlag(entry.countryCode)} {entry.countryName} - {formatScore(entry.score)}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
+                <NextImage
+                  src={GOLDEN_STAMP_SRC}
+                  alt="Golden approved stamp"
+                  width={148}
+                  height={148}
+                  className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
+                />
+                <p className="w-full max-w-[34ch] text-sm leading-snug text-amber-900 md:max-w-none">
+                  <span className="block font-semibold">Golden Approved Stamp</span>
+                  <span className="mt-0.5 block">Approved! Your paperwork is perfect. Collect a stamp to increase your score.</span>
+                </p>
+              </div>
+              <div className="flex flex-col items-center gap-2 rounded-xl border border-rose-300 bg-rose-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
+                <NextImage
+                  src={PAPER_STACK_SRC}
+                  alt="Missing photocopy paper stack"
+                  width={148}
+                  height={148}
+                  className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
+                />
+                <p className="w-full max-w-[34ch] text-sm leading-snug text-rose-900 md:max-w-none">
+                  <span className="block font-semibold">Missing Photocopy Stack</span>
+                  <span className="mt-0.5 block">Missing a photocopy. Hit the paper stack and you lose a life, so jump it cleanly.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
