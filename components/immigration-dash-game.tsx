@@ -24,9 +24,9 @@ const GRAVITY = 1800;
 const JUMP_VELOCITY = -760;
 const FALL_DEATH_Y = CANVAS_HEIGHT + 120;
 const GOLDEN_STAMP_SRC = "/golden-stamp.png";
-const PAPER_STACK_SRC = "/red-paper-stack.png";
+const DURIAN_SRC = "/durian.png";
 const GOLDEN_STAMP_ASSET_SRC = "/golden-stamp.png?v=3";
-const MISSING_PHOTOCOPY_ASSET_SRC = "/red-paper-stack.png?v=1";
+const DURIAN_ASSET_SRC = "/durian.png?v=1";
 const BG_SKY_SRC = "/background-sky.jpg?v=2";
 const BG_CITY_SRC = "/background-city.jpg?v=2";
 const GROUND_SRC = "/ground-nogaps.png?v=2";
@@ -48,7 +48,7 @@ const MAX_SIM_STEPS_PER_FRAME = 6;
 const HUD_SYNC_INTERVAL_MS = 180;
 const GOLDEN_STAMP_SIZE = 54;
 const THAI_BLOCK_BONUS_STAMP_SIZE = 48;
-const MISSING_PHOTOCOPY_SIZE = 52;
+const DURIAN_SIZE = 60;
 const THAI_BLOCK_RUN_MIN_LENGTH = 2;
 const THAI_BLOCK_RUN_MAX_LENGTH = 4;
 const THAI_BLOCK_RUN_MIN_ELAPSED = 7;
@@ -97,7 +97,7 @@ const COUNTRY_OPTIONS = [
 ] as const;
 
 type GameStatus = "idle" | "running" | "paused" | "gameover";
-type ObstacleKind = "closed-sign" | "missing-photocopy" | "thai-block" | "pothole";
+type ObstacleKind = "closed-sign" | "durian" | "thai-block" | "pothole";
 
 type FrameRect = { x: number; y: number; w: number; h: number };
 type SpriteAsset = {
@@ -114,8 +114,8 @@ type LoadedAssets = {
   playerMaxW: number;
   playerMaxH: number;
   closedSign: SpriteAsset;
+  durian: SpriteAsset;
   thaiBlock: SpriteAsset;
-  missingPhotocopy: SpriteAsset;
   greenStamp: SpriteAsset;
 };
 
@@ -377,7 +377,7 @@ function getDifficulty(timeSeconds: number) {
     collectibleMin: lerp(1.9, 0.62, ramp),
     collectibleMax: lerp(2.6, 1.08, ramp),
     closedChance: lerp(0.12, 0.21, ramp),
-    blockChance: lerp(0.52, 0.36, ramp),
+    durianChance: lerp(0.33, 0.27, ramp),
     potholeChance: lerp(0.11, 0.22, ramp),
     collectibleBurstChance: lerp(0.32, 0.74, ramp),
     collectibleAlongsideObstacleChance: lerp(0.1, 0.55, ramp),
@@ -533,9 +533,11 @@ function drawObstacle(ctx: CanvasRenderingContext2D, assets: LoadedAssets, obsta
   const sprite =
     obstacle.kind === "closed-sign"
       ? assets.closedSign
-      : obstacle.kind === "thai-block"
+      : obstacle.kind === "durian"
+        ? assets.durian
+        : obstacle.kind === "thai-block"
         ? assets.thaiBlock
-        : assets.missingPhotocopy;
+        : assets.thaiBlock;
   const source = sprite.bounds;
   ctx.drawImage(
     sprite.image,
@@ -909,18 +911,18 @@ export default function ImmigrationDashGame() {
       forcePothole || roll < d.potholeChance
         ? "pothole"
         : roll < d.potholeChance + d.closedChance
-        ? "closed-sign"
-        : roll < d.potholeChance + d.closedChance + d.blockChance
-          ? "thai-block"
-          : "missing-photocopy";
+          ? "closed-sign"
+          : roll < d.potholeChance + d.closedChance + d.durianChance
+            ? "durian"
+            : "thai-block";
 
     if (!potholesAllowed && kind === "pothole") {
       // Keep first seconds fair: no instant-death pits until player is moving.
-      kind = roll < 0.5 ? "thai-block" : "missing-photocopy";
+      kind = roll < 0.55 ? "durian" : "thai-block";
     }
 
     if (kind === model.lastObstacleKind && model.lastObstacleStreak >= 2) {
-      const alternatives = (["closed-sign", "thai-block", "missing-photocopy", "pothole"] as ObstacleKind[]).filter(
+      const alternatives = (["closed-sign", "thai-block", "durian", "pothole"] as ObstacleKind[]).filter(
         (candidate) => candidate !== kind
       );
       kind = pickRandom(alternatives);
@@ -946,9 +948,9 @@ export default function ImmigrationDashGame() {
                 y: GROUND_SURFACE_Y - 10,
               }
             : {
-                w: MISSING_PHOTOCOPY_SIZE,
-                h: MISSING_PHOTOCOPY_SIZE,
-                y: GROUND_SURFACE_Y - MISSING_PHOTOCOPY_SIZE + STAMP_GROUND_OFFSET_Y,
+                w: DURIAN_SIZE,
+                h: DURIAN_SIZE,
+                y: GROUND_SURFACE_Y - DURIAN_SIZE + 2,
               };
 
     const earlySpawn = model.elapsed < 2.5;
@@ -1231,7 +1233,7 @@ export default function ImmigrationDashGame() {
           const rect = { x: obstacle.x + 8, y: obstacle.y + 8, w: obstacle.w - 16, h: obstacle.h - 8 };
           if (!intersects(playerRect, rect)) continue;
 
-          if (obstacle.kind === "missing-photocopy" && model.invulnerability <= 0) {
+          if (obstacle.kind === "durian" && model.invulnerability <= 0) {
             model.lives -= 1;
             model.invulnerability = 1.1;
             model.obstacles = model.obstacles.filter((o) => o.id !== obstacle.id);
@@ -1385,7 +1387,7 @@ export default function ImmigrationDashGame() {
 
     async function run() {
       try {
-        const [sky, city, ground, player, closedSign, thaiBlock, missingPhotocopy, greenStamp] =
+        const [sky, city, ground, player, closedSign, thaiBlock, durian, greenStamp] =
           await Promise.all([
             createImage(BG_SKY_SRC),
             createImage(BG_CITY_SRC),
@@ -1393,7 +1395,7 @@ export default function ImmigrationDashGame() {
             createImage(PLAYER_RUN_SRC),
             createImage(CLOSED_SIGN_SRC),
             createImage(THAI_BLOCK_SRC),
-            createImage(MISSING_PHOTOCOPY_ASSET_SRC),
+            createImage(DURIAN_ASSET_SRC),
             createImage(GOLDEN_STAMP_ASSET_SRC),
           ]);
 
@@ -1416,13 +1418,13 @@ export default function ImmigrationDashGame() {
             image: closedSign,
             bounds: extractAlphaBounds(closedSign, undefined, 208) ?? extractForegroundBounds(closedSign),
           },
+          durian: {
+            image: durian,
+            bounds: extractAlphaBounds(durian, undefined, 224) ?? extractForegroundBounds(durian),
+          },
           thaiBlock: {
             image: thaiBlock,
             bounds: extractAlphaBounds(thaiBlock, undefined, 160) ?? extractForegroundBounds(thaiBlock),
-          },
-          missingPhotocopy: {
-            image: missingPhotocopy,
-            bounds: extractAlphaBounds(missingPhotocopy, undefined, 208) ?? extractForegroundBounds(missingPhotocopy),
           },
           greenStamp: {
             image: greenStamp,
@@ -1901,7 +1903,7 @@ export default function ImmigrationDashGame() {
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:grid-cols-1">
-              <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left lg:min-h-[220px] lg:px-4 lg:py-4">
+              <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left lg:px-4 lg:py-3">
                 <NextImage
                   src={GOLDEN_STAMP_SRC}
                   alt="Golden approved stamp"
@@ -1911,20 +1913,20 @@ export default function ImmigrationDashGame() {
                 />
                 <p className="w-full max-w-[34ch] text-sm leading-snug text-amber-900 md:max-w-none">
                   <span className="block font-semibold">Golden Approved Stamp</span>
-                  <span className="mt-0.5 block">Approved! Your paperwork is perfect. Collect a stamp to increase your score.</span>
+                  <span className="mt-0.5 block">Your paperwork is perfect. Collect a stamp to increase your score.</span>
                 </p>
               </div>
-              <div className="flex flex-col items-center gap-2 rounded-xl border border-rose-300 bg-rose-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left lg:min-h-[220px] lg:px-4 lg:py-4">
+              <div className="flex flex-col items-center gap-2 rounded-xl border border-lime-300 bg-lime-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left lg:px-4 lg:py-3">
                 <NextImage
-                  src={PAPER_STACK_SRC}
-                  alt="Missing photocopy paper stack"
+                  src={DURIAN_SRC}
+                  alt="Stinky durian obstacle"
                   width={148}
                   height={148}
                   className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
                 />
-                <p className="w-full max-w-[34ch] text-sm leading-snug text-rose-900 md:max-w-none">
-                  <span className="block font-semibold">Paperwork Stack</span>
-                  <span className="mt-0.5 block">You missed a photocopy, immigration is not impressed.</span>
+                <p className="w-full max-w-[34ch] text-sm leading-snug text-lime-950 md:max-w-none">
+                  <span className="block font-semibold">Stinky Durian</span>
+                  <span className="mt-0.5 block">The smell hits hard. Stand on it and you lose a life.</span>
                 </p>
               </div>
             </div>
