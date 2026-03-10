@@ -48,6 +48,7 @@ const MAX_SIM_STEPS_PER_FRAME = 6;
 const HUD_SYNC_INTERVAL_MS = 180;
 const MOBILE_RENDER_INTERVAL_MS = 1000 / 30;
 const MOBILE_RENDER_SCALE = 0.72;
+const MOBILE_HIGH_DPR_RENDER_SCALE = 0.62;
 const GOLDEN_STAMP_SIZE = 54;
 const THAI_BLOCK_BONUS_STAMP_SIZE = 48;
 const DURIAN_SIZE = 60;
@@ -198,6 +199,10 @@ function randomRange(min: number, max: number) {
 
 function lerp(min: number, max: number, t: number) {
   return min + (max - min) * t;
+}
+
+function snapToPixel(value: number) {
+  return Math.round(value);
 }
 
 function pickRandom<T>(items: readonly T[]) {
@@ -445,9 +450,9 @@ function drawParallaxLayer(
 ) {
   const baseScale = Math.max(CANVAS_WIDTH / image.width, CANVAS_HEIGHT / image.height);
   const scale = baseScale * zoom;
-  const drawWidth = image.width * scale;
-  const drawHeight = image.height * scale;
-  const dy = Math.floor(anchorBottom - drawHeight);
+  const drawWidth = Math.round(image.width * scale);
+  const drawHeight = Math.round(image.height * scale);
+  const dy = snapToPixel(anchorBottom - drawHeight);
 
   if (drawWidth <= 0) return;
 
@@ -456,10 +461,11 @@ function drawParallaxLayer(
   const drift = ((scroll * speedFactor) % stripWidth + stripWidth) % stripWidth;
 
   for (let x = -drift - stripWidth; x < CANVAS_WIDTH + stripWidth; x += stripWidth) {
-    ctx.drawImage(image, x, dy, drawWidth, drawHeight);
+    const drawX = snapToPixel(x);
+    ctx.drawImage(image, drawX, dy, drawWidth, drawHeight);
 
     ctx.save();
-    ctx.translate(x + drawWidth * 2, 0);
+    ctx.translate(snapToPixel(x + drawWidth * 2), 0);
     ctx.scale(-1, 1);
     ctx.drawImage(image, 0, dy, drawWidth, drawHeight);
     ctx.restore();
@@ -506,12 +512,12 @@ function drawPlayer(ctx: CanvasRenderingContext2D, assets: LoadedAssets, model: 
   const alphaBlink = model.invulnerability > 0 && Math.floor(model.elapsed * 14) % 2 === 0;
   const stableScale = Math.min(PLAYER_DRAW_WIDTH / assets.playerMaxW, PLAYER_DRAW_HEIGHT / assets.playerMaxH);
   const scale = stableScale;
-  const drawW = frame.w * scale;
-  const drawH = frame.h * scale;
-  const dx = Math.round(
+  const drawW = snapToPixel(frame.w * scale);
+  const drawH = snapToPixel(frame.h * scale);
+  const dx = snapToPixel(
     PLAYER_X + model.playerOffsetX + (PLAYER_DRAW_WIDTH - assets.playerMaxW * scale) / 2 + ((assets.playerMaxW - frame.w) * scale) / 2
   );
-  const dy = Math.round(model.playerY + (PLAYER_DRAW_HEIGHT - assets.playerMaxH * scale) + (assets.playerMaxH - frame.h) * scale);
+  const dy = snapToPixel(model.playerY + (PLAYER_DRAW_HEIGHT - assets.playerMaxH * scale) + (assets.playerMaxH - frame.h) * scale);
 
   ctx.save();
   if (alphaBlink) ctx.globalAlpha = 0.45;
@@ -636,7 +642,7 @@ function drawCanvasHud(ctx: CanvasRenderingContext2D, model: GameModel) {
     `LIVES: ${lives}`,
     `TIME: ${time}s`,
   ];
-  const slots = [CANVAS_WIDTH / 6, CANVAS_WIDTH / 2, (CANVAS_WIDTH * 5) / 6];
+  const slots = [CANVAS_WIDTH * 0.3, CANVAS_WIDTH * 0.5, CANVAS_WIDTH * 0.7];
 
   labels.forEach((text, i) => {
     const x = slots[i] ?? 30;
@@ -833,8 +839,10 @@ export default function ImmigrationDashGame() {
 
     const mediaQuery = window.matchMedia("(pointer: coarse), (max-width: 768px)");
     const syncPerformanceMode = () => {
-      mobilePerformanceModeRef.current = mediaQuery.matches;
-      setCanvasRenderScale(mediaQuery.matches ? MOBILE_RENDER_SCALE : 1);
+      const isMobile = mediaQuery.matches;
+      const devicePixelRatio = window.devicePixelRatio || 1;
+      mobilePerformanceModeRef.current = isMobile;
+      setCanvasRenderScale(isMobile ? (devicePixelRatio > 2 ? MOBILE_HIGH_DPR_RENDER_SCALE : MOBILE_RENDER_SCALE) : 1);
     };
 
     syncPerformanceMode();
@@ -1294,6 +1302,7 @@ export default function ImmigrationDashGame() {
   );
 
   const startGame = useCallback(() => {
+    if (!assetsReady) return;
     playAmbience();
     modelRef.current = createInitialModel();
     setStatus("running");
@@ -1311,7 +1320,7 @@ export default function ImmigrationDashGame() {
       time: 0,
     });
     drawFrame();
-  }, [drawFrame, playAmbience]);
+  }, [assetsReady, drawFrame, playAmbience]);
 
   const togglePause = useCallback(() => {
     setStatus((current) => {
@@ -1337,7 +1346,8 @@ export default function ImmigrationDashGame() {
     const ambience = new Audio("/street-ambience-chinatown.m4a");
     ambience.loop = true;
     ambience.volume = 0.45;
-    ambience.preload = "none";
+    ambience.preload = "auto";
+    ambience.load();
     ambienceAudioRef.current = ambience;
 
     collectAudioPoolRef.current = Array.from({ length: COLLECT_SOUND_POOL_SIZE }, () => {
@@ -1635,13 +1645,17 @@ export default function ImmigrationDashGame() {
               Mobile tip: Turn your phone sideways to play.
             </p>
 
-            <div ref={gameShellRef} className="relative mt-2 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
+            <div
+              ref={gameShellRef}
+              className="relative mt-2 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100"
+              style={{ contain: "layout paint" }}
+            >
               <canvas
                 ref={canvasRef}
                 width={Math.round(CANVAS_WIDTH * canvasRenderScale)}
                 height={Math.round(CANVAS_HEIGHT * canvasRenderScale)}
                 onPointerDown={jump}
-                className="block h-auto w-[150%] max-w-none -translate-x-[17%] touch-manipulation select-none sm:w-[108%] sm:-translate-x-[4%] lg:w-full lg:translate-x-0"
+                className="block h-auto w-[150%] max-w-none -translate-x-[17%] touch-manipulation transform-gpu select-none sm:w-[108%] sm:-translate-x-[4%] lg:w-full lg:translate-x-0"
                 aria-label="Immigration Dash game"
               />
 

@@ -4,6 +4,9 @@ import path from "node:path";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://thaivisachecklist.com";
 const APP_DIR = path.join(process.cwd(), "app");
+const EXCLUDED_ROUTES = new Set([
+  "/immigration-dash",
+]);
 
 const ROUTE_OVERRIDES: Record<
   string,
@@ -85,6 +88,7 @@ function getSitemapRoutes() {
     .map(toRouteFromFile)
     .filter((route) => !route.startsWith("/api/"))
     .filter((route) => !route.includes("[") && !route.includes("]"))
+    .filter((route) => !EXCLUDED_ROUTES.has(route))
     .sort((a, b) => a.localeCompare(b));
 }
 

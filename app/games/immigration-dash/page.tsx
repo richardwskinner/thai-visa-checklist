@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function ImmigrationDashPage() {
   return (
-    <div className="min-h-screen bg-[#eef3fb]">
+    <div className="min-h-svh bg-[#eef3fb]">
       <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-5 sm:py-10">
         <Card className="rounded-3xl border-0 bg-white shadow-sm">
           <CardContent className="p-4 sm:p-8">
