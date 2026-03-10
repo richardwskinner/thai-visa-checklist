@@ -1878,23 +1878,16 @@ export default function ImmigrationDashGame() {
                     className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
                   />
                   <p className="w-full max-w-[34ch] text-sm leading-snug text-rose-900 md:max-w-none">
-                    <span className="block font-semibold">Paperword Stack</span>
-                    <span className="mt-0.5 block">You missed a photocopy, lose a life.</span>
+                    <span className="block font-semibold">Paperwork Stack</span>
+                    <span className="mt-0.5 block">You missed a photocopy, immigration is not impressed.</span>
                   </p>
                 </div>
               </div>
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_10px_30px_-24px_rgba(15,23,42,0.28)] sm:p-4">
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <h3 className="text-sm font-bold text-slate-900">Top 10 leaderboard</h3>
-                </div>
-                {leaderboardCutoffScore !== null && (
-                  <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-semibold text-slate-700">
-                    Cutoff {formatScore(leaderboardCutoffScore)}
-                  </span>
-                )}
+              <div>
+                <h3 className="text-sm font-bold text-slate-900">Top 10 leaderboard</h3>
               </div>
 
               <div className="mt-3">
