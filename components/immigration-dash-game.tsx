@@ -15,20 +15,23 @@ const PLAYER_X = 420;
 const PLAYER_DRAW_WIDTH = 112;
 const PLAYER_DRAW_HEIGHT = 112;
 const PLAYER_HITBOX = { x: 31, y: 17, w: 50, h: 88 };
-const FORCE_SINGLE_FRAME_PLAYER = true;
+const FORCE_SINGLE_FRAME_PLAYER = false;
+const PLAYER_SHEET_COLUMNS = 5;
+const PLAYER_SHEET_ROWS = 5;
+const PLAYER_ANIMATION_FPS = 8;
 const FAIL_ZONE_WIDTH = 110;
 const GRAVITY = 1800;
 const JUMP_VELOCITY = -760;
 const FALL_DEATH_Y = CANVAS_HEIGHT + 120;
 const GOLDEN_STAMP_SRC = "/golden-stamp.png";
-const RED_STAMP_SRC = "/red-stamp.png";
+const RED_STAMP_SRC = "/red-paper-stack.png";
 const GOLDEN_STAMP_ASSET_SRC = "/golden-stamp.png?v=3";
-const RED_STAMP_ASSET_SRC = "/red-stamp.png?v=2";
+const RED_STAMP_ASSET_SRC = "/red-paper-stack.png?v=1";
 const BG_SKY_SRC = "/background-sky.jpg?v=2";
 const BG_CITY_SRC = "/background-city.jpg?v=2";
 const GROUND_SRC = "/ground-nogaps.png?v=2";
 const THAI_BLOCK_SRC = "/thai-block.png?v=2";
-const PLAYER_RUN_SRC = "/player-run.png?v=2";
+const PLAYER_RUN_SRC = "/Farang-runner.png?v=1";
 const CLOSED_SIGN_SRC = "/obstacle-closed-sign.png?v=2";
 const COLLECT_SOUND_SRC = "/collect sound.wav";
 const COLLECT_SOUND_POOL_SIZE = 4;
@@ -46,10 +49,13 @@ const HUD_SYNC_INTERVAL_MS = 180;
 const GOLDEN_STAMP_SIZE = 54;
 const THAI_BLOCK_BONUS_STAMP_SIZE = 48;
 const REJECTED_STAMP_SIZE = 52;
+const THAI_BLOCK_RUN_MIN_LENGTH = 2;
+const THAI_BLOCK_RUN_MAX_LENGTH = 4;
+const THAI_BLOCK_RUN_MIN_ELAPSED = 7;
 const STAMP_GROUND_OFFSET_Y = 4;
 const REDUCE_COLLECTIBLE_EFFECTS_THRESHOLD = 8;
-const CLOSED_SIGN_WIDTH = 100;
-const CLOSED_SIGN_HEIGHT = 92;
+const CLOSED_SIGN_WIDTH = 122;
+const CLOSED_SIGN_HEIGHT = 112;
 const POTHOLE_COLLISION_INSET = 2;
 const POTHOLE_MIN_WIDTH = 96;
 const POTHOLE_MAX_WIDTH = 138;
@@ -69,6 +75,7 @@ type LoadedAssets = {
   ground: SpriteAsset;
   player: HTMLImageElement;
   playerFrames: FrameRect[];
+  playerMaxW: number;
   playerMaxH: number;
   closedSign: SpriteAsset;
   thaiBlock: SpriteAsset;
@@ -263,19 +270,29 @@ function extractAlphaBounds(img: HTMLImageElement, region?: FrameRect, alphaThre
   return { x, y, w: right - x + 1, h: bottom - y + 1 };
 }
 
-function extractPlayerFrames(img: HTMLImageElement, expectedFrames = 5): FrameRect[] {
+function extractPlayerFrames(img: HTMLImageElement, columns = PLAYER_SHEET_COLUMNS, rows = PLAYER_SHEET_ROWS): FrameRect[] {
   if (FORCE_SINGLE_FRAME_PLAYER) {
     const fullFrame = extractAlphaBounds(img, undefined, 120);
     if (fullFrame) return [fullFrame];
     return [extractForegroundBounds(img)];
   }
 
-  const frameWidth = Math.floor(img.width / expectedFrames);
-  const frames = Array.from({ length: expectedFrames }, (_, i) => {
-    const x = i * frameWidth;
-    const w = i === expectedFrames - 1 ? img.width - x : frameWidth;
-    return extractAlphaBounds(img, { x, y: 0, w, h: img.height }, 150);
-  }).filter((frame): frame is FrameRect => !!frame && frame.w >= 26 && frame.h >= 40);
+  const cellWidth = Math.floor(img.width / columns);
+  const cellHeight = Math.floor(img.height / rows);
+  const frames: FrameRect[] = [];
+
+  for (let row = 0; row < rows; row += 1) {
+    for (let column = 0; column < columns; column += 1) {
+      const x = column * cellWidth;
+      const y = row * cellHeight;
+      const w = column === columns - 1 ? img.width - x : cellWidth;
+      const h = row === rows - 1 ? img.height - y : cellHeight;
+      const frame = extractAlphaBounds(img, { x, y, w, h }, 150);
+      if (frame && frame.w >= 26 && frame.h >= 40) {
+        frames.push(frame);
+      }
+    }
+  }
 
   if (frames.length > 0) return frames;
 
@@ -427,21 +444,18 @@ function drawGroundLayer(ctx: CanvasRenderingContext2D, assets: LoadedAssets, sc
 
 function drawPlayer(ctx: CanvasRenderingContext2D, assets: LoadedAssets, model: GameModel) {
   const frameCount = assets.playerFrames.length;
-  const runningIndex = FORCE_SINGLE_FRAME_PLAYER
-    ? 0
-    : (() => {
-        const forward = Array.from({ length: frameCount }, (_, i) => i);
-        const backward = Array.from({ length: Math.max(0, frameCount - 2) }, (_, i) => frameCount - 2 - i);
-        const sequence = [...forward, ...backward];
-        return sequence[Math.floor(model.elapsed * 12) % sequence.length] ?? 0;
-      })();
+  const runningIndex =
+    FORCE_SINGLE_FRAME_PLAYER || frameCount <= 1 ? 0 : Math.floor(model.elapsed * PLAYER_ANIMATION_FPS) % frameCount;
   const frame = assets.playerFrames[runningIndex] ?? assets.playerFrames[0];
   const alphaBlink = model.invulnerability > 0 && Math.floor(model.elapsed * 14) % 2 === 0;
-  const scale = Math.min(PLAYER_DRAW_WIDTH / frame.w, PLAYER_DRAW_HEIGHT / frame.h);
+  const stableScale = Math.min(PLAYER_DRAW_WIDTH / assets.playerMaxW, PLAYER_DRAW_HEIGHT / assets.playerMaxH);
+  const scale = stableScale;
   const drawW = frame.w * scale;
   const drawH = frame.h * scale;
-  const dx = Math.round(PLAYER_X + model.playerOffsetX + (PLAYER_DRAW_WIDTH - drawW) / 2);
-  const dy = Math.round(model.playerY + (PLAYER_DRAW_HEIGHT - drawH));
+  const dx = Math.round(
+    PLAYER_X + model.playerOffsetX + (PLAYER_DRAW_WIDTH - assets.playerMaxW * scale) / 2 + ((assets.playerMaxW - frame.w) * scale) / 2
+  );
+  const dy = Math.round(model.playerY + (PLAYER_DRAW_HEIGHT - assets.playerMaxH * scale) + (assets.playerMaxH - frame.h) * scale);
 
   ctx.save();
   if (alphaBlink) ctx.globalAlpha = 0.45;
@@ -552,6 +566,7 @@ function drawCanvasHud(ctx: CanvasRenderingContext2D, model: GameModel) {
   ctx.save();
   ctx.fillStyle = "#fde047";
   ctx.textBaseline = "top";
+  ctx.textAlign = "center";
   ctx.font = "700 21px 'Trebuchet MS', 'Segoe UI', Arial, sans-serif";
   ctx.shadowColor = "rgba(0, 0, 0, 0.55)";
   ctx.shadowBlur = 2;
@@ -563,7 +578,7 @@ function drawCanvasHud(ctx: CanvasRenderingContext2D, model: GameModel) {
     `LIVES: ${lives}`,
     `TIME: ${time}s`,
   ];
-  const slots = [30, 330, 620];
+  const slots = [CANVAS_WIDTH / 6, CANVAS_WIDTH / 2, (CANVAS_WIDTH * 5) / 6];
 
   labels.forEach((text, i) => {
     const x = slots[i] ?? 30;
@@ -734,9 +749,9 @@ export default function ImmigrationDashGame() {
   const spawnThaiBlockJumpStamps = useCallback((blockX: number, blockY: number, blockW: number) => {
     const model = modelRef.current;
     const baseX = blockX + blockW + randomRange(20, 36);
-    const baseY = blockY - randomRange(44, 72);
+    const baseY = blockY - randomRange(56, 92);
     const stepX = randomRange(42, 74);
-    const riseStep = randomRange(8, 26);
+    const riseStep = randomRange(12, 30);
     const roll = Math.random();
     const count = roll < 0.45 ? 1 : roll < 0.82 ? 2 : 3;
 
@@ -759,6 +774,50 @@ export default function ImmigrationDashGame() {
       model.nextCollectibleId += 1;
     }
   }, []);
+
+  const spawnThaiBlockRun = useCallback((startX: number, blockY: number, blockW: number) => {
+    const model = modelRef.current;
+    const runLength = Math.floor(randomRange(THAI_BLOCK_RUN_MIN_LENGTH, THAI_BLOCK_RUN_MAX_LENGTH + 1));
+    let x = startX;
+
+    for (let i = 0; i < runLength; i += 1) {
+      model.obstacles.push({
+        id: model.nextObstacleId,
+        kind: "thai-block",
+        x,
+        y: blockY,
+        w: blockW,
+        h: 64,
+      });
+      model.nextObstacleId += 1;
+
+      // Place a climb line of stamps over the run so the player can hop and collect.
+      const stampTarget = {
+        x: x + blockW * 0.5 - THAI_BLOCK_BONUS_STAMP_SIZE * 0.5 + randomRange(-6, 6),
+        y: Math.max(28, blockY - 90 - i * randomRange(10, 18) + randomRange(-10, 6)),
+      };
+      const crowded = model.collectibles.some(
+        (item) => Math.abs(item.x - stampTarget.x) < 48 && Math.abs(item.y - stampTarget.y) < 40
+      );
+      if (!crowded) {
+        model.collectibles.push({
+          id: model.nextCollectibleId,
+          x: stampTarget.x,
+          y: stampTarget.y,
+          size: THAI_BLOCK_BONUS_STAMP_SIZE,
+        });
+        model.nextCollectibleId += 1;
+      }
+
+      const gap = randomRange(-6, 12);
+      x += blockW + gap;
+    }
+
+    // Bonus trail after the final block to reward keeping momentum.
+    if (Math.random() < 0.72) {
+      spawnThaiBlockJumpStamps(x - blockW, blockY, blockW);
+    }
+  }, [spawnThaiBlockJumpStamps]);
 
   const spawnObstacle = useCallback(() => {
     const model = modelRef.current;
@@ -820,6 +879,17 @@ export default function ImmigrationDashGame() {
           ? pickSpawnX(model, -14, 96, 180)
           : pickSpawnX(model, 16, 260, d.nonPotholeMinGap);
 
+    if (
+      kind === "thai-block" &&
+      model.elapsed >= THAI_BLOCK_RUN_MIN_ELAPSED &&
+      Math.random() < Math.min(0.42, 0.16 + model.elapsed / 220)
+    ) {
+      const runSpawnX = pickSpawnX(model, 26, 300, d.nonPotholeMinGap + 120);
+      const blockY = GROUND_SURFACE_Y - 124;
+      spawnThaiBlockRun(runSpawnX, blockY, 64);
+      return;
+    }
+
     model.obstacles.push({
       id: model.nextObstacleId,
       kind,
@@ -833,22 +903,22 @@ export default function ImmigrationDashGame() {
     if (kind === "thai-block" && Math.random() < 0.85) {
       spawnThaiBlockJumpStamps(spawnX, obstacle.y, obstacle.w);
     }
-  }, [spawnThaiBlockJumpStamps]);
+  }, [spawnThaiBlockJumpStamps, spawnThaiBlockRun]);
 
   const spawnCollectible = useCallback(() => {
     const model = modelRef.current;
     const d = getDifficulty(model.elapsed);
     const size = GOLDEN_STAMP_SIZE;
     const groundStampY = GROUND_SURFACE_Y - size + STAMP_GROUND_OFFSET_Y;
-    const lanes = [0, 28, 52, 82, 112];
+    const lanes = [0, 22, 46, 70, 94, 120, 146];
     let laneIndex = Math.floor(Math.random() * lanes.length);
     if (laneIndex === model.lastCollectibleLane && Math.random() < 0.75) {
       laneIndex = (laneIndex + 1 + Math.floor(Math.random() * (lanes.length - 1))) % lanes.length;
     }
     model.lastCollectibleLane = laneIndex;
 
-    const laneLift = Math.max(0, lanes[laneIndex] + randomRange(-7, 7));
-    const baseY = Math.max(42, groundStampY - laneLift);
+    const laneLift = Math.max(0, lanes[laneIndex] + randomRange(-8, 10));
+    const baseY = Math.max(26, groundStampY - laneLift);
     const earlySpawn = model.elapsed < 2.5;
     const spawnX = earlySpawn
       ? pickSpawnX(model, -70, 120, 160)
@@ -863,7 +933,7 @@ export default function ImmigrationDashGame() {
 
     for (let i = 0; i < burstCount; i += 1) {
       const x = spawnX + i * randomRange(42, 68) + randomRange(-6, 8);
-      const y = Math.min(groundStampY, Math.max(36, baseY - i * randomRange(4, 14) + randomRange(-4, 4)));
+      const y = Math.min(groundStampY, Math.max(26, baseY - i * randomRange(6, 16) + randomRange(-6, 5)));
       const crowded = model.collectibles.some((item) => Math.abs(item.x - x) < 48 && Math.abs(item.y - y) < 40);
       if (crowded) continue;
 
@@ -1239,7 +1309,7 @@ export default function ImmigrationDashGame() {
 
         if (isCancelled) return;
 
-        const playerFrames = extractPlayerFrames(player, 5);
+        const playerFrames = extractPlayerFrames(player, PLAYER_SHEET_COLUMNS, PLAYER_SHEET_ROWS);
         const playerSize = getMaxFrameSize(playerFrames);
         // This asset is authored without horizontal padding; keep full width for seamless tiling.
         const groundBounds = { x: 0, y: 0, w: ground.width, h: ground.height };
@@ -1250,6 +1320,7 @@ export default function ImmigrationDashGame() {
           ground: { image: ground, bounds: groundBounds },
           player,
           playerFrames,
+          playerMaxW: playerSize.maxW,
           playerMaxH: playerSize.maxH,
           closedSign: {
             image: closedSign,
@@ -1375,146 +1446,144 @@ export default function ImmigrationDashGame() {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
-        <div>
-          <div>
-            <h2 className="text-center text-2xl font-extrabold tracking-tight text-slate-900">Immigration Dash</h2>
-          </div>
+      <div className="space-y-2">
+        <div className="flex flex-col gap-3">
+            <div>
+              <p className="text-center text-xs font-semibold text-sky-700 sm:hidden">
+                Mobile tip: Turn your phone sideways to play.
+              </p>
 
-          <div className="mt-3 rounded-2xl border border-sky-300/80 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-2.5 shadow-[0_10px_30px_-24px_rgba(14,116,144,0.65)] sm:p-3">
-            <div className="flex items-center justify-between gap-2">
-              <h3 className="text-sm font-bold text-slate-900">Share your result</h3>
-              <div className="flex items-center gap-1.5 text-[11px] font-semibold">
-                <span className="rounded-full border border-sky-200 bg-white px-2 py-0.5 text-sky-800">{shareSeconds}s</span>
-                <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-amber-900">Score {hud.score}</span>
+              <div ref={gameShellRef} className="relative mt-2 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
+                <canvas
+                  ref={canvasRef}
+                  width={CANVAS_WIDTH}
+                  height={CANVAS_HEIGHT}
+                  onPointerDown={jump}
+                  className="block h-auto w-[150%] max-w-none -translate-x-[17%] touch-manipulation select-none sm:w-[108%] sm:-translate-x-[4%] lg:w-full lg:translate-x-0"
+                  aria-label="Immigration Dash game"
+                />
+
+                {!assetsReady && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-slate-900/35 px-4 text-center text-sm font-semibold text-white">
+                    {assetError ? `Asset error: ${assetError}` : "Loading game assets..."}
+                  </div>
+                )}
+
+                {assetsReady && status !== "running" && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-slate-900/25 backdrop-blur-[1px]">
+                    <div className="mx-4 max-w-md rounded-2xl border border-white/70 bg-white/95 p-4 text-center shadow-lg sm:p-5">
+                      {status !== "idle" && (
+                        <h3 className="text-lg font-bold text-slate-900">{status === "paused" ? "Paused" : "Game over"}</h3>
+                      )}
+                      {status !== "idle" && (
+                        <p className="mt-2 text-sm text-slate-600">
+                          {status === "paused" ? "Game is paused. Tap Resume to continue." : gameOverMessage}
+                        </p>
+                      )}
+                      <button
+                        type="button"
+                        onClick={status === "paused" ? togglePause : startGame}
+                        className={`inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-fuchsia-600 to-pink-600 px-5 py-2.5 text-sm font-semibold text-white shadow hover:from-fuchsia-700 hover:to-pink-700 ${
+                          status === "idle" ? "" : "mt-4"
+                        }`}
+                      >
+                        {status === "idle" ? "Start Game" : status === "paused" ? "Resume Game" : "Restart Game"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                {(status === "running" || status === "paused") && (
+                  <button
+                    type="button"
+                    onClick={startGame}
+                    className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                  >
+                    Restart Game
+                  </button>
+                )}
+                {(status === "running" || status === "paused") && (
+                  <button
+                    type="button"
+                    onClick={togglePause}
+                    className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                  >
+                    {status === "running" ? "Pause Game" : "Resume Game"}
+                  </button>
+                )}
+                {fullScreenEnabled && (
+                  <button
+                    type="button"
+                    onClick={toggleFullScreen}
+                    className="inline-flex items-center justify-center rounded-xl border border-sky-300 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-800 hover:bg-sky-100 sm:hidden"
+                  >
+                    {isFullScreen ? "Exit Full Screen" : "Full Screen"}
+                  </button>
+                )}
+                <p className="w-full text-center text-xs text-slate-500 sm:w-auto sm:text-left sm:text-sm">
+                  Controls: Use space or up arrow on desktop. Tap game on mobile to jump.
+                </p>
               </div>
             </div>
 
-            <div className="mt-2 rounded-xl border border-slate-200/80 bg-white/80 px-2.5 py-2 text-xs leading-relaxed text-slate-700 sm:text-sm">
-              <p>
-                🇹🇭 I survived <span className="font-extrabold text-slate-900">{shareSeconds}</span> seconds on Immigration Dash!{" "}
-                <span className="font-bold text-slate-900">Score: {hud.score}</span>
-              </p>
-              <p className="mt-1">
-                <span className="font-bold text-slate-900">Can you beat it?</span>{" "}
-                <span className="font-semibold text-slate-800">{SHARE_URL_TEXT}</span>
-              </p>
-            </div>
+            <div className="rounded-2xl border border-sky-300/80 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-2.5 shadow-[0_10px_30px_-24px_rgba(14,116,144,0.65)] sm:p-3">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-sm font-bold text-slate-900">Share your result</h3>
+                <div className="flex items-center gap-1.5 text-[11px] font-semibold">
+                  <span className="rounded-full border border-sky-200 bg-white px-2 py-0.5 text-sky-800">{shareSeconds}s</span>
+                  <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-amber-900">Score {hud.score}</span>
+                </div>
+              </div>
 
-            <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <button
-                type="button"
-                onClick={onNativeShare}
-                disabled={!canNativeShare}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-violet-300 bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-200 disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm"
-              >
-                <Share2 className="h-4 w-4" /> Share
-              </button>
-              <a
-                href={facebookShareUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#1664d9] bg-[#1877f2] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1664d9] sm:text-sm"
-              >
-                <NextImage
-                  src="/resource-logos/facebook-logo.svg"
-                  alt="Facebook"
-                  width={14}
-                  height={14}
-                  className="h-3.5 w-3.5"
-                />
-                Share on Facebook
-              </a>
-            </div>
-            {shareState !== "idle" && (
-              <p className="mt-2 text-xs text-slate-500">
-                {shareState === "shared" && "Thanks for sharing."}
-                {shareState === "error" && "Sharing was cancelled or unavailable."}
-              </p>
-            )}
-          </div>
-        </div>
-
-        <p className="mt-1 text-xs font-semibold text-sky-700 sm:hidden">
-          Mobile tip: Turn your phone sideways to play.
-        </p>
-
-        <div ref={gameShellRef} className="relative mt-2 overflow-hidden rounded-2xl border border-slate-300 bg-slate-100">
-          <canvas
-            ref={canvasRef}
-            width={CANVAS_WIDTH}
-            height={CANVAS_HEIGHT}
-            onPointerDown={jump}
-            className="block h-auto w-[150%] max-w-none -translate-x-[17%] touch-manipulation select-none sm:w-[108%] sm:-translate-x-[4%] lg:w-full lg:translate-x-0"
-            aria-label="Immigration Dash game"
-          />
-
-          {!assetsReady && (
-            <div className="absolute inset-0 flex items-center justify-center bg-slate-900/35 px-4 text-center text-sm font-semibold text-white">
-              {assetError ? `Asset error: ${assetError}` : "Loading game assets..."}
-            </div>
-          )}
-
-          {assetsReady && status !== "running" && (
-            <div className="absolute inset-0 flex items-center justify-center bg-slate-900/25 backdrop-blur-[1px]">
-              <div className="mx-4 max-w-md rounded-2xl border border-white/70 bg-white/95 p-4 text-center shadow-lg sm:p-5">
-                <h3 className="text-lg font-bold text-slate-900">
-                  {status === "idle" ? "Ready to run to immigration?" : status === "paused" ? "Paused" : "Game over"}
-                </h3>
-                <p className="mt-2 text-sm text-slate-600">
-                  {status === "idle"
-                    ? "Space, Up arrow, or tap to jump."
-                    : status === "paused"
-                      ? "Game is paused. Tap Resume to continue."
-                      : gameOverMessage}
+              <div className="mt-2 rounded-xl border border-slate-200/80 bg-white/80 px-2.5 py-2 text-xs leading-relaxed text-slate-700 sm:text-sm">
+                <p>
+                  🇹🇭 I survived <span className="font-extrabold text-slate-900">{shareSeconds}</span> seconds on Immigration Dash!{" "}
+                  <span className="font-bold text-slate-900">Score: {hud.score}</span>
                 </p>
+                <p className="mt-1">
+                  <span className="font-bold text-slate-900">Can you beat it?</span>{" "}
+                  <span className="font-semibold text-slate-800">{SHARE_URL_TEXT}</span>
+                </p>
+              </div>
+
+              <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
                 <button
                   type="button"
-                  onClick={status === "paused" ? togglePause : startGame}
-                  className="mt-4 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-fuchsia-600 to-pink-600 px-5 py-2.5 text-sm font-semibold text-white shadow hover:from-fuchsia-700 hover:to-pink-700"
+                  onClick={onNativeShare}
+                  disabled={!canNativeShare}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-violet-300 bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-200 disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm"
                 >
-                  {status === "idle" ? "Start Game" : status === "paused" ? "Resume Game" : "Restart Game"}
+                  <Share2 className="h-4 w-4" /> Share
                 </button>
+                <a
+                  href={facebookShareUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#1664d9] bg-[#1877f2] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1664d9] sm:text-sm"
+                >
+                  <NextImage
+                    src="/resource-logos/facebook-logo.svg"
+                    alt="Facebook"
+                    width={14}
+                    height={14}
+                    className="h-3.5 w-3.5"
+                  />
+                  Share on Facebook
+                </a>
               </div>
+              {shareState !== "idle" && (
+                <p className="mt-2 text-xs text-slate-500">
+                  {shareState === "shared" && "Thanks for sharing."}
+                  {shareState === "error" && "Sharing was cancelled or unavailable."}
+                </p>
+              )}
             </div>
-          )}
         </div>
-
-        <div className="mt-2 flex flex-wrap items-center gap-3">
-          {(status === "running" || status === "paused") && (
-            <button
-              type="button"
-              onClick={startGame}
-              className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
-            >
-              Restart Game
-            </button>
-          )}
-          {(status === "running" || status === "paused") && (
-            <button
-              type="button"
-              onClick={togglePause}
-              className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
-            >
-              {status === "running" ? "Pause Game" : "Resume Game"}
-            </button>
-          )}
-          {fullScreenEnabled && (
-            <button
-              type="button"
-              onClick={toggleFullScreen}
-              className="inline-flex items-center justify-center rounded-xl border border-sky-300 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-800 hover:bg-sky-100 sm:hidden"
-            >
-              {isFullScreen ? "Exit Full Screen" : "Full Screen"}
-            </button>
-          )}
-          <p className="w-full text-center text-xs text-slate-500 sm:w-auto sm:text-left sm:text-sm">
-            Controls: Use space or up arrow on desktop. Tap game on mobile to jump.
-          </p>
-        </div>
-        <div className="mt-2 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
+        <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="flex flex-col items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
+            <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-3 py-3 text-center md:flex-row md:items-center md:gap-3 md:text-left">
               <NextImage
                 src={GOLDEN_STAMP_SRC}
                 alt="Golden approved stamp"
@@ -1522,7 +1591,7 @@ export default function ImmigrationDashGame() {
                 height={148}
                 className="h-[92px] w-[92px] shrink-0 rounded-full object-cover object-center md:h-[104px] md:w-[104px]"
               />
-              <p className="w-full max-w-[34ch] text-sm leading-snug text-emerald-900 md:max-w-none">
+              <p className="w-full max-w-[34ch] text-sm leading-snug text-amber-900 md:max-w-none">
                 <span className="block font-semibold">Golden Approved Stamp</span>
                 <span className="mt-0.5 block">Approved! Your paperwork is perfect. Collect a stamp to increase your score.</span>
               </p>
@@ -1536,8 +1605,8 @@ export default function ImmigrationDashGame() {
                 className="h-[84px] w-[84px] shrink-0 rounded-full object-cover object-center md:h-[92px] md:w-[92px]"
               />
               <p className="w-full max-w-[34ch] text-sm leading-snug text-rose-900 md:max-w-none">
-                <span className="block font-semibold">Red Rejected Stamp</span>
-                <span className="mt-0.5 block">Rejected! You missed a photocopy. Collect a stamp and reduce your will to live.</span>
+                <span className="block font-semibold">Paperwork</span>
+                <span className="mt-0.5 block">You missed a photocopy. Immigration is not impressed</span>
               </p>
             </div>
           </div>
