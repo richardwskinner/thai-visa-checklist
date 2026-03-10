@@ -46,6 +46,7 @@ const CITY_ANCHOR_BOTTOM = CANVAS_HEIGHT + 168;
 const FIXED_TIMESTEP = 1 / 60;
 const MAX_SIM_STEPS_PER_FRAME = 6;
 const HUD_SYNC_INTERVAL_MS = 180;
+const MOBILE_RENDER_INTERVAL_MS = 1000 / 30;
 const GOLDEN_STAMP_SIZE = 54;
 const THAI_BLOCK_BONUS_STAMP_SIZE = 48;
 const DURIAN_SIZE = 60;
@@ -656,8 +657,10 @@ export default function ImmigrationDashGame() {
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const rafRef = useRef<number | null>(null);
   const lastTimeRef = useRef(0);
+  const lastRenderTimeRef = useRef(0);
   const accumulatorRef = useRef(0);
   const lastHudSyncRef = useRef(0);
+  const mobilePerformanceModeRef = useRef(false);
 
   const [status, setStatus] = useState<GameStatus>("idle");
   const [assetsReady, setAssetsReady] = useState(false);
@@ -789,12 +792,13 @@ export default function ImmigrationDashGame() {
       ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
       if (!ctx) return;
       ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "medium";
       ctxRef.current = ctx;
     }
 
     const model = modelRef.current;
-    const reduceCollectibleEffects = model.collectibles.length >= REDUCE_COLLECTIBLE_EFFECTS_THRESHOLD;
+    ctx.imageSmoothingQuality = mobilePerformanceModeRef.current ? "low" : "medium";
+    const reduceCollectibleEffects =
+      mobilePerformanceModeRef.current || model.collectibles.length >= REDUCE_COLLECTIBLE_EFFECTS_THRESHOLD;
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     drawParallaxLayer(ctx, assets.sky, model.worldScroll, SKY_SCROLL_FACTOR, SKY_ZOOM, SKY_ANCHOR_BOTTOM);
     drawParallaxLayer(ctx, assets.city, model.worldScroll, CITY_SCROLL_FACTOR, CITY_ZOOM, CITY_ANCHOR_BOTTOM);
@@ -816,8 +820,24 @@ export default function ImmigrationDashGame() {
       rafRef.current = null;
     }
     lastTimeRef.current = 0;
+    lastRenderTimeRef.current = 0;
     accumulatorRef.current = 0;
     lastHudSyncRef.current = 0;
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
+
+    const mediaQuery = window.matchMedia("(pointer: coarse), (max-width: 768px)");
+    const syncPerformanceMode = () => {
+      mobilePerformanceModeRef.current = mediaQuery.matches;
+    };
+
+    syncPerformanceMode();
+    mediaQuery.addEventListener("change", syncPerformanceMode);
+    return () => {
+      mediaQuery.removeEventListener("change", syncPerformanceMode);
+    };
   }, []);
 
   const endGame = useCallback((message?: string) => {
@@ -1471,7 +1491,10 @@ export default function ImmigrationDashGame() {
         // Prevent long-frame catch-up spikes from causing visible hitching.
         accumulatorRef.current = 0;
       }
-      drawFrame();
+      if (!mobilePerformanceModeRef.current || ts - lastRenderTimeRef.current >= MOBILE_RENDER_INTERVAL_MS) {
+        drawFrame();
+        lastRenderTimeRef.current = ts;
+      }
 
       if (ts - lastHudSyncRef.current > HUD_SYNC_INTERVAL_MS) {
         pushHud();
@@ -1779,7 +1802,7 @@ export default function ImmigrationDashGame() {
                 <button
                   type="button"
                   onClick={startGame}
-                  className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                  className="hidden items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 sm:inline-flex"
                 >
                   Restart Game
                 </button>
