@@ -267,6 +267,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2619811921682806"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="antialiased font-sans" suppressHydrationWarning>
         <SiteHeader />
 
@@ -274,13 +281,6 @@ export default function RootLayout({
         <main className="pt-2">{children}</main>
 
         <Footer />
-
-        {/* Google AdSense */}
-        <Script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2619811921682806"
-          strategy="afterInteractive"
-          crossOrigin="anonymous"
-        />
 
         {/* Google Analytics */}
         <Script
