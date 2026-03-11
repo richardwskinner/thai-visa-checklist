@@ -13,7 +13,7 @@ import NinetyDayCalculator from "./NinetyDayCalculator";
 import ExampleLink from "@/components/example-link";
 import GuideBackButton from "@/components/guide-back-button";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "90-Day Reporting in Thailand - What It Is and How to Do It",
   description:
     "Everything you need to know about 90-day reporting in Thailand. Who needs to report, when to do it, how to report online, by mail, or in person, and what happens if you miss it.",
@@ -21,6 +21,25 @@ export const metadata: Metadata = {
     canonical: "/guides/90-day-reporting",
   },
 };
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ returnTo?: string; returnLabel?: string }>;
+}): Promise<Metadata> {
+  const params = await searchParams;
+  const hasReturnContext = Boolean(params.returnTo || params.returnLabel);
+
+  return {
+    ...baseMetadata,
+    robots: hasReturnContext
+      ? {
+          index: false,
+          follow: true,
+        }
+      : undefined,
+  };
+}
 
 function isSafeInternalPath(path: string) {
   return path.startsWith("/") && !path.startsWith("//");

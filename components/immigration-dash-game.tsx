@@ -1585,6 +1585,43 @@ export default function ImmigrationDashGame() {
     }
   }, [canNativeShare, resultText]);
 
+  const onFacebookShare = useCallback(() => {
+    if (typeof window === "undefined") return;
+
+    const prefersMobileFlow =
+      window.matchMedia("(max-width: 640px)").matches || window.matchMedia("(pointer: coarse)").matches;
+
+    if (prefersMobileFlow) {
+      setShareState("shared");
+      window.location.href = facebookShareUrl;
+      return;
+    }
+
+    const popupWidth = 640;
+    const popupHeight = 560;
+    const left = Math.max(0, Math.round(window.screenX + (window.outerWidth - popupWidth) / 2));
+    const top = Math.max(0, Math.round(window.screenY + (window.outerHeight - popupHeight) / 2));
+    const popup = window.open(
+      facebookShareUrl,
+      "immigration-dash-facebook-share",
+      `popup=yes,width=${popupWidth},height=${popupHeight},left=${left},top=${top}`
+    );
+
+    if (popup) {
+      try {
+        popup.opener = null;
+      } catch {
+        // Ignore cross-origin opener restrictions.
+      }
+      popup.focus();
+      setShareState("shared");
+      return;
+    }
+
+    setShareState("shared");
+    window.location.href = facebookShareUrl;
+  }, [facebookShareUrl]);
+
   const submitLeaderboardScore = useCallback(async () => {
     if (status !== "gameover" || score <= 0) return;
     if (!selectedCountryCode || !selectedCountryName) {
@@ -1884,10 +1921,9 @@ export default function ImmigrationDashGame() {
                 >
                   <Share2 className="h-4 w-4" /> Share
                 </button>
-                <a
-                  href={facebookShareUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={onFacebookShare}
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#1664d9] bg-[#1877f2] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1664d9] sm:text-sm"
                 >
                   <NextImage
@@ -1898,7 +1934,7 @@ export default function ImmigrationDashGame() {
                     className="h-3.5 w-3.5"
                   />
                   Share on Facebook
-                </a>
+                </button>
               </div>
               {shareState !== "idle" && (
                 <p className="mt-2 text-xs text-slate-500">

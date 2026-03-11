@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | Thai Visa Checklist",
   },
   description:
-    "Free, comprehensive document checklists for Thai visa applications, plus practical Thailand tools including current Thailand time (ICT). Marriage visa, retirement visa, and more.",
+    "Free, comprehensive document checklists for Thai visa applications, along with practical guides and tools for Thailand. Marriage visa, retirement visa, and more.",
   keywords: [
     "Thailand visa checklist",
     "Thailand visa requirements",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Thai Visa Checklist - Free Document Checklists for Thailand Visas",
     description:
-      "Free Thailand visa checklists and practical tools, including current Thailand time (ICT).",
+      "Free Thailand visa checklists and practical guides.",
     images: ["/thai-visa-checklist-logo-social.png"],
   },
   icons: {
@@ -274,6 +274,13 @@ export default function RootLayout({
         <main className="pt-2">{children}</main>
 
         <Footer />
+
+        {/* Google AdSense */}
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2619811921682806"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
 
         {/* Google Analytics */}
         <Script
