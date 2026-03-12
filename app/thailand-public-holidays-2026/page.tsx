@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ExternalLink } from "lucide-react";
+import { createRouteMetadata } from "@/lib/seo";
 
 type HolidayItem = {
   date: string;
@@ -116,11 +116,12 @@ const governmentOnlyHolidays: HolidayItem[] = [
   },
 ];
 
-export const metadata: Metadata = {
-  title: "Thailand Public Holidays 2026 | Thai Visa Checklist",
+export const metadata = createRouteMetadata({
+  title: "Thailand Public Holidays 2026",
   description:
-    "Thailand public holidays 2026 with official holiday dates and short cultural and religious context notes.",
-};
+    "Thailand public holidays for 2026 with official holiday dates and short cultural and religious context notes.",
+  path: "/thailand-public-holidays-2026",
+});
 
 type SectionTheme = {
   shell: string;

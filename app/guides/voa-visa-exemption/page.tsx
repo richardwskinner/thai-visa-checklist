@@ -8,30 +8,17 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Globe } from "lucide-react";
-import type { Metadata } from "next";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
 const VOA_GUIDE_URL = "https://thaivisachecklist.com/guides/voa-visa-exemption";
 
-export const metadata: Metadata = {
-  title: "Thailand Entry Options - Visa Exemption vs Visa on Arrival (VOA)",
+export const metadata = createRouteMetadata({
+  title: "Thailand Visa Exemption vs Visa on Arrival",
   description:
-    "Confused between Thailand visa exemption and visa on arrival? This guide explains the differences, who qualifies, typical stay length, fees, and what to check before you fly.",
-  alternates: {
-    canonical: VOA_GUIDE_URL,
-  },
-  openGraph: {
-    url: VOA_GUIDE_URL,
-    title: "Thailand Entry Options - Visa Exemption vs Visa on Arrival (VOA)",
-    description:
-      "Confused between Thailand visa exemption and visa on arrival? This guide explains the differences, who qualifies, typical stay length, fees, and what to check before you fly.",
-  },
-  twitter: {
-    title: "Thailand Entry Options - Visa Exemption vs Visa on Arrival (VOA)",
-    description:
-      "Confused between Thailand visa exemption and visa on arrival? This guide explains the differences, who qualifies, typical stay length, fees, and what to check before you fly.",
-  },
-};
+    "Compare Thailand visa exemption and visa on arrival, including who qualifies, stay length, fees, and what to check before you fly.",
+  path: VOA_GUIDE_URL,
+});
 
 const FAQS = [
   {

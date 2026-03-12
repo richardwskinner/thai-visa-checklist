@@ -8,17 +8,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { IdCard } from "lucide-react";
-import type { Metadata } from "next";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "What Is a Thai Pink ID Card and How to Get One?",
+export const metadata = createRouteMetadata({
+  title: "Thai Pink ID Card Guide",
   description:
-    "A practical guide to Thailand's Pink ID card for foreigners: what it is, who can apply, required documents, process, and common issues.",
-  alternates: {
-    canonical: "/guides/pink-id-card",
-  },
-};
+    "A practical guide to Thailand's pink ID card for foreigners, including eligibility, required documents, the process, and common issues.",
+  path: "/guides/pink-id-card",
+});
 
 const FAQS = [
   {

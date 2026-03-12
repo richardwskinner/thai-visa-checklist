@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = createRouteMetadata({
   title: "Disclaimer",
   description:
     "Disclaimer for Thai Visa Checklist. General information only, no legal advice, and no guarantee of approval.",
-};
+  path: "/disclaimer",
+});
 
 export default function DisclaimerPage() {
   return (

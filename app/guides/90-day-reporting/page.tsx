@@ -12,15 +12,14 @@ import type { Metadata } from "next";
 import NinetyDayCalculator from "./NinetyDayCalculator";
 import ExampleLink from "@/components/example-link";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
-const baseMetadata: Metadata = {
-  title: "90-Day Reporting in Thailand - What It Is and How to Do It",
+const baseMetadata = createRouteMetadata({
+  title: "90-Day Reporting in Thailand",
   description:
-    "Everything you need to know about 90-day reporting in Thailand. Who needs to report, when to do it, how to report online, by mail, or in person, and what happens if you miss it.",
-  alternates: {
-    canonical: "/guides/90-day-reporting",
-  },
-};
+    "Everything you need to know about 90-day reporting in Thailand, including who must report, when to do it, how to file, and what happens if you miss it.",
+  path: "/guides/90-day-reporting",
+});
 
 export async function generateMetadata({
   searchParams,
@@ -135,7 +134,7 @@ export default async function NinetyDayReportingpage({
                 <CalendarClock className="h-6 w-6 text-violet-600" />
               </div>
               <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
-                90-Day Reporting Thailand
+                90-Day Reporting in Thailand
               </h1>
             </div>
 

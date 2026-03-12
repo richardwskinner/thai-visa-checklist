@@ -1,17 +1,18 @@
-import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink, Landmark } from "lucide-react";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
 const RD_FOREIGNERS_TAX_PDF =
   "https://www.rd.go.th/fileadmin/user_upload/lorkhor/newspr/2024/FOREIGNERS_PAY_TAX2024.pdf";
 
-export const metadata: Metadata = {
-  title: "Foreigners Paying Tax in Thailand (Revenue Department Guide)",
+export const metadata = createRouteMetadata({
+  title: "Foreigners Paying Tax in Thailand",
   description:
     "General information for foreigners paying tax in Thailand, including the 180-day rule, foreign income remittance rules, filing, and foreign tax credits.",
-};
+  path: "/guides/foreigners-paying-tax-thailand",
+});
 
 export default function ForeignersPayingTaxThailandGuidePage() {
   return (

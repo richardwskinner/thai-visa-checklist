@@ -8,15 +8,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Home } from "lucide-react";
-import type { Metadata } from "next";
 import ExampleLink from "@/components/example-link";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "What Is a Yellow Book (Tabien Baan) and How to Get One?",
+export const metadata = createRouteMetadata({
+  title: "Yellow Book (Tabien Baan) Guide",
   description:
-    "A practical guide to Thailand's Yellow House Book (Tabien Baan): what it is, who can apply, required documents, process, and common issues.",
-};
+    "A practical guide to Thailand's yellow book (Tabien Baan), including what it is, who can apply, required documents, the process, and common issues.",
+  path: "/guides/yellow-book",
+});
 
 const FAQS = [
   {

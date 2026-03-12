@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -9,6 +8,7 @@ import {
 } from "@/components/ui/accordion";
 import { CarFront, ExternalLink } from "lucide-react";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
 const DLT_NEW_LICENSE_URL = "https://www.dlt.go.th/en/new-license";
 const DLT_TWO_YEAR_LICENSE_URL = "https://www.dlt.go.th/en/two-year-license";
@@ -37,11 +37,12 @@ const FAQS = [
   },
 ] as const;
 
-export const metadata: Metadata = {
-  title: "How Foreigners Can Get a Driving Licence in Thailand",
+export const metadata = createRouteMetadata({
+  title: "Thai Driving Licence for Foreigners",
   description:
-    "A practical guide for foreigners applying for a Thai driving licence: documents, common tests, conversion options, and what to expect at the DLT office.",
-};
+    "A practical guide for foreigners applying for a Thai driving licence, including documents, tests, conversion options, and what to expect at the DLT office.",
+  path: "/guides/thai-driving-licence",
+});
 
 export default function ThaiDrivingLicenceGuidePage() {
   const faqSchema = {

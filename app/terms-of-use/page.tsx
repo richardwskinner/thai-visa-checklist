@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = createRouteMetadata({
   title: "Terms of Use",
   description:
     "Terms of Use for Thai Visa Checklist, including acceptable use, content limitations, and liability disclaimers.",
-};
+  path: "/terms-of-use",
+});
 
 export default function TermsOfUsePage() {
   return (

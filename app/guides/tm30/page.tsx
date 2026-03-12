@@ -10,17 +10,14 @@ import {
 import { ExternalLink, MapPin } from "lucide-react";
 import ExampleLink from "@/components/example-link";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "TM.30 in Thailand - What It Is and Who Needs to File It",
+export const metadata = createRouteMetadata({
+  title: "TM.30 in Thailand",
   description:
-    "A simple guide to the TM.30 notification in Thailand. What it is, who is responsible, how to file it online or in person, and why it matters for your visa.",
-  alternates: {
-    canonical: "/guides/tm30",
-  },
-};
+    "A simple guide to the TM.30 notification in Thailand, including who is responsible, how to file it, and why it matters for your visa.",
+  path: "/guides/tm30",
+});
 
 const FAQS = [
   {

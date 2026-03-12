@@ -8,14 +8,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ExternalLink, PlaneTakeoff } from "lucide-react";
-import type { Metadata } from "next";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Re-Entry Permit in Thailand - How to protect Your Visa When You Travel outside of the country",
+export const metadata = createRouteMetadata({
+  title: "Thailand Re-Entry Permit Guide",
   description:
-    "Everything you need to know about the Thailand re-entry permit. Single vs multiple, how to get one at the airport or immigration office, costs, and what happens if you forget.",
-};
+    "Thailand re-entry permits explained: single vs multiple permits, where to get one, costs, and what happens if you forget.",
+  path: "/guides/re-entry-permit",
+});
 
 const TM8_URL = "https://www.immigration.go.th/wp-content/uploads/2022/10/5.%E0%B8%84%E0%B8%B3%E0%B8%82%E0%B8%AD%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%8D%E0%B8%B2%E0%B8%95%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%81%E0%B8%A5%E0%B8%B1%E0%B8%9A%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A1%E0%B8%B2%E0%B9%83%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%AD%E0%B8%B2%E0%B8%93%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%B5%E0%B8%81-%E0%B8%95%E0%B8%A1.8.pdf";
 

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Script from "next/script";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -8,28 +7,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import ThailandTimeClient from "./ThailandTimeClient";
+import { createRouteMetadata } from "@/lib/seo";
 
 const THAILAND_TIME_URL = "https://thaivisachecklist.com/thailand-time";
 
-export const metadata: Metadata = {
-  title: "Thailand Time (ICT) - Thailand Time Now",
+export const metadata = createRouteMetadata({
+  title: "Thailand Time (ICT)",
   description:
     "Check the current Thailand time now (ICT, UTC+7), compare it with your local time, and use a quick Thailand time converter.",
-  alternates: {
-    canonical: THAILAND_TIME_URL,
-  },
-  openGraph: {
-    title: "Thailand Time (ICT) - Thailand Time Now",
-    description:
-      "Live Thailand time (ICT, UTC+7) with local time comparison and quick converter.",
-    url: THAILAND_TIME_URL,
-  },
-  twitter: {
-    title: "Thailand Time (ICT) - Thailand Time Now",
-    description:
-      "Live Thailand time (ICT, UTC+7) with local time comparison and quick converter.",
-  },
-};
+  path: THAILAND_TIME_URL,
+});
 
 const FAQS = [
   {

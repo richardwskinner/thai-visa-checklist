@@ -8,15 +8,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ExternalLink, PlusCircle } from "lucide-react";
-import type { Metadata } from "next";
 import ExampleLink from "@/components/example-link";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Thailand Tourist Visa Extension (30 Days) - How to Extend Your Stay",
+export const metadata = createRouteMetadata({
+  title: "Thailand Tourist Visa Extension Guide",
   description:
-    "How to extend your Thailand tourist visa or visa exemption by 30 days. Requirements, documents needed, fee, where to apply, and common mistakes to avoid.",
-};
+    "How to extend your Thailand tourist visa or visa exemption by 30 days, including requirements, documents, fees, where to apply, and common mistakes.",
+  path: "/guides/tourist-extension",
+});
 
 const TM7_FORM =
   "https://www.immigration.go.th/wp-content/uploads/2022/10/4.คำขออนุญาตเพื่ออยู่ในราชอาณาจักรเป็นการชั่วคราวต่อไป-ตม.7.pdf";

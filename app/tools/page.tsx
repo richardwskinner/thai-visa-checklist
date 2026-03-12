@@ -1,5 +1,4 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Calculator, Clock3, ShieldAlert, ExternalLink, Gamepad2 } from "lucide-react";
@@ -7,12 +6,14 @@ import ThailandVisaNeedChecker from "@/components/thailand-visa-need-checker";
 import ThailandOverstayChecker from "@/components/thailand-overstay-checker";
 import NinetyDayCalculator from "@/app/guides/90-day-reporting/NinetyDayCalculator";
 import ThailandTimeClient from "@/app/thailand-time/ThailandTimeClient";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Thai Visa Calculators",
+export const metadata = createRouteMetadata({
+  title: "Thailand Visa Tools and Calculators",
   description:
     "Free Thailand visa and immigration tools including a 90-day report calculator, visa checker, overstay calculator, and current Thailand time (ICT).",
-};
+  path: "/tools",
+});
 
 const toolSections = [
   {
@@ -66,7 +67,7 @@ export default function ToolsPage() {
     <div className="min-h-screen bg-[#eef3fb]">
       <div className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-5">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">Thai Visa Calculators</h1>
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">Thailand Visa Tools and Calculators</h1>
           <p className="mt-3 text-lg text-slate-600">
             Use these visa calculators directly here, or open the full guides for more details.
           </p>

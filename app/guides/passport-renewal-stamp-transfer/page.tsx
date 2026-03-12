@@ -1,5 +1,4 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -11,28 +10,16 @@ import {
 import { ExternalLink, IdCard } from "lucide-react";
 import ExampleLink from "@/components/example-link";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
 const PASSPORT_TRANSFER_URL = "https://thaivisachecklist.com/guides/passport-renewal-stamp-transfer";
 
-export const metadata: Metadata = {
-  title: "Renewing Your Passport in Thailand and Transferring Visa Stamps",
+export const metadata = createRouteMetadata({
+  title: "Passport Renewal and Visa Stamp Transfer",
   description:
-    "How to renew your passport in Thailand and transfer your visa, extension, and re-entry stamps to a new passport before your next immigration filing.",
-  alternates: {
-    canonical: PASSPORT_TRANSFER_URL,
-  },
-  openGraph: {
-    url: PASSPORT_TRANSFER_URL,
-    title: "Renewing Your Passport in Thailand and Transferring Visa Stamps",
-    description:
-      "How to renew your passport in Thailand and transfer your visa, extension, and re-entry stamps to a new passport before your next immigration filing.",
-  },
-  twitter: {
-    title: "Renewing Your Passport in Thailand and Transferring Visa Stamps",
-    description:
-      "How to renew your passport in Thailand and transfer your visa, extension, and re-entry stamps to a new passport before your next immigration filing.",
-  },
-};
+    "How to renew your passport in Thailand and transfer your visa, extension, and re-entry stamps before your next immigration filing.",
+  path: PASSPORT_TRANSFER_URL,
+});
 
 const BANGKOK_TRANSFER_FORM_URL =
   "https://bangkok.immigration.go.th/wp-content/uploads/2021/08/Transfer-Stamp-to-New-Passport-Form.pdf";

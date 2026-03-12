@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
+import { createSectionMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Marriage Visa - 1 Year Extension Checklist | Thai Visa Checklist",
+export const metadata = createSectionMetadata({
+  title: "Marriage Visa - 1 Year Extension Checklist",
   description:
-    "Printable checklist for a 1-year Thailand Marriage Visa extension (Non-Immigrant O based on Thai spouse), including forms, documents, funds evidence, and practical filing tips.",
-};
+    "Printable checklist for a 1-year Thailand marriage visa extension (Non-Immigrant O based on a Thai spouse), including forms, documents, funds evidence, and filing tips.",
+});
 
 export default function MarriageVisaLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

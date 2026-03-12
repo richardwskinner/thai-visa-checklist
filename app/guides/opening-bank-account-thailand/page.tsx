@@ -1,5 +1,4 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -10,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import { Building2, ExternalLink } from "lucide-react";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
 const KBANK_FOREIGN_ACCOUNT_URL =
   "https://www.kasikornbank.com/en/personal/services/guides/Pages/foreigncustomer.aspx";
@@ -40,11 +40,12 @@ const FAQS = [
   },
 ] as const;
 
-export const metadata: Metadata = {
-  title: "How Foreigners Can Open a Bank Account in Thailand",
+export const metadata = createRouteMetadata({
+  title: "Open a Bank Account in Thailand",
   description:
-    "Practical guide for foreigners opening a bank account in Thailand: documents, visa considerations, branch differences, and what to bring for the best chance of approval.",
-};
+    "Practical guide for foreigners opening a bank account in Thailand, including documents, visa considerations, branch differences, and what to bring.",
+  path: "/guides/opening-bank-account-thailand",
+});
 
 export default function OpeningBankAccountThailandPage() {
   const faqSchema = {

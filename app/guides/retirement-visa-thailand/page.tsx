@@ -1,15 +1,16 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BadgeCheck } from "lucide-react";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Thailand Retirement Visa Guide - Non-Immigrant O and 1-Year Extension",
+export const metadata = createRouteMetadata({
+  title: "Thailand Retirement Visa Guide",
   description:
-    "In-depth Thailand retirement visa guide: getting a 90-day Non-Immigrant O, financial requirements, applying for a 1-year extension, and managing ongoing reporting requirements.",
-};
+    "In-depth Thailand retirement visa guide covering the 90-day Non-Immigrant O, financial requirements, the 1-year extension, and ongoing reporting rules.",
+  path: "/guides/retirement-visa-thailand",
+});
 
 export default function RetirementVisaGuidePage() {
   return (

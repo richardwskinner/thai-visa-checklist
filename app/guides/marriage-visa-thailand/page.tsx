@@ -1,15 +1,16 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Heart } from "lucide-react";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Thailand Marriage Visa Guide - Non-Immigrant O and 1-Year Extension",
+export const metadata = createRouteMetadata({
+  title: "Thailand Marriage Visa Guide",
   description:
-    "In-depth Thailand marriage visa guide: getting a 90-day Non-Immigrant O, opening a Thai bank account, seasoning funds, applying for a 1-year extension, and understanding the consideration period.",
-};
+    "In-depth Thailand marriage visa guide covering the 90-day Non-Immigrant O, seasoning funds, the 1-year extension, and the consideration period.",
+  path: "/guides/marriage-visa-thailand",
+});
 
 export default function MarriageVisaGuidePage() {
   return (

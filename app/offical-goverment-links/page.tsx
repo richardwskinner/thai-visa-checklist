@@ -1,14 +1,15 @@
 import Image from "next/image";
-import type { Metadata } from "next";
 import { ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { resourceLinks } from "@/lib/data/resource-links";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Offical Goverment Links",
+export const metadata = createRouteMetadata({
+  title: "Official Government Links",
   description:
-    "Offical Goverment Links for Thailand including Thai Immigration Bureau, Thai e-Visa, MFA, 90-day reporting, TM.30, and related portals.",
-};
+    "Official Thailand immigration and government links, including Thai Immigration Bureau, Thai e-Visa, MFA, 90-day reporting, and TM.30 portals.",
+  path: "/offical-goverment-links",
+});
 
 const LINK_DESCRIPTIONS: Record<string, string> = {
   "Thai Immigration Bureau":
@@ -43,7 +44,7 @@ export default function OfficalGovermentLinksPage() {
       <div className="mx-auto w-full max-w-5xl px-5">
         <div className="pt-10 text-center sm:pt-12">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">
-            Offical Goverment Links
+            Official Government Links
           </h1>
           <p className="mt-3 text-lg text-slate-600">
             Official Thailand immigration and government portals in one place.

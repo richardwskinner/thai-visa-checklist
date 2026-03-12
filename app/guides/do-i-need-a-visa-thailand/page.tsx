@@ -1,16 +1,17 @@
-import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink, Globe2 } from "lucide-react";
 import ThailandVisaNeedChecker from "@/components/thailand-visa-need-checker";
 import { VISA_ELIGIBILITY_SOURCES } from "@/lib/data/thai-visa-eligibility";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = createRouteMetadata({
   title: "Do I Need a Visa for Thailand?",
   description:
-    "Check if you need a visa for Thailand based on passport nationality and planned stay using official Thai government source lists.",
-};
+    "Check whether you need a visa for Thailand based on nationality and planned stay length using official Thai government source lists.",
+  path: "/guides/do-i-need-a-visa-thailand",
+});
 
 export default function DoINeedAVisaThailandPage() {
   return (

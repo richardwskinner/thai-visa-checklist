@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import type { Metadata } from "next";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Retirement Visa Stages - Non-Immigrant O (Retirement)",
+export const metadata = createRouteMetadata({
+  title: "Retirement Visa Stages",
   description:
-    "Choose your stage in the Thai retirement visa process. Start with Stage 1 or Stage 2 (not both), then continue to extension and ongoing requirements.",
-};
+    "Choose your stage in the Thai retirement visa process and continue to the correct Non-Immigrant O checklist and extension steps.",
+  path: "/visa/retirement/stages",
+});
 
 const stages = [
   {

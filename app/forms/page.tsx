@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
+import { createRouteMetadata } from "@/lib/seo";
 
 type FormItem = {
   code: string;
@@ -140,25 +140,12 @@ const formGroups: FormGroup[] = [
   },
 ];
 
-export const metadata: Metadata = {
-  title: "Most Used Thai Immigration Forms (Checklist Forms)",
+export const metadata = createRouteMetadata({
+  title: "Thai Immigration Forms and Downloads",
   description:
-    "Official download links for the Thai immigration forms used on our marriage and retirement visa checklists, with quick notes on what each form is for.",
-  alternates: {
-    canonical: FORMS_URL,
-  },
-  openGraph: {
-    url: FORMS_URL,
-    title: "Most Used Thai Immigration Forms (Checklist Forms)",
-    description:
-      "Official download links for the Thai immigration forms used on our marriage and retirement visa checklists, with quick notes on what each form is for.",
-  },
-  twitter: {
-    title: "Most Used Thai Immigration Forms (Checklist Forms)",
-    description:
-      "Official download links for the Thai immigration forms used on our marriage and retirement visa checklists, with quick notes on what each form is for.",
-  },
-};
+    "Official download links for common Thai immigration forms, with clear notes on what each form is for and where it is used.",
+  path: FORMS_URL,
+});
 
 export default function FormsPage() {
   return (

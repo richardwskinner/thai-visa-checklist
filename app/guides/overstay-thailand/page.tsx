@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -10,12 +9,14 @@ import {
 import { AlertTriangle, ExternalLink } from "lucide-react";
 import ThailandOverstayChecker from "@/components/thailand-overstay-checker";
 import GuideBackButton from "@/components/guide-back-button";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Overstay in Thailand - Fines, Blacklist Rules and What To Do",
+export const metadata = createRouteMetadata({
+  title: "Overstay in Thailand",
   description:
-    "Official overstay rules in Thailand: fine amounts, blacklist durations, surrender vs arrest outcomes, and what to do if you have overstayed.",
-};
+    "Official overstay rules in Thailand, including fines, blacklist durations, surrender vs arrest outcomes, and what to do if you have overstayed.",
+  path: "/guides/overstay-thailand",
+});
 
 const SAMUTPRAKAN_OVERSTAY_URL = "https://www.samutprakanimmigration.go.th/warning-overstay/";
 const SURIN_OVERSTAY_URL =

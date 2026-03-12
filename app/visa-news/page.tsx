@@ -1,18 +1,16 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { visaNews } from "@/lib/data/visa-news";
 import { ExternalLink, Pin, CalendarDays } from "lucide-react";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Visa News",
+export const metadata = createRouteMetadata({
+  title: "Thailand Visa News",
   description:
     "Thailand visa news and updates on policies, forms, deadlines, and official immigration sources.",
-  alternates: {
-    canonical: "/visa-news",
-  },
-};
+  path: "/visa-news",
+});
 
 const categoryStyles: Record<string, string> = {
   Policy: "bg-blue-100 text-blue-800",

@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = createRouteMetadata({
   title: "Privacy Policy",
   description:
-    "Privacy Policy for Thai Visa Checklist, including information on analytics, contact emails, and how website usage data is handled.",
-};
+    "Privacy Policy for Thai Visa Checklist, including analytics, contact email use, and how website usage data is handled.",
+  path: "/privacy-policy",
+});
 
 export default function PrivacyPolicyPage() {
   return (

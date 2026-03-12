@@ -127,7 +127,7 @@ export const marriageChecklist: ChecklistData = {
           financialMethods: ["thai-income"],
         },
         {
-          text: "Embassy income certification letter",
+          text: "Embassy income certification letter (most embassies no longer provide this service)",
           required: true,
           financialMethods: ["foreign-income"],
         },

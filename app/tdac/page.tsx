@@ -7,16 +7,17 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ExternalLink, Plane } from "lucide-react";
-import type { Metadata } from "next";
 import { Suspense } from "react";
 import GuideBackButton from "@/components/guide-back-button";
 import { ShareInline } from "@/components/share-bar";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Thailand Digital Arrival Card (TDAC) - What You Need to Know",
+export const metadata = createRouteMetadata({
+  title: "Thailand Digital Arrival Card (TDAC)",
   description:
-    "Everything you need to know about the Thailand Digital Arrival Card (TDAC). Required for all non-Thai nationals entering Thailand from 1 May 2025.",
-};
+    "Everything you need to know about the Thailand Digital Arrival Card (TDAC), including who must complete it and when to submit it before arrival.",
+  path: "/tdac",
+});
 
 const FAQS = [
   {

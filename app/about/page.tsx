@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import Image from "next/image";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About",
+export const metadata = createRouteMetadata({
+  title: "About Thai Visa Checklist",
   description:
-    "About Thai Visa Checklist - why it exists, how it helps, and how to connect with trusted visa agents.",
-};
+    "Learn why Thai Visa Checklist exists, how it helps people prepare immigration paperwork, and how to get in touch.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (

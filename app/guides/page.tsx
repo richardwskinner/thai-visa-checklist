@@ -17,13 +17,14 @@ import {
   FileText,
   Heart,
 } from "lucide-react";
-import type { Metadata } from "next";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Thailand Visa & Immigration Guides - Free Help for Expats",
+export const metadata = createRouteMetadata({
+  title: "Thailand Visa and Immigration Guides",
   description:
-    "Free, easy-to-read guides on Thai immigration topics including 90-day reporting, tourist visa extensions, re-entry permits, TM.30, visa exemption, and the Thailand Digital Arrival Card (TDAC).",
-};
+    "Free, practical guides on Thai immigration topics including 90-day reporting, tourist visa extensions, re-entry permits, TM.30, visa exemption, and TDAC.",
+  path: "/guides",
+});
 
 const guides = [
   {
@@ -186,7 +187,7 @@ export default function GuidesPage() {
         {/* Page heading */}
         <div className="pt-10 text-center sm:pt-12">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">
-            Thailand Visa and Document Guides
+            Thailand Visa and Immigration Guides
           </h1>
           <p className="mt-3 text-lg text-slate-600">
             Free, simple step-by-step guides for visas, extensions, reporting, and residency documents.

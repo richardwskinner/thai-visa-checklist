@@ -1,12 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import HomeVisaGrid from "@/components/home-visa-grid";
-import type { Metadata } from "next";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Thai Visa Checklist Helper - Free Document Checklists for Thailand Visas",
+export const metadata = createRouteMetadata({
+  title: "Free Thailand Visa Checklists and Guides",
   description:
-    "Free, comprehensive document checklists for Thai visa applications. Marriage visa, retirement visa, and more. Never miss a document again.",
-};
+    "Free Thailand visa checklists, immigration guides, and practical tools for marriage visas, retirement visas, reporting, and more.",
+  path: "/",
+});
 
 export default function HomePage() {
   return (

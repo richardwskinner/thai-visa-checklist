@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import type { Metadata } from "next";
+import { createRouteMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Marriage Visa Stages - Non-Immigrant O (Marriage)",
+export const metadata = createRouteMetadata({
+  title: "Marriage Visa Stages",
   description:
-    "Choose your stage in the Thai marriage visa process. Start with Stage 1 or Stage 2 (not both), then continue to extension and ongoing requirements.",
-};
+    "Choose your stage in the Thai marriage visa process and continue to the correct Non-Immigrant O checklist and extension steps.",
+  path: "/visa/marriage/stages",
+});
 
 const stages = [
   {
