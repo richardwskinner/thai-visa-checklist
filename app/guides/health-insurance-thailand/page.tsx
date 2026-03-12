@@ -395,8 +395,10 @@ export default function HealthInsuranceThailandGuidePage() {
                       </p>
                     </div>
 
-                    <div className="mx-auto flex w-full max-w-[320px] flex-col items-center sm:max-w-[380px] lg:-mt-8 lg:ml-2 lg:mx-0 lg:max-w-none">
-                      <SafetyWingWidget affiliateId="26491026" scale="0.9" />
+                    <div className="mx-auto flex w-full max-w-[300px] flex-col items-center sm:max-w-[380px] lg:-mt-8 lg:ml-2 lg:mx-0 lg:max-w-none">
+                      <div className="w-full overflow-hidden rounded-[28px]">
+                        <SafetyWingWidget affiliateId="26491026" scale="0.9" />
+                      </div>
                     </div>
 
                     <a
@@ -404,7 +406,7 @@ export default function HealthInsuranceThailandGuidePage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="View SafetyWing plans"
-                      className="mx-auto mt-3 block w-full max-w-[320px] sm:max-w-[420px] lg:col-span-2 lg:-mt-8 lg:max-w-[68%]"
+                      className="mx-auto mt-3 block w-full max-w-[300px] sm:max-w-[420px] lg:col-span-2 lg:-mt-8 lg:max-w-[68%]"
                     >
                       <Image
                         src="/SafetyWing-button-promo-2.png"
