@@ -7,12 +7,14 @@ const SAFETYWING_SCRIPT_ID = "safetywing-price-widget-script";
 type SafetyWingWidgetProps = {
   affiliateId: string;
   scale?: string;
+  mobileScale?: string;
   minHeightClassName?: string;
 };
 
 export default function SafetyWingWidget({
   affiliateId,
   scale = "1.0",
+  mobileScale,
   minHeightClassName = "min-h-[260px]",
 }: SafetyWingWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,10 +26,13 @@ export default function SafetyWingWidget({
 
     container.innerHTML = "";
 
+    const effectiveScale =
+      typeof window !== "undefined" && window.innerWidth < 640 ? mobileScale ?? scale : scale;
+
     const widget = document.createElement("div");
     widget.className = `safetywing-price-widget ${minHeightClassName}`;
     widget.dataset.safetywingaffiliateid = affiliateId;
-    widget.dataset.scale = scale;
+    widget.dataset.scale = effectiveScale;
     container.appendChild(widget);
 
     scriptTimeoutRef.current = window.setTimeout(() => {
@@ -47,7 +52,7 @@ export default function SafetyWingWidget({
       container.innerHTML = "";
       document.getElementById(SAFETYWING_SCRIPT_ID)?.remove();
     };
-  }, [affiliateId, minHeightClassName, scale]);
+  }, [affiliateId, minHeightClassName, mobileScale, scale]);
 
-  return <div ref={containerRef} />;
+  return <div ref={containerRef} className="flex w-full justify-center overflow-hidden" />;
 }
