@@ -184,8 +184,8 @@ const guides = [
       "Simple guide to the Revenue Department's 2024 foreigner tax summary, including Thai-sourced income, remittances, and filing basics.",
     href: "/guides/foreigners-paying-tax-thailand",
     icon: FileText,
-    color: "bg-emerald-100",
-    iconColor: "text-emerald-700",
+    color: "bg-orange-100",
+    iconColor: "text-orange-600",
   },
 ];
 

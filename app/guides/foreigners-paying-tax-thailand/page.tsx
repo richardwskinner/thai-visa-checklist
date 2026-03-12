@@ -25,19 +25,19 @@ export default function ForeignersPayingTaxThailandGuidePage() {
         <Card className="mt-4 rounded-3xl border-0 bg-white shadow-sm sm:mt-6">
           <CardContent className="p-4 sm:p-10">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100">
-                <Landmark className="h-6 w-6 text-emerald-700" />
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-orange-100">
+                <Landmark className="h-6 w-6 text-orange-600" />
               </div>
               <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
                 Foreigners Paying Tax in Thailand
               </h1>
             </div>
 
-            <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-5 sm:p-6">
-              <p className="text-base font-semibold text-emerald-900 sm:text-lg">
+            <div className="mt-6 rounded-2xl border border-orange-200 bg-orange-50 p-5 sm:p-6">
+              <p className="text-base font-semibold text-orange-900 sm:text-lg">
                 For foreigners who stay in Thailand for 180 days or more in a calendar year.
               </p>
-              <p className="mt-3 text-sm text-emerald-900/80">
+              <p className="mt-3 text-sm text-orange-900/80">
                 This guide is general information only. Tax outcomes depend on your residency status, income source,
                 remittance timing, and any applicable Double Tax Agreements. Always confirm with the Thai Revenue
                 Department or a qualified tax professional.
@@ -68,7 +68,7 @@ export default function ForeignersPayingTaxThailandGuidePage() {
                     "Foreign income earned in a year you were not a Thai tax resident, meaning fewer than 180 days in Thailand, is also not taxable, even if remitted later.",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-3 leading-7">
-                      <div className="mt-[0.7rem] h-2 w-2 shrink-0 rounded-full bg-emerald-300" />
+                      <div className="mt-[0.7rem] h-2 w-2 shrink-0 rounded-full bg-orange-300" />
                       <span className="min-w-0 leading-7">{item}</span>
                     </div>
                   ))}
@@ -98,7 +98,7 @@ export default function ForeignersPayingTaxThailandGuidePage() {
                   href={RD_FOREIGNERS_TAX_PDF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-1.5 font-semibold text-blue-700 underline underline-offset-2"
+                  className="mt-3 inline-flex items-center gap-1.5 font-semibold text-orange-700 underline underline-offset-2"
                 >
                   Thailand Revenue Department - Foreigners Pay Tax (2024) <ExternalLink className="h-4 w-4" />
                 </a>

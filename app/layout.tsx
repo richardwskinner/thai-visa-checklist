@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import "./globals.css";
 import Script from "next/script";
-import FooterSafetyWingLink from "@/components/footer-safetywing-link";
 import SiteHeader from "@/components/site-header";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://thaivisachecklist.com";
@@ -77,8 +76,8 @@ function Footer() {
         <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-5 sm:py-7">
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <div className="grid gap-8 md:grid-cols-[1.25fr_1fr_1fr_0.9fr]">
-              <div className="text-center md:pr-6 md:border-r md:border-slate-200">
-                <Link href="/" className="mx-auto inline-flex">
+              <div className="text-center md:text-left md:pr-6 md:border-r md:border-slate-200">
+                <Link href="/" className="inline-flex md:mx-0">
                   <Image
                     src="/logo-full.svg"
                     alt="Thai Visa Checklist"
@@ -87,7 +86,10 @@ function Footer() {
                     className="h-auto w-[220px]"
                   />
                 </Link>
-                <div className="mt-5 hidden flex-wrap items-center justify-center gap-4 md:flex">
+                <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-slate-600 md:mx-0">
+                  Visa information and practical guides for Thailand.
+                </p>
+                <div className="mt-5 hidden flex-wrap items-center justify-center gap-4 md:flex md:justify-start">
                   <a
                     href="mailto:hello@thaivisachecklist.com"
                     className="text-sm font-semibold text-slate-700 hover:text-slate-900"
@@ -118,7 +120,6 @@ function Footer() {
                     </svg>
                   </a>
                 </div>
-                <FooterSafetyWingLink />
               </div>
 
               <div className="text-center md:text-left">
