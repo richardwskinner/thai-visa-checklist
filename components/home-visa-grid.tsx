@@ -15,6 +15,8 @@ export default function HomeVisaGrid() {
   const hiddenVisaSlugs = new Set(["business", "education"]);
   const cardBaseClass =
     "group relative overflow-hidden rounded-[2rem] border border-white/40 px-7 py-7 text-left text-white shadow-[0_18px_44px_rgba(15,23,42,0.16),inset_0_1px_0_rgba(255,255,255,0.28)] transition hover:-translate-y-0.5 hover:shadow-[0_24px_54px_rgba(15,23,42,0.22),inset_0_1px_0_rgba(255,255,255,0.34)]";
+  const affiliateCardClass =
+    "group relative overflow-hidden rounded-[2rem] border border-slate-200/80 px-6 py-5 text-left shadow-[0_16px_36px_rgba(15,23,42,0.10)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(15,23,42,0.14)]";
 
   return (
     <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -100,6 +102,16 @@ export default function HomeVisaGrid() {
         </div>
         <div className="relative mt-2 text-lg font-semibold text-white/85">Thailand travel entry checker</div>
       </Link>
+
+      <div className="mx-auto w-full max-w-[96%] sm:col-span-2">
+        <iframe
+          src="https://saily.com/embed/affiliate-banner?variant=a&cta=https%3A%2F%2Fwww.saily.com%2Faffiliate&aff_banner=12974"
+          title="Saily affiliate banner"
+          style={{ display: "block", width: "100%", border: 0, overflow: "hidden" }}
+          referrerPolicy="no-referrer"
+          loading="lazy"
+        />
+      </div>
     </div>
   );
 }

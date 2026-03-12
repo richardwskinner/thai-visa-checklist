@@ -16,6 +16,7 @@ import {
   Globe2,
   FileText,
   Heart,
+  HeartPulse,
 } from "lucide-react";
 import { createRouteMetadata } from "@/lib/seo";
 
@@ -167,6 +168,15 @@ const guides = [
     icon: BadgeCheck,
     color: "bg-blue-100",
     iconColor: "text-blue-700",
+  },
+  {
+    title: "Health Insurance in Thailand",
+    description:
+      "Health insurance guide for expats and visitors in Thailand, including public options, private insurance, costs, exclusions, and emergency numbers.",
+    href: "/guides/health-insurance-thailand",
+    icon: HeartPulse,
+    color: "bg-emerald-100",
+    iconColor: "text-emerald-700",
   },
   {
     title: "Foreigners Paying Tax in Thailand",

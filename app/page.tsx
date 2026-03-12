@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { Card, CardContent } from "@/components/ui/card";
 import HomeVisaGrid from "@/components/home-visa-grid";
 import { createRouteMetadata } from "@/lib/seo";
@@ -28,6 +29,8 @@ export default function HomePage() {
           </CardContent>
         </Card>
       </div>
+
+      <Script src="https://saily.com/embed/receiver.js" strategy="afterInteractive" />
     </div>
   );
 }
