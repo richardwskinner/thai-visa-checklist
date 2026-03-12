@@ -97,7 +97,12 @@ export default function HealthInsuranceThailandGuidePage() {
 
             <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-5 sm:p-6">
               <p className="text-base font-semibold text-emerald-900 sm:text-lg">
-                Hospitals in Thailand are operated by both public and private providers. The country is known for modern healthcare and strong private hospitals, especially in major cities. However, even a short visit to a private hospital can add up. So if you live in Thailand long-term or travel here frequently, having health insurance is strongly recommended.
+                Hospitals in Thailand are operated by both public and private providers. The country is known for
+                modern healthcare and strong private hospitals, especially in major cities.
+              </p>
+              <p className="mt-3 text-base font-semibold text-emerald-900 sm:text-lg">
+                However, even a short visit to a private hospital can add up. So if you live in Thailand long-term or
+                travel here frequently, having health insurance is strongly recommended.
               </p>
             </div>
 
@@ -390,7 +395,7 @@ export default function HealthInsuranceThailandGuidePage() {
                       </p>
                     </div>
 
-                    <div className="mx-auto flex w-full max-w-[380px] flex-col items-center lg:-mt-8 lg:ml-2 lg:mx-0 lg:max-w-none">
+                    <div className="mx-auto flex w-full max-w-[320px] flex-col items-center sm:max-w-[380px] lg:-mt-8 lg:ml-2 lg:mx-0 lg:max-w-none">
                       <SafetyWingWidget affiliateId="26491026" scale="0.9" />
                     </div>
 
@@ -399,7 +404,7 @@ export default function HealthInsuranceThailandGuidePage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="View SafetyWing plans"
-                      className="mx-auto -mt-8 block w-full max-w-[68%] lg:col-span-2"
+                      className="mx-auto mt-3 block w-full max-w-[320px] sm:max-w-[420px] lg:col-span-2 lg:-mt-8 lg:max-w-[68%]"
                     >
                       <Image
                         src="/SafetyWing-button-promo-2.png"

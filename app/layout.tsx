@@ -73,8 +73,8 @@ function Footer() {
   return (
     <footer className="bg-[#eef3fb] pt-4">
       <div className="border-t border-slate-200 bg-white">
-        <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-5 sm:py-7">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-5 sm:py-6">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 pb-4 shadow-sm sm:p-6 sm:pb-5">
             <div className="grid gap-8 md:grid-cols-[1.25fr_1fr_1fr_0.9fr]">
               <div className="text-center md:text-left md:pr-6 md:border-r md:border-slate-200">
                 <Link href="/" className="inline-flex md:mx-0">
