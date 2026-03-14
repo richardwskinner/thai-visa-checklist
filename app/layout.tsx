@@ -77,7 +77,7 @@ function Footer() {
           <div className="rounded-2xl border border-slate-200 bg-white p-5 pb-4 shadow-sm sm:p-6 sm:pb-5">
             <div className="grid gap-8 md:grid-cols-[1.25fr_1fr_1fr_0.9fr]">
               <div className="text-center md:text-left md:pr-6 md:border-r md:border-slate-200">
-                <Link href="/" className="inline-flex md:mx-0">
+                <Link href="/" className="flex justify-start">
                   <Image
                     src="/logo-full.svg"
                     alt="Thai Visa Checklist"

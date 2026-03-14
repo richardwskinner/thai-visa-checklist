@@ -105,7 +105,7 @@ export default function HomeVisaGrid() {
 
       <div className="mx-auto w-full max-w-[96%] sm:col-span-2">
         <iframe
-          src="https://saily.com/embed/affiliate-banner?variant=a&cta=https%3A%2F%2Fwww.saily.com%2Faffiliate&aff_banner=12974"
+          src="https://saily.com/embed/affiliate-banner?variant=a&cta=https%3A%2F%2Fwww.saily.com&aff_banner=12974"
           title="Saily affiliate banner"
           style={{ display: "block", width: "100%", border: 0, overflow: "hidden" }}
           referrerPolicy="no-referrer"
